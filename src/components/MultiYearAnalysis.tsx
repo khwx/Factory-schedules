@@ -15,7 +15,7 @@ const MultiYearAnalysis: React.FC<MultiYearAnalysisProps> = ({ multiYearData, sc
             <div className="p-4 border-b border-gray-700 flex items-center gap-2">
                 <Calendar className="w-5 h-5 text-blue-400" />
                 <h3 className="text-lg font-semibold text-white">
-                    5-Year Weekend Analysis: {scenarioName}
+                    Análise de Fins de Semana (5 Anos): {scenarioName}
                 </h3>
             </div>
 
@@ -24,7 +24,7 @@ const MultiYearAnalysis: React.FC<MultiYearAnalysisProps> = ({ multiYearData, sc
                     <thead>
                         <tr className="bg-gray-900/50">
                             <th className="p-3 text-left text-gray-400 font-medium border-b border-gray-700">Year</th>
-                            <th className="p-3 text-center text-gray-400 font-medium border-b border-gray-700">Total Weekends</th>
+                            <th className="p-3 text-center text-gray-400 font-medium border-b border-gray-700">Total de Fins de Semana</th>
                             <th className="p-3 text-center text-gray-400 font-medium border-b border-gray-700">Total Off Days</th>
                             {multiYearData[0]?.monthlyBreakdown.map(m => (
                                 <th key={m.month} className="p-2 text-center text-gray-400 font-medium border-b border-gray-700 border-l border-gray-700">
@@ -54,8 +54,8 @@ const MultiYearAnalysis: React.FC<MultiYearAnalysisProps> = ({ multiYearData, sc
             </div>
 
             <div className="p-3 bg-gray-900/30 text-xs text-gray-400 border-t border-gray-700">
-                <span className="text-green-400">Green numbers</span>: Weekends off (Sat+Sun) •
-                <span className="text-gray-500 ml-2">(Gray numbers)</span>: Total off days in month
+                <span className="text-green-400">Números verdes</span>: Fins de semana de folga (Sáb+Dom) •
+                <span className="text-gray-500 ml-2">(Números cinzentos)</span>: Total de dias de folga no mês
             </div>
         </div>
     );

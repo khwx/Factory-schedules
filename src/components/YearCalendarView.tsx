@@ -122,15 +122,15 @@ const YearCalendarView: React.FC<YearCalendarViewProps> = ({ scenario }) => {
             <div className="p-3 bg-gray-900/30 border-t border-gray-700 flex flex-wrap gap-4 text-xs">
                 <div className="flex items-center gap-2">
                     <div className="w-4 h-4 bg-yellow-500 rounded"></div>
-                    <span className="text-gray-400">Morning</span>
+                    <span className="text-gray-400">Manhã</span>
                 </div>
                 <div className="flex items-center gap-2">
                     <div className="w-4 h-4 bg-orange-500 rounded"></div>
-                    <span className="text-gray-400">Afternoon</span>
+                    <span className="text-gray-400">Tarde</span>
                 </div>
                 <div className="flex items-center gap-2">
                     <div className="w-4 h-4 bg-blue-600 rounded"></div>
-                    <span className="text-gray-400">Night</span>
+                    <span className="text-gray-400">Noite</span>
                 </div>
                 <div className="flex items-center gap-2">
                     <div className="w-4 h-4 bg-gray-600 rounded"></div>
