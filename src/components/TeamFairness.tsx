@@ -69,11 +69,11 @@ const TeamFairness: React.FC<TeamFairnessProps> = ({ scenario }) => {
                     <table className="w-full text-sm border-collapse">
                         <thead>
                             <tr className="bg-gray-900/50">
-                                <th className="p-3 text-left text-gray-400 font-medium border-b border-gray-700">Team</th>
-                                <th className="p-3 text-center text-gray-400 font-medium border-b border-gray-700">Weekends Off</th>
-                                <th className="p-3 text-center text-gray-400 font-medium border-b border-gray-700">Total Off Days</th>
+                                <th className="p-3 text-left text-gray-400 font-medium border-b border-gray-700">Turno</th>
+                                <th className="p-3 text-center text-gray-400 font-medium border-b border-gray-700">Fins de Semana de Folga</th>
+                                <th className="p-3 text-center text-gray-400 font-medium border-b border-gray-700">Total de Dias de Folga</th>
                                 <th className="p-3 text-center text-gray-400 font-medium border-b border-gray-700">Feriados Trabalhados 💰</th>
-                                <th className="p-3 text-center text-gray-400 font-medium border-b border-gray-700">Difference</th>
+                                <th className="p-3 text-center text-gray-400 font-medium border-b border-gray-700">Diferença</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -83,7 +83,7 @@ const TeamFairness: React.FC<TeamFairnessProps> = ({ scenario }) => {
 
                                 return (
                                     <tr key={idx} className={idx % 2 === 0 ? 'bg-gray-800/50' : ''}>
-                                        <td className="p-3 text-white font-semibold border-b border-gray-700">Team {team.teamNumber}</td>
+                                        <td className="p-3 text-white font-semibold border-b border-gray-700">Turno {String.fromCharCode(64 + team.teamNumber)}</td>
                                         <td className="p-3 text-center text-green-400 font-mono border-b border-gray-700">
                                             {team.yearlyAnalysis.totalWeekends}
                                         </td>
