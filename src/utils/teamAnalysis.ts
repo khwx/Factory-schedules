@@ -68,17 +68,17 @@ export const analyzeTeamFairness = (scenario: Scenario, year: number): FairnessA
         if (weekendDiff > 1) {
             const bestTeam = teamAnalyses.find(t => t.yearlyAnalysis.totalWeekends === maxWeekends);
             const worstTeam = teamAnalyses.find(t => t.yearlyAnalysis.totalWeekends === minWeekends);
-            insights.push(`⚠️ Weekend imbalance: Team ${bestTeam?.teamNumber} gets ${weekendDiff} more weekends off than Team ${worstTeam?.teamNumber}.`);
+            insights.push(`⚠️ Desequilíbrio de fins de semana: Turno ${String.fromCharCode(64 + (bestTeam?.teamNumber || 0))} tem mais ${weekendDiff} fins de semana de folga que o Turno ${String.fromCharCode(64 + (worstTeam?.teamNumber || 0))}.`);
         }
 
         if (offDayDiff > 1) {
-            insights.push(`⚠️ Off-day imbalance: ${offDayDiff} days difference between teams.`);
+            insights.push(`⚠️ Desequilíbrio de dias de folga: diferença de ${offDayDiff} dias entre turnos.`);
         }
 
         if (holidayDiff > 1) {
             const bestTeam = teamAnalyses.find(t => t.holidaysWorked === maxHolidays);
             const worstTeam = teamAnalyses.find(t => t.holidaysWorked === minHolidays);
-            insights.push(`💰 Holiday imbalance: Team ${bestTeam?.teamNumber} works ${holidayDiff} more feriados than Team ${worstTeam?.teamNumber}.`);
+            insights.push(`💰 Desequilíbrio de feriados: Turno ${String.fromCharCode(64 + (bestTeam?.teamNumber || 0))} trabalha mais ${holidayDiff} feriados que o Turno ${String.fromCharCode(64 + (worstTeam?.teamNumber || 0))}.`);
         }
     }
 

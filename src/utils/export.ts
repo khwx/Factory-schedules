@@ -11,24 +11,24 @@ export const exportToExcel = (scenario: Scenario, analysis: AnalysisResult) => {
 
     // Sheet 1: Summary
     const summaryData = [
-        ['ShiftSim Factory - Scenario Analysis'],
+        ['ShiftSim Factory - Análise de Cenário'],
         [''],
-        ['Scenario Name', scenario.name],
-        ['Number of Teams', scenario.teams],
-        ['Shift Duration (hours)', scenario.shiftDuration],
-        ['Rotation Pattern', scenario.pattern],
+        ['Nome do Cenário', scenario.name],
+        ['Número de Equipas', scenario.teams],
+        ['Duração do Turno (horas)', scenario.shiftDuration],
+        ['Padrão de Rotação', scenario.pattern],
         [''],
-        ['METRICS'],
-        ['Average Weekly Hours', analysis.avgWeeklyHours.toFixed(2)],
-        ['Total Annual Hours', Math.round(analysis.totalAnnualHours)],
-        ['Weekends Off (per year)', analysis.weekendsOffPerYear],
-        ['Total Off Days (per year)', analysis.totalOffDaysPerYear],
+        ['MÉTRICAS'],
+        ['Média de Horas Semanais', analysis.avgWeeklyHours.toFixed(2)],
+        ['Horas Anuais Totais', Math.round(analysis.totalAnnualHours)],
+        ['Fins de Semana de Folga (por ano)', analysis.weekendsOffPerYear],
+        ['Total de Dias de Folga (por ano)', analysis.totalOffDaysPerYear],
         [''],
-        ['QUALITATIVE ANALYSIS'],
+        ['ANÁLISE QUALITATIVA'],
         ...analysis.qualitative.map(q => [q]),
     ];
     const summarySheet = XLSX.utils.aoa_to_sheet(summaryData);
-    XLSX.utils.book_append_sheet(workbook, summarySheet, 'Summary');
+    XLSX.utils.book_append_sheet(workbook, summarySheet, 'Resumo');
 
     // Sheet 2-6: Calendar for each year (5 years)
     for (let i = 0; i < 5; i++) {
@@ -36,25 +36,25 @@ export const exportToExcel = (scenario: Scenario, analysis: AnalysisResult) => {
         const calendar = generateYearCalendar(scenario, year);
 
         const calendarData = [
-            ['Date', 'Day of Week', 'Shift', 'Is Weekend', 'Is Weekend Off'],
+            ['Data', 'Dia da Semana', 'Turno', 'Fim de Semana', 'Fim de Semana de Folga'],
             ...calendar.map(day => [
-                day.date.toLocaleDateString(),
-                day.date.toLocaleDateString('en-US', { weekday: 'long' }),
+                day.date.toLocaleDateString('pt-PT'),
+                day.date.toLocaleDateString('pt-PT', { weekday: 'long' }),
                 day.shift,
-                day.isWeekend ? 'Yes' : 'No',
-                day.isWeekendOff ? 'Yes' : 'No',
+                day.isWeekend ? 'Sim' : 'Não',
+                day.isWeekendOff ? 'Sim' : 'Não',
             ]),
         ];
 
         const calendarSheet = XLSX.utils.aoa_to_sheet(calendarData);
-        XLSX.utils.book_append_sheet(workbook, calendarSheet, `Calendar_${year}`);
+        XLSX.utils.book_append_sheet(workbook, calendarSheet, `Calendario_${year}`);
     }
 
     // Sheet 7: Multi-Year Weekend Analysis
     const weekendAnalysisData = [
-        ['5-Year Weekend Analysis'],
+        ['Análise de Fins de Semana (5 Anos)'],
         [''],
-        ['Year', 'Total Weekends Off', 'Total Off Days', ...analysis.multiYearAnalysis[0]?.monthlyBreakdown.map(m => m.monthName) || []],
+        ['Ano', 'Total de Fins de Semana', 'Total de Dias de Folga', ...analysis.multiYearAnalysis[0]?.monthlyBreakdown.map(m => m.monthName) || []],
     ];
 
     analysis.multiYearAnalysis.forEach(yearData => {
@@ -67,7 +67,7 @@ export const exportToExcel = (scenario: Scenario, analysis: AnalysisResult) => {
     });
 
     const weekendSheet = XLSX.utils.aoa_to_sheet(weekendAnalysisData);
-    XLSX.utils.book_append_sheet(workbook, weekendSheet, 'Weekend_Analysis');
+    XLSX.utils.book_append_sheet(workbook, weekendSheet, 'Analise_Fins_Semana');
 
     // Generate and download
     const fileName = `${scenario.name.replace(/[^a-z0-9]/gi, '_')}_Analysis.xlsx`;
@@ -82,30 +82,30 @@ export const exportComparison = (scenarios: Scenario[], analyses: AnalysisResult
 
     // Comparison Sheet
     const comparisonData = [
-        ['Scenario Comparison'],
+        ['Comparação de Cenários'],
         [''],
-        ['Metric', ...scenarios.map(s => s.name)],
-        ['Teams', ...scenarios.map(s => s.teams)],
-        ['Shift Duration (h)', ...scenarios.map(s => s.shiftDuration)],
-        ['Pattern', ...scenarios.map(s => s.pattern)],
+        ['Métrica', ...scenarios.map(s => s.name)],
+        ['Equipas', ...scenarios.map(s => s.teams)],
+        ['Duração do Turno (h)', ...scenarios.map(s => s.shiftDuration)],
+        ['Padrão', ...scenarios.map(s => s.pattern)],
         [''],
-        ['METRICS'],
-        ['Avg Weekly Hours', ...analyses.map(a => a.avgWeeklyHours.toFixed(2))],
-        ['Total Annual Hours', ...analyses.map(a => Math.round(a.totalAnnualHours))],
-        ['Weekends Off/Year', ...analyses.map(a => a.weekendsOffPerYear)],
-        ['Total Off Days/Year', ...analyses.map(a => a.totalOffDaysPerYear)],
+        ['MÉTRICAS'],
+        ['Média de Horas Semanais', ...analyses.map(a => a.avgWeeklyHours.toFixed(2))],
+        ['Horas Anuais Totais', ...analyses.map(a => Math.round(a.totalAnnualHours))],
+        ['Fins de Semana de Folga/Ano', ...analyses.map(a => a.weekendsOffPerYear)],
+        ['Total de Dias de Folga/Ano', ...analyses.map(a => a.totalOffDaysPerYear)],
     ];
 
     const comparisonSheet = XLSX.utils.aoa_to_sheet(comparisonData);
-    XLSX.utils.book_append_sheet(workbook, comparisonSheet, 'Comparison');
+    XLSX.utils.book_append_sheet(workbook, comparisonSheet, 'Comparacao');
 
     // Multi-year comparison for each scenario
     scenarios.forEach((scenario, idx) => {
         const analysis = analyses[idx];
         const yearData = [
-            [`${scenario.name} - 5 Year Analysis`],
+            [`${scenario.name} - Análise de 5 Anos`],
             [''],
-            ['Year', 'Total Weekends', 'Total Off Days', ...analysis.multiYearAnalysis[0]?.monthlyBreakdown.map(m => m.monthName) || []],
+            ['Ano', 'Total de Fins de Semana', 'Total de Dias de Folga', ...analysis.multiYearAnalysis[0]?.monthlyBreakdown.map(m => m.monthName) || []],
         ];
 
         analysis.multiYearAnalysis.forEach(year => {
@@ -122,5 +122,5 @@ export const exportComparison = (scenarios: Scenario[], analyses: AnalysisResult
     });
 
     // Generate and download
-    XLSX.writeFile(workbook, 'Scenario_Comparison.xlsx');
+    XLSX.writeFile(workbook, 'Comparacao_Cenarios.xlsx');
 };
