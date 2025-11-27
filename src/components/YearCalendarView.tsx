@@ -42,13 +42,13 @@ const YearCalendarView: React.FC<YearCalendarViewProps> = ({ scenario }) => {
         monthGroups[month].push(day);
     });
 
-    const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
-        'July', 'August', 'September', 'October', 'November', 'December'];
+    const monthNames = ['Janeiro', 'Fevereiro', 'Mar\u00e7o', 'Abril', 'Maio', 'Junho',
+        'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
 
     return (
         <div className="bg-gray-800 rounded-lg border border-gray-700 overflow-hidden">
             <div className="p-4 border-b border-gray-700 flex items-center justify-between flex-wrap gap-3">
-                <h3 className="text-lg font-semibold text-white">Annual Calendar: {scenario.name}</h3>
+                <h3 className="text-lg font-semibold text-white">Calendário Anual: {scenario.name}</h3>
                 <div className="flex items-center gap-3">
                     {/* Team Selector */}
                     {scenario.teams > 1 && (
@@ -59,7 +59,7 @@ const YearCalendarView: React.FC<YearCalendarViewProps> = ({ scenario }) => {
                         >
                             {Array.from({ length: scenario.teams }, (_, i) => (
                                 <option key={i} value={i}>
-                                    Team {i + 1}
+                                    Equipa {i + 1}
                                 </option>
                             ))}
                         </select>
@@ -69,7 +69,7 @@ const YearCalendarView: React.FC<YearCalendarViewProps> = ({ scenario }) => {
                     <button
                         onClick={() => setSelectedYear(y => y - 1)}
                         className="p-1 hover:bg-gray-700 rounded transition-colors"
-                        title="Previous Year"
+                        title="Ano Anterior"
                     >
                         <ChevronLeft className="w-5 h-5 text-gray-400" />
                     </button>
@@ -77,7 +77,7 @@ const YearCalendarView: React.FC<YearCalendarViewProps> = ({ scenario }) => {
                     <button
                         onClick={() => setSelectedYear(y => y + 1)}
                         className="p-1 hover:bg-gray-700 rounded transition-colors"
-                        title="Next Year"
+                        title="Próximo Ano"
                     >
                         <ChevronRight className="w-5 h-5 text-gray-400" />
                     </button>

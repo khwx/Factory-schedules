@@ -29,13 +29,13 @@ const ScenarioCard: React.FC<ScenarioCardProps> = ({ scenario, onDelete, onViewC
                 <div>
                     <h3 className="text-lg font-semibold text-white">{scenario.name}</h3>
                     <p className="text-sm text-gray-400">
-                        {scenario.teams} Teams • {scenario.shiftDuration}h Shifts
+                        {scenario.teams} Equipas • Turnos de {scenario.shiftDuration}h
                     </p>
                 </div>
                 <button
                     onClick={() => onDelete(scenario.id)}
                     className="text-gray-500 hover:text-red-400 transition-colors"
-                    title="Delete Scenario"
+                    title="Eliminar Cenário"
                 >
                     <Trash2 className="w-5 h-5" />
                 </button>
@@ -44,7 +44,7 @@ const ScenarioCard: React.FC<ScenarioCardProps> = ({ scenario, onDelete, onViewC
             <div className="p-4 space-y-4">
                 {/* Pattern Visualization */}
                 <div>
-                    <p className="text-xs text-gray-500 mb-1 uppercase tracking-wider">Rotation Pattern</p>
+                    <p className="text-xs text-gray-500 mb-1 uppercase tracking-wider">Padrão de Rotação</p>
                     <div className="flex h-4 rounded overflow-hidden">
                         {scenario.pattern.split('').map((char, i) => (
                             <div
@@ -55,8 +55,8 @@ const ScenarioCard: React.FC<ScenarioCardProps> = ({ scenario, onDelete, onViewC
                         ))}
                     </div>
                     <div className="flex justify-between text-xs text-gray-500 mt-1 font-mono">
-                        <span>Day 1</span>
-                        <span>Day {scenario.pattern.length}</span>
+                        <span>Dia 1</span>
+                        <span>Dia {scenario.pattern.length}</span>
                     </div>
                 </div>
 
@@ -65,7 +65,7 @@ const ScenarioCard: React.FC<ScenarioCardProps> = ({ scenario, onDelete, onViewC
                     <div className="bg-gray-700/50 p-3 rounded">
                         <div className="flex items-center gap-2 text-gray-400 mb-1">
                             <Clock className="w-4 h-4" />
-                            <span className="text-xs">Avg Weekly</span>
+                            <span className="text-xs">Média Semanal</span>
                         </div>
                         <div className={`text-lg font-bold ${analysis.avgWeeklyHours > 40 ? 'text-red-400' : 'text-white'}`}>
                             {analysis.avgWeeklyHours.toFixed(1)}h
@@ -75,7 +75,7 @@ const ScenarioCard: React.FC<ScenarioCardProps> = ({ scenario, onDelete, onViewC
                     <div className="bg-gray-700/50 p-3 rounded">
                         <div className="flex items-center gap-2 text-gray-400 mb-1">
                             <Calendar className="w-4 h-4" />
-                            <span className="text-xs">Weekends</span>
+                            <span className="text-xs">Fins de Semana</span>
                         </div>
                         <div className="text-lg font-bold text-white">
                             {analysis.weekendsOffPerYear}
@@ -85,7 +85,7 @@ const ScenarioCard: React.FC<ScenarioCardProps> = ({ scenario, onDelete, onViewC
                     <div className="bg-gray-700/50 p-3 rounded">
                         <div className="flex items-center gap-2 text-gray-400 mb-1">
                             <Palmtree className="w-4 h-4" />
-                            <span className="text-xs">Off Days</span>
+                            <span className="text-xs">Dias de Folga</span>
                         </div>
                         <div className="text-lg font-bold text-green-400">
                             {analysis.totalOffDaysPerYear}
@@ -100,14 +100,14 @@ const ScenarioCard: React.FC<ScenarioCardProps> = ({ scenario, onDelete, onViewC
                         className="flex-1 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium py-2 px-3 rounded transition-colors flex items-center justify-center gap-2"
                     >
                         <Eye className="w-4 h-4" />
-                        View Calendar
+                        Ver Calendário
                     </button>
                     <button
                         onClick={() => onExport(scenario)}
                         className="flex-1 bg-green-600 hover:bg-green-700 text-white text-sm font-medium py-2 px-3 rounded transition-colors flex items-center justify-center gap-2"
                     >
                         <Download className="w-4 h-4" />
-                        Export
+                        Exportar
                     </button>
                 </div>
             </div>
