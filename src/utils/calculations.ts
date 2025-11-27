@@ -51,19 +51,19 @@ export const calculateAnalysis = (scenario: Scenario): AnalysisResult => {
     ];
 
     if (avgWeeklyHours > 42) {
-        qualitative.push('⚠️ High average weekly hours. Consider reducing shift load.');
+        qualitative.push('⚠️ Média de horas semanais elevada. Considere reduzir a carga horária.');
     } else if (avgWeeklyHours < 35) {
-        qualitative.push('ℹ️ Low average weekly hours. May need additional coverage.');
+        qualitative.push('ℹ️ Média de horas semanais baixa. Pode necessitar de cobertura adicional.');
     }
 
     if (weekendsOff < 20) {
-        qualitative.push('⚠️ Few weekends off. May impact work-life balance.');
+        qualitative.push('⚠️ Poucos fins de semana de folga. Pode afetar o equilíbrio vida-trabalho.');
     } else if (weekendsOff >= 26) {
-        qualitative.push('✅ Good weekend coverage for rest and family time.');
+        qualitative.push('✅ Boa cobertura de fins de semana para descanso e família.');
     }
 
     if (totalOffDaysPerYear < 150) {
-        qualitative.push('⚠️ Low total off-days. Ensure adequate rest periods.');
+        qualitative.push('⚠️ Poucos dias de folga totais. Assegure períodos de descanso adequados.');
     }
 
     return {

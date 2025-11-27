@@ -59,7 +59,7 @@ const YearCalendarView: React.FC<YearCalendarViewProps> = ({ scenario }) => {
                         >
                             {Array.from({ length: scenario.teams }, (_, i) => (
                                 <option key={i} value={i}>
-                                    Equipa {i + 1}
+                                    Turno {String.fromCharCode(65 + i)}
                                 </option>
                             ))}
                         </select>

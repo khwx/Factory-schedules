@@ -12,12 +12,16 @@ export interface MonthlyBreakdown {
   month: number; // 1-12
   monthName: string;
   weekendsOff: number;
+  saturdaysOff: number;
+  sundaysOff: number;
   totalOffDays: number;
 }
 
 export interface YearlyAnalysis {
   year: number;
   totalWeekends: number;
+  totalSaturdaysOff: number;
+  totalSundaysOff: number;
   totalOffDays: number;
   monthlyBreakdown: MonthlyBreakdown[];
 }

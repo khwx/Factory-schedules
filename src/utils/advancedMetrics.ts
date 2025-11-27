@@ -129,61 +129,61 @@ export const generateAdvancedInsights = (metrics: AdvancedMetrics): string[] => 
 
     // Holidays - Working holidays is good (better pay)
     if (metrics.holidaysWorked >= 10) {
-        insights.push(`💰 Excellent earnings potential: ${metrics.holidaysWorked} feriados trabalhados (pagamento majorado).`);
+        insights.push(`💰 Potencial de ganhos excelente: ${metrics.holidaysWorked} feriados trabalhados (pagamento majorado).`);
     } else if (metrics.holidaysWorked >= 6) {
-        insights.push(`💰 Good earnings: ${metrics.holidaysWorked} feriados trabalhados com pagamento extra.`);
+        insights.push(`💰 Bons ganhos: ${metrics.holidaysWorked} feriados trabalhados com pagamento extra.`);
     } else if (metrics.holidaysWorked < 3) {
-        insights.push(`ℹ️ Few paid holidays worked: apenas ${metrics.holidaysWorked} feriados trabalhados.`);
+        insights.push(`ℹ️ Poucos feriados trabalhados: apenas ${metrics.holidaysWorked} feriados trabalhados.`);
     }
 
     if (metrics.holidaysOff > 10) {
-        insights.push(`ℹ️ Many holidays off: ${metrics.holidaysOff} feriados de folga (menos rendimento extra).`);
+        insights.push(`ℹ️ Muitos feriados de folga: ${metrics.holidaysOff} feriados de folga (menos rendimento extra).`);
     }
 
     // Consecutive off days
     if (metrics.maxConsecutiveOffDays >= 5) {
-        insights.push(`✅ Excellent rest periods: up to ${metrics.maxConsecutiveOffDays} consecutive days off.`);
+        insights.push(`✅ Excelentes períodos de descanso: até ${metrics.maxConsecutiveOffDays} dias de folga consecutivos.`);
     } else if (metrics.maxConsecutiveOffDays <= 2) {
-        insights.push(`⚠️ Short rest periods: maximum ${metrics.maxConsecutiveOffDays} consecutive days off.`);
+        insights.push(`⚠️ Períodos de descanso curtos: máximo de ${metrics.maxConsecutiveOffDays} dias de folga consecutivos.`);
     }
 
     // Mini-vacations
     if (metrics.miniVacations >= 4) {
-        insights.push(`✅ ${metrics.miniVacations} mini-vacations (3+ days off) per year.`);
+        insights.push(`✅ ${metrics.miniVacations} mini-férias (3+ dias de folga) por ano.`);
     } else if (metrics.miniVacations === 0) {
-        insights.push(`⚠️ No mini-vacation opportunities (3+ consecutive days off).`);
+        insights.push(`⚠️ Sem oportunidades de mini-férias (3+ dias de folga consecutivos).`);
     }
 
     // Isolated off days
     if (metrics.isolatedOffDays > 20) {
-        insights.push(`⚠️ Many isolated off-days (${metrics.isolatedOffDays}). Less effective for recovery.`);
+        insights.push(`⚠️ Muitos dias de folga isolados (${metrics.isolatedOffDays}). Menos eficaz para recuperação.`);
     }
 
     // Consecutive work days
     if (metrics.maxConsecutiveWorkDays > 7) {
-        insights.push(`⚠️ Long work stretches: up to ${metrics.maxConsecutiveWorkDays} consecutive days. Risk of burnout.`);
+        insights.push(`⚠️ Longos períodos de trabalho: até ${metrics.maxConsecutiveWorkDays} dias consecutivos. Risco de burnout.`);
     } else if (metrics.maxConsecutiveWorkDays <= 5) {
-        insights.push(`✅ Reasonable work stretches: maximum ${metrics.maxConsecutiveWorkDays} consecutive days.`);
+        insights.push(`✅ Períodos de trabalho razoáveis: máximo de ${metrics.maxConsecutiveWorkDays} dias consecutivos.`);
     }
 
     // Night shifts
     if (metrics.nightShiftsPerMonth > 10) {
-        insights.push(`⚠️ High night shift load: ${metrics.nightShiftsPerMonth.toFixed(1)} per month. Monitor health impacts.`);
+        insights.push(`⚠️ Carga elevada de turnos noturnos: ${metrics.nightShiftsPerMonth.toFixed(1)} por mês. Monitorizar impacto na saúde.`);
     } else if (metrics.nightShiftsPerMonth < 5) {
-        insights.push(`✅ Moderate night shift load: ${metrics.nightShiftsPerMonth.toFixed(1)} per month.`);
+        insights.push(`✅ Carga moderada de turnos noturnos: ${metrics.nightShiftsPerMonth.toFixed(1)} por mês.`);
     }
 
     if (metrics.maxConsecutiveNightShifts > 5) {
-        insights.push(`⚠️ Long night shift sequences: up to ${metrics.maxConsecutiveNightShifts} consecutive nights. Impacts circadian rhythm.`);
+        insights.push(`⚠️ Sequências longas de turnos noturnos: até ${metrics.maxConsecutiveNightShifts} noites consecutivas. Impacta o ritmo circadiano.`);
     }
 
     // Social life
     if (metrics.fridayNightsOff >= 40) {
-        insights.push(`✅ Good social life potential: ${metrics.fridayNightsOff} Friday nights free.`);
+        insights.push(`✅ Bom potencial de vida social: ${metrics.fridayNightsOff} noites de sexta-feira livres.`);
     }
 
     if (metrics.sundayMorningsOff >= 45) {
-        insights.push(`✅ Family-friendly: ${metrics.sundayMorningsOff} Sunday mornings free.`);
+        insights.push(`✅ Favorável à família: ${metrics.sundayMorningsOff} manhãs de domingo livres.`);
     }
 
     return insights;

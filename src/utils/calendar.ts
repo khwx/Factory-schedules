@@ -65,11 +65,15 @@ export const analyzeYearCalendar = (calendar: DayInfo[], year: number): YearlyAn
             month: month + 1,
             monthName: MONTH_NAMES[month],
             weekendsOff: 0,
+            saturdaysOff: 0,
+            sundaysOff: 0,
             totalOffDays: 0,
         });
     }
 
     let totalWeekends = 0;
+    let totalSaturdaysOff = 0;
+    let totalSundaysOff = 0;
     let totalOffDays = 0;
 
     // Count weekends off (only count once per weekend, on Saturday)
@@ -83,6 +87,18 @@ export const analyzeYearCalendar = (calendar: DayInfo[], year: number): YearlyAn
             totalOffDays++;
         }
 
+        // Count Saturdays off
+        if (day.date.getDay() === 6 && day.shift === 'F') {
+            monthlyBreakdown[month].saturdaysOff++;
+            totalSaturdaysOff++;
+        }
+
+        // Count Sundays off
+        if (day.date.getDay() === 0 && day.shift === 'F') {
+            monthlyBreakdown[month].sundaysOff++;
+            totalSundaysOff++;
+        }
+
         // Count weekends off (only on Saturday to avoid double counting)
         if (day.date.getDay() === 6 && day.isWeekendOff) {
             monthlyBreakdown[month].weekendsOff++;
@@ -93,6 +109,8 @@ export const analyzeYearCalendar = (calendar: DayInfo[], year: number): YearlyAn
     return {
         year,
         totalWeekends,
+        totalSaturdaysOff,
+        totalSundaysOff,
         totalOffDays,
         monthlyBreakdown,
     };

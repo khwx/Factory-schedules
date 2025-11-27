@@ -25,6 +25,8 @@ const MultiYearAnalysis: React.FC<MultiYearAnalysisProps> = ({ multiYearData, sc
                         <tr className="bg-gray-900/50">
                             <th className="p-3 text-left text-gray-400 font-medium border-b border-gray-700">Year</th>
                             <th className="p-3 text-center text-gray-400 font-medium border-b border-gray-700">Total de Fins de Semana</th>
+                            <th className="p-3 text-center text-gray-400 font-medium border-b border-gray-700">Sábados</th>
+                            <th className="p-3 text-center text-gray-400 font-medium border-b border-gray-700">Domingos</th>
                             <th className="p-3 text-center text-gray-400 font-medium border-b border-gray-700">Total Off Days</th>
                             {multiYearData[0]?.monthlyBreakdown.map(m => (
                                 <th key={m.month} className="p-2 text-center text-gray-400 font-medium border-b border-gray-700 border-l border-gray-700">
@@ -38,12 +40,17 @@ const MultiYearAnalysis: React.FC<MultiYearAnalysisProps> = ({ multiYearData, sc
                             <tr key={yearData.year} className={idx % 2 === 0 ? 'bg-gray-800/50' : ''}>
                                 <td className="p-3 text-white font-semibold border-b border-gray-700">{yearData.year}</td>
                                 <td className="p-3 text-center text-green-400 font-mono border-b border-gray-700">{yearData.totalWeekends}</td>
+                                <td className="p-3 text-center text-gray-300 font-mono border-b border-gray-700">{yearData.totalSaturdaysOff}</td>
+                                <td className="p-3 text-center text-gray-300 font-mono border-b border-gray-700">{yearData.totalSundaysOff}</td>
                                 <td className="p-3 text-center text-blue-400 font-mono border-b border-gray-700">{yearData.totalOffDays}</td>
                                 {yearData.monthlyBreakdown.map(month => (
                                     <td key={month.month} className="p-2 text-center text-gray-300 font-mono border-b border-gray-700 border-l border-gray-700">
-                                        <div className="flex flex-col">
-                                            <span className="text-green-400">{month.weekendsOff}</span>
-                                            <span className="text-xs text-gray-500">({month.totalOffDays})</span>
+                                        <div className="flex flex-col gap-0.5">
+                                            <span className="text-green-400 font-bold" title="Fins de Semana Completos">{month.weekendsOff}</span>
+                                            <div className="flex justify-center gap-1 text-[10px] text-gray-400">
+                                                <span title="Sábados Livres">S:{month.saturdaysOff}</span>
+                                                <span title="Domingos Livres">D:{month.sundaysOff}</span>
+                                            </div>
                                         </div>
                                     </td>
                                 ))}
@@ -54,8 +61,8 @@ const MultiYearAnalysis: React.FC<MultiYearAnalysisProps> = ({ multiYearData, sc
             </div>
 
             <div className="p-3 bg-gray-900/30 text-xs text-gray-400 border-t border-gray-700">
-                <span className="text-green-400">Números verdes</span>: Fins de semana de folga (Sáb+Dom) •
-                <span className="text-gray-500 ml-2">(Números cinzentos)</span>: Total de dias de folga no mês
+                <span className="text-green-400">Números verdes</span>: Fins de semana completos •
+                <span className="text-gray-500 ml-2">S/D</span>: Total de Sábados e Domingos livres
             </div>
         </div>
     );
