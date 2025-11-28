@@ -100,12 +100,20 @@ export const analyzeYearCalendar = (calendar: DayInfo[], year: number): YearlyAn
                 // It's a full weekend off
                 monthlyBreakdown[month].weekendsOff++;
                 totalWeekends++;
+            } else if (shift === 'F') {
+                // It's just a Saturday off (Sunday is worked)
+                monthlyBreakdown[month].saturdaysOff++;
+                totalSaturdaysOff++;
             }
-            // Partial Saturday (Sat off, Sun work) -> IGNORED as per user request
-            // else if (shift === 'F') { ... }
         } else if (dayOfWeek === 0) { // Sunday
-            // Partial Sunday (Sat work, Sun off) -> IGNORED as per user request
-            // Only full weekends matter.
+            if (day.isWeekendOff) {
+                // Part of a full weekend off.
+                // Do NOTHING here. It was already counted on Saturday.
+            } else if (shift === 'F') {
+                // It's just a Sunday off (Saturday was worked)
+                monthlyBreakdown[month].sundaysOff++;
+                totalSundaysOff++;
+            }
         }
     }
 
