@@ -67,7 +67,7 @@ const ScenarioForm: React.FC<ScenarioFormProps> = ({ onAdd, onUpdate, onCancelEd
 
         // Calculate: (Weekly Hours × Total Days) / (Work Days × 7)
         const calculatedDuration = (weeklyHoursContract * totalDays) / (workDays * 7);
-        setShiftDuration(Math.round(calculatedDuration * 10) / 10); // Round to 1 decimal
+        setShiftDuration(Math.round(calculatedDuration * 100) / 100); // Round to 2 decimals
     };
 
     return (
