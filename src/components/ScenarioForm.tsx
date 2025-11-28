@@ -105,6 +105,7 @@ const ScenarioForm: React.FC<ScenarioFormProps> = ({ onAdd, onUpdate, onCancelEd
                         type="number"
                         value={weeklyHoursContract}
                         onChange={(e) => setWeeklyHoursContract(Number(e.target.value))}
+                        step="0.5"
                         min="1"
                         max="168"
                         className="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2 text-white focus:outline-none focus:border-blue-500"
