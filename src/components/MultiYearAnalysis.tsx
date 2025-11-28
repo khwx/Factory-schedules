@@ -23,11 +23,11 @@ const MultiYearAnalysis: React.FC<MultiYearAnalysisProps> = ({ multiYearData, sc
                 <table className="w-full text-sm border-collapse">
                     <thead>
                         <tr className="bg-gray-900/50">
-                            <th className="p-3 text-left text-gray-400 font-medium border-b border-gray-700">Year</th>
+                            <th className="p-3 text-left text-gray-400 font-medium border-b border-gray-700">Ano</th>
                             <th className="p-3 text-center text-gray-400 font-medium border-b border-gray-700">Total de Fins de Semana</th>
                             <th className="p-3 text-center text-gray-400 font-medium border-b border-gray-700">Sábados</th>
                             <th className="p-3 text-center text-gray-400 font-medium border-b border-gray-700">Domingos</th>
-                            <th className="p-3 text-center text-gray-400 font-medium border-b border-gray-700">Total Off Days</th>
+                            <th className="p-3 text-center text-gray-400 font-medium border-b border-gray-700">Total de Dias de Folga</th>
                             {multiYearData[0]?.monthlyBreakdown.map(m => (
                                 <th key={m.month} className="p-2 text-center text-gray-400 font-medium border-b border-gray-700 border-l border-gray-700">
                                     {m.monthName}

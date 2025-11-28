@@ -66,8 +66,22 @@ export const calculateAnalysis = (scenario: Scenario): AnalysisResult => {
         qualitative.push('⚠️ Poucos dias de folga totais. Assegure períodos de descanso adequados.');
     }
 
+    let weeklyHoursDifference: number | undefined;
+    if (scenario.weeklyHoursContract) {
+        weeklyHoursDifference = avgWeeklyHours - scenario.weeklyHoursContract;
+
+        if (weeklyHoursDifference > 0.5) {
+            qualitative.push(`⚠️ Excede o contrato em ${weeklyHoursDifference.toFixed(1)} horas semanais.`);
+        } else if (weeklyHoursDifference < -0.5) {
+            qualitative.push(`ℹ️ Abaixo do contrato em ${Math.abs(weeklyHoursDifference).toFixed(1)} horas semanais.`);
+        } else {
+            qualitative.push('✅ Cumpre o horário contratual.');
+        }
+    }
+
     return {
         avgWeeklyHours,
+        weeklyHoursDifference,
         totalAnnualHours,
         weekendsOffPerYear: weekendsOff,
         weekendsOffPerMonthAvg,

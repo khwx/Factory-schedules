@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { Scenario } from '../types';
-import { analyzeTeamFairness } from '../utils/teamAnalysis';
-import { Users, AlertTriangle, CheckCircle, ChevronLeft, ChevronRight } from 'lucide-react';
+import { analyzeTeamFairness, analyzeCoverage } from '../utils/teamAnalysis';
+import { Users, AlertTriangle, CheckCircle, ChevronLeft, ChevronRight, ShieldAlert } from 'lucide-react';
 
 interface TeamFairnessProps {
     scenario: Scenario;
@@ -11,6 +11,7 @@ const TeamFairness: React.FC<TeamFairnessProps> = ({ scenario }) => {
     const currentYear = new Date().getFullYear();
     const [selectedYear, setSelectedYear] = useState(currentYear);
     const fairness = useMemo(() => analyzeTeamFairness(scenario, selectedYear), [scenario, selectedYear]);
+    const coverage = useMemo(() => analyzeCoverage(scenario, selectedYear), [scenario, selectedYear]);
 
     if (scenario.teams <= 1) return null;
 
@@ -63,6 +64,29 @@ const TeamFairness: React.FC<TeamFairnessProps> = ({ scenario }) => {
                         </div>
                     ))}
                 </div>
+
+                {/* Coverage Analysis */}
+                {coverage.insights.length > 0 && (
+                    <div className="mb-6 space-y-2 border-t border-gray-700 pt-4">
+                        <h4 className="text-sm font-semibold text-gray-300 flex items-center gap-2 mb-2">
+                            <ShieldAlert className="w-4 h-4 text-blue-400" />
+                            Análise de Cobertura Diária
+                        </h4>
+                        {coverage.insights.map((insight, idx) => (
+                            <div
+                                key={idx}
+                                className={`p-3 rounded text-sm ${insight.startsWith('✅')
+                                    ? 'bg-green-900/30 text-green-300'
+                                    : insight.startsWith('⛔')
+                                        ? 'bg-red-900/30 text-red-300 border border-red-800'
+                                        : 'bg-yellow-900/30 text-yellow-300'
+                                    }`}
+                            >
+                                {insight}
+                            </div>
+                        ))}
+                    </div>
+                )}
 
                 {/* Team Comparison Table */}
                 <div className="overflow-x-auto">

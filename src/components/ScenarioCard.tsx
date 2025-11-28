@@ -70,6 +70,11 @@ const ScenarioCard: React.FC<ScenarioCardProps> = ({ scenario, onDelete, onViewC
                         <div className={`text-lg font-bold ${analysis.avgWeeklyHours > 40 ? 'text-red-400' : 'text-white'}`}>
                             {analysis.avgWeeklyHours.toFixed(1)}h
                         </div>
+                        {analysis.weeklyHoursDifference !== undefined && (
+                            <div className={`text-xs mt-1 ${analysis.weeklyHoursDifference > 0 ? 'text-red-400' : analysis.weeklyHoursDifference < 0 ? 'text-green-400' : 'text-gray-400'}`}>
+                                {analysis.weeklyHoursDifference > 0 ? '+' : ''}{analysis.weeklyHoursDifference.toFixed(1)}h
+                            </div>
+                        )}
                     </div>
 
                     <div className="bg-gray-700/50 p-3 rounded">

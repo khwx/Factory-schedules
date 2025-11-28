@@ -5,6 +5,7 @@ export interface Scenario {
   name: string;
   teams: number;
   shiftDuration: number; // in hours
+  weeklyHoursContract?: number; // Contractual weekly hours (e.g. 40)
   pattern: string; // e.g., "MMTTNNFFFF"
 }
 
@@ -53,6 +54,7 @@ export interface AdvancedMetrics {
 
 export interface AnalysisResult {
   avgWeeklyHours: number;
+  weeklyHoursDifference?: number; // Difference from contract
   totalAnnualHours: number;
   weekendsOffPerYear: number;
   weekendsOffPerMonthAvg: number;
