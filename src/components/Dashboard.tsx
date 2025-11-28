@@ -10,6 +10,8 @@ import { Scenario } from '../types';
 import { calculateAnalysis } from '../utils/calculations';
 import { exportToExcel, exportComparison } from '../utils/export';
 import { X, Download } from 'lucide-react';
+import PresetSelector from './PresetSelector';
+import { PresetScenario } from '../data/presetScenarios';
 
 const Dashboard: React.FC = () => {
     const [scenarios, setScenarios] = useState<Scenario[]>(() => {
@@ -72,8 +74,22 @@ const Dashboard: React.FC = () => {
         exportComparison(scenarios, analyses);
     };
 
+    const handleLoadPreset = (preset: PresetScenario) => {
+        const scenario: Scenario = {
+            id: crypto.randomUUID(),
+            name: preset.name,
+            teams: preset.teams,
+            shiftDuration: preset.shiftDuration,
+            weeklyHoursContract: preset.weeklyHoursContract,
+            pattern: preset.pattern,
+        };
+        setScenarios([...scenarios, scenario]);
+    };
+
     return (
         <div className="max-w-7xl mx-auto px-4">
+            <PresetSelector onLoadPreset={handleLoadPreset} />
+
             <ScenarioForm
                 onAdd={handleAddScenario}
                 onUpdate={handleUpdateScenario}
