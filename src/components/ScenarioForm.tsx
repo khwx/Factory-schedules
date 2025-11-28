@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, HelpCircle } from 'lucide-react';
+import { Plus, HelpCircle, Zap } from 'lucide-react';
 import { Scenario } from '../types';
 
 interface ScenarioFormProps {
@@ -56,6 +56,20 @@ const ScenarioForm: React.FC<ScenarioFormProps> = ({ onAdd, onUpdate, onCancelEd
         }
     };
 
+    const calculateAutoDuration = () => {
+        if (!pattern) return;
+
+        const cleanPattern = pattern.toUpperCase().replace(/\s/g, '');
+        const workDays = cleanPattern.split('').filter(c => c !== 'F').length;
+        const totalDays = cleanPattern.length;
+
+        if (workDays === 0) return;
+
+        // Calculate: (Weekly Hours × Total Days) / (Work Days × 7)
+        const calculatedDuration = (weeklyHoursContract * totalDays) / (workDays * 7);
+        setShiftDuration(Math.round(calculatedDuration * 10) / 10); // Round to 1 decimal
+    };
+
     return (
         <div className="bg-gray-800 p-6 rounded-lg shadow-lg border border-gray-700 mb-8">
             <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
@@ -88,14 +102,25 @@ const ScenarioForm: React.FC<ScenarioFormProps> = ({ onAdd, onUpdate, onCancelEd
 
                 <div>
                     <label className="block text-sm font-medium text-gray-400 mb-1">Duração Turno (h)</label>
-                    <input
-                        type="number"
-                        value={shiftDuration}
-                        onChange={(e) => setShiftDuration(Number(e.target.value))}
-                        step="0.1"
-                        className="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2 text-white focus:outline-none focus:border-blue-500"
-                        required
-                    />
+                    <div className="flex gap-2">
+                        <input
+                            type="number"
+                            value={shiftDuration}
+                            onChange={(e) => setShiftDuration(Number(e.target.value))}
+                            step="0.1"
+                            className="flex-1 bg-gray-700 border border-gray-600 rounded px-3 py-2 text-white focus:outline-none focus:border-blue-500"
+                            required
+                        />
+                        <button
+                            type="button"
+                            onClick={calculateAutoDuration}
+                            className="bg-purple-600 hover:bg-purple-700 text-white px-3 py-2 rounded transition-colors flex items-center gap-1"
+                            title="Calcular automaticamente com base nas horas contratuais e padrão"
+                        >
+                            <Zap className="w-4 h-4" />
+                            Auto
+                        </button>
+                    </div>
                 </div>
 
                 <div>
