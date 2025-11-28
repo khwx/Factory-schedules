@@ -81,28 +81,54 @@ export const analyzeYearCalendar = (calendar: DayInfo[], year: number): YearlyAn
         const day = calendar[i];
         const month = day.date.getMonth();
 
+        const dayOfWeek = day.date.getDay();
+        const shift = day.shift;
+
         // Count off days
-        if (day.shift === 'F') {
+        if (shift === 'F') {
             monthlyBreakdown[month].totalOffDays++;
             totalOffDays++;
         }
 
-        // Count Saturdays off
-        if (day.date.getDay() === 6 && day.shift === 'F') {
-            monthlyBreakdown[month].saturdaysOff++;
-            totalSaturdaysOff++;
-        }
+        // Logic for Exclusive Counting:
+        // 1. Full Weekend (Sat+Sun off): Counts as weekendsOff (assigned to Saturday's month)
+        // 2. Partial Saturday (Sat off, Sun work): Counts as saturdaysOff
+        // 3. Partial Sunday (Sat work, Sun off): Counts as sundaysOff
 
-        // Count Sundays off
-        if (day.date.getDay() === 0 && day.shift === 'F') {
-            monthlyBreakdown[month].sundaysOff++;
-            totalSundaysOff++;
-        }
+        if (dayOfWeek === 6) { // Saturday
+            if (day.isWeekendOff) {
+                // It's a full weekend off
+                monthlyBreakdown[month].weekendsOff++;
+                totalWeekends++;
+            } else if (shift === 'F') {
+                // It's just a Saturday off (Sunday is worked)
+                monthlyBreakdown[month].saturdaysOff++;
+                totalSaturdaysOff++;
+            }
+        } else if (dayOfWeek === 0) { // Sunday
+            if (shift === 'F') {
+                // Check previous day (Saturday)
+                // We need to know if Saturday was OFF.
+                // We can check calendar[i-1].shift, handling index 0 boundary.
+                let prevDayWasOff = false;
+                if (i > 0) {
+                    prevDayWasOff = calendar[i - 1].shift === 'F';
+                } else {
+                    // If year starts on Sunday, we check the pattern logic or assume based on rotation?
+                    // For simplicity in this specific edge case (Jan 1st is Sunday),
+                    // if it's 'F', we count it as Sunday off unless we know Saturday was off (which is previous year).
+                    // But generateYearCalendar handles logic within the year.
+                    // Let's assume for i=0, it's a isolated Sunday if F.
+                    prevDayWasOff = false;
+                }
 
-        // Count weekends off (only on Saturday to avoid double counting)
-        if (day.date.getDay() === 6 && day.isWeekendOff) {
-            monthlyBreakdown[month].weekendsOff++;
-            totalWeekends++;
+                if (!prevDayWasOff) {
+                    // Only count as Sunday Off if Saturday was NOT off.
+                    // If Saturday WAS off, it's already counted as a Weekend Off.
+                    monthlyBreakdown[month].sundaysOff++;
+                    totalSundaysOff++;
+                }
+            }
         }
     }
 
