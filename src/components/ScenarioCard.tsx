@@ -1,16 +1,17 @@
 import React, { useMemo } from 'react';
-import { Trash2, Clock, Calendar, Download, Eye, Palmtree } from 'lucide-react';
+import { Trash2, Clock, Calendar, Download, Palmtree, Pencil } from 'lucide-react';
 import { Scenario } from '../types';
 import { calculateAnalysis } from '../utils/calculations';
 
 interface ScenarioCardProps {
     scenario: Scenario;
     onDelete: (id: string) => void;
+    onEdit: (scenario: Scenario) => void;
     onViewCalendar: (scenario: Scenario) => void;
     onExport: (scenario: Scenario) => void;
 }
 
-const ScenarioCard: React.FC<ScenarioCardProps> = ({ scenario, onDelete, onViewCalendar, onExport }) => {
+const ScenarioCard: React.FC<ScenarioCardProps> = ({ scenario, onDelete, onEdit, onViewCalendar, onExport }) => {
     const analysis = useMemo(() => calculateAnalysis(scenario), [scenario]);
 
     const getShiftColor = (char: string) => {
@@ -32,13 +33,22 @@ const ScenarioCard: React.FC<ScenarioCardProps> = ({ scenario, onDelete, onViewC
                         {scenario.teams} Equipas • Turnos de {scenario.shiftDuration}h
                     </p>
                 </div>
-                <button
-                    onClick={() => onDelete(scenario.id)}
-                    className="text-gray-500 hover:text-red-400 transition-colors"
-                    title="Eliminar Cenário"
-                >
-                    <Trash2 className="w-5 h-5" />
-                </button>
+                <div className="flex gap-2">
+                    <button
+                        onClick={() => onEdit(scenario)}
+                        className="text-gray-500 hover:text-blue-400 transition-colors"
+                        title="Editar Cenário"
+                    >
+                        <Pencil className="w-5 h-5" />
+                    </button>
+                    <button
+                        onClick={() => onDelete(scenario.id)}
+                        className="text-gray-500 hover:text-red-400 transition-colors"
+                        title="Eliminar Cenário"
+                    >
+                        <Trash2 className="w-5 h-5" />
+                    </button>
+                </div>
             </div>
 
             <div className="p-4 space-y-4">
@@ -104,7 +114,7 @@ const ScenarioCard: React.FC<ScenarioCardProps> = ({ scenario, onDelete, onViewC
                         onClick={() => onViewCalendar(scenario)}
                         className="flex-1 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium py-2 px-3 rounded transition-colors flex items-center justify-center gap-2"
                     >
-                        <Eye className="w-4 h-4" />
+                        <Calendar className="w-4 h-4" />
                         Ver Calendário
                     </button>
                     <button

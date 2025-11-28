@@ -18,6 +18,7 @@ const Dashboard: React.FC = () => {
     });
 
     const [selectedScenario, setSelectedScenario] = useState<Scenario | null>(null);
+    const [editingScenario, setEditingScenario] = useState<Scenario | null>(null);
     const [showCalendar, setShowCalendar] = useState(false);
 
     useEffect(() => {
@@ -38,6 +39,23 @@ const Dashboard: React.FC = () => {
 
     const handleDeleteScenario = (id: string) => {
         setScenarios(scenarios.filter(s => s.id !== id));
+        if (editingScenario?.id === id) {
+            setEditingScenario(null);
+        }
+    };
+
+    const handleEditScenario = (scenario: Scenario) => {
+        setEditingScenario(scenario);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    const handleUpdateScenario = (id: string, updatedData: Omit<Scenario, 'id'>) => {
+        setScenarios(scenarios.map(s => s.id === id ? { ...updatedData, id } : s));
+        setEditingScenario(null);
+    };
+
+    const handleCancelEdit = () => {
+        setEditingScenario(null);
     };
 
     const handleViewCalendar = (scenario: Scenario) => {
@@ -56,7 +74,12 @@ const Dashboard: React.FC = () => {
 
     return (
         <div className="max-w-7xl mx-auto px-4">
-            <ScenarioForm onAdd={handleAddScenario} />
+            <ScenarioForm
+                onAdd={handleAddScenario}
+                onUpdate={handleUpdateScenario}
+                onCancelEdit={handleCancelEdit}
+                editingScenario={editingScenario}
+            />
 
             {scenarios.length > 0 ? (
                 <>
@@ -66,6 +89,7 @@ const Dashboard: React.FC = () => {
                                 key={scenario.id}
                                 scenario={scenario}
                                 onDelete={handleDeleteScenario}
+                                onEdit={handleEditScenario}
                                 onViewCalendar={handleViewCalendar}
                                 onExport={handleExport}
                             />

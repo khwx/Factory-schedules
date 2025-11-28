@@ -1,40 +1,68 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Plus, HelpCircle } from 'lucide-react';
 import { Scenario } from '../types';
 
 interface ScenarioFormProps {
     onAdd: (scenario: Omit<Scenario, 'id'>) => void;
+    onUpdate?: (id: string, scenario: Omit<Scenario, 'id'>) => void;
+    onCancelEdit?: () => void;
+    editingScenario?: Scenario | null;
 }
 
-const ScenarioForm: React.FC<ScenarioFormProps> = ({ onAdd }) => {
+const ScenarioForm: React.FC<ScenarioFormProps> = ({ onAdd, onUpdate, onCancelEdit, editingScenario }) => {
     const [name, setName] = useState('');
     const [teams, setTeams] = useState(4);
     const [shiftDuration, setShiftDuration] = useState(8);
+    const [weeklyHoursContract, setWeeklyHoursContract] = useState(40);
     const [pattern, setPattern] = useState('');
+
+    useEffect(() => {
+        if (editingScenario) {
+            setName(editingScenario.name);
+            setTeams(editingScenario.teams);
+            setShiftDuration(editingScenario.shiftDuration);
+            setWeeklyHoursContract(editingScenario.weeklyHoursContract || 40);
+            setPattern(editingScenario.pattern);
+        } else {
+            setName('');
+            setTeams(4);
+            setShiftDuration(8);
+            setWeeklyHoursContract(40);
+            setPattern('');
+        }
+    }, [editingScenario]);
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         if (!name || !pattern) return;
 
-        onAdd({
+        const scenarioData = {
             name,
             teams,
             shiftDuration,
+            weeklyHoursContract,
             pattern: pattern.toUpperCase(),
-        });
+        };
 
-        // Reset form
-        setName('');
-        setPattern('');
+        if (editingScenario && onUpdate) {
+            onUpdate(editingScenario.id, scenarioData);
+        } else {
+            onAdd(scenarioData);
+        }
+
+        if (!editingScenario) {
+            setName('');
+            setPattern('');
+        }
     };
 
     return (
         <div className="bg-gray-800 p-6 rounded-lg shadow-lg border border-gray-700 mb-8">
             <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
                 <Plus className="w-5 h-5 text-blue-400" />
-                Criar Novo Cenário
+                {editingScenario ? 'Editar Cenário' : 'Criar Novo Cenário'}
             </h2>
-            <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 items-end">
+            <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4 items-end">
                 <div className="lg:col-span-1">
                     <label className="block text-sm font-medium text-gray-400 mb-1">Nome do Cenário</label>
                     <input
@@ -59,13 +87,26 @@ const ScenarioForm: React.FC<ScenarioFormProps> = ({ onAdd }) => {
                 </div>
 
                 <div>
-                    <label className="block text-sm font-medium text-gray-400 mb-1">Duração do Turno (h)</label>
+                    <label className="block text-sm font-medium text-gray-400 mb-1">Duração Turno (h)</label>
                     <input
                         type="number"
                         value={shiftDuration}
                         onChange={(e) => setShiftDuration(Number(e.target.value))}
-                        step={0.5}
-                        min={1}
+                        min="1"
+                        max="24"
+                        className="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2 text-white focus:outline-none focus:border-blue-500"
+                        required
+                    />
+                </div>
+
+                <div>
+                    <label className="block text-sm font-medium text-gray-400 mb-1">Horas Semanais (Contrato)</label>
+                    <input
+                        type="number"
+                        value={weeklyHoursContract}
+                        onChange={(e) => setWeeklyHoursContract(Number(e.target.value))}
+                        min="1"
+                        max="168"
                         className="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2 text-white focus:outline-none focus:border-blue-500"
                     />
                 </div>
@@ -90,13 +131,22 @@ const ScenarioForm: React.FC<ScenarioFormProps> = ({ onAdd }) => {
                     />
                 </div>
 
-                <div className="lg:col-span-5 flex justify-end mt-2">
+                <div className="lg:col-span-6 flex justify-end mt-2 gap-2">
+                    {editingScenario && (
+                        <button
+                            type="button"
+                            onClick={onCancelEdit}
+                            className="bg-gray-600 hover:bg-gray-700 text-white font-medium py-2 px-6 rounded transition-colors"
+                        >
+                            Cancelar
+                        </button>
+                    )}
                     <button
                         type="submit"
-                        className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded transition-colors flex items-center gap-2"
+                        className={`${editingScenario ? 'bg-green-600 hover:bg-green-700' : 'bg-blue-600 hover:bg-blue-700'} text-white font-medium py-2 px-6 rounded transition-colors flex items-center gap-2`}
                     >
                         <Plus className="w-4 h-4" />
-                        Adicionar Cenário
+                        {editingScenario ? 'Atualizar Cenário' : 'Adicionar Cenário'}
                     </button>
                 </div>
             </form>
