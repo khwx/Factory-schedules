@@ -89,13 +89,13 @@ const YearCalendarView: React.FC<YearCalendarViewProps> = ({ scenario }) => {
                     <div key={monthIdx} className="bg-gray-900/30 rounded p-3">
                         <h4 className="text-sm font-semibold text-gray-300 mb-2">{monthNames[parseInt(monthIdx)]}</h4>
                         <div className="grid grid-cols-7 gap-1">
-                            {/* Day headers */}
-                            {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((d, i) => (
+                            {/* Day headers - Starting on Monday (European format) */}
+                            {['S', 'T', 'Q', 'Q', 'S', 'S', 'D'].map((d, i) => (
                                 <div key={i} className="text-xs text-gray-500 text-center font-medium">{d}</div>
                             ))}
 
-                            {/* Empty cells for alignment */}
-                            {Array.from({ length: days[0].date.getDay() }).map((_, i) => (
+                            {/* Empty cells for alignment - Adjust for Monday start */}
+                            {Array.from({ length: (days[0].date.getDay() + 6) % 7 }).map((_, i) => (
                                 <div key={`empty-${i}`} />
                             ))}
 
@@ -109,7 +109,7 @@ const YearCalendarView: React.FC<YearCalendarViewProps> = ({ scenario }) => {
                     ${day.isWeekendOff ? 'ring-2 ring-green-400' : ''}
                     ${day.isWeekend && !day.isWeekendOff ? 'opacity-75' : ''}
                   `}
-                                    title={`${day.date.toLocaleDateString()} - ${getShiftLabel(day.shift)} ${day.isWeekendOff ? '(Weekend Off)' : ''}`}
+                                    title={`${day.date.toLocaleDateString('pt-PT')} - ${getShiftLabel(day.shift)} ${day.isWeekendOff ? '(Fim de Semana de Folga)' : ''}`}
                                 >
                                     <span className="text-white font-semibold">{day.date.getDate()}</span>
                                 </div>
@@ -134,11 +134,11 @@ const YearCalendarView: React.FC<YearCalendarViewProps> = ({ scenario }) => {
                 </div>
                 <div className="flex items-center gap-2">
                     <div className="w-4 h-4 bg-gray-600 rounded"></div>
-                    <span className="text-gray-400">Off</span>
+                    <span className="text-gray-400">Folga</span>
                 </div>
                 <div className="flex items-center gap-2">
                     <div className="w-4 h-4 bg-gray-600 rounded ring-2 ring-green-400"></div>
-                    <span className="text-gray-400">Weekend Off</span>
+                    <span className="text-gray-400">Fim de Semana de Folga</span>
                 </div>
             </div>
         </div>
