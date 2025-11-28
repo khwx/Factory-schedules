@@ -92,8 +92,7 @@ const ScenarioForm: React.FC<ScenarioFormProps> = ({ onAdd, onUpdate, onCancelEd
                         type="number"
                         value={shiftDuration}
                         onChange={(e) => setShiftDuration(Number(e.target.value))}
-                        min="1"
-                        max="24"
+                        step="0.1"
                         className="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2 text-white focus:outline-none focus:border-blue-500"
                         required
                     />
