@@ -100,35 +100,12 @@ export const analyzeYearCalendar = (calendar: DayInfo[], year: number): YearlyAn
                 // It's a full weekend off
                 monthlyBreakdown[month].weekendsOff++;
                 totalWeekends++;
-            } else if (shift === 'F') {
-                // It's just a Saturday off (Sunday is worked)
-                monthlyBreakdown[month].saturdaysOff++;
-                totalSaturdaysOff++;
             }
+            // Partial Saturday (Sat off, Sun work) -> IGNORED as per user request
+            // else if (shift === 'F') { ... }
         } else if (dayOfWeek === 0) { // Sunday
-            if (shift === 'F') {
-                // Check previous day (Saturday)
-                // We need to know if Saturday was OFF.
-                // We can check calendar[i-1].shift, handling index 0 boundary.
-                let prevDayWasOff = false;
-                if (i > 0) {
-                    prevDayWasOff = calendar[i - 1].shift === 'F';
-                } else {
-                    // If year starts on Sunday, we check the pattern logic or assume based on rotation?
-                    // For simplicity in this specific edge case (Jan 1st is Sunday),
-                    // if it's 'F', we count it as Sunday off unless we know Saturday was off (which is previous year).
-                    // But generateYearCalendar handles logic within the year.
-                    // Let's assume for i=0, it's a isolated Sunday if F.
-                    prevDayWasOff = false;
-                }
-
-                if (!prevDayWasOff) {
-                    // Only count as Sunday Off if Saturday was NOT off.
-                    // If Saturday WAS off, it's already counted as a Weekend Off.
-                    monthlyBreakdown[month].sundaysOff++;
-                    totalSundaysOff++;
-                }
-            }
+            // Partial Sunday (Sat work, Sun off) -> IGNORED as per user request
+            // Only full weekends matter.
         }
     }
 
