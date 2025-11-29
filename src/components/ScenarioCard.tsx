@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { Trash2, Clock, Calendar, Download, Palmtree, Pencil } from 'lucide-react';
+import { Trash2, Clock, Calendar, Download, Palmtree, Pencil, Eye, EyeOff } from 'lucide-react';
 import { Scenario } from '../types';
 import { calculateAnalysis } from '../utils/calculations';
 
@@ -9,9 +9,10 @@ interface ScenarioCardProps {
     onEdit: (scenario: Scenario) => void;
     onViewCalendar: (scenario: Scenario) => void;
     onExport: (scenario: Scenario) => void;
+    onToggleHidden: (id: string) => void;
 }
 
-const ScenarioCard: React.FC<ScenarioCardProps> = ({ scenario, onDelete, onEdit, onViewCalendar, onExport }) => {
+const ScenarioCard: React.FC<ScenarioCardProps> = ({ scenario, onDelete, onEdit, onViewCalendar, onExport, onToggleHidden }) => {
     const analysis = useMemo(() => calculateAnalysis(scenario), [scenario]);
 
     const getShiftColor = (char: string) => {
@@ -34,6 +35,13 @@ const ScenarioCard: React.FC<ScenarioCardProps> = ({ scenario, onDelete, onEdit,
                     </p>
                 </div>
                 <div className="flex gap-2">
+                    <button
+                        onClick={() => onToggleHidden(scenario.id)}
+                        className="text-gray-500 hover:text-yellow-400 transition-colors"
+                        title={scenario.hidden ? "Mostrar Cenário" : "Ocultar Cenário"}
+                    >
+                        {scenario.hidden ? <Eye className="w-5 h-5" /> : <EyeOff className="w-5 h-5" />}
+                    </button>
                     <button
                         onClick={() => onEdit(scenario)}
                         className="text-gray-500 hover:text-blue-400 transition-colors"

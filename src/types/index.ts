@@ -7,6 +7,7 @@ export interface Scenario {
   shiftDuration: number; // in hours
   weeklyHoursContract?: number; // Contractual weekly hours (e.g. 40)
   pattern: string; // e.g., "MMTTNNFFFF"
+  hidden?: boolean; // Whether scenario is hidden from main view
 }
 
 export interface MonthlyBreakdown {

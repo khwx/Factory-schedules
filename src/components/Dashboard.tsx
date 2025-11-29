@@ -9,7 +9,7 @@ import AdvancedMetricsDisplay from './AdvancedMetricsDisplay';
 import { Scenario } from '../types';
 import { calculateAnalysis } from '../utils/calculations';
 import { exportToExcel, exportComparison } from '../utils/export';
-import { X, Download } from 'lucide-react';
+import { X, Download, Filter } from 'lucide-react';
 import PresetSelector from './PresetSelector';
 import { PresetScenario } from '../data/presetScenarios';
 
@@ -22,14 +22,20 @@ const Dashboard: React.FC = () => {
     const [selectedScenario, setSelectedScenario] = useState<Scenario | null>(null);
     const [editingScenario, setEditingScenario] = useState<Scenario | null>(null);
     const [showCalendar, setShowCalendar] = useState(false);
+    const [showHidden, setShowHidden] = useState(false);
 
     useEffect(() => {
         localStorage.setItem('shiftsim_scenarios', JSON.stringify(scenarios));
     }, [scenarios]);
 
+    // Filter scenarios based on visibility
+    const visibleScenarios = useMemo(() => {
+        return showHidden ? scenarios : scenarios.filter(s => !s.hidden);
+    }, [scenarios, showHidden]);
+
     const analyses = useMemo(() => {
-        return scenarios.map(s => calculateAnalysis(s));
-    }, [scenarios]);
+        return visibleScenarios.map(s => calculateAnalysis(s));
+    }, [visibleScenarios]);
 
     const handleAddScenario = (newScenario: Omit<Scenario, 'id'>) => {
         const scenario: Scenario = {
@@ -86,6 +92,12 @@ const Dashboard: React.FC = () => {
         setScenarios([...scenarios, scenario]);
     };
 
+    const handleToggleHidden = (id: string) => {
+        setScenarios(scenarios.map(s =>
+            s.id === id ? { ...s, hidden: !s.hidden } : s
+        ));
+    };
+
     return (
         <div className="max-w-7xl mx-auto px-4">
             <PresetSelector onLoadPreset={handleLoadPreset} />
@@ -97,26 +109,48 @@ const Dashboard: React.FC = () => {
                 editingScenario={editingScenario}
             />
 
-            {scenarios.length > 0 ? (
+            {scenarios.length > 0 && (
+                <div className="mb-4 flex justify-end">
+                    <button
+                        onClick={() => setShowHidden(!showHidden)}
+                        className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${showHidden
+                            ? 'bg-yellow-600 hover:bg-yellow-700 text-white'
+                            : 'bg-gray-700 hover:bg-gray-600 text-gray-300'
+                            }`}
+                        title={showHidden ? "Ocultar cenários escondidos" : "Mostrar cenários escondidos"}
+                    >
+                        <Filter className="w-4 h-4" />
+                        {showHidden ? 'Ocultar Escondidos' : 'Mostrar Escondidos'}
+                        {scenarios.filter(s => s.hidden).length > 0 && (
+                            <span className="bg-gray-900 px-2 py-0.5 rounded-full text-xs">
+                                {scenarios.filter(s => s.hidden).length}
+                            </span>
+                        )}
+                    </button>
+                </div>
+            )}
+
+            {visibleScenarios.length > 0 ? (
                 <>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-                        {scenarios.map(scenario => (
+                        {visibleScenarios.map(scenario => (
                             <ScenarioCard
                                 key={scenario.id}
                                 scenario={scenario}
                                 onDelete={handleDeleteScenario}
                                 onEdit={handleEditScenario}
+                                onToggleHidden={handleToggleHidden}
                                 onViewCalendar={handleViewCalendar}
                                 onExport={handleExport}
                             />
                         ))}
                     </div>
 
-                    <ComparisonTable scenarios={scenarios} />
+                    <ComparisonTable scenarios={visibleScenarios} />
 
                     {/* Advanced Metrics, Multi-Year Analysis, and Team Fairness for each scenario */}
                     <div className="mt-8 space-y-6">
-                        {scenarios.map((scenario, idx) => (
+                        {visibleScenarios.map((scenario, idx) => (
                             <div key={scenario.id} className="space-y-6">
                                 {analyses[idx].advancedMetrics && (
                                     <AdvancedMetricsDisplay
