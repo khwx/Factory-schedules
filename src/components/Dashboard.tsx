@@ -11,6 +11,7 @@ import { calculateAnalysis } from '../utils/calculations';
 import { exportToExcel, exportComparison } from '../utils/export';
 import { X, Download, Filter } from 'lucide-react';
 import PresetSelector from './PresetSelector';
+import ICSImporter from './ICSImporter';
 import { PresetScenario } from '../data/presetScenarios';
 
 const Dashboard: React.FC = () => {
@@ -100,6 +101,8 @@ const Dashboard: React.FC = () => {
 
     return (
         <div className="max-w-7xl mx-auto px-4">
+            <ICSImporter onImport={handleAddScenario} />
+
             <PresetSelector onLoadPreset={handleLoadPreset} />
 
             <ScenarioForm
@@ -189,7 +192,7 @@ const Dashboard: React.FC = () => {
                 <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4">
                     <div className="bg-gray-900 rounded-lg max-w-6xl w-full max-h-[90vh] overflow-hidden flex flex-col">
                         <div className="p-4 border-b border-gray-700 flex justify-between items-center">
-                            <h2 className="text-xl font-semibold text-white">Annual Calendar View</h2>
+                            <h2 className="text-xl font-semibold text-white">Vista de Calendário Anual</h2>
                             <button
                                 onClick={() => setShowCalendar(false)}
                                 className="text-gray-400 hover:text-white transition-colors"

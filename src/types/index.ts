@@ -6,8 +6,9 @@ export interface Scenario {
   teams: number;
   shiftDuration: number; // in hours
   weeklyHoursContract?: number; // Contractual weekly hours (e.g. 40)
-  pattern: string; // e.g., "MMTTNNFFFF"
+  pattern: string; // e.g., "MMTTNNFFFF" - default pattern for team 1
   hidden?: boolean; // Whether scenario is hidden from main view
+  teamPatterns?: string[]; // Optional: individual patterns for each team (overrides pattern)
 }
 
 export interface MonthlyBreakdown {
