@@ -125,6 +125,11 @@ export function extractTeamPatterns(events: ICSEvent[]): TeamPattern[] {
     // Determine cycle length from RRULE interval
     const cycleLength = events[0].rrule?.interval || 15;
 
+    // Find global reference date (earliest date across ALL events)
+    const allDates = events.map(e => e.startDate.getTime());
+    const globalMinDate = Math.min(...allDates);
+    const referenceDate = new Date(globalMinDate);
+
     // Group events by team
     const teamEvents: { [team: string]: ICSEvent[] } = {};
 
@@ -138,15 +143,15 @@ export function extractTeamPatterns(events: ICSEvent[]): TeamPattern[] {
         teamEvents[parsed.team].push(event);
     }
 
-    // Build pattern for each team
+    // Build pattern for each team using the same reference date
     const patterns: TeamPattern[] = [];
 
     for (const [teamName, teamEventList] of Object.entries(teamEvents)) {
-        const pattern = buildTeamPattern(teamEventList, cycleLength);
+        const pattern = buildTeamPattern(teamEventList, cycleLength, referenceDate);
         patterns.push({
             teamName,
             pattern,
-            startOffset: 0, // Will calculate if needed
+            startOffset: 0,
         });
     }
 
@@ -159,14 +164,9 @@ export function extractTeamPatterns(events: ICSEvent[]): TeamPattern[] {
 /**
  * Build pattern string for a single team from their events
  */
-function buildTeamPattern(events: ICSEvent[], cycleLength: number): string {
+function buildTeamPattern(events: ICSEvent[], cycleLength: number, referenceDate: Date): string {
     // Initialize pattern with all F (folga)
     const pattern: string[] = new Array(cycleLength).fill('F');
-
-    // Find earliest date to use as reference
-    const dates = events.map(e => e.startDate.getTime());
-    const minDate = Math.min(...dates);
-    const referenceDate = new Date(minDate);
 
     // Fill in shifts from events
     for (const event of events) {
