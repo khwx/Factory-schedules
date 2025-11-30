@@ -5,6 +5,7 @@ export interface PresetScenario {
     shiftDuration: number;
     weeklyHoursContract: number;
     pattern: string;
+    teamPatterns?: string[]; // Optional: individual patterns for each team
 }
 
 export const PRESET_SCENARIOS: PresetScenario[] = [
@@ -31,5 +32,19 @@ export const PRESET_SCENARIOS: PresetScenario[] = [
         shiftDuration: 8.93,
         weeklyHoursContract: 37.5,
         pattern: 'FFFFFFFFFFFFFFNNNNFTTTTFFMMMFNNNNFFTTTTFMMMFFNNNNFTTTTFFMMMFNNNNFTTTTT',
+    },
+    {
+        name: 'Cimpor CPS FULL',
+        description: '4 equipas - Ciclo de 28 dias (Manhãs, Tardes, Noites)',
+        teams: 4,
+        shiftDuration: 8, // Assuming 8h shifts based on standard
+        weeklyHoursContract: 40, // Assuming 40h based on standard
+        pattern: 'FNNNFFFTTTFNNNNMFMMMMMFMTTTT', // Default pattern (Team A)
+        teamPatterns: [
+            'FNNNFFFTTTFNNNNMFMMMMMFMTTTT', // Team A
+            'MFMTTTTFNNNFFFTTTFNNNNMFMMMM', // Team B
+            'NMFMMMMMFMTTTTFNNNFFFTTTFNNN', // Team C
+            'TTTFNNNNMFMMMMMFMTTTTFNNNFFF', // Team D
+        ],
     },
 ];

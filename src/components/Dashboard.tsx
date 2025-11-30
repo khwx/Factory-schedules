@@ -89,6 +89,7 @@ const Dashboard: React.FC = () => {
             shiftDuration: preset.shiftDuration,
             weeklyHoursContract: preset.weeklyHoursContract,
             pattern: preset.pattern,
+            teamPatterns: preset.teamPatterns,
         };
         setScenarios([...scenarios, scenario]);
     };
