@@ -9,11 +9,18 @@ const MONTH_NAMES = [
  * Generate a full year calendar with shift assignments
  * @param scenario - The shift scenario
  * @param year - The year to generate
- * @param teamOffset - Offset for team-specific view (0 = Team 1, 1 = Team 2, etc.)
+ * @param teamOffset - Offset for team-specific view. If teamPatterns exists, this is the team INDEX. Otherwise it's a day offset.
  */
 export const generateYearCalendar = (scenario: Scenario, year: number, teamOffset: number = 0): DayInfo[] => {
-    const { pattern, startDate: scenarioStartDate } = scenario;
-    const patternLength = pattern.length;
+    const { pattern, startDate: scenarioStartDate, teamPatterns } = scenario;
+
+    // Determine which pattern to use
+    // If teamPatterns exists and we have a valid index, use that specific pattern
+    // Otherwise fall back to the default pattern
+    const hasExplicitTeamPattern = teamPatterns && teamPatterns[teamOffset];
+    const activePattern = hasExplicitTeamPattern ? teamPatterns[teamOffset] : pattern;
+    const patternLength = activePattern.length;
+
     const calendar: DayInfo[] = [];
 
     const yearStartDate = new Date(year, 0, 1);
@@ -40,22 +47,25 @@ export const generateYearCalendar = (scenario: Scenario, year: number, teamOffse
         currentDate.setDate(yearStartDate.getDate() + i);
         const dayOfWeek = currentDate.getDay();
 
-        // Apply team offset and initial date offset to the pattern index
-        // If no startDate, initialPatternOffset is 0, behaving as before (starts at index 0 on Jan 1)
-        const patternIndex = (initialPatternOffset + i + teamOffset) % patternLength;
-        const shift = pattern[patternIndex] as ShiftType;
+        // Calculate pattern index
+        // If we have an explicit team pattern, we ONLY apply the date offset (initialPatternOffset)
+        // If we are using the default pattern, we apply the teamOffset (assuming it represents a shift)
+
+        const offsetToAdd = hasExplicitTeamPattern ? 0 : teamOffset;
+        const patternIndex = (initialPatternOffset + i + offsetToAdd) % patternLength;
+        const shift = activePattern[patternIndex] as ShiftType;
 
         const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
 
         // Check if this is part of a weekend off (Sat+Sun both off)
         let isWeekendOff = false;
         if (dayOfWeek === 6) { // Saturday
-            const nextDayIndex = (i + 1 + teamOffset) % patternLength;
-            const nextShift = pattern[nextDayIndex];
+            const nextDayIndex = (initialPatternOffset + i + 1 + offsetToAdd) % patternLength;
+            const nextShift = activePattern[nextDayIndex];
             isWeekendOff = shift === 'F' && nextShift === 'F';
         } else if (dayOfWeek === 0) { // Sunday
-            const prevDayIndex = (i - 1 + teamOffset + patternLength) % patternLength;
-            const prevShift = pattern[prevDayIndex];
+            const prevDayIndex = (initialPatternOffset + i - 1 + offsetToAdd + patternLength) % patternLength;
+            const prevShift = activePattern[prevDayIndex];
             isWeekendOff = shift === 'F' && prevShift === 'F';
         }
 
