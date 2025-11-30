@@ -201,9 +201,16 @@ export function generateScenarioFromICS(
     weeklyHoursContract: number;
     pattern: string;
     teamPatterns: string[];
+    startDate: string;
 } {
     const events = parseICSFile(icsContent);
     const teamPatterns = extractTeamPatterns(events);
+
+    // Find global reference date (earliest date across ALL events)
+    const allDates = events.map(e => e.startDate.getTime());
+    const globalMinDate = Math.min(...allDates);
+    const referenceDate = new Date(globalMinDate);
+    const startDateStr = referenceDate.toISOString().split('T')[0];
 
     return {
         name: scenarioName,
@@ -212,5 +219,6 @@ export function generateScenarioFromICS(
         weeklyHoursContract,
         pattern: teamPatterns[0]?.pattern || '', // First team pattern as default
         teamPatterns: teamPatterns.map(tp => tp.pattern),
+        startDate: startDateStr,
     };
 }

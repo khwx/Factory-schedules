@@ -9,6 +9,7 @@ export interface Scenario {
   pattern: string; // e.g., "MMTTNNFFFF" - default pattern for team 1
   hidden?: boolean; // Whether scenario is hidden from main view
   teamPatterns?: string[]; // Optional: individual patterns for each team (overrides pattern)
+  startDate?: string; // ISO date string (YYYY-MM-DD) for pattern start reference
 }
 
 export interface MonthlyBreakdown {

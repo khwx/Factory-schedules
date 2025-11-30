@@ -12,20 +12,37 @@ const MONTH_NAMES = [
  * @param teamOffset - Offset for team-specific view (0 = Team 1, 1 = Team 2, etc.)
  */
 export const generateYearCalendar = (scenario: Scenario, year: number, teamOffset: number = 0): DayInfo[] => {
-    const { pattern } = scenario;
+    const { pattern, startDate: scenarioStartDate } = scenario;
     const patternLength = pattern.length;
     const calendar: DayInfo[] = [];
 
-    const startDate = new Date(year, 0, 1);
+    const yearStartDate = new Date(year, 0, 1);
     const daysInYear = isLeapYear(year) ? 366 : 365;
+
+    // Calculate initial offset based on scenario start date if available
+    let initialPatternOffset = 0;
+    if (scenarioStartDate) {
+        const start = new Date(scenarioStartDate);
+        // Reset time components to avoid timezone issues
+        start.setHours(0, 0, 0, 0);
+        const yearStart = new Date(year, 0, 1);
+        yearStart.setHours(0, 0, 0, 0);
+
+        const diffTime = yearStart.getTime() - start.getTime();
+        const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+        // Calculate offset: ensure positive modulo
+        initialPatternOffset = ((diffDays % patternLength) + patternLength) % patternLength;
+    }
 
     for (let i = 0; i < daysInYear; i++) {
         const currentDate = new Date(year, 0, 1);
-        currentDate.setDate(startDate.getDate() + i);
+        currentDate.setDate(yearStartDate.getDate() + i);
         const dayOfWeek = currentDate.getDay();
 
-        // Apply team offset to the pattern index
-        const patternIndex = (i + teamOffset) % patternLength;
+        // Apply team offset and initial date offset to the pattern index
+        // If no startDate, initialPatternOffset is 0, behaving as before (starts at index 0 on Jan 1)
+        const patternIndex = (initialPatternOffset + i + teamOffset) % patternLength;
         const shift = pattern[patternIndex] as ShiftType;
 
         const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
