@@ -40,13 +40,13 @@ export const PRESET_SCENARIOS: PresetScenario[] = [
         teams: 4,
         shiftDuration: 8, // Assuming 8h shifts based on standard
         weeklyHoursContract: 40, // Assuming 40h based on standard
-        pattern: 'FNNNFFFTTTFNNNNMFMMMMMFMTTTT', // Default pattern (Team A)
-        startDate: '2018-12-31', // Reference date from ICS
+        pattern: 'TFNNNNMFMMMMMFMTTTTFNNNFFFTT', // Default pattern (Team A)
+        startDate: '2025-01-01', // Reference date from Excel 2025
         teamPatterns: [
-            'FNNNFFFTTTFNNNNMFMMMMMFMTTTT', // Team A
-            'MFMTTTTFNNNFFFTTTFNNNNMFMMMM', // Team B
-            'NMFMMMMMFMTTTTFNNNFFFTTTFNNN', // Team C
-            'TTTFNNNNMFMMMMMFMTTTTFNNNFFF', // Team D
+            'TFNNNNMFMMMMMFMTTTTFNNNFFFTT', // Team A
+            'NNFFFTTTFNNNNMFMMMMMFMTTTTFN', // Team B
+            'MTTTTFNNNFFFTTTFNNNNMFMMMMMF', // Team C
+            'FMMMMMFMTTTTFNNNFFFTTTFNNNNM', // Team D
         ],
     },
 ];
