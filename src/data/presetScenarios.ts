@@ -17,6 +17,14 @@ export const PRESET_SCENARIOS: PresetScenario[] = [
         shiftDuration: 8.93,
         weeklyHoursContract: 37.5,
         pattern: 'MMMMFFTTTTFFNNNNFFFF',
+        startDate: '2024-01-01', // Generic start date
+        teamPatterns: [
+            'MMMMFFTTTTFFNNNNFFFF', // Team A
+            'FFTTTTFFNNNNFFFFMMMM', // Team B (Offset 4)
+            'TTFFNNNNFFFFMMMMFFTT', // Team C (Offset 8)
+            'NNFFFFMMMMFFTTTTFFNN', // Team D (Offset 12)
+            'FFFFMMMMFFTTTTFFNNNN', // Team E (Offset 16)
+        ]
     },
     {
         name: '3.2',
@@ -25,6 +33,14 @@ export const PRESET_SCENARIOS: PresetScenario[] = [
         shiftDuration: 8.93,
         weeklyHoursContract: 37.5,
         pattern: 'NNNFFTTTFFMMMFF',
+        startDate: '2024-01-01', // Generic start date
+        teamPatterns: [
+            'NNNFFTTTFFMMMFF', // Team A
+            'FFTTTFFMMMFFNNN', // Team B (Offset 3)
+            'TTFFMMMFFNNNFFT', // Team C (Offset 6)
+            'FMMMFFNNNFFTTTF', // Team D (Offset 9)
+            'MFFNNNFFTTTFFMM', // Team E (Offset 12)
+        ]
     },
     {
         name: 'Veralia',
