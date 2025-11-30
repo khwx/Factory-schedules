@@ -6,6 +6,23 @@ const MONTH_NAMES = [
 ];
 
 /**
+ * Helper to calculate difference in days between two dates robustly
+ * Normalizes times to noon to avoid DST issues at midnight
+ */
+function getDaysDifference(date1: Date, date2: Date): number {
+    // Create new dates to avoid modifying originals
+    const d1 = new Date(date1);
+    const d2 = new Date(date2);
+
+    // Set to noon to avoid DST issues at midnight
+    d1.setHours(12, 0, 0, 0);
+    d2.setHours(12, 0, 0, 0);
+
+    const diffTime = d2.getTime() - d1.getTime();
+    return Math.round(diffTime / (1000 * 60 * 60 * 24));
+}
+
+/**
  * Generate a full year calendar with shift assignments
  * @param scenario - The shift scenario
  * @param year - The year to generate
@@ -29,14 +46,15 @@ export const generateYearCalendar = (scenario: Scenario, year: number, teamOffse
     // Calculate initial offset based on scenario start date if available
     let initialPatternOffset = 0;
     if (scenarioStartDate) {
-        const start = new Date(scenarioStartDate);
-        // Reset time components to avoid timezone issues
-        start.setHours(0, 0, 0, 0);
-        const yearStart = new Date(year, 0, 1);
-        yearStart.setHours(0, 0, 0, 0);
+        // Parse start date explicitly to ensure local time consistency
+        // scenarioStartDate is expected to be YYYY-MM-DD
+        const [sYear, sMonth, sDay] = scenarioStartDate.split('-').map(Number);
+        const start = new Date(sYear, sMonth - 1, sDay); // Month is 0-indexed
 
-        const diffTime = yearStart.getTime() - start.getTime();
-        const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+        const yearStart = new Date(year, 0, 1);
+
+        // Use a robust difference calculation (noon to noon) to avoid DST issues
+        const diffDays = getDaysDifference(start, yearStart);
 
         // Calculate offset: ensure positive modulo
         initialPatternOffset = ((diffDays % patternLength) + patternLength) % patternLength;
