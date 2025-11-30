@@ -51,7 +51,7 @@ export const PRESET_SCENARIOS: PresetScenario[] = [
         pattern: 'FFFFFFFFFFFFFFNNNNFTTTTFFMMMFNNNNFFTTTTFMMMFFNNNNFTTTTFFMMMFNNNNFTTTTT',
     },
     {
-        name: 'Cimpor CPS FULL',
+        name: 'Current',
         description: '4 equipas - Ciclo de 28 dias (Manhãs, Tardes, Noites)',
         teams: 4,
         shiftDuration: 8, // Assuming 8h shifts based on standard
