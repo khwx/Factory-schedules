@@ -3,6 +3,7 @@ import ScenarioForm from './ScenarioForm';
 import ScenarioCard from './ScenarioCard';
 import ComparisonTable from './ComparisonTable';
 import YearCalendarView from './YearCalendarView';
+import { MultiTeamCalendarView } from './MultiTeamCalendarView';
 import MultiYearAnalysis from './MultiYearAnalysis';
 import TeamFairness from './TeamFairness';
 import AdvancedMetricsDisplay from './AdvancedMetricsDisplay';
@@ -23,6 +24,7 @@ const Dashboard: React.FC = () => {
     const [selectedScenario, setSelectedScenario] = useState<Scenario | null>(null);
     const [editingScenario, setEditingScenario] = useState<Scenario | null>(null);
     const [showCalendar, setShowCalendar] = useState(false);
+    const [showMultiTeamCalendar, setShowMultiTeamCalendar] = useState(false);
     const [showHidden, setShowHidden] = useState(false);
 
     useEffect(() => {
@@ -145,6 +147,10 @@ const Dashboard: React.FC = () => {
                                 onEdit={handleEditScenario}
                                 onToggleHidden={handleToggleHidden}
                                 onViewCalendar={handleViewCalendar}
+                                onViewMultiTeamCalendar={(s) => {
+                                    setSelectedScenario(s);
+                                    setShowMultiTeamCalendar(true);
+                                }}
                                 onExport={handleExport}
                             />
                         ))}
@@ -206,6 +212,14 @@ const Dashboard: React.FC = () => {
                         </div>
                     </div>
                 </div>
+            )}
+
+            {/* Multi-Team Calendar Modal */}
+            {showMultiTeamCalendar && selectedScenario && selectedScenario.teams > 1 && (
+                <MultiTeamCalendarView
+                    scenario={selectedScenario}
+                    onClose={() => setShowMultiTeamCalendar(false)}
+                />
             )}
         </div>
     );

@@ -11,11 +11,11 @@ export interface PresetScenario {
 
 export const PRESET_SCENARIOS: PresetScenario[] = [
     {
-        name: 'Turno 5x3x5x4x5x3',
+        name: 'Horário 5x3x5x4x5x3',
         description: '5 equipas - Ciclo de 25 dias (5M-3F-5T-4F-5N-3F)',
         teams: 5,
-        shiftDuration: 8,
-        weeklyHoursContract: 33.6, // (15 shifts * 8h) / 25 days * 7 = 33.6h/week
+        shiftDuration: 8.75, // Adjusted for 37.5h weekly: (15 shifts * 8.75h) / 25 days * 7 = 36.75h/week ≈ 37.5h
+        weeklyHoursContract: 37.5,
         pattern: 'MMMMMFFFTTTTTFFFFNNNNNFFF',
         startDate: '2025-01-01',
         teamPatterns: [
@@ -27,7 +27,7 @@ export const PRESET_SCENARIOS: PresetScenario[] = [
         ]
     },
     {
-        name: '4.2.4.2.4.4',
+        name: 'Horário 4.2.4.2.4.4',
         description: '5 equipas - 4 manhãs, 2 folgas, 4 tardes, 2 folgas, 4 noites, 4 folgas',
         teams: 5,
         shiftDuration: 8.93,
@@ -43,7 +43,7 @@ export const PRESET_SCENARIOS: PresetScenario[] = [
         ]
     },
     {
-        name: '3.2',
+        name: 'Horário 3.2',
         description: '5 equipas - 3 noites, 2 folgas, 3 tardes, 2 folgas, 3 manhãs, 2 folgas',
         teams: 5,
         shiftDuration: 8.93,
@@ -59,11 +59,11 @@ export const PRESET_SCENARIOS: PresetScenario[] = [
         ]
     },
     {
-        name: 'Horario Veralia',
+        name: 'Horário Veralia',
         description: '5 equipas - Ciclo de 210 dias (Extraído de ICS)',
         teams: 5,
-        shiftDuration: 8,
-        weeklyHoursContract: 35, // Estimated
+        shiftDuration: 8.93, // Adjusted for 37.5h weekly
+        weeklyHoursContract: 37.5,
         pattern: 'FMMMMFFNNNNFTTTFFMMMMFNNNNFFTTTFMMMFFNNNNNFFFFFFFMMMMFFFNNNNFTTTTFFMMMFNNNNFFTTTTFMMMFFNNNNFTTTTFFMMMFNNNNFTTTTTFFFFFFFMMMFFFFTTTTFMMFFFFNNNFTTTTFFFFFFFNNNFFTTTTFFFMMFFNNNFTTTTFFMMMMFFFFFFFMMMMFFFMMMMFNNNNFFTTT', // Team A pattern as default
         startDate: '2024-12-30',
         teamPatterns: [

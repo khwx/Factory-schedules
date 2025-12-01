@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { Trash2, Clock, Calendar, Download, Palmtree, Pencil, Eye, EyeOff } from 'lucide-react';
+import { Trash2, Clock, Calendar, Download, Palmtree, Pencil, Eye, EyeOff, Users } from 'lucide-react';
 import { Scenario } from '../types';
 import { calculateAnalysis } from '../utils/calculations';
 
@@ -8,11 +8,12 @@ interface ScenarioCardProps {
     onDelete: (id: string) => void;
     onEdit: (scenario: Scenario) => void;
     onViewCalendar: (scenario: Scenario) => void;
+    onViewMultiTeamCalendar?: (scenario: Scenario) => void;
     onExport: (scenario: Scenario) => void;
     onToggleHidden: (id: string) => void;
 }
 
-const ScenarioCard: React.FC<ScenarioCardProps> = ({ scenario, onDelete, onEdit, onViewCalendar, onExport, onToggleHidden }) => {
+const ScenarioCard: React.FC<ScenarioCardProps> = ({ scenario, onDelete, onEdit, onViewCalendar, onViewMultiTeamCalendar, onExport, onToggleHidden }) => {
     const analysis = useMemo(() => calculateAnalysis(scenario), [scenario]);
 
     const getShiftColor = (char: string) => {
@@ -125,6 +126,16 @@ const ScenarioCard: React.FC<ScenarioCardProps> = ({ scenario, onDelete, onEdit,
                         <Calendar className="w-4 h-4" />
                         Ver Calendário
                     </button>
+                    {scenario.teams > 1 && onViewMultiTeamCalendar && (
+                        <button
+                            onClick={() => onViewMultiTeamCalendar(scenario)}
+                            className="flex-1 bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium py-2 px-3 rounded transition-colors flex items-center justify-center gap-2"
+                            title="Vista Multi-Equipa"
+                        >
+                            <Users className="w-4 h-4" />
+                            Multi-Equipa
+                        </button>
+                    )}
                     <button
                         onClick={() => onExport(scenario)}
                         className="flex-1 bg-green-600 hover:bg-green-700 text-white text-sm font-medium py-2 px-3 rounded transition-colors flex items-center justify-center gap-2"

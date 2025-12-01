@@ -1,0 +1,230 @@
+/* Multi-Team Calendar Styles */
+
+.multi-team-modal {
+    max-width: 95vw;
+    max-height: 90vh;
+    width: auto;
+}
+
+.header-controls {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.layout-toggle {
+    display: flex;
+    gap: 0.5rem;
+    background: #f3f4f6;
+    padding: 0.25rem;
+    border-radius: 0.5rem;
+}
+
+.layout-btn {
+    padding: 0.5rem;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    border-radius: 0.375rem;
+    transition: all 0.2s;
+    color: #6b7280;
+}
+
+.layout-btn:hover {
+    background: #e5e7eb;
+    color: #374151;
+}
+
+.layout-btn.active {
+    background: white;
+    color: #2563eb;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Horizontal Layout (Teams in Columns) */
+
+.multi-team-horizontal {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    padding: 1rem;
+}
+
+.team-column {
+    flex: 0 0 auto;
+    min-width: 200px;
+}
+
+.team-header {
+    position: sticky;
+    top: 0;
+    background: white;
+    z-index: 10;
+    padding: 0.5rem;
+    border-bottom: 2px solid #e5e7eb;
+    margin-bottom: 0.5rem;
+}
+
+.team-header h3 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1f2937;
+    text-align: center;
+}
+
+.calendar-grid-compact {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+}
+
+.day-cell-compact {
+    aspect-ratio: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.1s;
+}
+
+.day-cell-compact:hover {
+    transform: scale(1.1);
+    z-index: 5;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.month-label {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    font-size: 0.6rem;
+    font-weight: 600;
+    color: #374151;
+}
+
+.day-number {
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: #1f2937;
+}
+
+.shift-label {
+    font-size: 0.65rem;
+    font-weight: 600;
+    color: #374151;
+}
+
+/* Vertical Layout (Teams in Rows) */
+
+.multi-team-vertical {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.team-labels {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding-top: 60px; /* Align with day headers */
+}
+
+.team-label-vertical {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f3f4f6;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: #1f2937;
+    padding: 0 0.5rem;
+    white-space: nowrap;
+}
+
+.calendar-scroll-horizontal {
+    flex: 1;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.calendar-grid-vertical {
+    display: flex;
+    gap: 2px;
+}
+
+.day-column {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 0 0 auto;
+}
+
+.day-header-vertical {
+    height: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #f3f4f6;
+    border-radius: 4px;
+    padding: 0.25rem;
+    min-width: 40px;
+    position: relative;
+}
+
+.month-label-vertical {
+    font-size: 0.65rem;
+    font-weight: 600;
+    color: #374151;
+    position: absolute;
+    top: 4px;
+}
+
+.day-number-vertical {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #1f2937;
+}
+
+.shift-cell-vertical {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: #1f2937;
+    cursor: pointer;
+    transition: transform 0.1s;
+}
+
+.shift-cell-vertical:hover {
+    transform: scale(1.15);
+    z-index: 5;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Responsive adjustments */
+
+@media (max-width: 768px) {
+    .multi-team-horizontal {
+        flex-direction: column;
+    }
+    
+    .team-column {
+        min-width: 100%;
+    }
+    
+    .calendar-grid-compact {
+        grid-template-columns: repeat(7, minmax(30px, 1fr));
+    }
+}
