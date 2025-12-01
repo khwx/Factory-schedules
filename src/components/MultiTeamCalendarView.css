@@ -131,7 +131,8 @@
     display: flex;
     flex-direction: column;
     gap: 2px;
-    padding-top: 60px; /* Align with day headers */
+    padding-top: 60px;
+    /* Align with day headers */
 }
 
 .team-label-vertical {
@@ -213,17 +214,28 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
+
+/* Weekend highlighting */
+.weekend-cell {
+    box-shadow: inset 0 0 0 2px rgba(59, 130, 246, 0.3);
+}
+
+.day-cell-compact.weekend-cell:hover,
+.shift-cell-vertical.weekend-cell:hover {
+    box-shadow: inset 0 0 0 2px rgba(59, 130, 246, 0.5), 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
 /* Responsive adjustments */
 
 @media (max-width: 768px) {
     .multi-team-horizontal {
         flex-direction: column;
     }
-    
+
     .team-column {
         min-width: 100%;
     }
-    
+
     .calendar-grid-compact {
         grid-template-columns: repeat(7, minmax(30px, 1fr));
     }

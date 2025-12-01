@@ -28,13 +28,17 @@ export const MultiTeamCalendarView: React.FC<MultiTeamCalendarViewProps> = ({ sc
         return calendars;
     }, [scenario, year]);
 
-    const getShiftColor = (shift: string) => {
+    const getShiftColor = (shift: string, isWeekend: boolean = false) => {
+        if (shift === 'F') {
+            // Darker gray for off days, even darker on weekends
+            return isWeekend ? '#9ca3af' : '#d1d5db';
+        }
+
         switch (shift) {
             case 'M': return '#4ade80'; // Morning - green
             case 'T': return '#fbbf24'; // Afternoon - yellow
             case 'N': return '#60a5fa'; // Night - blue
-            case 'F': return '#e5e7eb'; // Off - gray
-            default: return '#e5e7eb';
+            default: return '#d1d5db';
         }
     };
 
@@ -60,12 +64,14 @@ export const MultiTeamCalendarView: React.FC<MultiTeamCalendarViewProps> = ({ sc
                             {calendar.map((day, dayIndex) => {
                                 const isFirstOfMonth = day.date.getDate() === 1;
                                 const monthLabel = isFirstOfMonth ? MONTH_NAMES[day.date.getMonth()].substring(0, 3) : '';
+                                const dayOfWeek = day.date.getDay();
+                                const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
 
                                 return (
                                     <div
                                         key={dayIndex}
-                                        className="day-cell-compact"
-                                        style={{ backgroundColor: getShiftColor(day.shift) }}
+                                        className={`day-cell-compact ${isWeekend ? 'weekend-cell' : ''}`}
+                                        style={{ backgroundColor: getShiftColor(day.shift, isWeekend) }}
                                         title={`${day.date.toLocaleDateString('pt-PT')} - ${day.shift}`}
                                     >
                                         {monthLabel && <div className="month-label">{monthLabel}</div>}
@@ -109,11 +115,13 @@ export const MultiTeamCalendarView: React.FC<MultiTeamCalendarViewProps> = ({ sc
                                 </div>
                                 {teamCalendars.map((calendar, teamIndex) => {
                                     const day = calendar[dayIndex];
+                                    const dayOfWeek = day.date.getDay();
+                                    const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
                                     return (
                                         <div
                                             key={teamIndex}
-                                            className="shift-cell-vertical"
-                                            style={{ backgroundColor: getShiftColor(day.shift) }}
+                                            className={`shift-cell-vertical ${isWeekend ? 'weekend-cell' : ''}`}
+                                            style={{ backgroundColor: getShiftColor(day.shift, isWeekend) }}
                                             title={`Turno ${String.fromCharCode(65 + teamIndex)} - ${day.date.toLocaleDateString('pt-PT')} - ${day.shift}`}
                                         >
                                             {getShiftLabel(day.shift)}
@@ -181,8 +189,12 @@ export const MultiTeamCalendarView: React.FC<MultiTeamCalendarViewProps> = ({ sc
                         <span>Noite (N)</span>
                     </div>
                     <div className="legend-item">
-                        <div className="legend-color" style={{ backgroundColor: '#e5e7eb' }}></div>
+                        <div className="legend-color" style={{ backgroundColor: '#d1d5db' }}></div>
                         <span>Folga (F)</span>
+                    </div>
+                    <div className="legend-item">
+                        <div className="legend-color" style={{ backgroundColor: '#d1d5db', boxShadow: 'inset 0 0 0 2px rgba(59, 130, 246, 0.3)' }}></div>
+                        <span>Fim de Semana</span>
                     </div>
                 </div>
             </div>
