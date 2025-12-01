@@ -11,6 +11,22 @@ export interface PresetScenario {
 
 export const PRESET_SCENARIOS: PresetScenario[] = [
     {
+        name: 'Turno 5x3x5x4x5x3',
+        description: '5 equipas - Ciclo de 25 dias (5M-3F-5T-4F-5N-3F)',
+        teams: 5,
+        shiftDuration: 8,
+        weeklyHoursContract: 33.6, // (15 shifts * 8h) / 25 days * 7 = 33.6h/week
+        pattern: 'MMMMMFFFTTTTTFFFFNNNNNFFF',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMMFFFTTTTTFFFFNNNNNFFF', // Team A
+            'NNFFFMMMMMFFFTTTTTFFFFNNN', // Team B (Offset 20)
+            'FFNNNNNFFFMMMMMFFFTTTTTFF', // Team C (Offset 15)
+            'TTTFFFFNNNNNFFFMMMMMFFFTT', // Team D (Offset 10)
+            'FFFTTTTTFFFFNNNNNFFFMMMMM', // Team E (Offset 5)
+        ]
+    },
+    {
         name: '4.2.4.2.4.4',
         description: '5 equipas - 4 manhãs, 2 folgas, 4 tardes, 2 folgas, 4 noites, 4 folgas',
         teams: 5,
