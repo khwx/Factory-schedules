@@ -16,6 +16,27 @@ const MONTH_NAMES = [
     'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
 ];
 
+const DAY_NAMES_SHORT = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
+
+// Portuguese holidays (format: 'MM-DD')
+const PORTUGUESE_HOLIDAYS = [
+    '01-01', // Ano Novo
+    '04-25', // 25 de Abril
+    '05-01', // Dia do Trabalhador
+    '06-10', // Dia de Portugal
+    '08-15', // Assunção de Nossa Senhora
+    '10-05', // Implantação da República
+    '11-01', // Todos os Santos
+    '12-01', // Restauração da Independência
+    '12-08', // Imaculada Conceição
+    '12-25', // Natal
+];
+
+const isHoliday = (date: Date): boolean => {
+    const monthDay = `${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+    return PORTUGUESE_HOLIDAYS.includes(monthDay);
+};
+
 export const MultiTeamCalendarView: React.FC<MultiTeamCalendarViewProps> = ({ scenario, onClose }) => {
     const [year, setYear] = useState(new Date().getFullYear());
     const [layoutMode, setLayoutMode] = useState<LayoutMode>('horizontal');
@@ -66,16 +87,19 @@ export const MultiTeamCalendarView: React.FC<MultiTeamCalendarViewProps> = ({ sc
                                 const monthLabel = isFirstOfMonth ? MONTH_NAMES[day.date.getMonth()].substring(0, 3) : '';
                                 const dayOfWeek = day.date.getDay();
                                 const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
+                                const isHol = isHoliday(day.date);
 
                                 return (
                                     <div
                                         key={dayIndex}
-                                        className={`day-cell-compact ${isWeekend ? 'weekend-cell' : ''}`}
+                                        className={`day-cell-compact ${isWeekend ? 'weekend-cell' : ''} ${isHol ? 'holiday-cell' : ''}`}
                                         style={{ backgroundColor: getShiftColor(day.shift, isWeekend) }}
                                         title={`${day.date.toLocaleDateString('pt-PT')} - ${day.shift}`}
                                     >
                                         {monthLabel && <div className="month-label">{monthLabel}</div>}
-                                        <div className="day-number">{day.date.getDate()}</div>
+                                        <div className="day-number" style={{ color: isWeekend || isHol ? '#dc2626' : '#1f2937' }}>
+                                            {day.date.getDate()}
+                                        </div>
                                         <div className="shift-label">{getShiftLabel(day.shift)}</div>
                                     </div>
                                 );
@@ -109,9 +133,16 @@ export const MultiTeamCalendarView: React.FC<MultiTeamCalendarViewProps> = ({ sc
                                             {MONTH_NAMES[teamCalendars[0][dayIndex].date.getMonth()].substring(0, 3)}
                                         </div>
                                     )}
-                                    <div className="day-number-vertical">
+                                    <div className="day-number-vertical" style={{
+                                        color: (teamCalendars[0][dayIndex].date.getDay() === 0 || teamCalendars[0][dayIndex].date.getDay() === 6 || isHoliday(teamCalendars[0][dayIndex].date)) ? '#dc2626' : '#1f2937'
+                                    }}>
                                         {teamCalendars[0][dayIndex].date.getDate()}
                                     </div>
+                                    {(teamCalendars[0][dayIndex].date.getDay() === 0 || teamCalendars[0][dayIndex].date.getDay() === 6) && (
+                                        <div className="day-name-vertical">
+                                            {DAY_NAMES_SHORT[teamCalendars[0][dayIndex].date.getDay()]}
+                                        </div>
+                                    )}
                                 </div>
                                 {teamCalendars.map((calendar, teamIndex) => {
                                     const day = calendar[dayIndex];
@@ -193,8 +224,8 @@ export const MultiTeamCalendarView: React.FC<MultiTeamCalendarViewProps> = ({ sc
                         <span>Folga (F)</span>
                     </div>
                     <div className="legend-item">
-                        <div className="legend-color" style={{ backgroundColor: '#d1d5db', boxShadow: 'inset 0 0 0 2px rgba(59, 130, 246, 0.3)' }}></div>
-                        <span>Fim de Semana</span>
+                        <div className="day-number" style={{ color: '#dc2626', fontWeight: 600 }}>25</div>
+                        <span>Fim de Semana / Feriado</span>
                     </div>
                 </div>
             </div>

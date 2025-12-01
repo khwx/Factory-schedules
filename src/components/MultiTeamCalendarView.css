@@ -182,22 +182,6 @@
 
 .month-label-vertical {
     font-size: 0.65rem;
-    font-weight: 600;
-    color: #374151;
-    position: absolute;
-    top: 4px;
-}
-
-.day-number-vertical {
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: #1f2937;
-}
-
-.shift-cell-vertical {
-    width: 40px;
-    height: 40px;
-    display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 4px;
