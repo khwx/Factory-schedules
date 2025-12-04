@@ -16,12 +16,28 @@ import { exportToExcel, exportComparison } from '../utils/export';
 import { X, Download, Filter, Search } from 'lucide-react';
 import PresetSelector from './PresetSelector';
 import ICSImporter from './ICSImporter';
-import { PresetScenario } from '../data/presetScenarios';
+import { PresetScenario, PRESET_SCENARIOS } from '../data/presetScenarios';
 
 const Dashboard: React.FC = () => {
     const [scenarios, setScenarios] = useState<Scenario[]>(() => {
         const saved = localStorage.getItem('shiftsim_scenarios');
-        return saved ? JSON.parse(saved) : [];
+        if (saved) {
+            return JSON.parse(saved);
+        }
+
+        // First visit - load all presets as examples
+        const presetsAsScenarios: Scenario[] = PRESET_SCENARIOS.map(preset => ({
+            id: crypto.randomUUID(),
+            name: preset.name,
+            teams: preset.teams,
+            shiftDuration: preset.shiftDuration,
+            weeklyHoursContract: preset.weeklyHoursContract,
+            pattern: preset.pattern,
+            teamPatterns: preset.teamPatterns,
+            startDate: preset.startDate,
+        }));
+
+        return presetsAsScenarios;
     });
 
     const [selectedScenario, setSelectedScenario] = useState<Scenario | null>(null);
