@@ -2,14 +2,48 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Dark Theme (Default) */
+:root.dark {
+  --bg-primary: #111827;
+  --bg-secondary: #1F2937;
+  --bg-tertiary: #374151;
+  --text-primary: #FFFFFF;
+  --text-secondary: #D1D5DB;
+  --text-tertiary: #9CA3AF;
+  --border-color: #374151;
+  --border-color-hover: #4B5563;
+
+  /* Accent colors stay the same */
+  --accent-blue: #3B82F6;
+  --accent-green: #10B981;
+  --accent-yellow: #F59E0B;
+  --accent-red: #EF4444;
+  --accent-purple: #8B5CF6;
+}
+
+/* Light Theme */
+:root.light {
+  --bg-primary: #F9FAFB;
+  --bg-secondary: #FFFFFF;
+  --bg-tertiary: #E5E7EB;
+  --text-primary: #111827;
+  --text-secondary: #374151;
+  --text-tertiary: #6B7280;
+  --border-color: #D1D5DB;
+  --border-color-hover: #9CA3AF;
+
+  /* Accent colors stay the same */
+  --accent-blue: #3B82F6;
+  --accent-green: #10B981;
+  --accent-yellow: #F59E0B;
+  --accent-red: #EF4444;
+  --accent-purple: #8B5CF6;
+}
+
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -17,8 +51,66 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Apply theme colors globally */
 body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Override Tailwind classes with theme variables */
+.light .bg-gray-900 {
+  background-color: var(--bg-primary) !important;
+}
+
+.light .bg-gray-800 {
+  background-color: var(--bg-secondary) !important;
+}
+
+.light .bg-gray-700 {
+  background-color: var(--bg-tertiary) !important;
+}
+
+.light .bg-gray-600 {
+  background-color: #D1D5DB !important;
+}
+
+.light .text-white {
+  color: var(--text-primary) !important;
+}
+
+.light .text-gray-300 {
+  color: var(--text-secondary) !important;
+}
+
+.light .text-gray-400 {
+  color: var(--text-tertiary) !important;
+}
+
+.light .text-gray-500 {
+  color: #6B7280 !important;
+}
+
+.light .border-gray-700 {
+  border-color: var(--border-color) !important;
+}
+
+.light .border-gray-600 {
+  border-color: var(--border-color-hover) !important;
+}
+
+/* Light theme specific tweaks */
+.light .hover\:bg-gray-700:hover {
+  background-color: #E5E7EB !important;
+}
+
+.light .hover\:bg-gray-600:hover {
+  background-color: #D1D5DB !important;
+}
+
+.light .hover\:border-gray-600:hover {
+  border-color: #9CA3AF !important;
 }
