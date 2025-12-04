@@ -108,16 +108,20 @@
     color: #374151;
 }
 
-.day-number {
-    font-size: 0.7rem;
-    font-weight: 500;
-    color: #1f2937;
-}
-
 .shift-label {
     font-size: 0.65rem;
     font-weight: 600;
     color: #374151;
+}
+
+.empty-cell {
+    background: transparent !important;
+    cursor: default !important;
+}
+
+.empty-cell:hover {
+    transform: none !important;
+    box-shadow: none !important;
 }
 
 /* Vertical Layout (Teams in Rows) */

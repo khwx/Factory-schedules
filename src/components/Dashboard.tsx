@@ -61,7 +61,7 @@ const Dashboard: React.FC = () => {
     };
 
     const handleUpdateScenario = (id: string, updatedData: Omit<Scenario, 'id'>) => {
-        setScenarios(scenarios.map(s => s.id === id ? { ...updatedData, id } : s));
+        setScenarios(scenarios.map(s => s.id === id ? { ...s, ...updatedData } : s));
         setEditingScenario(null);
     };
 
@@ -92,6 +92,7 @@ const Dashboard: React.FC = () => {
             weeklyHoursContract: preset.weeklyHoursContract,
             pattern: preset.pattern,
             teamPatterns: preset.teamPatterns,
+            startDate: preset.startDate,
         };
         setScenarios([...scenarios, scenario]);
     };

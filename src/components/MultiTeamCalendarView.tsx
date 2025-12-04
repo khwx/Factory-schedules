@@ -82,6 +82,18 @@ export const MultiTeamCalendarView: React.FC<MultiTeamCalendarViewProps> = ({ sc
                             <h3>Turno {String.fromCharCode(65 + teamIndex)}</h3>
                         </div>
                         <div className="calendar-grid-compact">
+                            {/* Add empty cells to align January 1st to correct day of week */}
+                            {calendar.length > 0 && (() => {
+                                const firstDayOfWeek = calendar[0].date.getDay();
+                                // Convert Sunday (0) to 7 for easier calculation (Mon=1, Sun=7)
+                                const dayNum = firstDayOfWeek === 0 ? 7 : firstDayOfWeek;
+                                // We want Monday=1 to be in column 1, so we need (dayNum - 1) empty cells
+                                const emptyCells = dayNum - 1;
+                                return Array.from({ length: emptyCells }).map((_, i) => (
+                                    <div key={`empty-${teamIndex}-${i}`} className="day-cell-compact empty-cell"></div>
+                                ));
+                            })()}
+
                             {calendar.map((day, dayIndex) => {
                                 const isFirstOfMonth = day.date.getDate() === 1;
                                 const monthLabel = isFirstOfMonth ? MONTH_NAMES[day.date.getMonth()].substring(0, 3) : '';

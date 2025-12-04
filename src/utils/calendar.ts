@@ -10,16 +10,11 @@ const MONTH_NAMES = [
  * Normalizes times to noon to avoid DST issues at midnight
  */
 function getDaysDifference(date1: Date, date2: Date): number {
-    // Create new dates to avoid modifying originals
-    const d1 = new Date(date1);
-    const d2 = new Date(date2);
+    // Use UTC to avoid any DST or timezone issues completely
+    const utc1 = Date.UTC(date1.getFullYear(), date1.getMonth(), date1.getDate());
+    const utc2 = Date.UTC(date2.getFullYear(), date2.getMonth(), date2.getDate());
 
-    // Set to noon to avoid DST issues at midnight
-    d1.setHours(12, 0, 0, 0);
-    d2.setHours(12, 0, 0, 0);
-
-    const diffTime = d2.getTime() - d1.getTime();
-    return Math.round(diffTime / (1000 * 60 * 60 * 24));
+    return Math.round((utc2 - utc1) / (1000 * 60 * 60 * 24));
 }
 
 /**
