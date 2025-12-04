@@ -9,6 +9,7 @@ import TeamFairness from './TeamFairness';
 import AdvancedMetricsDisplay from './AdvancedMetricsDisplay';
 import ComparisonCharts from './ComparisonCharts';
 import WorkloadHeatmap from './WorkloadHeatmap';
+import QualityOfLifeDisplay from './QualityOfLifeDisplay';
 import { Scenario } from '../types';
 import { calculateAnalysis } from '../utils/calculations';
 import { exportToExcel, exportComparison } from '../utils/export';
@@ -264,6 +265,10 @@ const Dashboard: React.FC = () => {
                                         scenarioName={scenario.name}
                                     />
                                 )}
+                                <QualityOfLifeDisplay
+                                    scenario={scenario}
+                                    analysis={analyses[idx]}
+                                />
                                 <WorkloadHeatmap scenario={scenario} />
                                 <MultiYearAnalysis
                                     multiYearData={analyses[idx].multiYearAnalysis}
