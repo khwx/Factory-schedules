@@ -7,6 +7,8 @@ import { MultiTeamCalendarView } from './MultiTeamCalendarView';
 import MultiYearAnalysis from './MultiYearAnalysis';
 import TeamFairness from './TeamFairness';
 import AdvancedMetricsDisplay from './AdvancedMetricsDisplay';
+import ComparisonCharts from './ComparisonCharts';
+import WorkloadHeatmap from './WorkloadHeatmap';
 import { Scenario } from '../types';
 import { calculateAnalysis } from '../utils/calculations';
 import { exportToExcel, exportComparison } from '../utils/export';
@@ -247,7 +249,12 @@ const Dashboard: React.FC = () => {
 
                     <ComparisonTable scenarios={visibleScenarios} />
 
-                    {/* Advanced Metrics, Multi-Year Analysis, and Team Fairness for each scenario */}
+                    {/* Comparison Charts */}
+                    {visibleScenarios.length > 1 && (
+                        <ComparisonCharts scenarios={visibleScenarios} analyses={analyses} />
+                    )}
+
+                    {/* Advanced Metrics, Multi-Year Analysis, Heatmap and Team Fairness for each scenario */}
                     <div className="mt-8 space-y-6">
                         {visibleScenarios.map((scenario, idx) => (
                             <div key={scenario.id} className="space-y-6">
@@ -257,6 +264,7 @@ const Dashboard: React.FC = () => {
                                         scenarioName={scenario.name}
                                     />
                                 )}
+                                <WorkloadHeatmap scenario={scenario} />
                                 <MultiYearAnalysis
                                     multiYearData={analyses[idx].multiYearAnalysis}
                                     scenarioName={scenario.name}
