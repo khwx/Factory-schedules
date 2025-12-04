@@ -10,7 +10,7 @@ import AdvancedMetricsDisplay from './AdvancedMetricsDisplay';
 import { Scenario } from '../types';
 import { calculateAnalysis } from '../utils/calculations';
 import { exportToExcel, exportComparison } from '../utils/export';
-import { X, Download, Filter } from 'lucide-react';
+import { X, Download, Filter, Search } from 'lucide-react';
 import PresetSelector from './PresetSelector';
 import ICSImporter from './ICSImporter';
 import { PresetScenario } from '../data/presetScenarios';
@@ -26,15 +26,48 @@ const Dashboard: React.FC = () => {
     const [showCalendar, setShowCalendar] = useState(false);
     const [showMultiTeamCalendar, setShowMultiTeamCalendar] = useState(false);
     const [showHidden, setShowHidden] = useState(false);
+    const [searchTerm, setSearchTerm] = useState('');
+    const [filterTeams, setFilterTeams] = useState<number | null>(null);
+    const [sortBy, setSortBy] = useState<'name' | 'weekends' | 'hours'>('name');
 
     useEffect(() => {
         localStorage.setItem('shiftsim_scenarios', JSON.stringify(scenarios));
     }, [scenarios]);
 
-    // Filter scenarios based on visibility
+    // Filter and sort scenarios
     const visibleScenarios = useMemo(() => {
-        return showHidden ? scenarios : scenarios.filter(s => !s.hidden);
-    }, [scenarios, showHidden]);
+        let filtered = showHidden ? scenarios : scenarios.filter(s => !s.hidden);
+
+        // Apply search filter
+        if (searchTerm) {
+            filtered = filtered.filter(s =>
+                s.name.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+        }
+
+        // Apply team filter
+        if (filterTeams !== null) {
+            filtered = filtered.filter(s => s.teams === filterTeams);
+        }
+
+        // Apply sorting
+        const sorted = [...filtered].sort((a, b) => {
+            if (sortBy === 'name') {
+                return a.name.localeCompare(b.name);
+            } else if (sortBy === 'weekends') {
+                const analysisA = calculateAnalysis(a);
+                const analysisB = calculateAnalysis(b);
+                return analysisB.weekendsOffPerYear - analysisA.weekendsOffPerYear;
+            } else if (sortBy === 'hours') {
+                const analysisA = calculateAnalysis(a);
+                const analysisB = calculateAnalysis(b);
+                return analysisA.avgWeeklyHours - analysisB.avgWeeklyHours;
+            }
+            return 0;
+        });
+
+        return sorted;
+    }, [scenarios, showHidden, searchTerm, filterTeams, sortBy]);
 
     const analyses = useMemo(() => {
         return visibleScenarios.map(s => calculateAnalysis(s));
@@ -103,6 +136,15 @@ const Dashboard: React.FC = () => {
         ));
     };
 
+    const handleDuplicate = (scenario: Scenario) => {
+        const duplicated: Scenario = {
+            ...scenario,
+            id: crypto.randomUUID(),
+            name: `${scenario.name} (Cópia)`,
+        };
+        setScenarios([...scenarios, duplicated]);
+    };
+
     return (
         <div className="max-w-7xl mx-auto px-4">
             <ICSImporter onImport={handleAddScenario} />
@@ -117,24 +159,69 @@ const Dashboard: React.FC = () => {
             />
 
             {scenarios.length > 0 && (
-                <div className="mb-4 flex justify-end">
-                    <button
-                        onClick={() => setShowHidden(!showHidden)}
-                        className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${showHidden
-                            ? 'bg-yellow-600 hover:bg-yellow-700 text-white'
-                            : 'bg-gray-700 hover:bg-gray-600 text-gray-300'
-                            }`}
-                        title={showHidden ? "Ocultar cenários escondidos" : "Mostrar cenários escondidos"}
-                    >
-                        <Filter className="w-4 h-4" />
-                        {showHidden ? 'Ocultar Escondidos' : 'Mostrar Escondidos'}
-                        {scenarios.filter(s => s.hidden).length > 0 && (
-                            <span className="bg-gray-900 px-2 py-0.5 rounded-full text-xs">
-                                {scenarios.filter(s => s.hidden).length}
-                            </span>
-                        )}
-                    </button>
-                </div>
+                <>
+                    {/* Search and Filter Bar */}
+                    <div className="mb-6 bg-gray-800 p-4 rounded-lg border border-gray-700">
+                        <div className="flex flex-col md:flex-row gap-4">
+                            {/* Search */}
+                            <div className="flex-1">
+                                <div className="relative">
+                                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                                    <input
+                                        type="text"
+                                        placeholder="Pesquisar cenários..."
+                                        value={searchTerm}
+                                        onChange={(e) => setSearchTerm(e.target.value)}
+                                        className="w-full pl-10 pr-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-blue-500"
+                                    />
+                                </div>
+                            </div>
+
+                            {/* Team Filter */}
+                            <div className="flex gap-2">
+                                <select
+                                    value={filterTeams ?? ''}
+                                    onChange={(e) => setFilterTeams(e.target.value ? Number(e.target.value) : null)}
+                                    className="px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:outline-none focus:border-blue-500"
+                                >
+                                    <option value="">Todas as Equipas</option>
+                                    {[...new Set(scenarios.map(s => s.teams))].sort((a, b) => a - b).map(num => (
+                                        <option key={num} value={num}>{num} Equipas</option>
+                                    ))}
+                                </select>
+
+                                {/* Sort */}
+                                <select
+                                    value={sortBy}
+                                    onChange={(e) => setSortBy(e.target.value as any)}
+                                    className="px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:outline-none focus:border-blue-500"
+                                >
+                                    <option value="name">Ordenar: Nome</option>
+                                    <option value="weekends">Ordenar: Fins de Semana</option>
+                                    <option value="hours">Ordenar: Horas Semanais</option>
+                                </select>
+                            </div>
+
+                            {/* Show Hidden Toggle */}
+                            <button
+                                onClick={() => setShowHidden(!showHidden)}
+                                className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors whitespace-nowrap ${showHidden
+                                    ? 'bg-yellow-600 hover:bg-yellow-700 text-white'
+                                    : 'bg-gray-700 hover:bg-gray-600 text-gray-300'
+                                    }`}
+                                title={showHidden ? "Ocultar cenários escondidos" : "Mostrar cenários escondidos"}
+                            >
+                                <Filter className="w-4 h-4" />
+                                {showHidden ? 'Ocultar Escondidos' : 'Mostrar Escondidos'}
+                                {scenarios.filter(s => s.hidden).length > 0 && (
+                                    <span className="bg-gray-900 px-2 py-0.5 rounded-full text-xs">
+                                        {scenarios.filter(s => s.hidden).length}
+                                    </span>
+                                )}
+                            </button>
+                        </div>
+                    </div>
+                </>
             )}
 
             {visibleScenarios.length > 0 ? (
@@ -148,6 +235,7 @@ const Dashboard: React.FC = () => {
                                 onEdit={handleEditScenario}
                                 onToggleHidden={handleToggleHidden}
                                 onViewCalendar={handleViewCalendar}
+                                onDuplicate={handleDuplicate}
                                 onViewMultiTeamCalendar={(s) => {
                                     setSelectedScenario(s);
                                     setShowMultiTeamCalendar(true);

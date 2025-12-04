@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { Trash2, Clock, Calendar, Download, Palmtree, Pencil, Eye, EyeOff, Users } from 'lucide-react';
+import { Trash2, Clock, Calendar, Download, Palmtree, Pencil, Eye, EyeOff, Users, Copy } from 'lucide-react';
 import { Scenario } from '../types';
 import { calculateAnalysis } from '../utils/calculations';
 
@@ -11,9 +11,10 @@ interface ScenarioCardProps {
     onViewMultiTeamCalendar?: (scenario: Scenario) => void;
     onExport: (scenario: Scenario) => void;
     onToggleHidden: (id: string) => void;
+    onDuplicate: (scenario: Scenario) => void;
 }
 
-const ScenarioCard: React.FC<ScenarioCardProps> = ({ scenario, onDelete, onEdit, onViewCalendar, onViewMultiTeamCalendar, onExport, onToggleHidden }) => {
+const ScenarioCard: React.FC<ScenarioCardProps> = ({ scenario, onDelete, onEdit, onViewCalendar, onViewMultiTeamCalendar, onExport, onToggleHidden, onDuplicate }) => {
     const analysis = useMemo(() => calculateAnalysis(scenario), [scenario]);
 
     const getShiftColor = (char: string) => {
@@ -42,6 +43,13 @@ const ScenarioCard: React.FC<ScenarioCardProps> = ({ scenario, onDelete, onEdit,
                         title={scenario.hidden ? "Mostrar Cenário" : "Ocultar Cenário"}
                     >
                         {scenario.hidden ? <Eye className="w-5 h-5" /> : <EyeOff className="w-5 h-5" />}
+                    </button>
+                    <button
+                        onClick={() => onDuplicate(scenario)}
+                        className="text-gray-500 hover:text-green-400 transition-colors"
+                        title="Duplicar Cenário"
+                    >
+                        <Copy className="w-5 h-5" />
                     </button>
                     <button
                         onClick={() => onEdit(scenario)}
