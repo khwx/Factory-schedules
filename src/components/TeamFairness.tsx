@@ -19,7 +19,7 @@ const TeamFairness: React.FC<TeamFairnessProps> = ({ scenario }) => {
         <div className="bg-gray-800 rounded-lg border border-gray-700 overflow-hidden mt-6">
             <div className="p-4 border-b border-gray-700 flex items-center gap-2">
                 <Users className="w-5 h-5 text-purple-400" />
-                <h3 className="text-lg font-semibold text-white">Análise de Equidade da Equipa</h3>
+                <h3 className="text-lg font-semibold text-white">Análise de Equidade da Equipa - {scenario.name}</h3>
 
                 {/* Year Navigation */}
                 <div className="ml-auto flex items-center gap-2">
