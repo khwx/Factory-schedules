@@ -137,8 +137,8 @@ const QualityOfLifeDisplay: React.FC<QualityOfLifeDisplayProps> = ({ scenario, a
                             <div
                                 key={idx}
                                 className={`p-3 rounded text-sm ${insight.startsWith('✅')
-                                        ? 'bg-green-900/30 text-green-300'
-                                        : 'bg-yellow-900/30 text-yellow-300'
+                                    ? 'bg-green-900/30 text-green-300'
+                                    : 'bg-yellow-900/30 text-yellow-300'
                                     }`}
                             >
                                 {insight}
@@ -159,35 +159,35 @@ const QualityOfLifeDisplay: React.FC<QualityOfLifeDisplayProps> = ({ scenario, a
                         </span>
                     </div>
 
-                    <div className="p-6 space-y-3">
+                    <div className="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
                         {criticalPeriods.map((period, idx) => (
                             <div
                                 key={idx}
-                                className={`p-4 rounded-lg border ${getSeverityColor(period.severity)}`}
+                                className={`p-3 rounded-lg border ${getSeverityColor(period.severity)}`}
                             >
                                 <div className="flex items-start justify-between">
                                     <div className="flex-1">
-                                        <div className="flex items-center gap-2 mb-2">
+                                        <div className="flex flex-col gap-2 mb-2">
                                             <span
-                                                className={`text-xs font-bold px-2 py-1 rounded uppercase ${period.severity === 'high'
-                                                        ? 'bg-red-600 text-white'
-                                                        : period.severity === 'medium'
-                                                            ? 'bg-orange-600 text-white'
-                                                            : 'bg-yellow-600 text-white'
+                                                className={`text-xs font-bold px-2 py-0.5 rounded uppercase self-start ${period.severity === 'high'
+                                                    ? 'bg-red-600 text-white'
+                                                    : period.severity === 'medium'
+                                                        ? 'bg-orange-600 text-white'
+                                                        : 'bg-yellow-600 text-white'
                                                     }`}
                                             >
-                                                {period.severity === 'high' ? 'Alta' : period.severity === 'medium' ? 'Média' : 'Baixa'}
+                                                {period.severity === 'high' ? 'Crítica' : period.severity === 'medium' ? 'Média' : 'Baixa'}
                                             </span>
-                                            <span className="text-sm font-semibold text-white">{period.description}</span>
+                                            <span className="text-sm font-semibold text-white leading-tight">{period.description}</span>
                                         </div>
-                                        <div className="text-xs text-gray-400">
-                                            {period.startDate.toLocaleDateString('pt-PT', { day: 'numeric', month: 'short' })} -{' '}
-                                            {period.endDate.toLocaleDateString('pt-PT', { day: 'numeric', month: 'short', year: 'numeric' })}
+                                        <div className="text-xs text-gray-400 mt-1">
+                                            {period.startDate.toLocaleDateString('pt-PT', { day: 'numeric', month: 'numeric' })} a{' '}
+                                            {period.endDate.toLocaleDateString('pt-PT', { day: 'numeric', month: 'numeric', year: 'numeric' })}
                                         </div>
                                     </div>
-                                    <div className="text-right">
-                                        <div className="text-2xl font-bold text-white">{period.daysAffected}</div>
-                                        <div className="text-xs text-gray-400">dias</div>
+                                    <div className="text-right pl-2">
+                                        <div className="text-xl font-bold text-white">{period.daysAffected}</div>
+                                        <div className="text-[10px] text-gray-400 uppercase">dias</div>
                                     </div>
                                 </div>
                             </div>
