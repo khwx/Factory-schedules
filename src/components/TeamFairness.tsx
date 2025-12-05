@@ -119,7 +119,7 @@ const TeamFairness: React.FC<TeamFairnessProps> = ({ scenario }) => {
                                             {team.holidaysWorked}
                                         </td>
                                         <td className="p-3 text-center text-purple-400 font-mono border-b border-gray-700">
-                                            {team.yearlyAnalysis.totalHoursWorked}h
+                                            {Number(team.yearlyAnalysis.totalHoursWorked.toFixed(1))}h
                                         </td>
                                         <td className={`p-3 text-center font-mono border-b border-gray-700 ${Math.abs(weekendDiff) < 0.5 ? 'text-gray-400' : weekendDiff > 0 ? 'text-green-400' : 'text-red-400'
                                             }`}>
@@ -132,7 +132,7 @@ const TeamFairness: React.FC<TeamFairnessProps> = ({ scenario }) => {
                     </table>
                 </div>
             </div>
-        </div>
+        </div >
     );
 };
 
