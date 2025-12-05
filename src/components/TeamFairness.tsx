@@ -98,13 +98,17 @@ const TeamFairness: React.FC<TeamFairnessProps> = ({ scenario }) => {
                                 <th className="p-3 text-center text-gray-400 font-medium border-b border-gray-700">Total de Dias de Folga</th>
                                 <th className="p-3 text-center text-gray-400 font-medium border-b border-gray-700">Feriados Trabalhados 💰</th>
                                 <th className="p-3 text-center text-gray-400 font-medium border-b border-gray-700">Horas Anuais</th>
-                                <th className="p-3 text-center text-gray-400 font-medium border-b border-gray-700">Diferença</th>
+                                <th className="p-3 text-center text-gray-400 font-medium border-b border-gray-700">Dif. Horas</th>
+                                <th className="p-3 text-center text-gray-400 font-medium border-b border-gray-700">Dif. Fins de Semana</th>
                             </tr>
                         </thead>
                         <tbody>
                             {fairness.teamAnalyses.map((team, idx) => {
                                 const avgWeekends = fairness.teamAnalyses.reduce((sum, t) => sum + t.yearlyAnalysis.totalWeekends, 0) / fairness.teamAnalyses.length;
                                 const weekendDiff = team.yearlyAnalysis.totalWeekends - avgWeekends;
+
+                                const avgHours = fairness.teamAnalyses.reduce((sum, t) => sum + t.yearlyAnalysis.totalHoursWorked, 0) / fairness.teamAnalyses.length;
+                                const hoursDiff = team.yearlyAnalysis.totalHoursWorked - avgHours;
 
                                 return (
                                     <tr key={idx} className={idx % 2 === 0 ? 'bg-gray-800/50' : ''}>
@@ -120,6 +124,10 @@ const TeamFairness: React.FC<TeamFairnessProps> = ({ scenario }) => {
                                         </td>
                                         <td className="p-3 text-center text-purple-400 font-mono border-b border-gray-700">
                                             {Number(team.yearlyAnalysis.totalHoursWorked.toFixed(1))}h
+                                        </td>
+                                        <td className={`p-3 text-center font-mono border-b border-gray-700 ${Math.abs(hoursDiff) < 0.1 ? 'text-gray-400' : hoursDiff > 0 ? 'text-red-400' : 'text-green-400'
+                                            }`}>
+                                            {hoursDiff > 0 ? '+' : ''}{Number(hoursDiff.toFixed(1))}h
                                         </td>
                                         <td className={`p-3 text-center font-mono border-b border-gray-700 ${Math.abs(weekendDiff) < 0.5 ? 'text-gray-400' : weekendDiff > 0 ? 'text-green-400' : 'text-red-400'
                                             }`}>
