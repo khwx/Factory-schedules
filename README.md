@@ -33,5 +33,60 @@ A organização de pastas reflete um projeto moderno com um processo de build:
 
 * **HTML5 / CSS3 / JavaScript**
 * **Node.js & npm** (Gestão de dependências e Scripts de Build)
-* **Vercel** (Infraestrutura de
-* 
+* **Vercel** (Infraestrutura de Deployment)
+
+## 🚀 Como Executar o Projeto Localmente
+
+### Pré-requisitos
+
+* [Node.js](https://nodejs.org/) instalado.
+* Git.
+
+### Passos de Instalação e Execução
+
+1.  **Clonar o repositório:**
+    ```bash
+    git clone [https://github.com/khwx/Factory-schedules.git](https://github.com/khwx/Factory-schedules.git)
+    ```
+
+2.  **Entrar na pasta e instalar dependências:**
+    ```bash
+    cd Factory-schedules
+    npm install
+    ```
+
+3.  **Compilar o código (Build):**
+    * Este passo gera os ficheiros finais na pasta `dist/` a partir do código fonte em `src/`.
+    ```bash
+    npm run build
+    ```
+
+4.  **Iniciar a aplicação:**
+    * Para servir os ficheiros da pasta `dist/` no teu ambiente local:
+    ```bash
+    npm run start 
+    # (Ou utiliza o comando de arranque específico que tens no teu package.json)
+    ```
+
+5.  Abre o teu navegador e acede ao endereço local indicado no terminal.
+
+## ☁️ Deployment
+
+O deployment contínuo é feito através da Vercel. Qualquer alteração feita na branch `main` é automaticamente publicada no domínio:
+
+[https://shiftsim-factory.vercel.app/](https://shiftsim-factory.vercel.app/)
+
+## 🤝 Como Contribuir
+
+Contribuições são bem-vindas!
+1.  Faz um **Fork** do projeto.
+2.  Cria uma nova Branch.
+3.  Faz o Commit das tuas alterações.
+4.  Abre um **Pull Request**.
+
+## 📝 Licença
+
+Este projeto está sob a licença MIT. Consulta o ficheiro `LICENSE` para mais detalhes.
+
+---
+Desenvolvido por [khwx](https://github.com/khwx)
