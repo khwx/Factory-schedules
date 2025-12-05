@@ -32,7 +32,7 @@ export const calculateAnalysis = (scenario: Scenario): AnalysisResult => {
     // 3. Current Year Analysis
     const currentYear = new Date().getFullYear();
     const currentYearCalendar = generateYearCalendar(scenario, currentYear);
-    const currentYearAnalysis = analyzeYearCalendar(currentYearCalendar, currentYear);
+    const currentYearAnalysis = analyzeYearCalendar(currentYearCalendar, currentYear, scenario.shiftDuration);
 
     const weekendsOff = currentYearAnalysis.totalWeekends;
     const totalOffDaysPerYear = currentYearAnalysis.totalOffDays;

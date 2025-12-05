@@ -97,6 +97,7 @@ const TeamFairness: React.FC<TeamFairnessProps> = ({ scenario }) => {
                                 <th className="p-3 text-center text-gray-400 font-medium border-b border-gray-700">Fins de Semana de Folga</th>
                                 <th className="p-3 text-center text-gray-400 font-medium border-b border-gray-700">Total de Dias de Folga</th>
                                 <th className="p-3 text-center text-gray-400 font-medium border-b border-gray-700">Feriados Trabalhados 💰</th>
+                                <th className="p-3 text-center text-gray-400 font-medium border-b border-gray-700">Horas Anuais</th>
                                 <th className="p-3 text-center text-gray-400 font-medium border-b border-gray-700">Diferença</th>
                             </tr>
                         </thead>
@@ -116,6 +117,9 @@ const TeamFairness: React.FC<TeamFairnessProps> = ({ scenario }) => {
                                         </td>
                                         <td className="p-3 text-center text-yellow-400 font-mono border-b border-gray-700">
                                             {team.holidaysWorked}
+                                        </td>
+                                        <td className="p-3 text-center text-purple-400 font-mono border-b border-gray-700">
+                                            {team.yearlyAnalysis.totalHoursWorked}h
                                         </td>
                                         <td className={`p-3 text-center font-mono border-b border-gray-700 ${Math.abs(weekendDiff) < 0.5 ? 'text-gray-400' : weekendDiff > 0 ? 'text-green-400' : 'text-red-400'
                                             }`}>

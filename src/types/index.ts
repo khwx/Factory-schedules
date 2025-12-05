@@ -27,6 +27,7 @@ export interface YearlyAnalysis {
   totalSaturdaysOff: number;
   totalSundaysOff: number;
   totalOffDays: number;
+  totalHoursWorked: number;
   monthlyBreakdown: MonthlyBreakdown[];
 }
 

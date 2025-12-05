@@ -96,7 +96,7 @@ export const generateYearCalendar = (scenario: Scenario, year: number, teamOffse
 /**
  * Analyze a year calendar and extract metrics
  */
-export const analyzeYearCalendar = (calendar: DayInfo[], year: number): YearlyAnalysis => {
+export const analyzeYearCalendar = (calendar: DayInfo[], year: number, shiftDuration: number = 8): YearlyAnalysis => {
     const monthlyBreakdown: MonthlyBreakdown[] = [];
 
     // Initialize monthly data
@@ -115,6 +115,7 @@ export const analyzeYearCalendar = (calendar: DayInfo[], year: number): YearlyAn
     let totalSaturdaysOff = 0;
     let totalSundaysOff = 0;
     let totalOffDays = 0;
+    let totalHoursWorked = 0;
 
     // Count weekends off (only count once per weekend, on Saturday)
     for (let i = 0; i < calendar.length; i++) {
@@ -128,6 +129,9 @@ export const analyzeYearCalendar = (calendar: DayInfo[], year: number): YearlyAn
         if (shift === 'F') {
             monthlyBreakdown[month].totalOffDays++;
             totalOffDays++;
+        } else {
+            // Count hours worked (any shift that's not 'F')
+            totalHoursWorked += shiftDuration;
         }
 
         // Logic for Exclusive Counting:
@@ -163,6 +167,7 @@ export const analyzeYearCalendar = (calendar: DayInfo[], year: number): YearlyAn
         totalSaturdaysOff,
         totalSundaysOff,
         totalOffDays,
+        totalHoursWorked,
         monthlyBreakdown,
     };
 };
@@ -176,7 +181,7 @@ export const generateMultiYearAnalysis = (scenario: Scenario, startYear: number 
     for (let i = 0; i < 5; i++) {
         const year = startYear + i;
         const calendar = generateYearCalendar(scenario, year);
-        const analysis = analyzeYearCalendar(calendar, year);
+        const analysis = analyzeYearCalendar(calendar, year, scenario.shiftDuration);
         years.push(analysis);
     }
 

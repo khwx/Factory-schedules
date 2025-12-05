@@ -35,7 +35,7 @@ export const analyzeTeamFairness = (scenario: Scenario, year: number): FairnessA
     // Generate analysis for each team
     for (let teamNum = 0; teamNum < teams; teamNum++) {
         const calendar = generateYearCalendar(scenario, year, teamNum);
-        const analysis = analyzeYearCalendar(calendar, year);
+        const analysis = analyzeYearCalendar(calendar, year, scenario.shiftDuration);
         const holidaysWorked = getHolidaysWorked(calendar, holidays).length;
         const holidaysOff = countHolidaysOff(calendar, holidays);
 
