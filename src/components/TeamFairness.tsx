@@ -13,6 +13,37 @@ const TeamFairness: React.FC<TeamFairnessProps> = ({ scenario }) => {
     const fairness = useMemo(() => analyzeTeamFairness(scenario, selectedYear), [scenario, selectedYear]);
     const coverage = useMemo(() => analyzeCoverage(scenario, selectedYear), [scenario, selectedYear]);
 
+    // Calculate accumulated hours if selectedYear >= 2026
+    const accumulatedHoursMap = useMemo(() => {
+        const accMap: Record<number, number> = {};
+
+        if (selectedYear < 2026 || !scenario.weeklyHoursContract) {
+            return accMap;
+        }
+
+        // Initialize map with 0
+        for (let teamNum = 0; teamNum < scenario.teams; teamNum++) {
+            accMap[teamNum + 1] = 0;
+        }
+
+        // Loop from 2026 up to selectedYear
+        for (let y = 2026; y <= selectedYear; y++) {
+            const isLeap = (y % 4 === 0 && y % 100 !== 0) || (y % 400 === 0);
+            const daysInYear = isLeap ? 366 : 365;
+            const annualContractHours = (scenario.weeklyHoursContract * daysInYear) / 7;
+
+            // Analyze for each team
+            const analysis = analyzeTeamFairness(scenario, y);
+
+            analysis.teamAnalyses.forEach(team => {
+                const diff = team.yearlyAnalysis.totalHoursWorked - annualContractHours;
+                accMap[team.teamNumber] += diff;
+            });
+        }
+
+        return accMap;
+    }, [scenario, selectedYear]);
+
     if (scenario.teams <= 1) return null;
 
     return (
@@ -99,6 +130,7 @@ const TeamFairness: React.FC<TeamFairnessProps> = ({ scenario }) => {
                                 <th className="p-3 text-center text-gray-400 font-medium border-b border-gray-700">Feriados Trabalhados 💰</th>
                                 <th className="p-3 text-center text-gray-400 font-medium border-b border-gray-700">Horas Anuais</th>
                                 <th className="p-3 text-center text-gray-400 font-medium border-b border-gray-700">Dif. Horas</th>
+                                <th className="p-3 text-center text-gray-400 font-medium border-b border-gray-700">Dif. Acumulada (2026+)</th>
                                 <th className="p-3 text-center text-gray-400 font-medium border-b border-gray-700">Dif. Fins de Semana</th>
                             </tr>
                         </thead>
@@ -107,8 +139,13 @@ const TeamFairness: React.FC<TeamFairnessProps> = ({ scenario }) => {
                                 const avgWeekends = fairness.teamAnalyses.reduce((sum, t) => sum + t.yearlyAnalysis.totalWeekends, 0) / fairness.teamAnalyses.length;
                                 const weekendDiff = team.yearlyAnalysis.totalWeekends - avgWeekends;
 
+                                // Annual hour diff (vs average of teams) - keep existing logic or change to contract? 
+                                // Existing logic was vs Average. Let's keep it consistent with previous state, 
+                                // but note that "Dif. Acumulada" is vs Contract.
                                 const avgHours = fairness.teamAnalyses.reduce((sum, t) => sum + t.yearlyAnalysis.totalHoursWorked, 0) / fairness.teamAnalyses.length;
                                 const hoursDiff = team.yearlyAnalysis.totalHoursWorked - avgHours;
+
+                                const accDiff = accumulatedHoursMap[team.teamNumber];
 
                                 return (
                                     <tr key={idx} className={idx % 2 === 0 ? 'bg-gray-800/50' : ''}>
@@ -128,6 +165,11 @@ const TeamFairness: React.FC<TeamFairnessProps> = ({ scenario }) => {
                                         <td className={`p-3 text-center font-mono border-b border-gray-700 ${Math.abs(hoursDiff) < 0.1 ? 'text-gray-400' : hoursDiff > 0 ? 'text-red-400' : 'text-green-400'
                                             }`}>
                                             {hoursDiff > 0 ? '+' : ''}{Number(hoursDiff.toFixed(1))}h
+                                        </td>
+                                        <td className={`p-3 text-center font-mono border-b border-gray-700 ${selectedYear < 2026 ? 'text-gray-500' :
+                                                Math.abs(accDiff || 0) < 1 ? 'text-gray-400' : (accDiff || 0) > 0 ? 'text-red-400' : 'text-green-400'
+                                            }`}>
+                                            {selectedYear < 2026 ? '-' : `${(accDiff || 0) > 0 ? '+' : ''}${Number((accDiff || 0).toFixed(1))}h`}
                                         </td>
                                         <td className={`p-3 text-center font-mono border-b border-gray-700 ${Math.abs(weekendDiff) < 0.5 ? 'text-gray-400' : weekendDiff > 0 ? 'text-green-400' : 'text-red-400'
                                             }`}>
