@@ -125,7 +125,7 @@ const GeneratorUI: React.FC<ScheduleGeneratorProps> = ({ isOpen, onClose, onSele
                                 <label className="block text-sm font-medium text-gray-400 mb-2">Max. Dias Trabalho Seguidos</label>
                                 <div className="flex items-center gap-3">
                                     <input
-                                        type="range" min="4" max="7" step="1"
+                                        type="range" min="4" max="6" step="1"
                                         value={constraints.maxConsecutiveWork}
                                         onChange={(e) => setConstraints({ ...constraints, maxConsecutiveWork: parseInt(e.target.value) })}
                                         className="flex-1 accent-blue-500 h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
