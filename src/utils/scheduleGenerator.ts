@@ -105,7 +105,7 @@ export class ScheduleGenerator {
             // Heuristic: try to continue block
             const candidates = ['M', 'T', 'N', 'F'];
             if (prev) {
-                candidates.sort((a, b) => (a === prev ? -1 : 1));
+                candidates.sort((a, _b) => (a === prev ? -1 : 1));
             }
 
             for (const char of candidates) {
