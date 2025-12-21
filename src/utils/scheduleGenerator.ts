@@ -18,8 +18,8 @@ export interface GeneratedSchedule {
 }
 
 const ALLOWED_TRANSITIONS: Record<string, string[]> = {
-    'M': ['M', 'T', 'F'],
-    'T': ['T', 'N', 'F'],
+    'M': ['M', 'F'],
+    'T': ['T', 'F'],
     'N': ['N', 'F'],
     'F': ['M', 'T', 'N', 'F']
 };
