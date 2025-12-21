@@ -13,10 +13,12 @@ import QualityOfLifeDisplay from './QualityOfLifeDisplay';
 import { Scenario } from '../types';
 import { calculateAnalysis } from '../utils/calculations';
 import { exportToExcel, exportComparison } from '../utils/export';
-import { X, Download, Filter, Search } from 'lucide-react';
+import { X, Download, Filter, Search, Wand2 } from 'lucide-react';
 import PresetSelector from './PresetSelector';
 import ICSImporter from './ICSImporter';
 import { PresetScenario, PRESET_SCENARIOS } from '../data/presetScenarios';
+import GeneratorUI from './ScheduleGenerator';
+
 
 const Dashboard: React.FC = () => {
     const [scenarios, setScenarios] = useState<Scenario[]>(() => {
@@ -42,6 +44,7 @@ const Dashboard: React.FC = () => {
 
     const [selectedScenario, setSelectedScenario] = useState<Scenario | null>(null);
     const [editingScenario, setEditingScenario] = useState<Scenario | null>(null);
+    const [showGenerator, setShowGenerator] = useState(false);
     const [showCalendar, setShowCalendar] = useState(false);
     const [showMultiTeamCalendar, setShowMultiTeamCalendar] = useState(false);
     const [showHidden, setShowHidden] = useState(false);
@@ -168,7 +171,20 @@ const Dashboard: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4">
             <ICSImporter onImport={handleAddScenario} />
 
-            <PresetSelector onLoadPreset={handleLoadPreset} />
+
+
+            <div className="flex gap-4 mb-6">
+                <div className="flex-1">
+                    <PresetSelector onLoadPreset={handleLoadPreset} />
+                </div>
+                <button
+                    onClick={() => setShowGenerator(true)}
+                    className="flex items-center gap-2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white px-6 py-4 rounded-lg shadow-lg transition-all transform hover:scale-[1.02] font-semibold"
+                >
+                    <Wand2 className="w-5 h-5" />
+                    Gerar Horário
+                </button>
+            </div>
 
             <ScenarioForm
                 onAdd={handleAddScenario}
@@ -339,6 +355,12 @@ const Dashboard: React.FC = () => {
                     onClose={() => setShowMultiTeamCalendar(false)}
                 />
             )}
+
+            <GeneratorUI
+                isOpen={showGenerator}
+                onClose={() => setShowGenerator(false)}
+                onSelectScenario={handleLoadPreset}
+            />
         </div>
     );
 };

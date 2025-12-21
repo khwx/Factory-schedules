@@ -89,4 +89,36 @@ export const PRESET_SCENARIOS: PresetScenario[] = [
             'FMMMMMFMTTTTFNNNFFFTTTFNNNNM', // Team D
         ],
     },
+    {
+        name: 'Horário 25 Dias (Equilibrado)',
+        description: '5 equipas - Ciclo 25 dias (5M-2F-5T-4F-5N-4F). Blocos de 5 dias de trabalho.',
+        teams: 5,
+        shiftDuration: 8.75,
+        weeklyHoursContract: 37.5,
+        pattern: 'MMMMMFFTTTTTFFFFNNNNNFFFF',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMMFFTTTTTFFFFNNNNNFFFF', // Team A
+            'FFTTTTTFFFFNNNNNFFFFMMMMM', // Team B (Offset 5)
+            'TTTTTFFFFNNNNNFFFFMMMMMFF', // Team C (Offset 10)
+            'FFFFNNNNNFFFFMMMMMFFTTTTT', // Team D (Offset 15)
+            'NNNNNFFFFMMMMMFFTTTTTFFFF', // Team E (Offset 20)
+        ]
+    },
+    {
+        name: 'Horário 30 Dias (Blocos Longos)',
+        description: '5 equipas - Ciclo 30 dias (6M-5F-6T-5F-6N-2F). Máximo 6 dias trabalho, 5 folgas.',
+        teams: 5,
+        shiftDuration: 8.75,
+        weeklyHoursContract: 37.5,
+        pattern: 'MMMMMMFFFFFTTTTTTFFFFFNNNNNNFF',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMMMFFFFFTTTTTTFFFFFNNNNNNFF', // Team A
+            'FFFFFTTTTTTFFFFFNNNNNNFFMMMMMM', // Team B (Offset 6)
+            'TTTTTTFFFFFNNNNNNFFMMMMMMFFFFF', // Team C (Offset 12)
+            'FFFFFNNNNNNFFMMMMMMFFFFFTTTTTT', // Team D (Offset 18)
+            'NNNNNNFFMMMMMMFFFFFTTTTTTFFFFF', // Team E (Offset 24)
+        ]
+    },
 ];
