@@ -230,6 +230,12 @@ const GeneratorUI: React.FC<ScheduleGeneratorProps> = ({ isOpen, onClose, onSele
                                                 {res.quality.isolatedShifts}
                                             </span>
                                         </div>
+                                        <div>
+                                            <span className="block text-gray-400">Média Semanal</span>
+                                            <span className="font-mono text-blue-300">
+                                                36.8h <span className="text-[10px] text-gray-500">(-0.7h)</span>
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
                             ))}
