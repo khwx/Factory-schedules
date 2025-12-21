@@ -98,7 +98,7 @@ const GeneratorUI: React.FC<ScheduleGeneratorProps> = ({ isOpen, onClose, onSele
                 <div className="p-4 border-b border-gray-800 flex justify-between items-center bg-gray-800">
                     <div>
                         <h2 className="text-xl font-bold text-white">Gerador de Horários</h2>
-                        <p className="text-sm text-gray-400">Cria novas opções de turnos baseadas nas tuas regras</p>
+                        <p className="text-sm text-gray-400">Opções geradas para 5 equipas com cobertura total 24h</p>
                     </div>
                     <button onClick={onClose} className="p-2 hover:bg-gray-700 rounded-full text-gray-400 hover:text-white transition-colors">
                         ✕
@@ -108,7 +108,17 @@ const GeneratorUI: React.FC<ScheduleGeneratorProps> = ({ isOpen, onClose, onSele
                 <div className="flex flex-1 overflow-hidden">
                     {/* Settings Panel */}
                     <div className="w-80 bg-gray-900 p-6 border-r border-gray-800 overflow-y-auto">
-                        <h3 className="font-semibold text-gray-300 mb-4 uppercase text-xs tracking-wider">Regras & Preferências</h3>
+                        <div className="mb-6 bg-gray-800/50 p-3 rounded-lg border border-gray-700">
+                            <h4 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Regras Base (Fixas)</h4>
+                            <ul className="text-xs text-gray-300 space-y-1.5">
+                                <li className="flex justify-between"><span>Equipas:</span> <span className="text-white font-mono">5</span></li>
+                                <li className="flex justify-between"><span>Cobertura:</span> <span className="text-green-400">24h (1M + 1T + 1N)</span></li>
+                                <li className="flex justify-between"><span>Duração Turno:</span> <span className="text-white font-mono">8h45 (8.75h)</span></li>
+                                <li className="flex justify-between"><span>Alvo Semanal:</span> <span className="text-white font-mono">37.5h</span></li>
+                            </ul>
+                        </div>
+
+                        <h3 className="font-semibold text-gray-300 mb-4 uppercase text-xs tracking-wider">Preferências Ajustáveis</h3>
 
                         <div className="space-y-6">
                             <div>
