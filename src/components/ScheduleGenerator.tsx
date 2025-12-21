@@ -193,6 +193,10 @@ const GeneratorUI: React.FC<ScheduleGeneratorProps> = ({ isOpen, onClose, onSele
                                                 <span className="bg-blue-900/50 text-blue-200 text-xs px-2 py-0.5 rounded border border-blue-800">
                                                     Ciclo {res.cycleLength} Dias
                                                 </span>
+                                                <span className="bg-purple-900/50 text-purple-200 text-xs px-2 py-0.5 rounded border border-purple-800 flex items-center gap-1">
+                                                    <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse"></span>
+                                                    Cobertura 24h
+                                                </span>
                                                 {res.score < 10 && (
                                                     <span className="bg-green-900/50 text-green-200 text-xs px-2 py-0.5 rounded border border-green-800">
                                                         Excelente Balanceamento
