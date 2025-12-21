@@ -128,7 +128,7 @@ const GeneratorUI: React.FC<ScheduleGeneratorProps> = ({ isOpen, onClose, onSele
                                 <label className="block text-sm font-medium text-gray-400 mb-2">Max. Folgas Seguidas</label>
                                 <div className="flex items-center gap-3">
                                     <input
-                                        type="range" min="2" max="6" step="1"
+                                        type="range" min="2" max="5" step="1"
                                         value={constraints.maxConsecutiveOff}
                                         onChange={(e) => setConstraints({ ...constraints, maxConsecutiveOff: parseInt(e.target.value) })}
                                         className="flex-1 accent-blue-500 h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
@@ -155,8 +155,8 @@ const GeneratorUI: React.FC<ScheduleGeneratorProps> = ({ isOpen, onClose, onSele
                                 onClick={handleGenerate}
                                 disabled={isGenerating}
                                 className={`w-full py-3 px-4 rounded-lg font-bold text-white transition-all transform active:scale-95 ${isGenerating
-                                        ? 'bg-gray-700 cursor-wait opacity-50'
-                                        : 'bg-blue-600 hover:bg-blue-500 shadow-lg shadow-blue-900/20'
+                                    ? 'bg-gray-700 cursor-wait opacity-50'
+                                    : 'bg-blue-600 hover:bg-blue-500 shadow-lg shadow-blue-900/20'
                                     }`}
                             >
                                 {isGenerating ? 'A Gerar...' : 'Gerar Opções'}
