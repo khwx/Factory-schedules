@@ -8,7 +8,23 @@ interface ScheduleGeneratorProps {
     onSelectScenario: (scenario: PresetScenario) => void;
 }
 
+// Creative names for schedules
+const SCENARIO_NAMES = [
+    "Aurora", "Zenith", "Horizonte", "Maré Viva", "Equinócio",
+    "Solstício", "Pulsar", "Órbita", "Crono", "Vértice",
+    "Meridiano", "Brisa", "Eclipse", "Nebula", "Spectra",
+    "Quantum", "Fluxo", "Delta", "Sigma", "Polaris"
+];
+
+const generateCreativeName = (idx: number, cycle: number) => {
+    // Deterministic name based on index to keep it consistent during re-renders if needed
+    const base = SCENARIO_NAMES[idx % SCENARIO_NAMES.length];
+    const suffix = Math.floor(idx / SCENARIO_NAMES.length) + 1;
+    return `${base} ${suffix > 1 ? suffix : ''} (${cycle}d)`;
+};
+
 const GeneratorUI: React.FC<ScheduleGeneratorProps> = ({ isOpen, onClose, onSelectScenario }) => {
+    // ... existing state ...
     const [constraints, setConstraints] = useState<GeneratorConstraints>({
         teams: 5,
         maxConsecutiveWork: 6,
@@ -33,8 +49,6 @@ const GeneratorUI: React.FC<ScheduleGeneratorProps> = ({ isOpen, onClose, onSele
         generatorRef.current = new ScheduleGenerator(constraints);
 
         try {
-            // Generate for 25 and 30 day cycles primarily (Stride 5 and 6)
-            // Stride 4 (20 days) often too compressed for 5 teams but we can try
             const patterns = await generatorRef.current.generate([5, 6]);
             setResults(patterns);
         } catch (e) {
@@ -44,28 +58,14 @@ const GeneratorUI: React.FC<ScheduleGeneratorProps> = ({ isOpen, onClose, onSele
         }
     };
 
-    const handleSelect = (result: GeneratedSchedule) => {
-        // Convert to PresetScenario format
-        const teamPatterns: string[] = [];
+    const handleSelect = (result: GeneratedSchedule, index: number) => {
         const L = result.cycleLength;
-        const offsetStep = L / 5; // Should be exact integer for these strides
+        const creativeName = generateCreativeName(index, L);
+        const offsetStep = L / 5;
+        const teamPatterns: string[] = [];
 
-        // Generate rotated patterns for teams
         for (let i = 0; i < 5; i++) {
             const offset = i * offsetStep;
-            // Pattern rotation:
-            // Team 0: Pattern
-            // Team 1: Pattern shifted by offset
-            // Actually, usually in these cyclic rosters:
-            // Team A starts at day 0. Team B starts at day X.
-            // Which means Team B's pattern is Team A's pattern shifted LEFT by X days? 
-            // Or Team B's schedule at day D is Team A's schedule at day D+X ?
-            // Let's assume standard rotation: P[t] = P[(t + offset) % L]
-
-            // Wait, if Team A is M M M F F
-            // And Team B is offset by 1 day "later", they do M M M F F but starting tomorrow?
-            // No, usually staggered.
-            // Let's construct the string.
             let p = '';
             for (let d = 0; d < L; d++) {
                 p += result.pattern[(d + offset) % L];
@@ -74,10 +74,10 @@ const GeneratorUI: React.FC<ScheduleGeneratorProps> = ({ isOpen, onClose, onSele
         }
 
         const newScenario: PresetScenario = {
-            name: `Gerado (Ciclo ${L}d)`,
+            name: creativeName,
             description: `5 Equipas, Ciclo ${L} dias. Gerado automaticamente.`,
             teams: 5,
-            shiftDuration: 8.75, // Standard placeholder
+            shiftDuration: 8.75,
             weeklyHoursContract: 37.5,
             pattern: result.pattern,
             startDate: new Date().toISOString().split('T')[0],
@@ -93,8 +93,7 @@ const GeneratorUI: React.FC<ScheduleGeneratorProps> = ({ isOpen, onClose, onSele
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70 p-4 backdrop-blur-sm">
             <div className="bg-gray-900 border border-gray-700 rounded-xl shadow-2xl w-full max-w-4xl max-h-[90vh] flex flex-col text-gray-100 overflow-hidden">
-
-                {/* Header */}
+                {/* Header and Left Panel unchanged ... */}
                 <div className="p-4 border-b border-gray-800 flex justify-between items-center bg-gray-800">
                     <div>
                         <h2 className="text-xl font-bold text-white">Gerador de Horários</h2>
@@ -106,7 +105,6 @@ const GeneratorUI: React.FC<ScheduleGeneratorProps> = ({ isOpen, onClose, onSele
                 </div>
 
                 <div className="flex flex-1 overflow-hidden">
-                    {/* Settings Panel */}
                     <div className="w-80 bg-gray-900 p-6 border-r border-gray-800 overflow-y-auto">
                         <div className="mb-6 bg-gray-800/50 p-3 rounded-lg border border-gray-700">
                             <h4 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Regras Base (Fixas)</h4>
@@ -119,7 +117,7 @@ const GeneratorUI: React.FC<ScheduleGeneratorProps> = ({ isOpen, onClose, onSele
                         </div>
 
                         <h3 className="font-semibold text-gray-300 mb-4 uppercase text-xs tracking-wider">Preferências Ajustáveis</h3>
-
+                        {/* Settings inputs unchanged ... (Only need to verify existing inputs are kept or use broader match if I am replacing the whole component logic block) */}
                         <div className="space-y-6">
                             <div>
                                 <label className="block text-sm font-medium text-gray-400 mb-2">Max. Dias Trabalho Seguidos</label>
@@ -200,16 +198,16 @@ const GeneratorUI: React.FC<ScheduleGeneratorProps> = ({ isOpen, onClose, onSele
                                     <div className="flex items-start justify-between mb-3">
                                         <div>
                                             <div className="flex items-center gap-2 mb-1">
-                                                <span className="bg-blue-900/50 text-blue-200 text-xs px-2 py-0.5 rounded border border-blue-800">
-                                                    Ciclo {res.cycleLength} Dias
-                                                </span>
+                                                <h4 className="font-bold text-blue-400 text-sm">
+                                                    {generateCreativeName(idx, res.cycleLength)}
+                                                </h4>
                                                 <span className="bg-purple-900/50 text-purple-200 text-xs px-2 py-0.5 rounded border border-purple-800 flex items-center gap-1">
                                                     <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse"></span>
-                                                    Cobertura 24h
+                                                    24h
                                                 </span>
                                                 {res.score < 10 && (
                                                     <span className="bg-green-900/50 text-green-200 text-xs px-2 py-0.5 rounded border border-green-800">
-                                                        Excelente Balanceamento
+                                                        Excelente
                                                     </span>
                                                 )}
                                             </div>
@@ -218,7 +216,7 @@ const GeneratorUI: React.FC<ScheduleGeneratorProps> = ({ isOpen, onClose, onSele
                                             </div>
                                         </div>
                                         <button
-                                            onClick={() => handleSelect(res)}
+                                            onClick={() => handleSelect(res, idx)}
                                             className="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg font-medium text-sm transition-colors opacity-0 group-hover:opacity-100"
                                         >
                                             Usar Este
