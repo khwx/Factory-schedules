@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Upload, FileText, AlertCircle, CheckCircle } from 'lucide-react';
+import { Upload, FileText, AlertCircle, CheckCircle, ChevronDown, ChevronUp } from 'lucide-react';
 import { generateScenarioFromICS } from '../utils/icsParser';
 import { findConflicts, getConflictSummary } from '../utils/conflictValidator';
 import { Scenario } from '../types';
@@ -9,6 +9,7 @@ interface ICSImporterProps {
 }
 
 const ICSImporter: React.FC<ICSImporterProps> = ({ onImport }) => {
+    const [isExpanded, setIsExpanded] = useState(false);
     const [isDragging, setIsDragging] = useState(false);
     const [fileContent, setFileContent] = useState<string | null>(null);
     const [fileName, setFileName] = useState<string>('');
@@ -83,12 +84,42 @@ const ICSImporter: React.FC<ICSImporterProps> = ({ onImport }) => {
         if (file) handleFileSelect(file);
     };
 
+    if (!isExpanded) {
+        return (
+            <div
+                onClick={() => setIsExpanded(true)}
+                className="bg-gray-800 p-4 rounded-lg border border-gray-700 mb-8 cursor-pointer hover:bg-gray-750 transition-colors flex items-center justify-between group"
+            >
+                <h2 className="text-xl font-semibold flex items-center gap-2 text-gray-200 group-hover:text-white transition-colors">
+                    <Upload className="w-5 h-5 text-blue-400" />
+                    Importar Horário (.ics)
+                </h2>
+                <div className="flex items-center gap-2 text-gray-400 group-hover:text-white transition-colors">
+                    <span className="text-sm font-medium">Clique para expandir</span>
+                    <ChevronDown className="w-5 h-5" />
+                </div>
+            </div>
+        );
+    }
+
     return (
-        <div className="bg-gray-800 p-6 rounded-lg border border-gray-700 mb-8">
-            <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
-                <Upload className="w-5 h-5 text-blue-400" />
-                Importar Horário (.ics)
-            </h2>
+        <div className="bg-gray-800 p-6 rounded-lg border border-gray-700 mb-8 animate-in fade-in slide-in-from-top-4 duration-300">
+            <div className="flex justify-between items-center mb-4">
+                <h2
+                    className="text-xl font-semibold flex items-center gap-2 cursor-pointer hover:text-blue-300 transition-colors"
+                    onClick={() => setIsExpanded(false)}
+                >
+                    <Upload className="w-5 h-5 text-blue-400" />
+                    Importar Horário (.ics)
+                </h2>
+                <button
+                    onClick={() => setIsExpanded(false)}
+                    className="text-gray-400 hover:text-white p-1 hover:bg-gray-700 rounded transition-colors"
+                    title="Recolher"
+                >
+                    <ChevronUp className="w-5 h-5" />
+                </button>
+            </div>
 
             {!fileContent ? (
                 <div
