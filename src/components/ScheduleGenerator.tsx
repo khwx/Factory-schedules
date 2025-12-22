@@ -104,8 +104,8 @@ const GeneratorUI: React.FC<ScheduleGeneratorProps> = ({ isOpen, onClose, onSele
                     </button>
                 </div>
 
-                <div className="flex flex-1 overflow-hidden">
-                    <div className="w-80 bg-gray-900 p-6 border-r border-gray-800 overflow-y-auto">
+                <div className="flex flex-col lg:flex-row flex-1 overflow-hidden">
+                    <div className="w-full lg:w-80 bg-gray-900 p-6 border-b lg:border-b-0 lg:border-r border-gray-800 overflow-y-auto shrink-0">
                         <div className="mb-6 bg-gray-800/50 p-3 rounded-lg border border-gray-700">
                             <h4 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Regras Base (Fixas)</h4>
                             <ul className="text-xs text-gray-300 space-y-1.5">
