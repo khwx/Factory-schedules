@@ -173,13 +173,13 @@ const Dashboard: React.FC = () => {
 
 
 
-            <div className="flex gap-4 mb-6">
+            <div className="flex flex-col md:flex-row gap-4 mb-6">
                 <div className="flex-1">
                     <PresetSelector onLoadPreset={handleLoadPreset} />
                 </div>
                 <button
                     onClick={() => setShowGenerator(true)}
-                    className="flex items-center gap-2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white px-6 py-4 rounded-lg shadow-lg transition-all transform hover:scale-[1.02] font-semibold"
+                    className="flex items-center justify-center gap-2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white px-6 py-4 rounded-lg shadow-lg transition-all transform hover:scale-[1.02] font-semibold w-full md:w-auto"
                 >
                     <Wand2 className="w-5 h-5" />
                     Gerar Horário
