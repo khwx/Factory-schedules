@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import ScenarioForm from './ScenarioForm';
 import ScenarioCard from './ScenarioCard';
 import ComparisonTable from './ComparisonTable';
@@ -13,11 +13,12 @@ import QualityOfLifeDisplay from './QualityOfLifeDisplay';
 import { Scenario } from '../types';
 import { calculateAnalysis } from '../utils/calculations';
 import { exportToExcel, exportComparison } from '../utils/export';
-import { X, Download, Filter, Search, Wand2 } from 'lucide-react';
+import { X, Download, Filter, Search, Wand2, Undo2, Redo2 } from 'lucide-react';
 import PresetSelector from './PresetSelector';
 import ICSImporter from './ICSImporter';
 import { PresetScenario, PRESET_SCENARIOS } from '../data/presetScenarios';
 import GeneratorUI from './ScheduleGenerator';
+import { useKeyboardShortcuts } from '../hooks/useKeyboardShortcuts';
 
 
 const Dashboard: React.FC = () => {
@@ -46,6 +47,55 @@ const Dashboard: React.FC = () => {
         return presetsAsScenarios;
     });
 
+    // Undo/Redo history
+    const historyRef = useRef<Scenario[][]>([scenarios]);
+    const historyIndexRef = useRef<number>(0);
+    const [canUndo, setCanUndo] = useState(false);
+    const [canRedo, setCanRedo] = useState(false);
+
+    const updateScenariosWithHistory = useCallback((newScenarios: Scenario[] | ((prev: Scenario[]) => Scenario[])) => {
+        setScenarios((currentScenarios) => {
+            const resolvedScenarios = newScenarios instanceof Function ? newScenarios(currentScenarios) : newScenarios;
+
+            // Trim future history if we're not at the end
+            const newHistory = historyRef.current.slice(0, historyIndexRef.current + 1);
+            newHistory.push(resolvedScenarios);
+
+            // Keep max 50 history states
+            if (newHistory.length > 50) {
+                newHistory.shift();
+            } else {
+                historyIndexRef.current++;
+            }
+
+            historyRef.current = newHistory;
+            setCanUndo(historyIndexRef.current > 0);
+            setCanRedo(historyIndexRef.current < historyRef.current.length - 1);
+
+            return resolvedScenarios;
+        });
+    }, []);
+
+    const undo = useCallback(() => {
+        if (historyIndexRef.current > 0) {
+            historyIndexRef.current--;
+            const previousState = historyRef.current[historyIndexRef.current];
+            setScenarios(previousState);
+            setCanUndo(historyIndexRef.current > 0);
+            setCanRedo(historyIndexRef.current < historyRef.current.length - 1);
+        }
+    }, []);
+
+    const redo = useCallback(() => {
+        if (historyIndexRef.current < historyRef.current.length - 1) {
+            historyIndexRef.current++;
+            const nextState = historyRef.current[historyIndexRef.current];
+            setScenarios(nextState);
+            setCanUndo(historyIndexRef.current > 0);
+            setCanRedo(historyIndexRef.current < historyRef.current.length - 1);
+        }
+    }, []);
+
     const [selectedScenario, setSelectedScenario] = useState<Scenario | null>(null);
     const [editingScenario, setEditingScenario] = useState<Scenario | null>(null);
     const [showGenerator, setShowGenerator] = useState(false);
@@ -55,6 +105,26 @@ const Dashboard: React.FC = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [filterTeams, setFilterTeams] = useState<number | null>(null);
     const [sortBy, setSortBy] = useState<'name' | 'weekends' | 'hours'>('name');
+    const searchInputRef = useRef<HTMLInputElement>(null);
+
+    // Keyboard shortcuts
+    const handleEscape = useCallback(() => {
+        if (showCalendar) setShowCalendar(false);
+        else if (showMultiTeamCalendar) setShowMultiTeamCalendar(false);
+        else if (showGenerator) setShowGenerator(false);
+        else if (editingScenario) setEditingScenario(null);
+    }, [showCalendar, showMultiTeamCalendar, showGenerator, editingScenario]);
+
+    const handleSearchFocus = useCallback(() => {
+        searchInputRef.current?.focus();
+    }, []);
+
+    useKeyboardShortcuts({
+        onUndo: undo,
+        onRedo: redo,
+        onEscape: handleEscape,
+        onSearch: handleSearchFocus,
+    });
 
     useEffect(() => {
         localStorage.setItem('shiftsim_scenarios', JSON.stringify(scenarios));
@@ -107,13 +177,13 @@ const Dashboard: React.FC = () => {
             ...newScenario,
             id: crypto.randomUUID(),
         };
-        setScenarios(prev => [...prev, scenario]);
-    }, []);
+        updateScenariosWithHistory(prev => [...prev, scenario]);
+    }, [updateScenariosWithHistory]);
 
     const handleDeleteScenario = useCallback((id: string) => {
-        setScenarios(prev => prev.filter(s => s.id !== id));
+        updateScenariosWithHistory(prev => prev.filter(s => s.id !== id));
         setEditingScenario(prev => prev?.id === id ? null : prev);
-    }, []);
+    }, [updateScenariosWithHistory]);
 
     const handleEditScenario = useCallback((scenario: Scenario) => {
         setEditingScenario(scenario);
@@ -121,9 +191,9 @@ const Dashboard: React.FC = () => {
     }, []);
 
     const handleUpdateScenario = useCallback((id: string, updatedData: Omit<Scenario, 'id'>) => {
-        setScenarios(prev => prev.map(s => s.id === id ? { ...s, ...updatedData } : s));
+        updateScenariosWithHistory(prev => prev.map(s => s.id === id ? { ...s, ...updatedData } : s));
         setEditingScenario(null);
-    }, []);
+    }, [updateScenariosWithHistory]);
 
     const handleCancelEdit = useCallback(() => {
         setEditingScenario(null);
@@ -154,14 +224,14 @@ const Dashboard: React.FC = () => {
             teamPatterns: preset.teamPatterns,
             startDate: preset.startDate,
         };
-        setScenarios(prev => [...prev, scenario]);
-    }, []);
+        updateScenariosWithHistory(prev => [...prev, scenario]);
+    }, [updateScenariosWithHistory]);
 
     const handleToggleHidden = useCallback((id: string) => {
-        setScenarios(prev => prev.map(s =>
+        updateScenariosWithHistory(prev => prev.map(s =>
             s.id === id ? { ...s, hidden: !s.hidden } : s
         ));
-    }, []);
+    }, [updateScenariosWithHistory]);
 
     const handleDuplicate = useCallback((scenario: Scenario) => {
         const duplicated: Scenario = {
@@ -169,8 +239,8 @@ const Dashboard: React.FC = () => {
             id: crypto.randomUUID(),
             name: `${scenario.name} (Copia)`,
         };
-        setScenarios(prev => [...prev, duplicated]);
-    }, []);
+        updateScenariosWithHistory(prev => [...prev, duplicated]);
+    }, [updateScenariosWithHistory]);
 
     const handleViewMultiTeamCalendar = useCallback((scenario: Scenario) => {
         setSelectedScenario(scenario);
@@ -236,6 +306,41 @@ const Dashboard: React.FC = () => {
 
             {scenarios.length > 0 && (
                 <>
+                    {/* Undo/Redo Bar */}
+                    <div className="mb-4 flex items-center gap-2">
+                        <button
+                            onClick={undo}
+                            disabled={!canUndo}
+                            className={`flex items-center gap-1 px-3 py-2 rounded-lg text-sm transition-colors ${
+                                canUndo 
+                                    ? 'bg-gray-700 hover:bg-gray-600 text-white' 
+                                    : 'bg-gray-800 text-gray-500 cursor-not-allowed'
+                            }`}
+                            title="Desfazer (Ctrl+Z)"
+                            aria-label="Desfazer ultima acao"
+                        >
+                            <Undo2 className="w-4 h-4" />
+                            Desfazer
+                        </button>
+                        <button
+                            onClick={redo}
+                            disabled={!canRedo}
+                            className={`flex items-center gap-1 px-3 py-2 rounded-lg text-sm transition-colors ${
+                                canRedo 
+                                    ? 'bg-gray-700 hover:bg-gray-600 text-white' 
+                                    : 'bg-gray-800 text-gray-500 cursor-not-allowed'
+                            }`}
+                            title="Refazer (Ctrl+Shift+Z)"
+                            aria-label="Refazer ultima acao"
+                        >
+                            <Redo2 className="w-4 h-4" />
+                            Refazer
+                        </button>
+                        <span className="text-xs text-gray-500 ml-2">
+                            Ctrl+Z para desfazer, Ctrl+Shift+Z para refazer
+                        </span>
+                    </div>
+
                     {/* Search and Filter Bar */}
                     <div className="mb-6 bg-gray-800 p-4 rounded-lg border border-gray-700">
                         <div className="flex flex-col md:flex-row gap-4">
@@ -244,8 +349,9 @@ const Dashboard: React.FC = () => {
                                 <div className="relative">
                                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" aria-hidden="true" />
                                     <input
+                                        ref={searchInputRef}
                                         type="text"
-                                        placeholder="Pesquisar cenarios..."
+                                        placeholder="Pesquisar cenarios... (Ctrl+F)"
                                         value={searchTerm}
                                         onChange={handleSearchChange}
                                         className="w-full pl-10 pr-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-blue-500"
