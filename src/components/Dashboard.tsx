@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import ScenarioForm from './ScenarioForm';
 import ScenarioCard from './ScenarioCard';
 import ComparisonTable from './ComparisonTable';
@@ -24,7 +24,11 @@ const Dashboard: React.FC = () => {
     const [scenarios, setScenarios] = useState<Scenario[]>(() => {
         const saved = localStorage.getItem('shiftsim_scenarios');
         if (saved) {
-            return JSON.parse(saved);
+            try {
+                return JSON.parse(saved);
+            } catch {
+                return [];
+            }
         }
 
         // First visit - load all presets as examples
@@ -56,14 +60,20 @@ const Dashboard: React.FC = () => {
         localStorage.setItem('shiftsim_scenarios', JSON.stringify(scenarios));
     }, [scenarios]);
 
+    // Memoized analysis calculations
+    const analyses = useMemo(() => {
+        return scenarios.map(s => calculateAnalysis(s));
+    }, [scenarios]);
+
     // Filter and sort scenarios
     const visibleScenarios = useMemo(() => {
         let filtered = showHidden ? scenarios : scenarios.filter(s => !s.hidden);
 
         // Apply search filter
         if (searchTerm) {
+            const term = searchTerm.toLowerCase();
             filtered = filtered.filter(s =>
-                s.name.toLowerCase().includes(searchTerm.toLowerCase())
+                s.name.toLowerCase().includes(term)
             );
         }
 
@@ -77,68 +87,63 @@ const Dashboard: React.FC = () => {
             if (sortBy === 'name') {
                 return a.name.localeCompare(b.name);
             } else if (sortBy === 'weekends') {
-                const analysisA = calculateAnalysis(a);
-                const analysisB = calculateAnalysis(b);
-                return analysisB.weekendsOffPerYear - analysisA.weekendsOffPerYear;
+                const idxA = scenarios.findIndex(s => s.id === a.id);
+                const idxB = scenarios.findIndex(s => s.id === b.id);
+                return analyses[idxB]?.weekendsOffPerYear ?? 0 - analyses[idxA]?.weekendsOffPerYear ?? 0;
             } else if (sortBy === 'hours') {
-                const analysisA = calculateAnalysis(a);
-                const analysisB = calculateAnalysis(b);
-                return analysisA.avgWeeklyHours - analysisB.avgWeeklyHours;
+                const idxA = scenarios.findIndex(s => s.id === a.id);
+                const idxB = scenarios.findIndex(s => s.id === b.id);
+                return (analyses[idxA]?.avgWeeklyHours ?? 0) - (analyses[idxB]?.avgWeeklyHours ?? 0);
             }
             return 0;
         });
 
         return sorted;
-    }, [scenarios, showHidden, searchTerm, filterTeams, sortBy]);
+    }, [scenarios, showHidden, searchTerm, filterTeams, sortBy, analyses]);
 
-    const analyses = useMemo(() => {
-        return visibleScenarios.map(s => calculateAnalysis(s));
-    }, [visibleScenarios]);
-
-    const handleAddScenario = (newScenario: Omit<Scenario, 'id'>) => {
+    // Memoized handlers
+    const handleAddScenario = useCallback((newScenario: Omit<Scenario, 'id'>) => {
         const scenario: Scenario = {
             ...newScenario,
             id: crypto.randomUUID(),
         };
-        setScenarios([...scenarios, scenario]);
-    };
+        setScenarios(prev => [...prev, scenario]);
+    }, []);
 
-    const handleDeleteScenario = (id: string) => {
-        setScenarios(scenarios.filter(s => s.id !== id));
-        if (editingScenario?.id === id) {
-            setEditingScenario(null);
-        }
-    };
+    const handleDeleteScenario = useCallback((id: string) => {
+        setScenarios(prev => prev.filter(s => s.id !== id));
+        setEditingScenario(prev => prev?.id === id ? null : prev);
+    }, []);
 
-    const handleEditScenario = (scenario: Scenario) => {
+    const handleEditScenario = useCallback((scenario: Scenario) => {
         setEditingScenario(scenario);
         window.scrollTo({ top: 0, behavior: 'smooth' });
-    };
+    }, []);
 
-    const handleUpdateScenario = (id: string, updatedData: Omit<Scenario, 'id'>) => {
-        setScenarios(scenarios.map(s => s.id === id ? { ...s, ...updatedData } : s));
+    const handleUpdateScenario = useCallback((id: string, updatedData: Omit<Scenario, 'id'>) => {
+        setScenarios(prev => prev.map(s => s.id === id ? { ...s, ...updatedData } : s));
         setEditingScenario(null);
-    };
+    }, []);
 
-    const handleCancelEdit = () => {
+    const handleCancelEdit = useCallback(() => {
         setEditingScenario(null);
-    };
+    }, []);
 
-    const handleViewCalendar = (scenario: Scenario) => {
+    const handleViewCalendar = useCallback((scenario: Scenario) => {
         setSelectedScenario(scenario);
         setShowCalendar(true);
-    };
+    }, []);
 
-    const handleExport = (scenario: Scenario) => {
+    const handleExport = useCallback((scenario: Scenario) => {
         const analysis = calculateAnalysis(scenario);
         exportToExcel(scenario, analysis);
-    };
+    }, []);
 
-    const handleExportAll = () => {
+    const handleExportAll = useCallback(() => {
         exportComparison(scenarios, analyses);
-    };
+    }, [scenarios, analyses]);
 
-    const handleLoadPreset = (preset: PresetScenario) => {
+    const handleLoadPreset = useCallback((preset: PresetScenario) => {
         const scenario: Scenario = {
             id: crypto.randomUUID(),
             name: preset.name,
@@ -149,40 +154,76 @@ const Dashboard: React.FC = () => {
             teamPatterns: preset.teamPatterns,
             startDate: preset.startDate,
         };
-        setScenarios([...scenarios, scenario]);
-    };
+        setScenarios(prev => [...prev, scenario]);
+    }, []);
 
-    const handleToggleHidden = (id: string) => {
-        setScenarios(scenarios.map(s =>
+    const handleToggleHidden = useCallback((id: string) => {
+        setScenarios(prev => prev.map(s =>
             s.id === id ? { ...s, hidden: !s.hidden } : s
         ));
-    };
+    }, []);
 
-    const handleDuplicate = (scenario: Scenario) => {
+    const handleDuplicate = useCallback((scenario: Scenario) => {
         const duplicated: Scenario = {
             ...scenario,
             id: crypto.randomUUID(),
-            name: `${scenario.name} (Cópia)`,
+            name: `${scenario.name} (Copia)`,
         };
-        setScenarios([...scenarios, duplicated]);
-    };
+        setScenarios(prev => [...prev, duplicated]);
+    }, []);
+
+    const handleViewMultiTeamCalendar = useCallback((scenario: Scenario) => {
+        setSelectedScenario(scenario);
+        setShowMultiTeamCalendar(true);
+    }, []);
+
+    const handleCloseMultiTeamCalendar = useCallback(() => {
+        setShowMultiTeamCalendar(false);
+    }, []);
+
+    const handleCloseCalendar = useCallback(() => {
+        setShowCalendar(false);
+    }, []);
+
+    const handleOpenGenerator = useCallback(() => {
+        setShowGenerator(true);
+    }, []);
+
+    const handleCloseGenerator = useCallback(() => {
+        setShowGenerator(false);
+    }, []);
+
+    const handleSearchChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchTerm(e.target.value);
+    }, []);
+
+    const handleFilterTeamsChange = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
+        setFilterTeams(e.target.value ? Number(e.target.value) : null);
+    }, []);
+
+    const handleSortChange = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
+        setSortBy(e.target.value as 'name' | 'weekends' | 'hours');
+    }, []);
+
+    const toggleShowHidden = useCallback(() => {
+        setShowHidden(prev => !prev);
+    }, []);
 
     return (
         <div className="max-w-7xl mx-auto px-4">
             <ICSImporter onImport={handleAddScenario} />
-
-
 
             <div className="flex flex-col md:flex-row gap-4 mb-6">
                 <div className="flex-1">
                     <PresetSelector onLoadPreset={handleLoadPreset} />
                 </div>
                 <button
-                    onClick={() => setShowGenerator(true)}
+                    onClick={handleOpenGenerator}
                     className="flex items-center justify-center gap-2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white px-6 py-4 rounded-lg shadow-lg transition-all transform hover:scale-[1.02] font-semibold w-full md:w-auto"
+                    aria-label="Abrir gerador de horarios"
                 >
                     <Wand2 className="w-5 h-5" />
-                    Gerar Horário
+                    Gerar Horario
                 </button>
             </div>
 
@@ -201,13 +242,14 @@ const Dashboard: React.FC = () => {
                             {/* Search */}
                             <div className="flex-1">
                                 <div className="relative">
-                                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" aria-hidden="true" />
                                     <input
                                         type="text"
-                                        placeholder="Pesquisar cenários..."
+                                        placeholder="Pesquisar cenarios..."
                                         value={searchTerm}
-                                        onChange={(e) => setSearchTerm(e.target.value)}
+                                        onChange={handleSearchChange}
                                         className="w-full pl-10 pr-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-blue-500"
+                                        aria-label="Pesquisar cenarios"
                                     />
                                 </div>
                             </div>
@@ -216,8 +258,9 @@ const Dashboard: React.FC = () => {
                             <div className="flex gap-2">
                                 <select
                                     value={filterTeams ?? ''}
-                                    onChange={(e) => setFilterTeams(e.target.value ? Number(e.target.value) : null)}
+                                    onChange={handleFilterTeamsChange}
                                     className="px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:outline-none focus:border-blue-500"
+                                    aria-label="Filtrar por numero de equipas"
                                 >
                                     <option value="">Todas as Equipas</option>
                                     {[...new Set(scenarios.map(s => s.teams))].sort((a, b) => a - b).map(num => (
@@ -228,7 +271,7 @@ const Dashboard: React.FC = () => {
                                 {/* Sort */}
                                 <select
                                     value={sortBy}
-                                    onChange={(e) => setSortBy(e.target.value as 'name' | 'weekends' | 'hours')}
+                                    onChange={handleSortChange}
                                     className="px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:outline-none focus:border-blue-500"
                                     aria-label="Ordenar cenarios"
                                 >
@@ -240,17 +283,18 @@ const Dashboard: React.FC = () => {
 
                             {/* Show Hidden Toggle */}
                             <button
-                                onClick={() => setShowHidden(!showHidden)}
+                                onClick={toggleShowHidden}
                                 className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors whitespace-nowrap ${showHidden
                                     ? 'bg-yellow-600 hover:bg-yellow-700 text-white'
                                     : 'bg-gray-700 hover:bg-gray-600 text-gray-300'
                                     }`}
-                                title={showHidden ? "Ocultar cenários escondidos" : "Mostrar cenários escondidos"}
+                                title={showHidden ? "Ocultar cenarios escondidos" : "Mostrar cenarios escondidos"}
+                                aria-pressed={showHidden}
                             >
-                                <Filter className="w-4 h-4" />
+                                <Filter className="w-4 h-4" aria-hidden="true" />
                                 {showHidden ? 'Ocultar Escondidos' : 'Mostrar Escondidos'}
                                 {scenarios.filter(s => s.hidden).length > 0 && (
-                                    <span className="bg-gray-900 px-2 py-0.5 rounded-full text-xs">
+                                    <span className="bg-gray-900 px-2 py-0.5 rounded-full text-xs" aria-label={`${scenarios.filter(s => s.hidden).length} cenarios escondidos`}>
                                         {scenarios.filter(s => s.hidden).length}
                                     </span>
                                 )}
@@ -272,10 +316,7 @@ const Dashboard: React.FC = () => {
                                 onToggleHidden={handleToggleHidden}
                                 onViewCalendar={handleViewCalendar}
                                 onDuplicate={handleDuplicate}
-                                onViewMultiTeamCalendar={(s) => {
-                                    setSelectedScenario(s);
-                                    setShowMultiTeamCalendar(true);
-                                }}
+                                onViewMultiTeamCalendar={handleViewMultiTeamCalendar}
                                 onExport={handleExport}
                             />
                         ))}
@@ -290,26 +331,32 @@ const Dashboard: React.FC = () => {
 
                     {/* Advanced Metrics, Multi-Year Analysis, Heatmap and Team Fairness for each scenario */}
                     <div className="mt-8 space-y-6">
-                        {visibleScenarios.map((scenario, idx) => (
-                            <div key={scenario.id} className="space-y-6">
-                                {analyses[idx].advancedMetrics && (
-                                    <AdvancedMetricsDisplay
-                                        metrics={analyses[idx].advancedMetrics!}
+                        {visibleScenarios.map((scenario) => {
+                            const idx = scenarios.findIndex(s => s.id === scenario.id);
+                            const analysis = analyses[idx];
+                            if (!analysis) return null;
+
+                            return (
+                                <div key={scenario.id} className="space-y-6">
+                                    {analysis.advancedMetrics && (
+                                        <AdvancedMetricsDisplay
+                                            metrics={analysis.advancedMetrics}
+                                            scenarioName={scenario.name}
+                                        />
+                                    )}
+                                    <QualityOfLifeDisplay
+                                        scenario={scenario}
+                                        analysis={analysis}
+                                    />
+                                    <WorkloadHeatmap scenario={scenario} />
+                                    <MultiYearAnalysis
+                                        multiYearData={analysis.multiYearAnalysis}
                                         scenarioName={scenario.name}
                                     />
-                                )}
-                                <QualityOfLifeDisplay
-                                    scenario={scenario}
-                                    analysis={analyses[idx]}
-                                />
-                                <WorkloadHeatmap scenario={scenario} />
-                                <MultiYearAnalysis
-                                    multiYearData={analyses[idx].multiYearAnalysis}
-                                    scenarioName={scenario.name}
-                                />
-                                <TeamFairness scenario={scenario} />
-                            </div>
-                        ))}
+                                    <TeamFairness scenario={scenario} />
+                                </div>
+                            );
+                        })}
                     </div>
 
                     {/* Export All Button */}
@@ -317,8 +364,9 @@ const Dashboard: React.FC = () => {
                         <button
                             onClick={handleExportAll}
                             className="bg-green-600 hover:bg-green-700 text-white font-medium py-3 px-6 rounded-lg transition-colors flex items-center gap-2"
+                            aria-label="Exportar todos os cenarios para Excel"
                         >
-                            <Download className="w-5 h-5" />
+                            <Download className="w-5 h-5" aria-hidden="true" />
                             Export All Scenarios to Excel
                         </button>
                     </div>
@@ -331,13 +379,19 @@ const Dashboard: React.FC = () => {
 
             {/* Calendar Modal */}
             {showCalendar && selectedScenario && (
-                <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4">
+                <div 
+                    className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4"
+                    role="dialog"
+                    aria-modal="true"
+                    aria-label="Calendario Anual"
+                >
                     <div className="bg-gray-900 rounded-lg max-w-6xl w-full max-h-[90vh] overflow-hidden flex flex-col">
                         <div className="p-4 border-b border-gray-700 flex justify-between items-center">
-                            <h2 className="text-xl font-semibold text-white">Vista de Calendário Anual</h2>
+                            <h2 className="text-xl font-semibold text-white">Vista de Calendario Anual</h2>
                             <button
-                                onClick={() => setShowCalendar(false)}
+                                onClick={handleCloseCalendar}
                                 className="text-gray-400 hover:text-white transition-colors"
+                                aria-label="Fechar calendario"
                             >
                                 <X className="w-6 h-6" />
                             </button>
@@ -353,13 +407,13 @@ const Dashboard: React.FC = () => {
             {showMultiTeamCalendar && selectedScenario && selectedScenario.teams > 1 && (
                 <MultiTeamCalendarView
                     scenario={selectedScenario}
-                    onClose={() => setShowMultiTeamCalendar(false)}
+                    onClose={handleCloseMultiTeamCalendar}
                 />
             )}
 
             <GeneratorUI
                 isOpen={showGenerator}
-                onClose={() => setShowGenerator(false)}
+                onClose={handleCloseGenerator}
                 onSelectScenario={handleLoadPreset}
             />
         </div>

@@ -206,6 +206,19 @@ export function generateScenarioFromICS(
     startDate: string;
 } {
     const events = parseICSFile(icsContent);
+
+    if (events.length === 0) {
+        return {
+            name: scenarioName,
+            teams: 0,
+            shiftDuration,
+            weeklyHoursContract,
+            pattern: '',
+            teamPatterns: [],
+            startDate: new Date().toISOString().split('T')[0],
+        };
+    }
+
     const teamPatterns = extractTeamPatterns(events);
 
     // Find global reference date (earliest date across ALL events)

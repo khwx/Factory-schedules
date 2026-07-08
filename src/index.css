@@ -7,18 +7,30 @@
   --bg-primary: #111827;
   --bg-secondary: #1F2937;
   --bg-tertiary: #374151;
+  --bg-hover: #4B5563;
   --text-primary: #FFFFFF;
   --text-secondary: #D1D5DB;
   --text-tertiary: #9CA3AF;
   --border-color: #374151;
   --border-color-hover: #4B5563;
 
-  /* Accent colors stay the same */
+  /* Accent colors */
   --accent-blue: #3B82F6;
   --accent-green: #10B981;
   --accent-yellow: #F59E0B;
   --accent-red: #EF4444;
   --accent-purple: #8B5CF6;
+
+  /* Status colors */
+  --status-success: #10B981;
+  --status-warning: #F59E0B;
+  --status-error: #EF4444;
+  --status-info: #3B82F6;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 }
 
 /* Light Theme */
@@ -26,18 +38,30 @@
   --bg-primary: #F9FAFB;
   --bg-secondary: #FFFFFF;
   --bg-tertiary: #E5E7EB;
+  --bg-hover: #D1D5DB;
   --text-primary: #111827;
   --text-secondary: #374151;
   --text-tertiary: #6B7280;
   --border-color: #D1D5DB;
   --border-color-hover: #9CA3AF;
 
-  /* Accent colors stay the same */
-  --accent-blue: #3B82F6;
-  --accent-green: #10B981;
-  --accent-yellow: #F59E0B;
-  --accent-red: #EF4444;
-  --accent-purple: #8B5CF6;
+  /* Accent colors */
+  --accent-blue: #2563EB;
+  --accent-green: #059669;
+  --accent-yellow: #D97706;
+  --accent-red: #DC2626;
+  --accent-purple: #7C3AED;
+
+  /* Status colors */
+  --status-success: #059669;
+  --status-warning: #D97706;
+  --status-error: #DC2626;
+  --status-info: #2563EB;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 }
 
 :root {
@@ -78,6 +102,10 @@ body {
   background-color: #D1D5DB !important;
 }
 
+.light .bg-gray-500 {
+  background-color: #9CA3AF !important;
+}
+
 .light .text-white {
   color: var(--text-primary) !important;
 }
@@ -113,4 +141,80 @@ body {
 
 .light .hover\:border-gray-600:hover {
   border-color: #9CA3AF !important;
+}
+
+.light .hover\:text-white:hover {
+  color: var(--text-primary) !important;
+}
+
+.light .hover\:text-gray-300:hover {
+  color: var(--text-secondary) !important;
+}
+
+/* Focus states for accessibility */
+*:focus-visible {
+  outline: 2px solid var(--accent-blue);
+  outline-offset: 2px;
+}
+
+/* Smooth transitions for interactive elements */
+button, a, input, select, textarea {
+  transition: all 0.15s ease;
+}
+
+/* Custom scrollbar for dark theme */
+.dark ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: var(--bg-tertiary);
+  border-radius: 4px;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: var(--bg-hover);
+}
+
+/* Custom scrollbar for light theme */
+.light ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.light ::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+}
+
+.light ::-webkit-scrollbar-thumb {
+  background: #9CA3AF;
+  border-radius: 4px;
+}
+
+.light ::-webkit-scrollbar-thumb:hover {
+  background: #6B7280;
+}
+
+/* Animation utilities */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from { transform: translateY(-10px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.2s ease-out;
+}
+
+.animate-slideIn {
+  animation: slideIn 0.2s ease-out;
 }
