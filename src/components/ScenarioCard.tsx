@@ -14,7 +14,7 @@ interface ScenarioCardProps {
     onDuplicate: (scenario: Scenario) => void;
 }
 
-const ScenarioCard: React.FC<ScenarioCardProps> = ({ scenario, onDelete, onEdit, onViewCalendar, onViewMultiTeamCalendar, onExport, onToggleHidden, onDuplicate }) => {
+const ScenarioCard: React.FC<ScenarioCardProps> = React.memo(({ scenario, onDelete, onEdit, onViewCalendar, onViewMultiTeamCalendar, onExport, onToggleHidden, onDuplicate }) => {
     const analysis = useMemo(() => calculateAnalysis(scenario), [scenario]);
 
     const getShiftColor = (char: string) => {
@@ -155,6 +155,8 @@ const ScenarioCard: React.FC<ScenarioCardProps> = ({ scenario, onDelete, onEdit,
             </div>
         </div>
     );
-};
+});
+
+ScenarioCard.displayName = 'ScenarioCard';
 
 export default ScenarioCard;

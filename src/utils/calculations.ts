@@ -2,6 +2,25 @@ import { Scenario, AnalysisResult } from '../types';
 import { generateMultiYearAnalysis, generateYearCalendar, analyzeYearCalendar } from './calendar';
 import { calculateAdvancedMetrics, generateAdvancedInsights } from './advancedMetrics';
 
+/**
+ * Calculate comprehensive analysis for a shift schedule scenario.
+ * 
+ * @param scenario - The schedule scenario to analyze
+ * @returns Complete analysis results including hours, weekends, and qualitative insights
+ * 
+ * @example
+ * ```typescript
+ * const scenario: Scenario = {
+ *   id: '1',
+ *   name: '5 Teams - Standard',
+ *   teams: 5,
+ *   shiftDuration: 8,
+ *   pattern: 'MMTTNNFFFF'
+ * };
+ * const analysis = calculateAnalysis(scenario);
+ * console.log(analysis.avgWeeklyHours); // Average weekly hours
+ * ```
+ */
 export const calculateAnalysis = (scenario: Scenario): AnalysisResult => {
     const { teams, shiftDuration, pattern } = scenario;
     const patternLength = pattern.length;
@@ -51,19 +70,19 @@ export const calculateAnalysis = (scenario: Scenario): AnalysisResult => {
     ];
 
     if (avgWeeklyHours > 42) {
-        qualitative.push('⚠️ Média de horas semanais elevada. Considere reduzir a carga horária.');
+        qualitative.push('Media de horas semanais elevada. Considere reduzir a carga horaria.');
     } else if (avgWeeklyHours < 35) {
-        qualitative.push('ℹ️ Média de horas semanais baixa. Pode necessitar de cobertura adicional.');
+        qualitative.push('Media de horas semanais baixa. Pode necessitar de cobertura adicional.');
     }
 
     if (weekendsOff < 20) {
-        qualitative.push('⚠️ Poucos fins de semana de folga. Pode afetar o equilíbrio vida-trabalho.');
+        qualitative.push('Poucos fins de semana de folga. Pode afetar o equilibrio vida-trabalho.');
     } else if (weekendsOff >= 26) {
-        qualitative.push('✅ Boa cobertura de fins de semana para descanso e família.');
+        qualitative.push('Boa cobertura de fins de semana para descanso e familia.');
     }
 
     if (totalOffDaysPerYear < 150) {
-        qualitative.push('⚠️ Poucos dias de folga totais. Assegure períodos de descanso adequados.');
+        qualitative.push('Poucos dias de folga totais. Assegure periodos de descanso adequados.');
     }
 
     let weeklyHoursDifference: number | undefined;
@@ -71,11 +90,11 @@ export const calculateAnalysis = (scenario: Scenario): AnalysisResult => {
         weeklyHoursDifference = avgWeeklyHours - scenario.weeklyHoursContract;
 
         if (weeklyHoursDifference > 0.5) {
-            qualitative.push(`⚠️ Excede o contrato em ${weeklyHoursDifference.toFixed(1)} horas semanais.`);
+            qualitative.push(`Excede o contrato em ${weeklyHoursDifference.toFixed(1)} horas semanais.`);
         } else if (weeklyHoursDifference < -0.5) {
-            qualitative.push(`ℹ️ Abaixo do contrato em ${Math.abs(weeklyHoursDifference).toFixed(1)} horas semanais.`);
+            qualitative.push(`Abaixo do contrato em ${Math.abs(weeklyHoursDifference).toFixed(1)} horas semanais.`);
         } else {
-            qualitative.push('✅ Cumpre o horário contratual.');
+            qualitative.push('Cumpre o horario contratual.');
         }
     }
 

@@ -2,13 +2,15 @@
 // Parses .ics files to extract shift patterns for multiple teams
 
 export interface ICSEvent {
-    summary: string; // e.g., "Manhã A", "Noite B"
+    summary: string; // e.g., "Manha A", "Noite B"
     startDate: Date;
     endDate: Date;
-    rrule?: {
-        freq: string; // e.g., "DAILY"
-        interval: number; // e.g., 15
-    };
+    rrule?: RRULE;
+}
+
+export interface RRULE {
+    freq: string; // e.g., "DAILY"
+    interval: number; // e.g., 15
 }
 
 export interface TeamPattern {
@@ -39,7 +41,7 @@ export function parseICSFile(content: string): ICSEvent[] {
             }
             inEvent = false;
         } else if (inEvent) {
-            // Parse SUMMARY (e.g., "SUMMARY:Manhã A")
+            // Parse SUMMARY (e.g., "SUMMARY:Manha A")
             if (trimmed.startsWith('SUMMARY:')) {
                 currentEvent.summary = trimmed.substring(8);
             }
@@ -65,7 +67,7 @@ export function parseICSFile(content: string): ICSEvent[] {
             // Parse RRULE (e.g., "RRULE:FREQ=DAILY;INTERVAL=15")
             else if (trimmed.startsWith('RRULE:')) {
                 const rruleStr = trimmed.substring(6);
-                const rrule: any = {};
+                const rrule: RRULE = { freq: '', interval: 0 };
 
                 const freqMatch = rruleStr.match(/FREQ=([A-Z]+)/);
                 if (freqMatch) rrule.freq = freqMatch[1];
@@ -93,14 +95,14 @@ function parseICSDate(dateStr: string): Date {
 
 /**
  * Extract team name and shift type from event summary
- * Examples: "Manhã A" -> {team: "A", shift: "M"}
+ * Examples: "Manha A" -> {team: "A", shift: "M"}
  *           "Noite B" -> {team: "B", shift: "N"}
  */
 function parseEventSummary(summary: string): { team: string; shift: string } | null {
     const normalized = summary.trim();
 
-    // Match patterns like "Manhã A", "Tarde B", "Noite C"
-    const match = normalized.match(/(Manhã|Tarde|Noite)\s+([A-E])/i);
+    // Match patterns like "Manha A", "Tarde B", "Noite C"
+    const match = normalized.match(/(Manha|Tarde|Noite)\s+([A-E])/i);
 
     if (!match) return null;
 
@@ -108,7 +110,7 @@ function parseEventSummary(summary: string): { team: string; shift: string } | n
     const team = match[2].toUpperCase();
 
     let shift = '';
-    if (shiftType === 'manhã') shift = 'M';
+    if (shiftType === 'manha') shift = 'M';
     else if (shiftType === 'tarde') shift = 'T';
     else if (shiftType === 'noite') shift = 'N';
 

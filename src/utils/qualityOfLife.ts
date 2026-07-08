@@ -1,5 +1,6 @@
 import { Scenario, AnalysisResult } from '../types';
 import { generateYearCalendar } from './calendar';
+import { getPortugueseHolidays, getHolidayMonthDays, isHolidayByMonthDay } from './portugueseHolidays';
 
 export interface QualityOfLifeScore {
     overall: number; // 0-100
@@ -23,22 +24,9 @@ export interface CriticalPeriod {
     daysAffected: number;
 }
 
-const PORTUGUESE_HOLIDAYS = [
-    '01-01', // Ano Novo
-    '04-25', // 25 de Abril
-    '05-01', // Dia do Trabalhador
-    '06-10', // Dia de Portugal
-    '08-15', // Assunção de Nossa Senhora
-    '10-05', // Implantação da República
-    '11-01', // Todos os Santos
-    '12-01', // Restauração da Independência
-    '12-08', // Imaculada Conceição
-    '12-25', // Natal
-];
-
-function isHoliday(date: Date, customHolidays: string[] = []): boolean {
+function isHoliday(date: Date, holidayMonthDays: string[]): boolean {
     const monthDay = `${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
-    return PORTUGUESE_HOLIDAYS.includes(monthDay) || customHolidays.includes(monthDay);
+    return isHolidayByMonthDay(monthDay, holidayMonthDays);
 }
 
 export function calculateQualityOfLifeScore(
@@ -48,6 +36,7 @@ export function calculateQualityOfLifeScore(
     customHolidays: string[] = []
 ): QualityOfLifeScore {
     const calendar = generateYearCalendar(scenario, year);
+    const holidayMonthDays = getHolidayMonthDays(year);
 
     // 1. Weekends Coverage (0-100)
     const idealWeekends = 26; // ~50% of weekends
@@ -86,12 +75,12 @@ export function calculateQualityOfLifeScore(
     // 5. Holidays Coverage
     let holidaysOff = 0;
     calendar.forEach(day => {
-        if (day.shift === 'F' && isHoliday(day.date, customHolidays)) {
+        if (day.shift === 'F' && isHoliday(day.date, holidayMonthDays)) {
             holidaysOff++;
         }
     });
-    const totalHolidays = PORTUGUESE_HOLIDAYS.length + customHolidays.length;
-    const holidaysCoverage = (holidaysOff / totalHolidays) * 100;
+    const totalHolidays = holidayMonthDays.length + customHolidays.length;
+    const holidaysCoverage = totalHolidays > 0 ? (holidaysOff / totalHolidays) * 100 : 0;
 
     // Calculate overall score (weighted average)
     const overall = (
@@ -115,29 +104,29 @@ export function calculateQualityOfLifeScore(
     const insights: string[] = [];
 
     if (weekendsCoverage >= 80) {
-        insights.push('✅ Excelente cobertura de fins de semana para vida social e familiar.');
+        insights.push('Excelente cobertura de fins de semana para vida social e familiar.');
     } else if (weekendsCoverage < 50) {
-        insights.push('⚠️ Poucos fins de semana livres podem afetar a qualidade de vida.');
+        insights.push('Poucos fins de semana livres podem afetar a qualidade de vida.');
     }
 
     if (Math.abs(analysis.weeklyHoursDifference ?? 0) <= 1) {
-        insights.push('✅ Horas semanais equilibradas com o contrato.');
+        insights.push('Horas semanais equilibradas com o contrato.');
     }
 
     if (totalMiniVacations >= 4) {
-        insights.push(`✅ ${totalMiniVacations} períodos de descanso prolongado (3+ dias) por ano.`);
+        insights.push(`${totalMiniVacations} periodos de descanso prolongado (3+ dias) por ano.`);
     } else if (totalMiniVacations === 0) {
-        insights.push('⚠️ Sem períodos de descanso prolongado. Considere ajustar o padrão.');
+        insights.push('Sem periodos de descanso prolongado. Considere ajustar o padrao.');
     }
 
     if (nightRatio > 0.25) {
-        insights.push('⚠️ Alto número de turnos noturnos pode afetar a saúde e ritmo circadiano.');
+        insights.push('Alto numero de turnos noturnos pode afetar a saude e ritmo circadiano.');
     }
 
     if (holidaysCoverage >= 70) {
-        insights.push('✅ Boa cobertura de feriados nacionais.');
+        insights.push('Boa cobertura de feriados nacionais.');
     } else if (holidaysCoverage < 30) {
-        insights.push('⚠️ Baixa cobertura de feriados pode reduzir tempo com família.');
+        insights.push('Baixa cobertura de feriados pode reduzir tempo com familia.');
     }
 
     return {

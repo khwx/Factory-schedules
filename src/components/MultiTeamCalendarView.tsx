@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { Scenario } from '../types';
 import { generateYearCalendar } from '../utils/calendar';
+import { getHolidayMonthDays, isHolidayByMonthDay } from '../utils/portugueseHolidays';
 import { ArrowLeft, ArrowRight, LayoutGrid, LayoutList } from 'lucide-react';
 import './MultiTeamCalendarView.css';
 
@@ -12,34 +13,22 @@ interface MultiTeamCalendarViewProps {
 type LayoutMode = 'horizontal' | 'vertical';
 
 const MONTH_NAMES = [
-    'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
+    'Janeiro', 'Fevereiro', 'Marco', 'Abril', 'Maio', 'Junho',
     'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
 ];
 
-const DAY_NAMES_SHORT = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
+const DAY_NAMES_SHORT = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'];
 
-// Portuguese holidays (format: 'MM-DD')
-const PORTUGUESE_HOLIDAYS = [
-    '01-01', // Ano Novo
-    '04-25', // 25 de Abril
-    '05-01', // Dia do Trabalhador
-    '06-10', // Dia de Portugal
-    '08-15', // Assunção de Nossa Senhora
-    '10-05', // Implantação da República
-    '11-01', // Todos os Santos
-    '12-01', // Restauração da Independência
-    '12-08', // Imaculada Conceição
-    '12-25', // Natal
-];
-
-const isHoliday = (date: Date): boolean => {
+const isHoliday = (date: Date, holidayMonthDays: string[]): boolean => {
     const monthDay = `${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
-    return PORTUGUESE_HOLIDAYS.includes(monthDay);
+    return isHolidayByMonthDay(monthDay, holidayMonthDays);
 };
 
 export const MultiTeamCalendarView: React.FC<MultiTeamCalendarViewProps> = ({ scenario, onClose }) => {
     const [year, setYear] = useState(new Date().getFullYear());
     const [layoutMode, setLayoutMode] = useState<LayoutMode>('horizontal');
+
+    const holidayMonthDays = useMemo(() => getHolidayMonthDays(year), [year]);
 
     const teamCalendars = useMemo(() => {
         const calendars = [];
@@ -51,15 +40,14 @@ export const MultiTeamCalendarView: React.FC<MultiTeamCalendarViewProps> = ({ sc
 
     const getShiftColor = (shift: string, isWeekend: boolean = false) => {
         if (shift === 'F') {
-            // Darker gray for off days, even darker on weekends
-            return isWeekend ? '#9ca3af' : '#d1d5db';
+            return isWeekend ? 'var(--cal-bg-secondary)' : 'var(--cal-bg-secondary)';
         }
 
         switch (shift) {
             case 'M': return '#4ade80'; // Morning - green
             case 'T': return '#fbbf24'; // Afternoon - yellow
             case 'N': return '#60a5fa'; // Night - blue
-            default: return '#d1d5db';
+            default: return 'var(--cal-bg-secondary)';
         }
     };
 
@@ -99,7 +87,7 @@ export const MultiTeamCalendarView: React.FC<MultiTeamCalendarViewProps> = ({ sc
                                 const monthLabel = isFirstOfMonth ? MONTH_NAMES[day.date.getMonth()].substring(0, 3) : '';
                                 const dayOfWeek = day.date.getDay();
                                 const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
-                                const isHol = isHoliday(day.date);
+                                const isHol = isHoliday(day.date, holidayMonthDays);
 
                                 return (
                                     <div
@@ -145,8 +133,8 @@ export const MultiTeamCalendarView: React.FC<MultiTeamCalendarViewProps> = ({ sc
                                             {MONTH_NAMES[teamCalendars[0][dayIndex].date.getMonth()].substring(0, 3)}
                                         </div>
                                     )}
-                                    <div className="day-number-vertical" style={{
-                                        color: (teamCalendars[0][dayIndex].date.getDay() === 0 || teamCalendars[0][dayIndex].date.getDay() === 6 || isHoliday(teamCalendars[0][dayIndex].date)) ? '#dc2626' : '#1f2937'
+                                    <div className="day-number-vertical"                                     style={{
+                                        color: (teamCalendars[0][dayIndex].date.getDay() === 0 || teamCalendars[0][dayIndex].date.getDay() === 6 || isHoliday(teamCalendars[0][dayIndex].date, holidayMonthDays)) ? '#dc2626' : '#1f2937'
                                     }}>
                                         {teamCalendars[0][dayIndex].date.getDate()}
                                     </div>

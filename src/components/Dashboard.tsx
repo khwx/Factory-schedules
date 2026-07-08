@@ -228,8 +228,9 @@ const Dashboard: React.FC = () => {
                                 {/* Sort */}
                                 <select
                                     value={sortBy}
-                                    onChange={(e) => setSortBy(e.target.value as any)}
+                                    onChange={(e) => setSortBy(e.target.value as 'name' | 'weekends' | 'hours')}
                                     className="px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:outline-none focus:border-blue-500"
+                                    aria-label="Ordenar cenarios"
                                 >
                                     <option value="name">Ordenar: Nome</option>
                                     <option value="weekends">Ordenar: Fins de Semana</option>
