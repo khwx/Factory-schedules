@@ -1,5 +1,4 @@
 import React, { Suspense, LazyExoticComponent, ComponentType } from 'react';
-import { Skeleton } from '../components/Skeleton';
 
 interface LazyLoadProps {
     children: React.ReactNode;
@@ -18,8 +17,7 @@ export const LazyLoad: React.FC<LazyLoadProps> = ({
 };
 
 export function lazyLoad<P extends object>(
-    factory: () => Promise<{ default: ComponentType<P> }>,
-    FallbackComponent?: React.ComponentType
+    factory: () => Promise<{ default: ComponentType<P> }>
 ): LazyExoticComponent<ComponentType<P>> {
     return React.lazy(factory);
 }

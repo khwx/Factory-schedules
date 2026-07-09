@@ -1,6 +1,6 @@
 import { Scenario, AnalysisResult } from '../types';
 import { generateYearCalendar } from './calendar';
-import { getPortugueseHolidays, getHolidayMonthDays, isHolidayByMonthDay } from './portugueseHolidays';
+import { getHolidayMonthDays, isHolidayByMonthDay } from './portugueseHolidays';
 
 export interface QualityOfLifeScore {
     overall: number; // 0-100

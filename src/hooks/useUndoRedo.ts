@@ -1,6 +1,6 @@
 import { useState, useCallback, useRef } from 'react';
 
-interface UseUndoRedoOptions<T> {
+interface UseUndoRedoOptions {
     maxHistory?: number;
 }
 
@@ -16,7 +16,7 @@ interface UseUndoRedoReturn<T> {
 
 export function useUndoRedo<T>(
     initialState: T,
-    options: UseUndoRedoOptions<T> = {}
+    options: UseUndoRedoOptions = {}
 ): UseUndoRedoReturn<T> {
     const { maxHistory = 50 } = options;
 
