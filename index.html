@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="manifest" href="/manifest.json" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="ShiftSim Factory - Simulador de escalas de turnos industriais para otimizacao de horarios de trabalho" />
     <meta name="keywords" content="escalas, turnos, fabrica, horarios, trabalho, simulacao, Portugal" />
@@ -24,10 +25,30 @@
     <!-- Theme color -->
     <meta name="theme-color" content="#111827" />
     
+    <!-- PWA -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="ShiftSim" />
+    <link rel="apple-touch-icon" href="/icon-192.png" />
+    
     <title>ShiftSim Factory - Simulador de Escalas</title>
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    <script>
+      // Register service worker for PWA
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js')
+            .then((registration) => {
+              console.log('SW registered:', registration.scope);
+            })
+            .catch((error) => {
+              console.log('SW registration failed:', error);
+            });
+        });
+      }
+    </script>
   </body>
 </html>

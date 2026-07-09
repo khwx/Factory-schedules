@@ -1,0 +1,36 @@
+{
+  "name": "ShiftSim Factory - Simulador de Turnos",
+  "short_name": "ShiftSim",
+  "description": "Simulador de escalas de turnos industriais para o mercado português",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#111827",
+  "theme_color": "#3B82F6",
+  "orientation": "any",
+  "scope": "/",
+  "lang": "pt",
+  "icons": [
+    {
+      "src": "/icon-192.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "categories": ["business", "productivity", "utilities"],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "Novo Cenário",
+      "short_name": "Novo",
+      "url": "/",
+      "description": "Criar um novo cenário de turnos"
+    }
+  ]
+}

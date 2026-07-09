@@ -5,7 +5,8 @@ import ComparisonTable from './ComparisonTable';
 import { Scenario } from '../types';
 import { calculateAnalysis } from '../utils/calculations';
 import { exportToExcel, exportComparison } from '../utils/export';
-import { X, Download, Filter, Search, Wand2, Undo2, Redo2 } from 'lucide-react';
+import { exportScenarioToPDF, exportComparisonToPDF } from '../utils/pdfExport';
+import { X, Download, Filter, Search, Wand2, Undo2, Redo2, FileText } from 'lucide-react';
 import PresetSelector from './PresetSelector';
 import ICSImporter from './ICSImporter';
 import { PresetScenario, PRESET_SCENARIOS } from '../data/presetScenarios';
@@ -213,8 +214,17 @@ const Dashboard: React.FC = () => {
         exportToExcel(scenario, analysis);
     }, []);
 
+    const handleExportPDF = useCallback((scenario: Scenario) => {
+        const analysis = calculateAnalysis(scenario);
+        exportScenarioToPDF(scenario, analysis);
+    }, []);
+
     const handleExportAll = useCallback(() => {
         exportComparison(scenarios, analyses);
+    }, [scenarios, analyses]);
+
+    const handleExportAllPDF = useCallback(() => {
+        exportComparisonToPDF(scenarios, analyses);
     }, [scenarios, analyses]);
 
     const handleLoadPreset = useCallback((preset: PresetScenario) => {
@@ -448,6 +458,7 @@ const Dashboard: React.FC = () => {
                                 onDuplicate={handleDuplicate}
                                 onViewMultiTeamCalendar={handleViewMultiTeamCalendar}
                                 onExport={handleExport}
+                                onExportPDF={handleExportPDF}
                                 isDragging={draggedItem?.id === scenario.id}
                                 isDragOver={dragOverItem?.id === scenario.id}
                                 onDragStart={() => handleDragStart(scenario)}
@@ -509,15 +520,23 @@ const Dashboard: React.FC = () => {
                         })}
                     </div>
 
-                    {/* Export All Button */}
-                    <div className="mt-8 flex justify-center">
+                    {/* Export All Buttons */}
+                    <div className="mt-8 flex justify-center gap-4">
                         <button
                             onClick={handleExportAll}
                             className="bg-green-600 hover:bg-green-700 text-white font-medium py-3 px-6 rounded-lg transition-colors flex items-center gap-2"
                             aria-label="Exportar todos os cenarios para Excel"
                         >
                             <Download className="w-5 h-5" aria-hidden="true" />
-                            Export All Scenarios to Excel
+                            Export All to Excel
+                        </button>
+                        <button
+                            onClick={handleExportAllPDF}
+                            className="bg-red-600 hover:bg-red-700 text-white font-medium py-3 px-6 rounded-lg transition-colors flex items-center gap-2"
+                            aria-label="Exportar todos os cenarios para PDF"
+                        >
+                            <FileText className="w-5 h-5" aria-hidden="true" />
+                            Export All to PDF
                         </button>
                     </div>
                 </>

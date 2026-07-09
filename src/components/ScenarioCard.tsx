@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { Trash2, Clock, Calendar, Download, Palmtree, Pencil, Eye, EyeOff, Users, Copy, GripVertical } from 'lucide-react';
+import { Trash2, Clock, Calendar, Download, Palmtree, Pencil, Eye, EyeOff, Users, Copy, GripVertical, FileText } from 'lucide-react';
 import { Scenario } from '../types';
 import { calculateAnalysis } from '../utils/calculations';
 
@@ -10,6 +10,7 @@ interface ScenarioCardProps {
     onViewCalendar: (scenario: Scenario) => void;
     onViewMultiTeamCalendar?: (scenario: Scenario) => void;
     onExport: (scenario: Scenario) => void;
+    onExportPDF?: (scenario: Scenario) => void;
     onToggleHidden: (id: string) => void;
     onDuplicate: (scenario: Scenario) => void;
     isDragging?: boolean;
@@ -29,6 +30,7 @@ const ScenarioCard: React.FC<ScenarioCardProps> = React.memo(({
     onViewCalendar, 
     onViewMultiTeamCalendar, 
     onExport, 
+    onExportPDF,
     onToggleHidden, 
     onDuplicate,
     isDragging = false,
@@ -71,7 +73,7 @@ const ScenarioCard: React.FC<ScenarioCardProps> = React.memo(({
         >
             <div className="p-4 border-b border-gray-700 flex justify-between items-start">
                 <div className="flex items-start gap-2">
-                    <div className="mt-1 cursor-grab active:cursor-grabbing text-gray-500 hover:text-gray-300 transition-colors">
+                    <div className="mt-1 cursor-grab active:cursor-grabbing text-gray-500 hover:text-gray-300 transition-colors" data-testid="drag-handle">
                         <GripVertical className="w-4 h-4" />
                     </div>
                     <div>
@@ -201,8 +203,18 @@ const ScenarioCard: React.FC<ScenarioCardProps> = React.memo(({
                         aria-label="Exportar para Excel"
                     >
                         <Download className="w-4 h-4" />
-                        Exportar
+                        Excel
                     </button>
+                    {onExportPDF && (
+                        <button
+                            onClick={() => onExportPDF(scenario)}
+                            className="flex-1 bg-red-600 hover:bg-red-700 text-white text-sm font-medium py-2 px-3 rounded transition-colors flex items-center justify-center gap-2"
+                            aria-label="Exportar para PDF"
+                        >
+                            <FileText className="w-4 h-4" />
+                            PDF
+                        </button>
+                    )}
                 </div>
             </div>
         </div>
