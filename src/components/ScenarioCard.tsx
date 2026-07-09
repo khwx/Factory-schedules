@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { Trash2, Clock, Calendar, Download, Palmtree, Pencil, Eye, EyeOff, Users, Copy } from 'lucide-react';
+import { Trash2, Clock, Calendar, Download, Palmtree, Pencil, Eye, EyeOff, Users, Copy, GripVertical } from 'lucide-react';
 import { Scenario } from '../types';
 import { calculateAnalysis } from '../utils/calculations';
 
@@ -12,9 +12,34 @@ interface ScenarioCardProps {
     onExport: (scenario: Scenario) => void;
     onToggleHidden: (id: string) => void;
     onDuplicate: (scenario: Scenario) => void;
+    isDragging?: boolean;
+    isDragOver?: boolean;
+    onDragStart?: () => void;
+    onDragEnter?: () => void;
+    onDragLeave?: () => void;
+    onDragOver?: (e: React.DragEvent) => void;
+    onDrop?: (e: React.DragEvent) => void;
+    onDragEnd?: () => void;
 }
 
-const ScenarioCard: React.FC<ScenarioCardProps> = React.memo(({ scenario, onDelete, onEdit, onViewCalendar, onViewMultiTeamCalendar, onExport, onToggleHidden, onDuplicate }) => {
+const ScenarioCard: React.FC<ScenarioCardProps> = React.memo(({ 
+    scenario, 
+    onDelete, 
+    onEdit, 
+    onViewCalendar, 
+    onViewMultiTeamCalendar, 
+    onExport, 
+    onToggleHidden, 
+    onDuplicate,
+    isDragging = false,
+    isDragOver = false,
+    onDragStart,
+    onDragEnter,
+    onDragLeave,
+    onDragOver,
+    onDrop,
+    onDragEnd,
+}) => {
     const analysis = useMemo(() => calculateAnalysis(scenario), [scenario]);
 
     const getShiftColor = (char: string) => {
@@ -28,40 +53,64 @@ const ScenarioCard: React.FC<ScenarioCardProps> = React.memo(({ scenario, onDele
     };
 
     return (
-        <div className="bg-gray-800 rounded-lg border border-gray-700 overflow-hidden hover:border-gray-600 transition-colors">
+        <div 
+            className={`bg-gray-800 rounded-lg border overflow-hidden transition-all duration-200 ${
+                isDragging 
+                    ? 'opacity-50 border-blue-500 scale-95' 
+                    : isDragOver 
+                        ? 'border-blue-500 border-2 scale-[1.02]' 
+                        : 'border-gray-700 hover:border-gray-600'
+            }`}
+            draggable
+            onDragStart={onDragStart}
+            onDragEnter={onDragEnter}
+            onDragLeave={onDragLeave}
+            onDragOver={onDragOver}
+            onDrop={onDrop}
+            onDragEnd={onDragEnd}
+        >
             <div className="p-4 border-b border-gray-700 flex justify-between items-start">
-                <div>
-                    <h3 className="text-lg font-semibold text-white">{scenario.name}</h3>
-                    <p className="text-sm text-gray-400">
-                        {scenario.teams} Equipas • Turnos de {scenario.shiftDuration}h
-                    </p>
+                <div className="flex items-start gap-2">
+                    <div className="mt-1 cursor-grab active:cursor-grabbing text-gray-500 hover:text-gray-300 transition-colors">
+                        <GripVertical className="w-4 h-4" />
+                    </div>
+                    <div>
+                        <h3 className="text-lg font-semibold text-white">{scenario.name}</h3>
+                        <p className="text-sm text-gray-400">
+                            {scenario.teams} Equipas • Turnos de {scenario.shiftDuration}h
+                        </p>
+                    </div>
                 </div>
                 <div className="flex gap-2">
                     <button
                         onClick={() => onToggleHidden(scenario.id)}
                         className="text-gray-500 hover:text-yellow-400 transition-colors"
-                        title={scenario.hidden ? "Mostrar Cenário" : "Ocultar Cenário"}
+                        title={scenario.hidden ? "Mostrar Cenario" : "Ocultar Cenario"}
+                        aria-label={scenario.hidden ? "Mostrar cenario" : "Ocultar cenario"}
                     >
                         {scenario.hidden ? <Eye className="w-5 h-5" /> : <EyeOff className="w-5 h-5" />}
                     </button>
                     <button
                         onClick={() => onDuplicate(scenario)}
                         className="text-gray-500 hover:text-green-400 transition-colors"
-                        title="Duplicar Cenário"
+                        title="Duplicar Cenario"
+                        aria-label="Duplicar cenario"
                     >
                         <Copy className="w-5 h-5" />
                     </button>
                     <button
                         onClick={() => onEdit(scenario)}
                         className="text-gray-500 hover:text-blue-400 transition-colors"
-                        title="Editar Cenário"
+                        title="Editar Cenario"
+                        aria-label="Editar cenario"
                     >
                         <Pencil className="w-5 h-5" />
                     </button>
                     <button
                         onClick={() => onDelete(scenario.id)}
                         className="text-gray-500 hover:text-red-400 transition-colors"
-                        title="Eliminar Cenário"
+                        title="Eliminar Cenario"
+                        aria-label="Eliminar cenario"
                     >
                         <Trash2 className="w-5 h-5" />
                     </button>
@@ -71,7 +120,7 @@ const ScenarioCard: React.FC<ScenarioCardProps> = React.memo(({ scenario, onDele
             <div className="p-4 space-y-4">
                 {/* Pattern Visualization */}
                 <div>
-                    <p className="text-xs text-gray-500 mb-1 uppercase tracking-wider">Padrão de Rotação</p>
+                    <p className="text-xs text-gray-500 mb-1 uppercase tracking-wider">Padrao de Rotacao</p>
                     <div className="flex h-4 rounded overflow-hidden">
                         {scenario.pattern.split('').map((char, i) => (
                             <div
@@ -92,7 +141,7 @@ const ScenarioCard: React.FC<ScenarioCardProps> = React.memo(({ scenario, onDele
                     <div className="bg-gray-700/50 p-3 rounded">
                         <div className="flex items-center gap-2 text-gray-400 mb-1">
                             <Clock className="w-4 h-4" />
-                            <span className="text-xs">Média Semanal</span>
+                            <span className="text-xs">Media Semanal</span>
                         </div>
                         <div className={`text-lg font-bold ${analysis.avgWeeklyHours > 40 ? 'text-red-400' : 'text-white'}`}>
                             {analysis.avgWeeklyHours.toFixed(1)}h
@@ -130,15 +179,17 @@ const ScenarioCard: React.FC<ScenarioCardProps> = React.memo(({ scenario, onDele
                     <button
                         onClick={() => onViewCalendar(scenario)}
                         className="flex-1 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium py-2 px-3 rounded transition-colors flex items-center justify-center gap-2"
+                        aria-label="Ver calendario anual"
                     >
                         <Calendar className="w-4 h-4" />
-                        Ver Calendário
+                        Ver Calendario
                     </button>
                     {scenario.teams > 1 && onViewMultiTeamCalendar && (
                         <button
                             onClick={() => onViewMultiTeamCalendar(scenario)}
                             className="flex-1 bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium py-2 px-3 rounded transition-colors flex items-center justify-center gap-2"
                             title="Vista Multi-Equipa"
+                            aria-label="Ver vista multi-equipa"
                         >
                             <Users className="w-4 h-4" />
                             Multi-Equipa
@@ -147,6 +198,7 @@ const ScenarioCard: React.FC<ScenarioCardProps> = React.memo(({ scenario, onDele
                     <button
                         onClick={() => onExport(scenario)}
                         className="flex-1 bg-green-600 hover:bg-green-700 text-white text-sm font-medium py-2 px-3 rounded transition-colors flex items-center justify-center gap-2"
+                        aria-label="Exportar para Excel"
                     >
                         <Download className="w-4 h-4" />
                         Exportar

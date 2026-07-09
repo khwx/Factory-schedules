@@ -19,6 +19,7 @@ import ICSImporter from './ICSImporter';
 import { PresetScenario, PRESET_SCENARIOS } from '../data/presetScenarios';
 import GeneratorUI from './ScheduleGenerator';
 import { useKeyboardShortcuts } from '../hooks/useKeyboardShortcuts';
+import { useDragAndDrop } from '../hooks/useDragAndDrop';
 
 
 const Dashboard: React.FC = () => {
@@ -279,6 +280,26 @@ const Dashboard: React.FC = () => {
         setShowHidden(prev => !prev);
     }, []);
 
+    // Drag and drop
+    const handleReorder = useCallback((newScenarios: Scenario[]) => {
+        updateScenariosWithHistory(newScenarios);
+    }, [updateScenariosWithHistory]);
+
+    const {
+        draggedItem,
+        dragOverItem,
+        handleDragStart,
+        handleDragEnter,
+        handleDragLeave,
+        handleDragOver,
+        handleDrop,
+        handleDragEnd,
+    } = useDragAndDrop({
+        items: scenarios,
+        onReorder: handleReorder,
+        getItemId: (item) => item.id,
+    });
+
     return (
         <div className="max-w-7xl mx-auto px-4">
             <ICSImporter onImport={handleAddScenario} />
@@ -424,6 +445,14 @@ const Dashboard: React.FC = () => {
                                 onDuplicate={handleDuplicate}
                                 onViewMultiTeamCalendar={handleViewMultiTeamCalendar}
                                 onExport={handleExport}
+                                isDragging={draggedItem?.id === scenario.id}
+                                isDragOver={dragOverItem?.id === scenario.id}
+                                onDragStart={() => handleDragStart(scenario)}
+                                onDragEnter={() => handleDragEnter(scenario)}
+                                onDragLeave={handleDragLeave}
+                                onDragOver={handleDragOver}
+                                onDrop={handleDrop}
+                                onDragEnd={handleDragEnd}
                             />
                         ))}
                     </div>
