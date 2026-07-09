@@ -1,15 +1,7 @@
-import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useMemo, useCallback, useRef, lazy, Suspense } from 'react';
 import ScenarioForm from './ScenarioForm';
 import ScenarioCard from './ScenarioCard';
 import ComparisonTable from './ComparisonTable';
-import YearCalendarView from './YearCalendarView';
-import { MultiTeamCalendarView } from './MultiTeamCalendarView';
-import MultiYearAnalysis from './MultiYearAnalysis';
-import TeamFairness from './TeamFairness';
-import AdvancedMetricsDisplay from './AdvancedMetricsDisplay';
-import ComparisonCharts from './ComparisonCharts';
-import WorkloadHeatmap from './WorkloadHeatmap';
-import QualityOfLifeDisplay from './QualityOfLifeDisplay';
 import { Scenario } from '../types';
 import { calculateAnalysis } from '../utils/calculations';
 import { exportToExcel, exportComparison } from '../utils/export';
@@ -20,6 +12,17 @@ import { PresetScenario, PRESET_SCENARIOS } from '../data/presetScenarios';
 import GeneratorUI from './ScheduleGenerator';
 import { useKeyboardShortcuts } from '../hooks/useKeyboardShortcuts';
 import { useDragAndDrop } from '../hooks/useDragAndDrop';
+import { Skeleton } from './Skeleton';
+
+// Lazy load heavy components for better performance
+const YearCalendarView = lazy(() => import('./YearCalendarView'));
+const MultiTeamCalendarView = lazy(() => import('./MultiTeamCalendarView').then(m => ({ default: m.MultiTeamCalendarView })));
+const MultiYearAnalysis = lazy(() => import('./MultiYearAnalysis'));
+const TeamFairness = lazy(() => import('./TeamFairness'));
+const AdvancedMetricsDisplay = lazy(() => import('./AdvancedMetricsDisplay'));
+const ComparisonCharts = lazy(() => import('./ComparisonCharts'));
+const WorkloadHeatmap = lazy(() => import('./WorkloadHeatmap'));
+const QualityOfLifeDisplay = lazy(() => import('./QualityOfLifeDisplay'));
 
 
 const Dashboard: React.FC = () => {
@@ -461,7 +464,9 @@ const Dashboard: React.FC = () => {
 
                     {/* Comparison Charts */}
                     {visibleScenarios.length > 1 && (
-                        <ComparisonCharts scenarios={visibleScenarios} analyses={analyses} />
+                        <Suspense fallback={<Skeleton className="h-64" />}>
+                            <ComparisonCharts scenarios={visibleScenarios} analyses={analyses} />
+                        </Suspense>
                     )}
 
                     {/* Advanced Metrics, Multi-Year Analysis, Heatmap and Team Fairness for each scenario */}
@@ -473,22 +478,32 @@ const Dashboard: React.FC = () => {
 
                             return (
                                 <div key={scenario.id} className="space-y-6">
-                                    {analysis.advancedMetrics && (
-                                        <AdvancedMetricsDisplay
-                                            metrics={analysis.advancedMetrics}
+                                    <Suspense fallback={<Skeleton className="h-32" />}>
+                                        {analysis.advancedMetrics && (
+                                            <AdvancedMetricsDisplay
+                                                metrics={analysis.advancedMetrics}
+                                                scenarioName={scenario.name}
+                                            />
+                                        )}
+                                    </Suspense>
+                                    <Suspense fallback={<Skeleton className="h-48" />}>
+                                        <QualityOfLifeDisplay
+                                            scenario={scenario}
+                                            analysis={analysis}
+                                        />
+                                    </Suspense>
+                                    <Suspense fallback={<Skeleton className="h-64" />}>
+                                        <WorkloadHeatmap scenario={scenario} />
+                                    </Suspense>
+                                    <Suspense fallback={<Skeleton className="h-48" />}>
+                                        <MultiYearAnalysis
+                                            multiYearData={analysis.multiYearAnalysis}
                                             scenarioName={scenario.name}
                                         />
-                                    )}
-                                    <QualityOfLifeDisplay
-                                        scenario={scenario}
-                                        analysis={analysis}
-                                    />
-                                    <WorkloadHeatmap scenario={scenario} />
-                                    <MultiYearAnalysis
-                                        multiYearData={analysis.multiYearAnalysis}
-                                        scenarioName={scenario.name}
-                                    />
-                                    <TeamFairness scenario={scenario} />
+                                    </Suspense>
+                                    <Suspense fallback={<Skeleton className="h-64" />}>
+                                        <TeamFairness scenario={scenario} />
+                                    </Suspense>
                                 </div>
                             );
                         })}
@@ -532,7 +547,9 @@ const Dashboard: React.FC = () => {
                             </button>
                         </div>
                         <div className="flex-1 overflow-auto">
-                            <YearCalendarView scenario={selectedScenario} />
+                            <Suspense fallback={<Skeleton className="h-96" />}>
+                                <YearCalendarView scenario={selectedScenario} />
+                            </Suspense>
                         </div>
                     </div>
                 </div>
@@ -540,10 +557,12 @@ const Dashboard: React.FC = () => {
 
             {/* Multi-Team Calendar Modal */}
             {showMultiTeamCalendar && selectedScenario && selectedScenario.teams > 1 && (
-                <MultiTeamCalendarView
-                    scenario={selectedScenario}
-                    onClose={handleCloseMultiTeamCalendar}
-                />
+                <Suspense fallback={<Skeleton className="h-96" />}>
+                    <MultiTeamCalendarView
+                        scenario={selectedScenario}
+                        onClose={handleCloseMultiTeamCalendar}
+                    />
+                </Suspense>
             )}
 
             <GeneratorUI
