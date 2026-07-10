@@ -11,6 +11,7 @@ const YearCalendarView: React.FC<YearCalendarViewProps> = ({ scenario }) => {
     const currentYear = new Date().getFullYear();
     const [selectedYear, setSelectedYear] = useState(currentYear);
     const [selectedTeam, setSelectedTeam] = useState(0);
+    const [tooltip, setTooltip] = useState<{ x: number; y: number; content: string } | null>(null);
 
     const calendar = generateYearCalendar(scenario, selectedYear, selectedTeam);
 
@@ -26,11 +27,11 @@ const YearCalendarView: React.FC<YearCalendarViewProps> = ({ scenario }) => {
 
     const getShiftLabel = (shift: string) => {
         switch (shift) {
-            case 'M': return 'M';
-            case 'T': return 'T';
-            case 'N': return 'N';
-            case 'F': return 'F';
-            default: return '?';
+            case 'M': return 'Manha';
+            case 'T': return 'Tarde';
+            case 'N': return 'Noite';
+            case 'F': return 'Folga';
+            default: return 'Desconhecido';
         }
     };
 
@@ -104,12 +105,24 @@ const YearCalendarView: React.FC<YearCalendarViewProps> = ({ scenario }) => {
                                 <div
                                     key={i}
                                     className={`
-                    aspect-square flex items-center justify-center text-xs rounded
+                    aspect-square flex items-center justify-center text-xs rounded cursor-default
                     ${getShiftColor(day.shift)}
                     ${day.isWeekendOff ? 'ring-2 ring-green-400' : ''}
                     ${day.isWeekend && !day.isWeekendOff ? 'opacity-75' : ''}
                   `}
-                                    title={`${day.date.toLocaleDateString('pt-PT')} - ${getShiftLabel(day.shift)} ${day.isWeekendOff ? '(Fim de Semana de Folga)' : ''}`}
+                                    role="gridcell"
+                                    aria-label={`${day.date.toLocaleDateString('pt-PT')}, ${getShiftLabel(day.shift)}${day.isWeekendOff ? ', fim de semana de folga' : ''}`}
+                                    onMouseEnter={(e) => {
+                                        const rect = e.currentTarget.getBoundingClientRect();
+                                        const dayName = day.date.toLocaleDateString('pt-PT', { weekday: 'long' });
+                                        const monthName = day.date.toLocaleDateString('pt-PT', { month: 'long' });
+                                        setTooltip({
+                                            x: rect.left + rect.width / 2,
+                                            y: rect.top - 8,
+                                            content: `${day.date.getDate()} de ${monthName} (${dayName}) - ${getShiftLabel(day.shift)}${day.isWeekendOff ? ' - FDS Folga' : ''}`,
+                                        });
+                                    }}
+                                    onMouseLeave={() => setTooltip(null)}
                                 >
                                     <span className="text-white font-semibold">{day.date.getDate()}</span>
                                 </div>
@@ -122,7 +135,7 @@ const YearCalendarView: React.FC<YearCalendarViewProps> = ({ scenario }) => {
             <div className="p-3 bg-gray-900/30 border-t border-gray-700 flex flex-wrap gap-4 text-xs">
                 <div className="flex items-center gap-2">
                     <div className="w-4 h-4 bg-yellow-500 rounded"></div>
-                    <span className="text-gray-400">Manhã</span>
+                    <span className="text-gray-400">Manha</span>
                 </div>
                 <div className="flex items-center gap-2">
                     <div className="w-4 h-4 bg-orange-500 rounded"></div>
@@ -138,9 +151,24 @@ const YearCalendarView: React.FC<YearCalendarViewProps> = ({ scenario }) => {
                 </div>
                 <div className="flex items-center gap-2">
                     <div className="w-4 h-4 bg-gray-600 rounded ring-2 ring-green-400"></div>
-                    <span className="text-gray-400">Fim de Semana de Folga</span>
+                    <span className="text-gray-400">FDS Folga</span>
                 </div>
             </div>
+
+            {/* Visual Tooltip */}
+            {tooltip && (
+                <div
+                    className="fixed z-50 px-3 py-1.5 bg-gray-900 text-white text-xs rounded shadow-lg border border-gray-600 pointer-events-none whitespace-nowrap"
+                    style={{
+                        left: tooltip.x,
+                        top: tooltip.y,
+                        transform: 'translate(-50%, -100%)',
+                    }}
+                    role="tooltip"
+                >
+                    {tooltip.content}
+                </div>
+            )}
         </div>
     );
 };

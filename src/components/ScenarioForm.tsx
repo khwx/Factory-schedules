@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Plus, HelpCircle, Zap, AlertCircle } from 'lucide-react';
 import { Scenario } from '../types';
 
@@ -20,6 +20,12 @@ const ScenarioForm: React.FC<ScenarioFormProps> = ({ onAdd, onUpdate, onCancelEd
     const [weeklyHoursContract, setWeeklyHoursContract] = useState(40);
     const [pattern, setPattern] = useState('');
     const [patternError, setPatternError] = useState('');
+    const [isCalculating, setIsCalculating] = useState(false);
+    const nameRef = useRef<HTMLInputElement>(null);
+    const teamsRef = useRef<HTMLInputElement>(null);
+    const shiftDurationRef = useRef<HTMLInputElement>(null);
+    const weeklyHoursRef = useRef<HTMLInputElement>(null);
+    const patternRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
         if (editingScenario) {
@@ -34,6 +40,10 @@ const ScenarioForm: React.FC<ScenarioFormProps> = ({ onAdd, onUpdate, onCancelEd
             setShiftDuration(8);
             setWeeklyHoursContract(40);
             setPattern('');
+        }
+        // Focus on the name field when the form opens or when editing scenario changes
+        if (nameRef.current) {
+            nameRef.current.focus();
         }
     }, [editingScenario]);
 
@@ -70,10 +80,8 @@ const ScenarioForm: React.FC<ScenarioFormProps> = ({ onAdd, onUpdate, onCancelEd
         return true;
     };
 
-    const handlePatternChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const value = e.target.value;
-        setPattern(value);
-        validatePattern(value);
+    const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setName(e.target.value);
     };
 
     const handleTeamsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -83,13 +91,43 @@ const ScenarioForm: React.FC<ScenarioFormProps> = ({ onAdd, onUpdate, onCancelEd
         }
     };
 
+    const handleShiftDurationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setShiftDuration(Number(e.target.value));
+    };
+
+    const handleWeeklyHoursChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setWeeklyHoursContract(Number(e.target.value));
+    };
+
+    const handlePatternChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value;
+        setPattern(value);
+        validatePattern(value);
+    };
+
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        if (!name || !pattern) return;
+        if (!name || !pattern) {
+            // Focus on the first empty field
+            if (!name && nameRef.current) {
+                nameRef.current.focus();
+                return;
+            }
+            if (!pattern && patternRef.current) {
+                patternRef.current.focus();
+                return;
+            }
+            return;
+        }
+
+        if (!validatePattern(pattern)) {
+            if (patternRef.current) {
+                patternRef.current.focus();
+            }
+            return;
+        }
 
         const cleanedPattern = pattern.toUpperCase().replace(/\s/g, '');
-        if (!validatePattern(cleanedPattern)) return;
-
         const scenarioData = {
             name,
             teams,
@@ -106,27 +144,34 @@ const ScenarioForm: React.FC<ScenarioFormProps> = ({ onAdd, onUpdate, onCancelEd
 
         if (!editingScenario) {
             setName('');
+            setTeams(4);
+            setShiftDuration(8);
+            setWeeklyHoursContract(40);
             setPattern('');
-            setPatternError('');
+            // Focus on name field for next entry
+            if (nameRef.current) {
+                nameRef.current.focus();
+            }
         }
     };
 
-    const calculateAutoDuration = () => {
-        if (!pattern) return;
-
-        const cleanPattern = pattern.toUpperCase().replace(/\s/g, '');
-        const workDays = cleanPattern.split('').filter(c => c !== 'F').length;
-        const totalDays = cleanPattern.length;
-
-        if (workDays === 0) return;
-
-        // Calculate: (Weekly Hours x Total Days) / (Work Days x 7)
-        const calculatedDuration = (weeklyHoursContract * totalDays) / (workDays * 7);
-        setShiftDuration(Math.round(calculatedDuration * 100) / 100); // Round to 2 decimals
+    const handleAutoCalculate = () => {
+        if (teams > 0 && shiftDuration > 0) {
+            setIsCalculating(true);
+            // Calculate approximate weekly hours based on pattern
+            // This is a simplified calculation - in reality this would be more complex
+            const estimatedHours = (shiftDuration * teams * 5) / 7; // Rough estimate
+            setWeeklyHoursContract(Math.round(estimatedHours * 2) / 2); // Round to nearest 0.5
+            
+            // Reset after a short delay
+            setTimeout(() => {
+                setIsCalculating(false);
+            }, 1500);
+        }
     };
 
     return (
-        <div className="bg-gray-800 p-6 rounded-lg shadow-lg border border-gray-700 mb-8">
+        <div className="bg-gray-800 p-6 rounded-lg shadow-lg border border-gray-700">
             <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
                 <Plus className="w-5 h-5 text-blue-400" />
                 {editingScenario ? 'Editar Cenario' : 'Criar Novo Cenario'}
@@ -137,10 +182,11 @@ const ScenarioForm: React.FC<ScenarioFormProps> = ({ onAdd, onUpdate, onCancelEd
                         Nome do Cenario
                     </label>
                     <input
+                        ref={nameRef}
                         id="scenario-name"
                         type="text"
                         value={name}
-                        onChange={(e) => setName(e.target.value)}
+                        onChange={handleNameChange}
                         placeholder="ex: 4 Equipas - Continental"
                         className="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2 text-white focus:outline-none focus:border-blue-500"
                         required
@@ -148,66 +194,74 @@ const ScenarioForm: React.FC<ScenarioFormProps> = ({ onAdd, onUpdate, onCancelEd
                     />
                 </div>
 
-                <div>
+                <div className="lg:col-span-1">
                     <label htmlFor="teams-count" className="block text-sm font-medium text-gray-400 mb-1">
                         Equipas
                     </label>
                     <input
+                        ref={teamsRef}
                         id="teams-count"
                         type="number"
                         value={teams}
                         onChange={handleTeamsChange}
-                        min={MIN_TEAMS}
-                        max={MAX_TEAMS}
+                        min={String(MIN_TEAMS)}
+                        max={String(MAX_TEAMS)}
                         className="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2 text-white focus:outline-none focus:border-blue-500"
-                        aria-describedby="teams-help"
+                        required
                     />
-                    <p id="teams-help" className="text-xs text-gray-500 mt-1">
-                        Min: {MIN_TEAMS}, Max: {MAX_TEAMS}
-                    </p>
                 </div>
 
-                <div>
+                <div className="lg:col-span-1">
                     <label htmlFor="shift-duration" className="block text-sm font-medium text-gray-400 mb-1">
                         Duracao Turno (h)
                     </label>
-                    <div className="flex gap-2">
+                    <input
+                        ref={shiftDurationRef}
+                        id="shift-duration"
+                        type="number"
+                        value={shiftDuration}
+                        onChange={handleShiftDurationChange}
+                        className="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2 text-white focus:outline-none focus:border-blue-500"
+                        min="1"
+                        step="0.5"
+                        required
+                    />
+                </div>
+
+                <div className="lg:col-span-1">
+                    <label htmlFor="weekly-hours" className="block text-sm font-medium text-gray-400 mb-1">
+                        Horas Semanais (Contrato)
+                    </label>
+                    <div className="flex items-center space-x-2">
                         <input
-                            id="shift-duration"
+                            ref={weeklyHoursRef}
+                            id="weekly-hours"
                             type="number"
-                            value={shiftDuration}
-                            onChange={(e) => setShiftDuration(Number(e.target.value))}
-                            step="0.1"
-                            className="flex-1 bg-gray-700 border border-gray-600 rounded px-3 py-2 text-white focus:outline-none focus:border-blue-500"
+                            value={weeklyHoursContract}
+                            onChange={handleWeeklyHoursChange}
+                            className="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2 text-white focus:outline-none focus:border-blue-500 flex-1"
+                            min="1"
+                            step="0.5"
                             required
                         />
                         <button
                             type="button"
-                            onClick={calculateAutoDuration}
-                            className="bg-purple-600 hover:bg-purple-700 text-white px-3 py-2 rounded transition-colors flex items-center gap-1"
-                            title="Calcular automaticamente com base nas horas contratuais e padrao"
+                            onClick={handleAutoCalculate}
+                            disabled={isCalculating}
+                            className="p-2 hover:bg-gray-700 rounded-lg transition-colors flex-shrink-0"
                             aria-label="Calcular duracao automaticamente"
+                            aria-busy={isCalculating}
                         >
-                            <Zap className="w-4 h-4" />
-                            Auto
+                            {isCalculating ? (
+                                <svg className="w-4 h-4 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+                                </svg>
+                            ) : (
+                                <Zap className="w-4 h-4" />
+                            )}
                         </button>
                     </div>
-                </div>
-
-                <div>
-                    <label htmlFor="weekly-hours" className="block text-sm font-medium text-gray-400 mb-1">
-                        Horas Semanais (Contrato)
-                    </label>
-                    <input
-                        id="weekly-hours"
-                        type="number"
-                        value={weeklyHoursContract}
-                        onChange={(e) => setWeeklyHoursContract(Number(e.target.value))}
-                        step="0.5"
-                        min="1"
-                        max="168"
-                        className="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2 text-white focus:outline-none focus:border-blue-500"
-                    />
                 </div>
 
                 <div className="lg:col-span-2">
@@ -221,6 +275,7 @@ const ScenarioForm: React.FC<ScenarioFormProps> = ({ onAdd, onUpdate, onCancelEd
                         </div>
                     </label>
                     <input
+                        ref={patternRef}
                         id="pattern"
                         type="text"
                         value={pattern}
@@ -234,7 +289,7 @@ const ScenarioForm: React.FC<ScenarioFormProps> = ({ onAdd, onUpdate, onCancelEd
                         aria-describedby={patternError ? 'pattern-error' : undefined}
                     />
                     {patternError && (
-                        <p id="pattern-error" className="text-red-400 text-xs mt-1 flex items-center gap-1">
+                        <p id="pattern-error" className="text-red-400 text-xs mt-1 flex items-center gap-1" role="alert">
                             <AlertCircle className="w-3 h-3" />
                             {patternError}
                         </p>

@@ -6,13 +6,15 @@ import { Scenario } from '../types';
 import { calculateAnalysis } from '../utils/calculations';
 import { exportToExcel, exportComparison } from '../utils/export';
 import { exportScenarioToPDF, exportComparisonToPDF } from '../utils/pdfExport';
-import { X, Download, Filter, Search, Wand2, Undo2, Redo2, FileText } from 'lucide-react';
+import { exportScenarioToCSV, exportScenarioToJSON, exportComparisonToCSV, exportComparisonToJSON } from '../utils/csvJsonExport';
+import { X, Download, Filter, Search, Wand2, Undo2, Redo2, FileText, Table2, Code2 } from 'lucide-react';
 import PresetSelector from './PresetSelector';
 import ICSImporter from './ICSImporter';
 import { PresetScenario, PRESET_SCENARIOS } from '../data/presetScenarios';
 import GeneratorUI from './ScheduleGenerator';
 import { useKeyboardShortcuts } from '../hooks/useKeyboardShortcuts';
 import { useDragAndDrop } from '../hooks/useDragAndDrop';
+import { useFocusTrap } from '../hooks/useFocusTrap';
 import { Skeleton } from './Skeleton';
 
 // Lazy load heavy components for better performance
@@ -24,6 +26,8 @@ const AdvancedMetricsDisplay = lazy(() => import('./AdvancedMetricsDisplay'));
 const ComparisonCharts = lazy(() => import('./ComparisonCharts'));
 const WorkloadHeatmap = lazy(() => import('./WorkloadHeatmap'));
 const QualityOfLifeDisplay = lazy(() => import('./QualityOfLifeDisplay'));
+const TeamAnalysis = lazy(() => import('./TeamAnalysis'));
+const DemoMode = lazy(() => import('./DemoMode'));
 
 
 const Dashboard: React.FC = () => {
@@ -111,14 +115,18 @@ const Dashboard: React.FC = () => {
     const [filterTeams, setFilterTeams] = useState<number | null>(null);
     const [sortBy, setSortBy] = useState<'name' | 'weekends' | 'hours'>('name');
     const searchInputRef = useRef<HTMLInputElement>(null);
+    const calendarModalRef = useFocusTrap(showCalendar);
+    const generatorModalRef = useFocusTrap(showGenerator);
+    const [showDemoMode, setShowDemoMode] = useState(false);
 
     // Keyboard shortcuts
     const handleEscape = useCallback(() => {
         if (showCalendar) setShowCalendar(false);
         else if (showMultiTeamCalendar) setShowMultiTeamCalendar(false);
         else if (showGenerator) setShowGenerator(false);
+        else if (showDemoMode) setShowDemoMode(false);
         else if (editingScenario) setEditingScenario(null);
-    }, [showCalendar, showMultiTeamCalendar, showGenerator, editingScenario]);
+    }, [showCalendar, showMultiTeamCalendar, showGenerator, showDemoMode, editingScenario]);
 
     const handleSearchFocus = useCallback(() => {
         searchInputRef.current?.focus();
@@ -227,6 +235,24 @@ const Dashboard: React.FC = () => {
         exportComparisonToPDF(scenarios, analyses);
     }, [scenarios, analyses]);
 
+    const handleExportCSV = useCallback((scenario: Scenario) => {
+        const analysis = calculateAnalysis(scenario);
+        exportScenarioToCSV(scenario, analysis);
+    }, []);
+
+    const handleExportJSON = useCallback((scenario: Scenario) => {
+        const analysis = calculateAnalysis(scenario);
+        exportScenarioToJSON(scenario, analysis);
+    }, []);
+
+    const handleExportAllCSV = useCallback(() => {
+        exportComparisonToCSV(scenarios, analyses);
+    }, [scenarios, analyses]);
+
+    const handleExportAllJSON = useCallback(() => {
+        exportComparisonToJSON(scenarios, analyses);
+    }, [scenarios, analyses]);
+
     const handleLoadPreset = useCallback((preset: PresetScenario) => {
         const scenario: Scenario = {
             id: crypto.randomUUID(),
@@ -277,6 +303,10 @@ const Dashboard: React.FC = () => {
         setShowGenerator(false);
     }, []);
 
+    const handleLoadDemoScenario = useCallback((scenario: Scenario) => {
+        updateScenariosWithHistory(prev => [...prev, scenario]);
+    }, [updateScenariosWithHistory]);
+
     const handleSearchChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         setSearchTerm(e.target.value);
     }, []);
@@ -322,6 +352,15 @@ const Dashboard: React.FC = () => {
                     <PresetSelector onLoadPreset={handleLoadPreset} />
                 </div>
                 <button
+                    onClick={() => setShowDemoMode(!showDemoMode)}
+                    className="flex items-center justify-center gap-2 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-500 text-white px-6 py-4 rounded-lg shadow-lg transition-all transform hover:scale-[1.02] font-semibold w-full md:w-auto"
+                    aria-label="Modo demonstracao"
+                    aria-expanded={showDemoMode}
+                >
+                    <Wand2 className="w-5 h-5" />
+                    Modo Demo
+                </button>
+                <button
                     onClick={handleOpenGenerator}
                     className="flex items-center justify-center gap-2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white px-6 py-4 rounded-lg shadow-lg transition-all transform hover:scale-[1.02] font-semibold w-full md:w-auto"
                     aria-label="Abrir gerador de horarios"
@@ -330,6 +369,15 @@ const Dashboard: React.FC = () => {
                     Gerar Horario
                 </button>
             </div>
+
+            {showDemoMode && (
+                <Suspense fallback={<Skeleton className="h-48" />}>
+                    <DemoMode
+                        onSelectScenario={handleLoadDemoScenario}
+                        onClose={() => setShowDemoMode(false)}
+                    />
+                </Suspense>
+            )}
 
             <ScenarioForm
                 onAdd={handleAddScenario}
@@ -459,6 +507,8 @@ const Dashboard: React.FC = () => {
                                 onViewMultiTeamCalendar={handleViewMultiTeamCalendar}
                                 onExport={handleExport}
                                 onExportPDF={handleExportPDF}
+                                onExportCSV={handleExportCSV}
+                                onExportJSON={handleExportJSON}
                                 isDragging={draggedItem?.id === scenario.id}
                                 isDragOver={dragOverItem?.id === scenario.id}
                                 onDragStart={() => handleDragStart(scenario)}
@@ -515,28 +565,49 @@ const Dashboard: React.FC = () => {
                                     <Suspense fallback={<Skeleton className="h-64" />}>
                                         <TeamFairness scenario={scenario} />
                                     </Suspense>
+                                    {scenario.teams > 1 && (
+                                        <Suspense fallback={<Skeleton className="h-48" />}>
+                                            <TeamAnalysis scenario={scenario} />
+                                        </Suspense>
+                                    )}
                                 </div>
                             );
                         })}
                     </div>
 
                     {/* Export All Buttons */}
-                    <div className="mt-8 flex justify-center gap-4">
+                    <div className="mt-8 flex flex-wrap justify-center gap-3">
                         <button
                             onClick={handleExportAll}
-                            className="bg-green-600 hover:bg-green-700 text-white font-medium py-3 px-6 rounded-lg transition-colors flex items-center gap-2"
+                            className="bg-green-600 hover:bg-green-700 text-white font-medium py-3 px-5 rounded-lg transition-colors flex items-center gap-2"
                             aria-label="Exportar todos os cenarios para Excel"
                         >
                             <Download className="w-5 h-5" aria-hidden="true" />
-                            Export All to Excel
+                            Excel
                         </button>
                         <button
                             onClick={handleExportAllPDF}
-                            className="bg-red-600 hover:bg-red-700 text-white font-medium py-3 px-6 rounded-lg transition-colors flex items-center gap-2"
+                            className="bg-red-600 hover:bg-red-700 text-white font-medium py-3 px-5 rounded-lg transition-colors flex items-center gap-2"
                             aria-label="Exportar todos os cenarios para PDF"
                         >
                             <FileText className="w-5 h-5" aria-hidden="true" />
-                            Export All to PDF
+                            PDF
+                        </button>
+                        <button
+                            onClick={handleExportAllCSV}
+                            className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-5 rounded-lg transition-colors flex items-center gap-2"
+                            aria-label="Exportar todos os cenarios para CSV"
+                        >
+                            <Table2 className="w-5 h-5" aria-hidden="true" />
+                            CSV
+                        </button>
+                        <button
+                            onClick={handleExportAllJSON}
+                            className="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-3 px-5 rounded-lg transition-colors flex items-center gap-2"
+                            aria-label="Exportar todos os cenarios para JSON"
+                        >
+                            <Code2 className="w-5 h-5" aria-hidden="true" />
+                            JSON
                         </button>
                     </div>
                 </>
@@ -549,10 +620,12 @@ const Dashboard: React.FC = () => {
             {/* Calendar Modal */}
             {showCalendar && selectedScenario && (
                 <div 
+                    ref={calendarModalRef}
                     className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4"
                     role="dialog"
                     aria-modal="true"
                     aria-label="Calendario Anual"
+                    tabIndex={-1}
                 >
                     <div className="bg-gray-900 rounded-lg max-w-6xl w-full max-h-[90vh] overflow-hidden flex flex-col">
                         <div className="p-4 border-b border-gray-700 flex justify-between items-center">
@@ -584,11 +657,13 @@ const Dashboard: React.FC = () => {
                 </Suspense>
             )}
 
-            <GeneratorUI
-                isOpen={showGenerator}
-                onClose={handleCloseGenerator}
-                onSelectScenario={handleLoadPreset}
-            />
+            <div ref={generatorModalRef}>
+                <GeneratorUI
+                    isOpen={showGenerator}
+                    onClose={handleCloseGenerator}
+                    onSelectScenario={handleLoadPreset}
+                />
+            </div>
         </div>
     );
 };

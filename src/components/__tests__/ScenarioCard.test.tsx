@@ -92,6 +92,6 @@ describe('ScenarioCard', () => {
       />
     );
     
-    expect(screen.getByText(/multi-equipa/i)).toBeInTheDocument();
+    expect(screen.getByText(/multi/i)).toBeInTheDocument();
   });
 });

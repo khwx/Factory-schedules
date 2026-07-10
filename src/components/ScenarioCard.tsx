@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { Trash2, Clock, Calendar, Download, Palmtree, Pencil, Eye, EyeOff, Users, Copy, GripVertical, FileText } from 'lucide-react';
+import { Trash2, Clock, Calendar, Download, Palmtree, Pencil, Eye, EyeOff, Users, Copy, GripVertical, FileText, Table2, Code2 } from 'lucide-react';
 import { Scenario } from '../types';
 import { calculateAnalysis } from '../utils/calculations';
 
@@ -11,6 +11,8 @@ interface ScenarioCardProps {
     onViewMultiTeamCalendar?: (scenario: Scenario) => void;
     onExport: (scenario: Scenario) => void;
     onExportPDF?: (scenario: Scenario) => void;
+    onExportCSV?: (scenario: Scenario) => void;
+    onExportJSON?: (scenario: Scenario) => void;
     onToggleHidden: (id: string) => void;
     onDuplicate: (scenario: Scenario) => void;
     isDragging?: boolean;
@@ -31,6 +33,8 @@ const ScenarioCard: React.FC<ScenarioCardProps> = React.memo(({
     onViewMultiTeamCalendar, 
     onExport, 
     onExportPDF,
+    onExportCSV,
+    onExportJSON,
     onToggleHidden, 
     onDuplicate,
     isDragging = false,
@@ -184,7 +188,7 @@ const ScenarioCard: React.FC<ScenarioCardProps> = React.memo(({
                         aria-label="Ver calendario anual"
                     >
                         <Calendar className="w-4 h-4" />
-                        Ver Calendario
+                        Calendario
                     </button>
                     {scenario.teams > 1 && onViewMultiTeamCalendar && (
                         <button
@@ -194,9 +198,11 @@ const ScenarioCard: React.FC<ScenarioCardProps> = React.memo(({
                             aria-label="Ver vista multi-equipa"
                         >
                             <Users className="w-4 h-4" />
-                            Multi-Equipa
+                            Multi
                         </button>
                     )}
+                </div>
+                <div className="flex gap-2">
                     <button
                         onClick={() => onExport(scenario)}
                         className="flex-1 bg-green-600 hover:bg-green-700 text-white text-sm font-medium py-2 px-3 rounded transition-colors flex items-center justify-center gap-2"
@@ -213,6 +219,26 @@ const ScenarioCard: React.FC<ScenarioCardProps> = React.memo(({
                         >
                             <FileText className="w-4 h-4" />
                             PDF
+                        </button>
+                    )}
+                    {onExportCSV && (
+                        <button
+                            onClick={() => onExportCSV(scenario)}
+                            className="flex-1 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium py-2 px-3 rounded transition-colors flex items-center justify-center gap-2"
+                            aria-label="Exportar para CSV"
+                        >
+                            <Table2 className="w-4 h-4" />
+                            CSV
+                        </button>
+                    )}
+                    {onExportJSON && (
+                        <button
+                            onClick={() => onExportJSON(scenario)}
+                            className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium py-2 px-3 rounded transition-colors flex items-center justify-center gap-2"
+                            aria-label="Exportar para JSON"
+                        >
+                            <Code2 className="w-4 h-4" />
+                            JSON
                         </button>
                     )}
                 </div>

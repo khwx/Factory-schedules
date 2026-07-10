@@ -7,8 +7,8 @@ interface LayoutProps {
 }
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
-    const { theme, toggleTheme } = useTheme();
     const [showSettings, setShowSettings] = useState(false);
+    const { theme, toggleTheme } = useTheme();
 
     const handleBackup = () => {
         const data = {
@@ -52,57 +52,70 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     };
 
     return (
-        <div className="min-h-screen bg-gray-900 text-white">
-            <header className="bg-gray-800 border-b border-gray-700 p-4">
-                <div className="container mx-auto flex items-center justify-between">
-                    <div className="flex items-center space-x-2">
-                        <span className="text-xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
-                            ShiftSim Factory
-                        </span>
-                    </div>
+        <div className="min-h-screen bg-gray-900 text-gray-100">
+            {/* Skip to main content link */}
+            <a href="#main-content" className="sr-only focus:not-sr-only absolute top-0 left-0 p-2 bg-white bg-opacity-90 text-black z-50">
+                Pular para conteúdo principal
+            </a>
 
-                    <div className="flex items-center gap-2">
-                        {/* Backup Button */}
-                        <button
-                            onClick={handleBackup}
-                            className="p-2 hover:bg-gray-700 rounded-lg transition-colors"
-                            title="Fazer Backup"
-                        >
-                            <Download className="w-5 h-5 text-gray-400" />
-                        </button>
+            <header className="bg-gray-800 border-b border-gray-700">
+                <div className="container mx-auto px-4 py-4">
+                    <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                            <div className="flex items-center gap-2">
+                                {/* Logo and Title */}
+                                <span className="text-xl font-semibold">ShiftSim Factory</span>
+                            </div>
 
-                        {/* Restore Button */}
-                        <label className="p-2 hover:bg-gray-700 rounded-lg transition-colors cursor-pointer" title="Restaurar Backup">
-                            <Upload className="w-5 h-5 text-gray-400" />
-                            <input
-                                type="file"
-                                accept=".json"
-                                onChange={handleRestore}
-                                className="hidden"
-                            />
-                        </label>
+                            <div className="flex items-center gap-2">
+                                {/* Backup Button */}
+                                <button
+                                    onClick={handleBackup}
+                                    className="p-2 hover:bg-gray-700 rounded-lg transition-colors"
+                                    title="Fazer Backup"
+                                    aria-label="Fazer backup das configurações"
+                                >
+                                    <Download className="w-5 h-5 text-gray-400" />
+                                </button>
 
-                        {/* Settings Button */}
-                        <button
-                            onClick={() => setShowSettings(!showSettings)}
-                            className="p-2 hover:bg-gray-700 rounded-lg transition-colors"
-                            title="Configurações"
-                        >
-                            <Settings className="w-5 h-5 text-gray-400" />
-                        </button>
+                                {/* Restore Button */}
+                                <label className="relative inline-flex items-center p-2 hover:bg-gray-700 rounded-lg transition-colors cursor-pointer" title="Restaurar Backup">
+                                    <Upload className="w-5 h-5 text-gray-400" />
+                                    <input
+                                        type="file"
+                                        accept=".json"
+                                        onChange={handleRestore}
+                                        className="hidden"
+                                        id="file-restore-input"
+                                        aria-label="Selecionar arquivo de backup para restaurar"
+                                    />
+                                </label>
 
-                        {/* Theme Toggle */}
-                        <button
-                            onClick={toggleTheme}
-                            className="p-2 hover:bg-gray-700 rounded-lg transition-colors"
-                            title={theme === 'dark' ? 'Tema Claro' : 'Tema Escuro'}
-                        >
-                            {theme === 'dark' ? (
-                                <Sun className="w-5 h-5 text-yellow-400" />
-                            ) : (
-                                <Moon className="w-5 h-5 text-blue-400" />
-                            )}
-                        </button>
+                                {/* Settings Button */}
+                                <button
+                                    onClick={() => setShowSettings(!showSettings)}
+                                    className="p-2 hover:bg-gray-700 rounded-lg transition-colors"
+                                    title="Configurações"
+                                    aria-label="Abrir painel de configurações"
+                                >
+                                    <Settings className="w-5 h-5 text-gray-400" />
+                                </button>
+
+                                {/* Theme Toggle */}
+                                <button
+                                    onClick={toggleTheme}
+                                    className="p-2 hover:bg-gray-700 rounded-lg transition-colors"
+                                    title={theme === 'dark' ? 'Tema Claro' : 'Tema Escuro'}
+                                    aria-label={theme === 'dark' ? 'Alternar para tema claro' : 'Alternar para tema escuro'}
+                                >
+                                    {theme === 'dark' ? (
+                                        <Sun className="w-5 h-5 text-yellow-400" />
+                                    ) : (
+                                        <Moon className="w-5 h-5 text-blue-400" />
+                                    )}
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </header>
@@ -126,7 +139,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                                         <Download className="w-4 h-4 inline mr-2" />
                                         Fazer Backup
                                     </button>
-                                    <label className="flex-1 bg-green-600 hover:bg-green-700 px-3 py-2 rounded text-sm transition-colors cursor-pointer text-center">
+                                    <label className="relative inline-flex items-center flex-1 bg-green-600 hover:bg-green-700 px-3 py-2 rounded text-sm transition-colors cursor-pointer">
                                         <Upload className="w-4 h-4 inline mr-2" />
                                         Restaurar
                                         <input
@@ -166,7 +179,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 </div>
             )}
 
-            <main className="container mx-auto py-8">
+            <main id="main-content" className="container mx-auto py-8">
                 {children}
             </main>
         </div>
