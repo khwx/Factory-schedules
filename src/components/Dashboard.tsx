@@ -7,6 +7,7 @@ import { calculateAnalysis } from '../utils/calculations';
 import { exportToExcel, exportComparison } from '../utils/export';
 import { exportScenarioToPDF, exportComparisonToPDF } from '../utils/pdfExport';
 import { exportScenarioToCSV, exportScenarioToJSON, exportComparisonToCSV, exportComparisonToJSON } from '../utils/csvJsonExport';
+import { downloadICS } from '../utils/icsExport';
 import { X, Download, Filter, Search, Wand2, Undo2, Redo2, FileText, Table2, Code2, Play } from 'lucide-react';
 import PresetSelector from './PresetSelector';
 import ICSImporter from './ICSImporter';
@@ -15,6 +16,7 @@ import GeneratorUI from './ScheduleGenerator';
 import { useKeyboardShortcuts } from '../hooks/useKeyboardShortcuts';
 import { useDragAndDrop } from '../hooks/useDragAndDrop';
 import { useFocusTrap } from '../hooks/useFocusTrap';
+import { usePreferences } from '../hooks/usePreferences';
 import { Skeleton } from './Skeleton';
 
 // Lazy load heavy components for better performance
@@ -28,6 +30,7 @@ const WorkloadHeatmap = lazy(() => import('./WorkloadHeatmap'));
 const QualityOfLifeDisplay = lazy(() => import('./QualityOfLifeDisplay'));
 const TeamAnalysis = lazy(() => import('./TeamAnalysis'));
 const DemoMode = lazy(() => import('./DemoMode'));
+const LegalComplianceBanner = lazy(() => import('./LegalComplianceBanner'));
 
 
 const Dashboard: React.FC = () => {
@@ -110,10 +113,8 @@ const Dashboard: React.FC = () => {
     const [showGenerator, setShowGenerator] = useState(false);
     const [showCalendar, setShowCalendar] = useState(false);
     const [showMultiTeamCalendar, setShowMultiTeamCalendar] = useState(false);
-    const [showHidden, setShowHidden] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
-    const [filterTeams, setFilterTeams] = useState<number | null>(null);
-    const [sortBy, setSortBy] = useState<'name' | 'weekends' | 'hours'>('name');
+    const { sortBy, filterTeams, showHidden, setSortBy, setFilterTeams, setShowHidden } = usePreferences();
     const searchInputRef = useRef<HTMLInputElement>(null);
     const calendarModalRef = useFocusTrap(showCalendar);
     const generatorModalRef = useFocusTrap(showGenerator);
@@ -260,6 +261,10 @@ const Dashboard: React.FC = () => {
         exportComparisonToJSON(scenarios, analyses);
     }, [scenarios, analyses]);
 
+    const handleExportICS = useCallback((scenario: Scenario) => {
+        downloadICS(scenario);
+    }, []);
+
     const handleLoadPreset = useCallback((preset: PresetScenario) => {
         const scenario: Scenario = {
             id: crypto.randomUUID(),
@@ -327,8 +332,8 @@ const Dashboard: React.FC = () => {
     }, []);
 
     const toggleShowHidden = useCallback(() => {
-        setShowHidden(prev => !prev);
-    }, []);
+        setShowHidden(!showHidden);
+    }, [showHidden, setShowHidden]);
 
     // Drag and drop
     const handleReorder = useCallback((newScenarios: Scenario[]) => {
@@ -517,6 +522,7 @@ const Dashboard: React.FC = () => {
                                 onExportPDF={handleExportPDF}
                                 onExportCSV={handleExportCSV}
                                 onExportJSON={handleExportJSON}
+                                onExportICS={handleExportICS}
                                 isDragging={draggedItem?.id === scenario.id}
                                 isDragOver={dragOverItem?.id === scenario.id}
                                 onDragStart={() => handleDragStart(scenario)}
@@ -579,6 +585,9 @@ const Dashboard: React.FC = () => {
                                             <TeamAnalysis scenario={scenario} />
                                         </Suspense>
                                     )}
+                                    <Suspense fallback={<Skeleton className="h-48" />}>
+                                        <LegalComplianceBanner scenario={scenario} />
+                                    </Suspense>
                                 </div>
                             );
                         })}

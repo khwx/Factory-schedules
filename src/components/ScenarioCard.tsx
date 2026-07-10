@@ -1,5 +1,5 @@
 import React, { useMemo, useCallback } from 'react';
-import { Trash2, Clock, Calendar, Download, Palmtree, Pencil, Eye, EyeOff, Users, Copy, GripVertical, FileText, Table2, Code2, ChevronUp, ChevronDown } from 'lucide-react';
+import { Trash2, Clock, Calendar, Download, Palmtree, Pencil, Eye, EyeOff, Users, Copy, GripVertical, FileText, Table2, Code2, ChevronUp, ChevronDown, CalendarDays } from 'lucide-react';
 import { Scenario } from '../types';
 import { calculateAnalysis } from '../utils/calculations';
 
@@ -13,6 +13,7 @@ interface ScenarioCardProps {
     onExportPDF?: (scenario: Scenario) => void;
     onExportCSV?: (scenario: Scenario) => void;
     onExportJSON?: (scenario: Scenario) => void;
+    onExportICS?: (scenario: Scenario) => void;
     onToggleHidden: (id: string) => void;
     onDuplicate: (scenario: Scenario) => void;
     isDragging?: boolean;
@@ -36,6 +37,7 @@ const ScenarioCard: React.FC<ScenarioCardProps> = React.memo(({
     onExportPDF,
     onExportCSV,
     onExportJSON,
+    onExportICS,
     onToggleHidden, 
     onDuplicate,
     isDragging = false,
@@ -278,6 +280,16 @@ const ScenarioCard: React.FC<ScenarioCardProps> = React.memo(({
                         >
                             <Code2 className="w-4 h-4" />
                             JSON
+                        </button>
+                    )}
+                    {onExportICS && (
+                        <button
+                            onClick={() => onExportICS(scenario)}
+                            className="flex-1 bg-teal-600 hover:bg-teal-700 text-white text-sm font-medium py-2 px-3 rounded transition-colors flex items-center justify-center gap-2"
+                            aria-label="Exportar para calendario (ICS)"
+                        >
+                            <CalendarDays className="w-4 h-4" />
+                            ICS
                         </button>
                     )}
                 </div>
