@@ -2,6 +2,15 @@ import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { Scenario, AnalysisResult } from '../types';
 
+interface AutoTableResult {
+    finalY: number;
+}
+
+function getTableFinalY(doc: jsPDF): number {
+    const docWithTable = doc as jsPDF & { lastAutoTable?: AutoTableResult };
+    return docWithTable.lastAutoTable?.finalY ?? 0;
+}
+
 /**
  * Export single scenario to PDF
  */
@@ -37,7 +46,7 @@ export const exportScenarioToPDF = (scenario: Scenario, analysis: AnalysisResult
     });
 
     // Metrics section
-    const metricsY = (doc as any).lastAutoTable.finalY + 15;
+    const metricsY = getTableFinalY(doc) + 15;
     doc.setFontSize(12);
     doc.setTextColor(59, 130, 246);
     doc.text('Métricas', 14, metricsY);
@@ -58,7 +67,7 @@ export const exportScenarioToPDF = (scenario: Scenario, analysis: AnalysisResult
 
     // Advanced metrics
     if (analysis.advancedMetrics) {
-        const advY = (doc as any).lastAutoTable.finalY + 15;
+        const advY = getTableFinalY(doc) + 15;
         doc.setFontSize(12);
         doc.setTextColor(59, 130, 246);
         doc.text('Métricas Avançadas', 14, advY);
@@ -82,7 +91,7 @@ export const exportScenarioToPDF = (scenario: Scenario, analysis: AnalysisResult
     }
 
     // Qualitative analysis
-    const qualY = (doc as any).lastAutoTable.finalY + 15;
+    const qualY = getTableFinalY(doc) + 15;
     if (qualY < 250) {
         doc.setFontSize(12);
         doc.setTextColor(59, 130, 246);
@@ -162,7 +171,7 @@ export const exportComparisonToPDF = (scenarios: Scenario[], analyses: AnalysisR
     });
 
     // Qualitative analysis for each scenario
-    let currentY = (doc as any).lastAutoTable.finalY + 15;
+    const currentY = getTableFinalY(doc) + 15;
     if (currentY < 150) {
         doc.setFontSize(12);
         doc.setTextColor(59, 130, 246);

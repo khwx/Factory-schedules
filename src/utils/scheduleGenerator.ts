@@ -94,7 +94,7 @@ export class ScheduleGenerator {
             const colIndices = columns[colId];
 
             const used = { M: 0, T: 0, N: 0, F: 0 };
-            for (let pos of colIndices) {
+            for (const pos of colIndices) {
                 if (pos < idx && pattern[pos]) {
                     used[pattern[pos] as keyof typeof used]++;
                 }
@@ -144,7 +144,7 @@ export class ScheduleGenerator {
         let consecutiveWork = 0;
         let consecutiveOff = 0;
 
-        for (let char of double) {
+        for (const char of double) {
             if (char === 'F') {
                 consecutiveWork = 0;
                 consecutiveOff++;
@@ -167,8 +167,8 @@ export class ScheduleGenerator {
     private analyzePattern(pattern: string, cycleLength: number): GeneratedSchedule {
         let score = 0;
         let isolated = 0;
-        let workBlocks = [];
-        let offBlocks = [];
+        const workBlocks = [];
+        const offBlocks = [];
 
         let currentType = pattern[0] === 'F' ? 'OFF' : 'WORK';
         let currentLen = 1;

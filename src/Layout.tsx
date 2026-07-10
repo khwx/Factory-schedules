@@ -44,7 +44,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
                 alert('Backup restaurado com sucesso! A página vai recarregar.');
                 window.location.reload();
-            } catch (error) {
+            } catch (_error) {
                 alert('Erro ao restaurar backup. Ficheiro inválido.');
             }
         };

@@ -172,7 +172,7 @@ const Dashboard: React.FC = () => {
             } else if (sortBy === 'weekends') {
                 const idxA = scenarios.findIndex(s => s.id === a.id);
                 const idxB = scenarios.findIndex(s => s.id === b.id);
-                return analyses[idxB]?.weekendsOffPerYear ?? 0 - analyses[idxA]?.weekendsOffPerYear ?? 0;
+                return (analyses[idxB]?.weekendsOffPerYear ?? 0) - (analyses[idxA]?.weekendsOffPerYear ?? 0);
             } else if (sortBy === 'hours') {
                 const idxA = scenarios.findIndex(s => s.id === a.id);
                 const idxB = scenarios.findIndex(s => s.id === b.id);
