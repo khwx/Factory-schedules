@@ -1,5 +1,5 @@
-import React, { useMemo } from 'react';
-import { Trash2, Clock, Calendar, Download, Palmtree, Pencil, Eye, EyeOff, Users, Copy, GripVertical, FileText, Table2, Code2 } from 'lucide-react';
+import React, { useMemo, useCallback } from 'react';
+import { Trash2, Clock, Calendar, Download, Palmtree, Pencil, Eye, EyeOff, Users, Copy, GripVertical, FileText, Table2, Code2, ChevronUp, ChevronDown } from 'lucide-react';
 import { Scenario } from '../types';
 import { calculateAnalysis } from '../utils/calculations';
 
@@ -23,6 +23,7 @@ interface ScenarioCardProps {
     onDragOver?: (e: React.DragEvent) => void;
     onDrop?: (e: React.DragEvent) => void;
     onDragEnd?: () => void;
+    onKeyboardReorder?: (itemId: string, direction: 'up' | 'down') => void;
 }
 
 const ScenarioCard: React.FC<ScenarioCardProps> = React.memo(({ 
@@ -45,8 +46,20 @@ const ScenarioCard: React.FC<ScenarioCardProps> = React.memo(({
     onDragOver,
     onDrop,
     onDragEnd,
+    onKeyboardReorder,
 }) => {
     const analysis = useMemo(() => calculateAnalysis(scenario), [scenario]);
+
+    const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
+        if (!onKeyboardReorder) return;
+        if (e.altKey && e.key === 'ArrowUp') {
+            e.preventDefault();
+            onKeyboardReorder(scenario.id, 'up');
+        } else if (e.altKey && e.key === 'ArrowDown') {
+            e.preventDefault();
+            onKeyboardReorder(scenario.id, 'down');
+        }
+    }, [onKeyboardReorder, scenario.id]);
 
     const getShiftColor = (char: string) => {
         switch (char) {
@@ -74,11 +87,37 @@ const ScenarioCard: React.FC<ScenarioCardProps> = React.memo(({
             onDragOver={onDragOver}
             onDrop={onDrop}
             onDragEnd={onDragEnd}
+            onKeyDown={handleKeyDown}
+            tabIndex={0}
+            role="article"
+            aria-label={`Cenario ${scenario.name}`}
         >
             <div className="p-4 border-b border-gray-700 flex justify-between items-start">
                 <div className="flex items-start gap-2">
-                    <div className="mt-1 cursor-grab active:cursor-grabbing text-gray-500 hover:text-gray-300 transition-colors" data-testid="drag-handle">
-                        <GripVertical className="w-4 h-4" />
+                    <div className="flex flex-col gap-0.5 mt-1">
+                        <div className="cursor-grab active:cursor-grabbing text-gray-500 hover:text-gray-300 transition-colors" data-testid="drag-handle">
+                            <GripVertical className="w-4 h-4" />
+                        </div>
+                        {onKeyboardReorder && (
+                            <div className="flex flex-col">
+                                <button
+                                    onClick={() => onKeyboardReorder(scenario.id, 'up')}
+                                    className="text-gray-500 hover:text-gray-300 transition-colors p-0"
+                                    aria-label={`Mover ${scenario.name} para cima`}
+                                    title="Mover para cima (Alt+Seta Cima)"
+                                >
+                                    <ChevronUp className="w-3 h-3" />
+                                </button>
+                                <button
+                                    onClick={() => onKeyboardReorder(scenario.id, 'down')}
+                                    className="text-gray-500 hover:text-gray-300 transition-colors p-0"
+                                    aria-label={`Mover ${scenario.name} para baixo`}
+                                    title="Mover para baixo (Alt+Seta Baixo)"
+                                >
+                                    <ChevronDown className="w-3 h-3" />
+                                </button>
+                            </div>
+                        )}
                     </div>
                     <div>
                         <h3 className="text-lg font-semibold text-white">{scenario.name}</h3>

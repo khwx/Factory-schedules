@@ -15,6 +15,7 @@ interface UseDragAndDropReturn<T> {
     handleDragOver: (e: React.DragEvent) => void;
     handleDrop: (e: React.DragEvent) => void;
     handleDragEnd: () => void;
+    handleKeyboardReorder: (itemId: string, direction: 'up' | 'down') => void;
     isDragging: boolean;
 }
 
@@ -31,7 +32,6 @@ export function useDragAndDrop<T>({
     const handleDragStart = useCallback((item: T) => {
         setDraggedItem(item);
         setIsDragging(true);
-        // Set drag data for Firefox compatibility
         const dt = new DataTransfer();
         dt.setData('text/plain', getItemId(item));
     }, [getItemId]);
@@ -86,6 +86,19 @@ export function useDragAndDrop<T>({
         dragCounterRef.current = 0;
     }, []);
 
+    const handleKeyboardReorder = useCallback((itemId: string, direction: 'up' | 'down') => {
+        const index = items.findIndex(item => getItemId(item) === itemId);
+        if (index === -1) return;
+
+        const newIndex = direction === 'up' ? index - 1 : index + 1;
+        if (newIndex < 0 || newIndex >= items.length) return;
+
+        const newItems = [...items];
+        const [removed] = newItems.splice(index, 1);
+        newItems.splice(newIndex, 0, removed);
+        onReorder(newItems);
+    }, [items, onReorder, getItemId]);
+
     return {
         draggedItem,
         dragOverItem,
@@ -95,6 +108,7 @@ export function useDragAndDrop<T>({
         handleDragOver,
         handleDrop,
         handleDragEnd,
+        handleKeyboardReorder,
         isDragging,
     };
 }

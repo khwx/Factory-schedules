@@ -337,6 +337,7 @@ const Dashboard: React.FC = () => {
         handleDragOver,
         handleDrop,
         handleDragEnd,
+        handleKeyboardReorder,
     } = useDragAndDrop({
         items: scenarios,
         onReorder: handleReorder,
@@ -517,6 +518,7 @@ const Dashboard: React.FC = () => {
                                 onDragOver={handleDragOver}
                                 onDrop={handleDrop}
                                 onDragEnd={handleDragEnd}
+                                onKeyboardReorder={handleKeyboardReorder}
                             />
                         ))}
                     </div>
