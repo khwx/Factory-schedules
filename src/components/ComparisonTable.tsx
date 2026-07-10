@@ -1,10 +1,11 @@
 import React, { useMemo } from 'react';
-import { Scenario } from '../types';
+import { Scenario, AnalysisResult } from '../types';
 import { calculateAnalysis } from '../utils/calculations';
 import { Trophy, TrendingDown, Minus } from 'lucide-react';
 
 interface ComparisonTableProps {
     scenarios: Scenario[];
+    analyses?: AnalysisResult[];
 }
 
 interface ComparisonRow {
@@ -15,8 +16,11 @@ interface ComparisonRow {
     format?: (value: number) => string;
 }
 
-const ComparisonTable: React.FC<ComparisonTableProps> = ({ scenarios }) => {
-    const analyses = useMemo(() => scenarios.map(s => calculateAnalysis(s)), [scenarios]);
+const ComparisonTable: React.FC<ComparisonTableProps> = ({ scenarios, analyses: preComputedAnalyses }) => {
+    const analyses = useMemo(
+        () => preComputedAnalyses ?? scenarios.map(s => calculateAnalysis(s)),
+        [scenarios, preComputedAnalyses]
+    );
 
     const rows: ComparisonRow[] = useMemo(() => [
         {

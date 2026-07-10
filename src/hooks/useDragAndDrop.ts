@@ -32,9 +32,7 @@ export function useDragAndDrop<T>({
     const handleDragStart = useCallback((item: T) => {
         setDraggedItem(item);
         setIsDragging(true);
-        const dt = new DataTransfer();
-        dt.setData('text/plain', getItemId(item));
-    }, [getItemId]);
+    }, []);
 
     const handleDragEnter = useCallback((item: T) => {
         dragCounterRef.current++;

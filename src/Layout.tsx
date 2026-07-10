@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Sun, Moon, Settings, Download, Upload } from 'lucide-react';
 import { useTheme } from './contexts/ThemeContext';
+import { useToast } from './contexts/ToastContext';
 
 interface LayoutProps {
     children: React.ReactNode;
@@ -9,6 +10,7 @@ interface LayoutProps {
 const Layout: React.FC<LayoutProps> = ({ children }) => {
     const [showSettings, setShowSettings] = useState(false);
     const { theme, toggleTheme } = useTheme();
+    const { showToast } = useToast();
 
     const handleBackup = () => {
         const data = {
@@ -42,10 +44,10 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 if (data.customHolidays) localStorage.setItem('shiftsim_custom_holidays', data.customHolidays);
                 if (data.theme) localStorage.setItem('shiftsim_theme', data.theme);
 
-                alert('Backup restaurado com sucesso! A página vai recarregar.');
-                window.location.reload();
+                showToast('success', 'Backup restaurado com sucesso! A pagina vai recarregar.');
+                setTimeout(() => window.location.reload(), 1500);
             } catch (_error) {
-                alert('Erro ao restaurar backup. Ficheiro inválido.');
+                showToast('error', 'Erro ao restaurar backup. Ficheiro invalido.');
             }
         };
         reader.readAsText(file);

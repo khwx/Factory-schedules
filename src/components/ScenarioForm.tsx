@@ -9,9 +9,13 @@ interface ScenarioFormProps {
     editingScenario?: Scenario | null;
 }
 
-const VALID_SHIFT_CHARS = /^[MTNFmtnf\s]+$/;
+const VALID_SHIFT_CHARS = /^[MTNF]+$/;
 const MAX_TEAMS = 10;
 const MIN_TEAMS = 1;
+const MIN_SHIFT_DURATION = 1;
+const MAX_SHIFT_DURATION = 12;
+const MIN_WEEKLY_HOURS = 1;
+const MAX_WEEKLY_HOURS = 60;
 
 const ScenarioForm: React.FC<ScenarioFormProps> = ({ onAdd, onUpdate, onCancelEdit, editingScenario }) => {
     const [name, setName] = useState('');
@@ -92,11 +96,17 @@ const ScenarioForm: React.FC<ScenarioFormProps> = ({ onAdd, onUpdate, onCancelEd
     };
 
     const handleShiftDurationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setShiftDuration(Number(e.target.value));
+        const value = Number(e.target.value);
+        if (value >= MIN_SHIFT_DURATION && value <= MAX_SHIFT_DURATION) {
+            setShiftDuration(value);
+        }
     };
 
     const handleWeeklyHoursChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setWeeklyHoursContract(Number(e.target.value));
+        const value = Number(e.target.value);
+        if (value >= MIN_WEEKLY_HOURS && value <= MAX_WEEKLY_HOURS) {
+            setWeeklyHoursContract(value);
+        }
     };
 
     const handlePatternChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -222,7 +232,8 @@ const ScenarioForm: React.FC<ScenarioFormProps> = ({ onAdd, onUpdate, onCancelEd
                         value={shiftDuration}
                         onChange={handleShiftDurationChange}
                         className="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2 text-white focus:outline-none focus:border-blue-500"
-                        min="1"
+                        min={String(MIN_SHIFT_DURATION)}
+                        max={String(MAX_SHIFT_DURATION)}
                         step="0.5"
                         required
                     />
@@ -240,7 +251,8 @@ const ScenarioForm: React.FC<ScenarioFormProps> = ({ onAdd, onUpdate, onCancelEd
                             value={weeklyHoursContract}
                             onChange={handleWeeklyHoursChange}
                             className="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2 text-white focus:outline-none focus:border-blue-500 flex-1"
-                            min="1"
+                            min={String(MIN_WEEKLY_HOURS)}
+                            max={String(MAX_WEEKLY_HOURS)}
                             step="0.5"
                             required
                         />

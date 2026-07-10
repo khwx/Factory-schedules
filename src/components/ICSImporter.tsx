@@ -29,16 +29,17 @@ const ICSImporter: React.FC<ICSImporterProps> = ({ onImport }) => {
     const [conflictReport, setConflictReport] = useState<ConflictReport | null>(null);
     const [importStatus, setImportStatus] = useState<ImportStatus>('idle');
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
+    const [shiftDuration, setShiftDuration] = useState(8);
+    const [weeklyHoursContract, setWeeklyHoursContract] = useState(40);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
-    const analyzeFile = useCallback((content: string, filename: string) => {
+    const analyzeFile = useCallback((content: string, filename: string, duration: number, weeklyHours: number) => {
         setImportStatus('loading');
         setErrorMessage(null);
 
         try {
-            // Generate scenario from ICS
             const scenarioName = filename.replace('.ics', '');
-            const scenario = generateScenarioFromICS(content, scenarioName, 9, 37.5);
+            const scenario = generateScenarioFromICS(content, scenarioName, duration, weeklyHours);
 
             if (scenario.teams === 0) {
                 setErrorMessage('Nenhuma equipa encontrada no ficheiro ICS. Verifique o formato do ficheiro.');
@@ -82,14 +83,14 @@ const ICSImporter: React.FC<ICSImporterProps> = ({ onImport }) => {
             const content = e.target?.result as string;
             setFileContent(content);
             setFileName(file.name);
-            analyzeFile(content, file.name);
+            analyzeFile(content, file.name, shiftDuration, weeklyHoursContract);
         };
         reader.onerror = () => {
             setErrorMessage('Erro ao ler o ficheiro.');
             setImportStatus('error');
         };
         reader.readAsText(file);
-    }, [analyzeFile]);
+    }, [analyzeFile, shiftDuration, weeklyHoursContract]);
 
     const handleImport = useCallback(() => {
         if (!previewData) return;
@@ -267,12 +268,28 @@ const ICSImporter: React.FC<ICSImporterProps> = ({ onImport }) => {
                                     <span className="text-white ml-2">{previewData.teams}</span>
                                 </div>
                                 <div>
-                                    <span className="text-gray-400">Duracao Turno:</span>
-                                    <span className="text-white ml-2">{previewData.shiftDuration}h</span>
+                                    <label className="text-gray-400 block mb-1">Duracao Turno (h):</label>
+                                    <input
+                                        type="number"
+                                        value={shiftDuration}
+                                        min={1}
+                                        max={12}
+                                        step={0.5}
+                                        onChange={(e) => setShiftDuration(Number(e.target.value))}
+                                        className="w-full bg-gray-700 border border-gray-600 rounded px-3 py-1.5 text-white text-sm focus:outline-none focus:border-blue-500"
+                                    />
                                 </div>
                                 <div>
-                                    <span className="text-gray-400">Horas Semanais:</span>
-                                    <span className="text-white ml-2">{previewData.weeklyHoursContract}h</span>
+                                    <label className="text-gray-400 block mb-1">Horas Semanais:</label>
+                                    <input
+                                        type="number"
+                                        value={weeklyHoursContract}
+                                        min={1}
+                                        max={60}
+                                        step={0.5}
+                                        onChange={(e) => setWeeklyHoursContract(Number(e.target.value))}
+                                        className="w-full bg-gray-700 border border-gray-600 rounded px-3 py-1.5 text-white text-sm focus:outline-none focus:border-blue-500"
+                                    />
                                 </div>
                             </div>
 

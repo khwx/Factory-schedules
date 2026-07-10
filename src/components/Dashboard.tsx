@@ -7,7 +7,7 @@ import { calculateAnalysis } from '../utils/calculations';
 import { exportToExcel, exportComparison } from '../utils/export';
 import { exportScenarioToPDF, exportComparisonToPDF } from '../utils/pdfExport';
 import { exportScenarioToCSV, exportScenarioToJSON, exportComparisonToCSV, exportComparisonToJSON } from '../utils/csvJsonExport';
-import { X, Download, Filter, Search, Wand2, Undo2, Redo2, FileText, Table2, Code2 } from 'lucide-react';
+import { X, Download, Filter, Search, Wand2, Undo2, Redo2, FileText, Table2, Code2, Play } from 'lucide-react';
 import PresetSelector from './PresetSelector';
 import ICSImporter from './ICSImporter';
 import { PresetScenario, PRESET_SCENARIOS } from '../data/presetScenarios';
@@ -140,7 +140,11 @@ const Dashboard: React.FC = () => {
     });
 
     useEffect(() => {
-        localStorage.setItem('shiftsim_scenarios', JSON.stringify(scenarios));
+        try {
+            localStorage.setItem('shiftsim_scenarios', JSON.stringify(scenarios));
+        } catch (_e) {
+            console.error('Failed to save scenarios to localStorage (quota exceeded?)');
+        }
     }, [scenarios]);
 
     // Memoized analysis calculations
@@ -194,9 +198,12 @@ const Dashboard: React.FC = () => {
     }, [updateScenariosWithHistory]);
 
     const handleDeleteScenario = useCallback((id: string) => {
+        const scenario = scenarios.find(s => s.id === id);
+        if (!scenario) return;
+        if (!window.confirm(`Tem a certeza que deseja eliminar "${scenario.name}"?`)) return;
         updateScenariosWithHistory(prev => prev.filter(s => s.id !== id));
         setEditingScenario(prev => prev?.id === id ? null : prev);
-    }, [updateScenariosWithHistory]);
+    }, [updateScenariosWithHistory, scenarios]);
 
     const handleEditScenario = useCallback((scenario: Scenario) => {
         setEditingScenario(scenario);
@@ -358,7 +365,7 @@ const Dashboard: React.FC = () => {
                     aria-label="Modo demonstracao"
                     aria-expanded={showDemoMode}
                 >
-                    <Wand2 className="w-5 h-5" />
+                    <Play className="w-5 h-5" />
                     Modo Demo
                 </button>
                 <button
@@ -523,7 +530,7 @@ const Dashboard: React.FC = () => {
                         ))}
                     </div>
 
-                    <ComparisonTable scenarios={visibleScenarios} />
+                    <ComparisonTable scenarios={visibleScenarios} analyses={analyses} />
 
                     {/* Comparison Charts */}
                     {visibleScenarios.length > 1 && (
@@ -615,7 +622,7 @@ const Dashboard: React.FC = () => {
                 </>
             ) : (
                 <div className="text-center py-12 text-gray-500 border-2 border-dashed border-gray-700 rounded-lg">
-                    <p>No scenarios created yet. Use the form above to get started.</p>
+                    <p>Nenhum cenario criado ainda. Utilize o formulario acima para comecar.</p>
                 </div>
             )}
 
