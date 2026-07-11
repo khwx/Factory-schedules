@@ -25,6 +25,14 @@
     <!-- Theme color -->
     <meta name="theme-color" content="#111827" />
     
+    <!-- Anti-FOUC: apply theme before React renders -->
+    <script>
+      (function() {
+        var theme = localStorage.getItem('shiftsim_theme') || 'dark';
+        document.documentElement.className = theme;
+      })();
+    </script>
+    
     <!-- PWA -->
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />

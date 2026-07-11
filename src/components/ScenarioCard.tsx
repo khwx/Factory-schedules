@@ -1,5 +1,5 @@
 import React, { useMemo, useCallback } from 'react';
-import { Trash2, Clock, Calendar, Download, Palmtree, Pencil, Eye, EyeOff, Users, Copy, GripVertical, FileText, Table2, Code2, ChevronUp, ChevronDown, CalendarDays } from 'lucide-react';
+import { Trash2, Clock, Calendar, Download, Palmtree, Pencil, Eye, EyeOff, Users, Copy, GripVertical, FileText, Table2, Code2, ChevronUp, ChevronDown, CalendarDays, Link } from 'lucide-react';
 import { Scenario } from '../types';
 import { calculateAnalysis } from '../utils/calculations';
 
@@ -14,6 +14,7 @@ interface ScenarioCardProps {
     onExportCSV?: (scenario: Scenario) => void;
     onExportJSON?: (scenario: Scenario) => void;
     onExportICS?: (scenario: Scenario) => void;
+    onShare?: (scenario: Scenario) => void;
     onToggleHidden: (id: string) => void;
     onDuplicate: (scenario: Scenario) => void;
     isDragging?: boolean;
@@ -38,6 +39,7 @@ const ScenarioCard: React.FC<ScenarioCardProps> = React.memo(({
     onExportCSV,
     onExportJSON,
     onExportICS,
+    onShare,
     onToggleHidden, 
     onDuplicate,
     isDragging = false,
@@ -240,6 +242,17 @@ const ScenarioCard: React.FC<ScenarioCardProps> = React.memo(({
                         >
                             <Users className="w-4 h-4" />
                             Multi
+                        </button>
+                    )}
+                    {onShare && (
+                        <button
+                            onClick={() => onShare(scenario)}
+                            className="flex-1 bg-cyan-600 hover:bg-cyan-700 text-white text-sm font-medium py-2 px-3 rounded transition-colors flex items-center justify-center gap-2"
+                            title="Copiar link partilhavel"
+                            aria-label="Copiar link partilhavel do cenario"
+                        >
+                            <Link className="w-4 h-4" />
+                            Partilhar
                         </button>
                     )}
                 </div>

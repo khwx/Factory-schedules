@@ -34,7 +34,8 @@ export const exportScenarioToCSV = (scenario: Scenario, analysis: AnalysisResult
 
     const csvContent = rows.map(r => r.map(c => `"${c.replace(/"/g, '""')}"`).join(',')).join('\n');
     const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' });
-    downloadBlob(blob, `${scenario.name.replace(/[^a-z0-9]/gi, '_')}_Analise.csv`);
+    const dateStr = new Date().toISOString().split('T')[0];
+    downloadBlob(blob, `${scenario.name.replace(/[^a-z0-9]/gi, '_')}_Analise_${dateStr}.csv`);
 };
 
 export const exportScenarioToJSON = (scenario: Scenario, analysis: AnalysisResult) => {
@@ -74,7 +75,8 @@ export const exportScenarioToJSON = (scenario: Scenario, analysis: AnalysisResul
 
     const json = JSON.stringify(data, null, 2);
     const blob = new Blob([json], { type: 'application/json' });
-    downloadBlob(blob, `${scenario.name.replace(/[^a-z0-9]/gi, '_')}_Analise.json`);
+    const dateStr = new Date().toISOString().split('T')[0];
+    downloadBlob(blob, `${scenario.name.replace(/[^a-z0-9]/gi, '_')}_Analise_${dateStr}.json`);
 };
 
 export const exportComparisonToCSV = (scenarios: Scenario[], analyses: AnalysisResult[]) => {
@@ -99,7 +101,8 @@ export const exportComparisonToCSV = (scenarios: Scenario[], analyses: AnalysisR
 
     const csvContent = rows.map(r => r.map(c => `"${c.replace(/"/g, '""')}"`).join(',')).join('\n');
     const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' });
-    downloadBlob(blob, 'Comparacao_Cenarios.csv');
+    const dateStr = new Date().toISOString().split('T')[0];
+    downloadBlob(blob, `Comparacao_Cenarios_${dateStr}.csv`);
 };
 
 export const exportComparisonToJSON = (scenarios: Scenario[], analyses: AnalysisResult[]) => {
@@ -128,7 +131,8 @@ export const exportComparisonToJSON = (scenarios: Scenario[], analyses: Analysis
 
     const json = JSON.stringify(data, null, 2);
     const blob = new Blob([json], { type: 'application/json' });
-    downloadBlob(blob, 'Comparacao_Cenarios.json');
+    const dateStr = new Date().toISOString().split('T')[0];
+    downloadBlob(blob, `Comparacao_Cenarios_${dateStr}.json`);
 };
 
 function downloadBlob(blob: Blob, filename: string) {

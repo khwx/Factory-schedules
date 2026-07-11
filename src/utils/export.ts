@@ -101,7 +101,7 @@ export const exportToExcel = (scenario: Scenario, analysis: AnalysisResult) => {
     XLSX.utils.book_append_sheet(workbook, weekendSheet, 'Analise_Fins_Semana');
 
     // Generate and download
-    const fileName = `${scenario.name.replace(/[^a-z0-9]/gi, '_')}_Analysis.xlsx`;
+    const fileName = `${scenario.name.replace(/[^a-z0-9]/gi, '_')}_Analise_${new Date().toISOString().split('T')[0]}.xlsx`;
     XLSX.writeFile(workbook, fileName);
 };
 
@@ -152,6 +152,6 @@ export const exportComparison = (scenarios: Scenario[], analyses: AnalysisResult
         XLSX.utils.book_append_sheet(workbook, sheet, `${scenario.name.substring(0, 25)}_5Y`);
     });
 
-    // Generate and download
-    XLSX.writeFile(workbook, 'Comparacao_Cenarios.xlsx');
+    const dateStr = new Date().toISOString().split('T')[0];
+    XLSX.writeFile(workbook, `Comparacao_Cenarios_${dateStr}.xlsx`);
 };

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Sun, Moon, Settings, Download, Upload } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Sun, Moon, Settings, Download, Upload, FilePlus2, WifiOff } from 'lucide-react';
 import { useTheme } from './contexts/ThemeContext';
 import { useToast } from './contexts/ToastContext';
 
@@ -9,8 +9,20 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
     const [showSettings, setShowSettings] = useState(false);
+    const [isOnline, setIsOnline] = useState(navigator.onLine);
     const { theme, toggleTheme } = useTheme();
     const { showToast } = useToast();
+
+    useEffect(() => {
+        const handleOnline = () => setIsOnline(true);
+        const handleOffline = () => setIsOnline(false);
+        window.addEventListener('online', handleOnline);
+        window.addEventListener('offline', handleOffline);
+        return () => {
+            window.removeEventListener('online', handleOnline);
+            window.removeEventListener('offline', handleOffline);
+        };
+    }, []);
 
     const handleBackup = () => {
         const data = {
@@ -53,6 +65,39 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         reader.readAsText(file);
     };
 
+    const handleBulkImport = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            try {
+                const data = JSON.parse(e.target?.result as string);
+
+                if (!data.scenarios || !Array.isArray(data.scenarios)) {
+                    showToast('error', 'Formato invalido. O ficheiro deve conter um array "scenarios".');
+                    return;
+                }
+
+                const existing = JSON.parse(localStorage.getItem('shiftsim_scenarios') || '[]');
+                const newScenarios = data.scenarios.map((s: { name: string; teams: number; shiftDuration: number; pattern: string; }) => ({
+                    ...s,
+                    id: crypto.randomUUID(),
+                }));
+
+                const combined = [...existing, ...newScenarios];
+                localStorage.setItem('shiftsim_scenarios', JSON.stringify(combined));
+
+                showToast('success', `${newScenarios.length} cenarios importados! A pagina vai recarregar.`);
+                setTimeout(() => window.location.reload(), 1500);
+            } catch (_error) {
+                showToast('error', 'Erro ao importar cenarios. Ficheiro invalido.');
+            }
+        };
+        reader.readAsText(file);
+        event.target.value = '';
+    };
+
     return (
         <div className="min-h-screen bg-gray-900 text-gray-100">
             {/* Skip to main content link */}
@@ -70,6 +115,13 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                             </div>
 
                             <div className="flex items-center gap-2">
+                                {/* Offline indicator */}
+                                {!isOnline && (
+                                    <span className="flex items-center gap-1 text-xs bg-yellow-900 text-yellow-300 px-2 py-1 rounded" role="status" aria-live="polite">
+                                        <WifiOff className="w-3 h-3" />
+                                        Offline
+                                    </span>
+                                )}
                                 {/* Backup Button */}
                                 <button
                                     onClick={handleBackup}
@@ -148,6 +200,18 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                                             type="file"
                                             accept=".json"
                                             onChange={handleRestore}
+                                            className="hidden"
+                                        />
+                                    </label>
+                                </div>
+                                <div className="mt-2">
+                                    <label className="relative inline-flex items-center w-full bg-purple-600 hover:bg-purple-700 px-3 py-2 rounded text-sm transition-colors cursor-pointer">
+                                        <FilePlus2 className="w-4 h-4 inline mr-2" />
+                                        Importar Multiplos Cenarios (JSON)
+                                        <input
+                                            type="file"
+                                            accept=".json"
+                                            onChange={handleBulkImport}
                                             className="hidden"
                                         />
                                     </label>

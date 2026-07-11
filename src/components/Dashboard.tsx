@@ -8,6 +8,7 @@ import { exportToExcel, exportComparison } from '../utils/export';
 import { exportScenarioToPDF, exportComparisonToPDF } from '../utils/pdfExport';
 import { exportScenarioToCSV, exportScenarioToJSON, exportComparisonToCSV, exportComparisonToJSON } from '../utils/csvJsonExport';
 import { downloadICS } from '../utils/icsExport';
+import { checkForSharedScenario, copyShareableLink } from '../utils/shareScenario';
 import { X, Download, Filter, Search, Wand2, Undo2, Redo2, FileText, Table2, Code2, Play } from 'lucide-react';
 import PresetSelector from './PresetSelector';
 import ICSImporter from './ICSImporter';
@@ -31,6 +32,7 @@ const QualityOfLifeDisplay = lazy(() => import('./QualityOfLifeDisplay'));
 const TeamAnalysis = lazy(() => import('./TeamAnalysis'));
 const DemoMode = lazy(() => import('./DemoMode'));
 const LegalComplianceBanner = lazy(() => import('./LegalComplianceBanner'));
+const PayEstimateDisplay = lazy(() => import('./PayEstimateDisplay'));
 
 
 const Dashboard: React.FC = () => {
@@ -64,6 +66,25 @@ const Dashboard: React.FC = () => {
     const historyIndexRef = useRef<number>(0);
     const [canUndo, setCanUndo] = useState(false);
     const [canRedo, setCanRedo] = useState(false);
+
+    // Check for shared scenario in URL hash on first load
+    useEffect(() => {
+        const sharedData = checkForSharedScenario();
+        if (sharedData && sharedData.n && sharedData.t && sharedData.d && sharedData.p) {
+            const sharedScenario: Scenario = {
+                id: crypto.randomUUID(),
+                name: sharedData.n,
+                teams: sharedData.t,
+                shiftDuration: sharedData.d,
+                weeklyHoursContract: sharedData.w,
+                pattern: sharedData.p,
+                teamPatterns: sharedData.tp,
+                startDate: sharedData.s,
+            };
+            updateScenariosWithHistory(prev => [...prev, sharedScenario]);
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const updateScenariosWithHistory = useCallback((newScenarios: Scenario[] | ((prev: Scenario[]) => Scenario[])) => {
         setScenarios((currentScenarios) => {
@@ -263,6 +284,10 @@ const Dashboard: React.FC = () => {
 
     const handleExportICS = useCallback((scenario: Scenario) => {
         downloadICS(scenario);
+    }, []);
+
+    const handleShareScenario = useCallback((scenario: Scenario) => {
+        copyShareableLink(scenario);
     }, []);
 
     const handleLoadPreset = useCallback((preset: PresetScenario) => {
@@ -523,6 +548,7 @@ const Dashboard: React.FC = () => {
                                 onExportCSV={handleExportCSV}
                                 onExportJSON={handleExportJSON}
                                 onExportICS={handleExportICS}
+                                onShare={handleShareScenario}
                                 isDragging={draggedItem?.id === scenario.id}
                                 isDragOver={dragOverItem?.id === scenario.id}
                                 onDragStart={() => handleDragStart(scenario)}
@@ -587,6 +613,9 @@ const Dashboard: React.FC = () => {
                                     )}
                                     <Suspense fallback={<Skeleton className="h-48" />}>
                                         <LegalComplianceBanner scenario={scenario} />
+                                    </Suspense>
+                                    <Suspense fallback={<Skeleton className="h-48" />}>
+                                        <PayEstimateDisplay scenario={scenario} />
                                     </Suspense>
                                 </div>
                             );
