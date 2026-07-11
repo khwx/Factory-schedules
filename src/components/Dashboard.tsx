@@ -386,7 +386,7 @@ const Dashboard: React.FC = () => {
             <ICSImporter onImport={handleAddScenario} />
 
             <div className="flex flex-col md:flex-row gap-4 mb-6">
-                <div className="flex-1">
+                <div className="flex-1" data-tutorial="presets">
                     <PresetSelector onLoadPreset={handleLoadPreset} />
                 </div>
                 <button
@@ -417,12 +417,14 @@ const Dashboard: React.FC = () => {
                 </Suspense>
             )}
 
-            <ScenarioForm
-                onAdd={handleAddScenario}
-                onUpdate={handleUpdateScenario}
-                onCancelEdit={handleCancelEdit}
-                editingScenario={editingScenario}
-            />
+            <div data-tutorial="form">
+                <ScenarioForm
+                    onAdd={handleAddScenario}
+                    onUpdate={handleUpdateScenario}
+                    onCancelEdit={handleCancelEdit}
+                    editingScenario={editingScenario}
+                />
+            </div>
 
             {scenarios.length > 0 && (
                 <>
@@ -532,7 +534,7 @@ const Dashboard: React.FC = () => {
 
             {visibleScenarios.length > 0 ? (
                 <>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8" data-tutorial="cards">
                         {visibleScenarios.map(scenario => (
                             <ScenarioCard
                                 key={scenario.id}
@@ -562,7 +564,9 @@ const Dashboard: React.FC = () => {
                         ))}
                     </div>
 
-                    <ComparisonTable scenarios={visibleScenarios} analyses={analyses} />
+                    <div data-tutorial="comparison">
+                        <ComparisonTable scenarios={visibleScenarios} analyses={analyses} />
+                    </div>
 
                     {/* Comparison Charts */}
                     {visibleScenarios.length > 1 && (
@@ -612,7 +616,9 @@ const Dashboard: React.FC = () => {
                                         </Suspense>
                                     )}
                                     <Suspense fallback={<Skeleton className="h-48" />}>
-                                        <LegalComplianceBanner scenario={scenario} />
+                                        <div data-tutorial="compliance">
+                                            <LegalComplianceBanner scenario={scenario} />
+                                        </div>
                                     </Suspense>
                                     <Suspense fallback={<Skeleton className="h-48" />}>
                                         <PayEstimateDisplay scenario={scenario} />
@@ -704,7 +710,7 @@ const Dashboard: React.FC = () => {
                 </Suspense>
             )}
 
-            <div ref={generatorModalRef}>
+            <div ref={generatorModalRef} data-tutorial="generator">
                 <GeneratorUI
                     isOpen={showGenerator}
                     onClose={handleCloseGenerator}

@@ -24,7 +24,22 @@
     }
   ],
   "categories": ["business", "productivity", "utilities"],
-  "screenshots": [],
+  "screenshots": [
+    {
+      "src": "/screenshots/dashboard.svg",
+      "sizes": "1280x720",
+      "type": "image/svg+xml",
+      "form_factor": "wide",
+      "label": "Dashboard com cenarios de turnos"
+    },
+    {
+      "src": "/screenshots/calendar.svg",
+      "sizes": "1280x720",
+      "type": "image/svg+xml",
+      "form_factor": "wide",
+      "label": "Calendario anual de turnos"
+    }
+  ],
   "shortcuts": [
     {
       "name": "Novo Cenário",

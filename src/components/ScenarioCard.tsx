@@ -170,15 +170,36 @@ const ScenarioCard: React.FC<ScenarioCardProps> = React.memo(({
                 {/* Pattern Visualization */}
                 <div>
                     <p className="text-xs text-gray-500 mb-1 uppercase tracking-wider">Padrao de Rotacao</p>
-                    <div className="flex h-4 rounded overflow-hidden">
-                        {scenario.pattern.split('').map((char, i) => (
-                            <div
-                                key={i}
-                                className={`flex-1 ${getShiftColor(char)}`}
-                                title={`Day ${i + 1}: ${char}`}
-                            />
-                        ))}
-                    </div>
+                    {scenario.teamPatterns && scenario.teamPatterns.length > 1 ? (
+                        <div className="space-y-1">
+                            {scenario.teamPatterns.map((pattern, teamIdx) => (
+                                <div key={teamIdx} className="flex items-center gap-2">
+                                    <span className="text-xs text-gray-400 w-12 flex-shrink-0">
+                                        {String.fromCharCode(65 + teamIdx)}
+                                    </span>
+                                    <div className="flex h-3 rounded overflow-hidden flex-1" title={`Equipa ${String.fromCharCode(65 + teamIdx)}: ${pattern}`}>
+                                        {pattern.split('').map((char, i) => (
+                                            <div
+                                                key={i}
+                                                className={`flex-1 ${getShiftColor(char)}`}
+                                                title={`Dia ${i + 1}: ${char}`}
+                                            />
+                                        ))}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    ) : (
+                        <div className="flex h-4 rounded overflow-hidden">
+                            {scenario.pattern.split('').map((char, i) => (
+                                <div
+                                    key={i}
+                                    className={`flex-1 ${getShiftColor(char)}`}
+                                    title={`Day ${i + 1}: ${char}`}
+                                />
+                            ))}
+                        </div>
+                    )}
                     <div className="flex justify-between text-xs text-gray-500 mt-1 font-mono">
                         <span>Dia 1</span>
                         <span>Dia {scenario.pattern.length}</span>

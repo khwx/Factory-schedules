@@ -1,5 +1,4 @@
-import jsPDF from 'jspdf';
-import autoTable from 'jspdf-autotable';
+import type jsPDF from 'jspdf';
 import { Scenario, AnalysisResult } from '../types';
 import { validateLegalCompliance } from './legalValidator';
 
@@ -15,7 +14,9 @@ function getTableFinalY(doc: jsPDF): number {
 /**
  * Export single scenario to PDF
  */
-export const exportScenarioToPDF = (scenario: Scenario, analysis: AnalysisResult) => {
+export const exportScenarioToPDF = async (scenario: Scenario, analysis: AnalysisResult) => {
+    const { default: jsPDF } = await import('jspdf');
+    const { default: autoTable } = await import('jspdf-autotable');
     const doc = new jsPDF();
     const pageWidth = doc.internal.pageSize.getWidth();
 
@@ -129,7 +130,9 @@ export const exportScenarioToPDF = (scenario: Scenario, analysis: AnalysisResult
 /**
  * Export comparison of multiple scenarios to PDF
  */
-export const exportComparisonToPDF = (scenarios: Scenario[], analyses: AnalysisResult[]) => {
+export const exportComparisonToPDF = async (scenarios: Scenario[], analyses: AnalysisResult[]) => {
+    const { default: jsPDF } = await import('jspdf');
+    const { default: autoTable } = await import('jspdf-autotable');
     const doc = new jsPDF({ orientation: 'landscape' });
     const pageWidth = doc.internal.pageSize.getWidth();
 
@@ -218,7 +221,8 @@ export const exportComparisonToPDF = (scenarios: Scenario[], analyses: AnalysisR
 /**
  * Export compliance report for audit purposes
  */
-export const exportComplianceReport = (scenario: Scenario, year?: number): void => {
+export const exportComplianceReport = async (scenario: Scenario, year?: number): Promise<void> => {
+    const { default: jsPDF } = await import('jspdf');
     const doc = new jsPDF();
     const pageWidth = doc.internal.pageSize.getWidth();
     const dateStr = new Date().toISOString().split('T')[0];

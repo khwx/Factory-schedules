@@ -1,11 +1,11 @@
-import * as XLSX from 'xlsx';
 import { Scenario, AnalysisResult, DayInfo } from '../types';
 import { generateYearCalendar } from './calendar';
 
 /**
  * Export scenario data to Excel
  */
-export const exportToExcel = (scenario: Scenario, analysis: AnalysisResult) => {
+export const exportToExcel = async (scenario: Scenario, analysis: AnalysisResult) => {
+    const XLSX = await import('xlsx');
     const workbook = XLSX.utils.book_new();
     const currentYear = new Date().getFullYear();
 
@@ -108,7 +108,8 @@ export const exportToExcel = (scenario: Scenario, analysis: AnalysisResult) => {
 /**
  * Export comparison of multiple scenarios
  */
-export const exportComparison = (scenarios: Scenario[], analyses: AnalysisResult[]) => {
+export const exportComparison = async (scenarios: Scenario[], analyses: AnalysisResult[]) => {
+    const XLSX = await import('xlsx');
     const workbook = XLSX.utils.book_new();
 
     // Comparison Sheet

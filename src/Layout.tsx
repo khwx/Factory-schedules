@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Sun, Moon, Settings, Download, Upload, FilePlus2, WifiOff } from 'lucide-react';
+import { Sun, Moon, Settings, Download, Upload, FilePlus2, WifiOff, Globe } from 'lucide-react';
 import { useTheme } from './contexts/ThemeContext';
 import { useToast } from './contexts/ToastContext';
+import { useI18n } from './i18n';
+import { useTutorial, TutorialOverlay, HelpButton } from './components/Tutorial';
 
 interface LayoutProps {
     children: React.ReactNode;
@@ -12,6 +14,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     const [isOnline, setIsOnline] = useState(navigator.onLine);
     const { theme, toggleTheme } = useTheme();
     const { showToast } = useToast();
+    const { lang, setLang } = useI18n();
+    const tutorial = useTutorial();
 
     useEffect(() => {
         const handleOnline = () => setIsOnline(true);
@@ -155,6 +159,9 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                                     <Settings className="w-5 h-5 text-gray-400" />
                                 </button>
 
+                                {/* Help Button */}
+                                <HelpButton onClick={tutorial.start} />
+
                                 {/* Theme Toggle */}
                                 <button
                                     onClick={toggleTheme}
@@ -240,6 +247,29 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                                     )}
                                 </button>
                             </div>
+
+                            <div className="bg-gray-700 p-4 rounded-lg">
+                                <h4 className="font-semibold mb-2 text-sm">Idioma</h4>
+                                <p className="text-xs text-gray-400 mb-3">
+                                    Escolha o idioma da aplicacao.
+                                </p>
+                                <div className="flex gap-2">
+                                    <button
+                                        onClick={() => setLang('pt')}
+                                        className={`flex-1 px-3 py-2 rounded text-sm transition-colors flex items-center justify-center gap-2 ${lang === 'pt' ? 'bg-blue-600 text-white' : 'bg-gray-600 text-gray-300 hover:bg-gray-500'}`}
+                                    >
+                                        <Globe className="w-4 h-4" />
+                                        Portugues
+                                    </button>
+                                    <button
+                                        onClick={() => setLang('en')}
+                                        className={`flex-1 px-3 py-2 rounded text-sm transition-colors flex items-center justify-center gap-2 ${lang === 'en' ? 'bg-blue-600 text-white' : 'bg-gray-600 text-gray-300 hover:bg-gray-500'}`}
+                                    >
+                                        <Globe className="w-4 h-4" />
+                                        English
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -248,6 +278,15 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             <main id="main-content" className="container mx-auto py-8">
                 {children}
             </main>
+
+            <TutorialOverlay
+                isActive={tutorial.isActive}
+                currentStep={tutorial.currentStep}
+                onNext={tutorial.next}
+                onPrev={tutorial.prev}
+                onClose={tutorial.close}
+                totalSteps={tutorial.totalSteps}
+            />
         </div>
     );
 };
