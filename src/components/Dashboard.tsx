@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useCallback, useRef, lazy, Suspense } from 'react';
+import React, { useState, useEffect, useMemo, useCallback, useRef, lazy } from 'react';
 import ScenarioForm from './ScenarioForm';
 import ScenarioCard from './ScenarioCard';
 import ComparisonTable from './ComparisonTable';
@@ -19,7 +19,8 @@ import { useDragAndDrop } from '../hooks/useDragAndDrop';
 import { useFocusTrap } from '../hooks/useFocusTrap';
 import { usePreferences } from '../hooks/usePreferences';
 import { useI18n } from '../i18n';
-import { Skeleton } from './Skeleton';
+import { LazyLoad } from './LazyErrorBoundary';
+import { ShortcutsHelp, useShortcutsHelp } from './ShortcutsHelp';
 
 // Lazy load heavy components for better performance
 const YearCalendarView = lazy(() => import('./YearCalendarView'));
@@ -69,6 +70,7 @@ const Dashboard: React.FC = () => {
     const [canRedo, setCanRedo] = useState(false);
 
     const { t } = useI18n();
+    const shortcutsHelp = useShortcutsHelp();
 
     // Check for shared scenario in URL hash on first load
     useEffect(() => {
@@ -412,12 +414,12 @@ const Dashboard: React.FC = () => {
             </div>
 
             {showDemoMode && (
-                <Suspense fallback={<Skeleton className="h-48" />}>
+                <LazyLoad className="h-48">
                     <DemoMode
                         onSelectScenario={handleLoadDemoScenario}
                         onClose={() => setShowDemoMode(false)}
                     />
-                </Suspense>
+                </LazyLoad>
             )}
 
             <div data-tutorial="form">
@@ -573,9 +575,9 @@ const Dashboard: React.FC = () => {
 
                     {/* Comparison Charts */}
                     {visibleScenarios.length > 1 && (
-                        <Suspense fallback={<Skeleton className="h-64" />}>
+                        <LazyLoad className="h-64">
                             <ComparisonCharts scenarios={visibleScenarios} analyses={analyses} />
-                        </Suspense>
+                        </LazyLoad>
                     )}
 
                     {/* Advanced Metrics, Multi-Year Analysis, Heatmap and Team Fairness for each scenario */}
@@ -587,45 +589,45 @@ const Dashboard: React.FC = () => {
 
                             return (
                                 <div key={scenario.id} className="space-y-6">
-                                    <Suspense fallback={<Skeleton className="h-32" />}>
+                                    <LazyLoad className="h-32">
                                         {analysis.advancedMetrics && (
                                             <AdvancedMetricsDisplay
                                                 metrics={analysis.advancedMetrics}
                                                 scenarioName={scenario.name}
                                             />
                                         )}
-                                    </Suspense>
-                                    <Suspense fallback={<Skeleton className="h-48" />}>
+                                    </LazyLoad>
+                                    <LazyLoad className="h-48">
                                         <QualityOfLifeDisplay
                                             scenario={scenario}
                                             analysis={analysis}
                                         />
-                                    </Suspense>
-                                    <Suspense fallback={<Skeleton className="h-64" />}>
+                                    </LazyLoad>
+                                    <LazyLoad className="h-64">
                                         <WorkloadHeatmap scenario={scenario} />
-                                    </Suspense>
-                                    <Suspense fallback={<Skeleton className="h-48" />}>
+                                    </LazyLoad>
+                                    <LazyLoad className="h-48">
                                         <MultiYearAnalysis
                                             multiYearData={analysis.multiYearAnalysis}
                                             scenarioName={scenario.name}
                                         />
-                                    </Suspense>
-                                    <Suspense fallback={<Skeleton className="h-64" />}>
+                                    </LazyLoad>
+                                    <LazyLoad className="h-64">
                                         <TeamFairness scenario={scenario} />
-                                    </Suspense>
+                                    </LazyLoad>
                                     {scenario.teams > 1 && (
-                                        <Suspense fallback={<Skeleton className="h-48" />}>
+                                        <LazyLoad className="h-48">
                                             <TeamAnalysis scenario={scenario} />
-                                        </Suspense>
+                                        </LazyLoad>
                                     )}
-                                    <Suspense fallback={<Skeleton className="h-48" />}>
+                                    <LazyLoad className="h-48">
                                         <div data-tutorial="compliance">
                                             <LegalComplianceBanner scenario={scenario} />
                                         </div>
-                                    </Suspense>
-                                    <Suspense fallback={<Skeleton className="h-48" />}>
+                                    </LazyLoad>
+                                    <LazyLoad className="h-48">
                                         <PayEstimateDisplay scenario={scenario} />
-                                    </Suspense>
+                                    </LazyLoad>
                                 </div>
                             );
                         })}
@@ -695,9 +697,9 @@ const Dashboard: React.FC = () => {
                             </button>
                         </div>
                         <div className="flex-1 overflow-auto">
-                            <Suspense fallback={<Skeleton className="h-96" />}>
+                            <LazyLoad className="h-96">
                                 <YearCalendarView scenario={selectedScenario} />
-                            </Suspense>
+                            </LazyLoad>
                         </div>
                     </div>
                 </div>
@@ -705,12 +707,12 @@ const Dashboard: React.FC = () => {
 
             {/* Multi-Team Calendar Modal */}
             {showMultiTeamCalendar && selectedScenario && selectedScenario.teams > 1 && (
-                <Suspense fallback={<Skeleton className="h-96" />}>
+                <LazyLoad className="h-96">
                     <MultiTeamCalendarView
                         scenario={selectedScenario}
                         onClose={handleCloseMultiTeamCalendar}
                     />
-                </Suspense>
+                </LazyLoad>
             )}
 
             <div ref={generatorModalRef} data-tutorial="generator">
@@ -720,6 +722,8 @@ const Dashboard: React.FC = () => {
                     onSelectScenario={handleLoadPreset}
                 />
             </div>
+
+            <ShortcutsHelp isOpen={shortcutsHelp.isOpen} onClose={shortcutsHelp.close} />
         </div>
     );
 };

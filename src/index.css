@@ -318,3 +318,34 @@ button, a, input, select, textarea {
     break-inside: avoid;
   }
 }
+
+/* Mobile touch targets - ensure minimum 44x44px for interactive elements */
+@media (max-width: 768px) {
+  button, a, input[type="checkbox"], input[type="radio"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Larger padding on mobile buttons */
+  .grid button {
+    padding: 0.75rem 1rem;
+  }
+
+  /* Stack grid items on very small screens */
+  .grid-cols-3 {
+    gap: 0.5rem;
+  }
+
+  /* Prevent text overflow on mobile */
+  .truncate-mobile {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100%;
+  }
+
+  /* Improve scrolling on iOS */
+  * {
+    -webkit-overflow-scrolling: touch;
+  }
+}
