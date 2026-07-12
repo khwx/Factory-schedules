@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Plus, HelpCircle, Zap, AlertCircle } from 'lucide-react';
 import { Scenario } from '../types';
+import { useI18n } from '../i18n';
 
 interface ScenarioFormProps {
     onAdd: (scenario: Omit<Scenario, 'id'>) => void;
@@ -18,6 +19,7 @@ const MIN_WEEKLY_HOURS = 1;
 const MAX_WEEKLY_HOURS = 60;
 
 const ScenarioForm: React.FC<ScenarioFormProps> = ({ onAdd, onUpdate, onCancelEdit, editingScenario }) => {
+    const { t } = useI18n();
     const [name, setName] = useState('');
     const [teams, setTeams] = useState(4);
     const [shiftDuration, setShiftDuration] = useState(8);
@@ -45,7 +47,6 @@ const ScenarioForm: React.FC<ScenarioFormProps> = ({ onAdd, onUpdate, onCancelEd
             setWeeklyHoursContract(40);
             setPattern('');
         }
-        // Focus on the name field when the form opens or when editing scenario changes
         if (nameRef.current) {
             nameRef.current.focus();
         }
@@ -60,23 +61,23 @@ const ScenarioForm: React.FC<ScenarioFormProps> = ({ onAdd, onUpdate, onCancelEd
         const cleaned = value.toUpperCase().replace(/\s/g, '');
 
         if (!VALID_SHIFT_CHARS.test(cleaned)) {
-            setPatternError('Apenas M (Manha), T (Tarde), N (Noite) e F (Folga) sao permitidos');
+            setPatternError(t.form.errorInvalidChars);
             return false;
         }
 
         if (cleaned.length < 5) {
-            setPatternError('Padrao demasiado curto (minimo 5 caracteres)');
+            setPatternError(t.form.errorTooShort);
             return false;
         }
 
         if (cleaned.length > 60) {
-            setPatternError('Padrao demasiado longo (maximo 60 caracteres)');
+            setPatternError(t.form.errorTooLong);
             return false;
         }
 
         const hasWorkShifts = /[MTN]/.test(cleaned);
         if (!hasWorkShifts) {
-            setPatternError('Padrao deve converter pelo menos um turno de trabalho (M, T ou N)');
+            setPatternError(t.form.errorNoWork);
             return false;
         }
 
@@ -118,7 +119,6 @@ const ScenarioForm: React.FC<ScenarioFormProps> = ({ onAdd, onUpdate, onCancelEd
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         if (!name || !pattern) {
-            // Focus on the first empty field
             if (!name && nameRef.current) {
                 nameRef.current.focus();
                 return;
@@ -158,7 +158,6 @@ const ScenarioForm: React.FC<ScenarioFormProps> = ({ onAdd, onUpdate, onCancelEd
             setShiftDuration(8);
             setWeeklyHoursContract(40);
             setPattern('');
-            // Focus on name field for next entry
             if (nameRef.current) {
                 nameRef.current.focus();
             }
@@ -168,12 +167,8 @@ const ScenarioForm: React.FC<ScenarioFormProps> = ({ onAdd, onUpdate, onCancelEd
     const handleAutoCalculate = () => {
         if (teams > 0 && shiftDuration > 0) {
             setIsCalculating(true);
-            // Calculate approximate weekly hours based on pattern
-            // This is a simplified calculation - in reality this would be more complex
-            const estimatedHours = (shiftDuration * teams * 5) / 7; // Rough estimate
-            setWeeklyHoursContract(Math.round(estimatedHours * 2) / 2); // Round to nearest 0.5
-            
-            // Reset after a short delay
+            const estimatedHours = (shiftDuration * teams * 5) / 7;
+            setWeeklyHoursContract(Math.round(estimatedHours * 2) / 2);
             setTimeout(() => {
                 setIsCalculating(false);
             }, 1500);
@@ -184,12 +179,12 @@ const ScenarioForm: React.FC<ScenarioFormProps> = ({ onAdd, onUpdate, onCancelEd
         <div className="bg-gray-800 p-6 rounded-lg shadow-lg border border-gray-700">
             <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
                 <Plus className="w-5 h-5 text-blue-400" />
-                {editingScenario ? 'Editar Cenario' : 'Criar Novo Cenario'}
+                {editingScenario ? t.form.editTitle : t.form.createTitle}
             </h2>
             <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4 items-end">
                 <div className="lg:col-span-1">
                     <label htmlFor="scenario-name" className="block text-sm font-medium text-gray-400 mb-1">
-                        Nome do Cenario
+                        {t.form.name}
                     </label>
                     <input
                         ref={nameRef}
@@ -197,7 +192,7 @@ const ScenarioForm: React.FC<ScenarioFormProps> = ({ onAdd, onUpdate, onCancelEd
                         type="text"
                         value={name}
                         onChange={handleNameChange}
-                        placeholder="ex: 4 Equipas - Continental"
+                        placeholder={t.form.placeholderName}
                         className="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2 text-white focus:outline-none focus:border-blue-500"
                         required
                         aria-describedby="name-help"
@@ -206,7 +201,7 @@ const ScenarioForm: React.FC<ScenarioFormProps> = ({ onAdd, onUpdate, onCancelEd
 
                 <div className="lg:col-span-1">
                     <label htmlFor="teams-count" className="block text-sm font-medium text-gray-400 mb-1">
-                        Equipas
+                        {t.form.teams}
                     </label>
                     <input
                         ref={teamsRef}
@@ -223,7 +218,7 @@ const ScenarioForm: React.FC<ScenarioFormProps> = ({ onAdd, onUpdate, onCancelEd
 
                 <div className="lg:col-span-1">
                     <label htmlFor="shift-duration" className="block text-sm font-medium text-gray-400 mb-1">
-                        Duracao Turno (h)
+                        {t.form.shiftDuration}
                     </label>
                     <input
                         ref={shiftDurationRef}
@@ -241,7 +236,7 @@ const ScenarioForm: React.FC<ScenarioFormProps> = ({ onAdd, onUpdate, onCancelEd
 
                 <div className="lg:col-span-1">
                     <label htmlFor="weekly-hours" className="block text-sm font-medium text-gray-400 mb-1">
-                        Horas Semanais (Contrato)
+                        {t.form.weeklyHours}
                     </label>
                     <div className="flex items-center space-x-2">
                         <input
@@ -261,7 +256,7 @@ const ScenarioForm: React.FC<ScenarioFormProps> = ({ onAdd, onUpdate, onCancelEd
                             onClick={handleAutoCalculate}
                             disabled={isCalculating}
                             className="p-2 hover:bg-gray-700 rounded-lg transition-colors flex-shrink-0"
-                            aria-label="Calcular duracao automaticamente"
+                            aria-label={t.form.autoCalc}
                             aria-busy={isCalculating}
                         >
                             {isCalculating ? (
@@ -278,11 +273,11 @@ const ScenarioForm: React.FC<ScenarioFormProps> = ({ onAdd, onUpdate, onCancelEd
 
                 <div className="lg:col-span-2">
                     <label htmlFor="pattern" className="block text-sm font-medium text-gray-400 mb-1 flex items-center gap-1">
-                        Padrao de Rotacao
+                        {t.form.pattern}
                         <div className="group relative">
-                            <HelpCircle className="w-4 h-4 text-gray-500 cursor-help" aria-label="Ajuda sobre padrao de rotacao" />
+                            <HelpCircle className="w-4 h-4 text-gray-500 cursor-help" aria-label={t.form.pattern} />
                             <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-64 p-2 bg-black text-xs text-gray-300 rounded hidden group-hover:block z-10">
-                                Insira a sequencia de turnos para UMA equipa. Use M (Manha), T (Tarde), N (Noite), F (Folga). Exemplo: MM TT NN FFFF
+                                {t.form.patternHelp}
                             </div>
                         </div>
                     </label>
@@ -292,7 +287,7 @@ const ScenarioForm: React.FC<ScenarioFormProps> = ({ onAdd, onUpdate, onCancelEd
                         type="text"
                         value={pattern}
                         onChange={handlePatternChange}
-                        placeholder="ex: MM TT NN FFFF"
+                        placeholder={t.form.placeholderPattern}
                         className={`w-full bg-gray-700 border rounded px-3 py-2 text-white focus:outline-none font-mono uppercase ${
                             patternError ? 'border-red-500 focus:border-red-500' : 'border-gray-600 focus:border-blue-500'
                         }`}
@@ -315,7 +310,7 @@ const ScenarioForm: React.FC<ScenarioFormProps> = ({ onAdd, onUpdate, onCancelEd
                             onClick={onCancelEdit}
                             className="bg-gray-600 hover:bg-gray-700 text-white font-medium py-2 px-6 rounded transition-colors"
                         >
-                            Cancelar
+                            {t.form.cancel}
                         </button>
                     )}
                     <button
@@ -324,7 +319,7 @@ const ScenarioForm: React.FC<ScenarioFormProps> = ({ onAdd, onUpdate, onCancelEd
                         className={`${editingScenario ? 'bg-green-600 hover:bg-green-700' : 'bg-blue-600 hover:bg-blue-700'} text-white font-medium py-2 px-6 rounded transition-colors flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed`}
                     >
                         <Plus className="w-4 h-4" />
-                        {editingScenario ? 'Atualizar Cenario' : 'Adicionar Cenario'}
+                        {editingScenario ? t.form.update : t.form.submit}
                     </button>
                 </div>
             </form>

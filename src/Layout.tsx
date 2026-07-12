@@ -14,7 +14,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     const [isOnline, setIsOnline] = useState(navigator.onLine);
     const { theme, toggleTheme } = useTheme();
     const { showToast } = useToast();
-    const { lang, setLang } = useI18n();
+    const { t, lang, setLang } = useI18n();
     const tutorial = useTutorial();
 
     useEffect(() => {
@@ -60,10 +60,10 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 if (data.customHolidays) localStorage.setItem('shiftsim_custom_holidays', data.customHolidays);
                 if (data.theme) localStorage.setItem('shiftsim_theme', data.theme);
 
-                showToast('success', 'Backup restaurado com sucesso! A pagina vai recarregar.');
+                showToast('success', lang === 'pt' ? 'Backup restaurado com sucesso! A pagina vai recarregar.' : 'Backup restored successfully! Page will reload.');
                 setTimeout(() => window.location.reload(), 1500);
             } catch (_error) {
-                showToast('error', 'Erro ao restaurar backup. Ficheiro invalido.');
+                showToast('error', lang === 'pt' ? 'Erro ao restaurar backup. Ficheiro invalido.' : 'Error restoring backup. Invalid file.');
             }
         };
         reader.readAsText(file);
@@ -79,7 +79,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 const data = JSON.parse(e.target?.result as string);
 
                 if (!data.scenarios || !Array.isArray(data.scenarios)) {
-                    showToast('error', 'Formato invalido. O ficheiro deve conter um array "scenarios".');
+                    showToast('error', lang === 'pt' ? 'Formato invalido. O ficheiro deve conter um array "scenarios".' : 'Invalid format. File must contain a "scenarios" array.');
                     return;
                 }
 
@@ -92,10 +92,10 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 const combined = [...existing, ...newScenarios];
                 localStorage.setItem('shiftsim_scenarios', JSON.stringify(combined));
 
-                showToast('success', `${newScenarios.length} cenarios importados! A pagina vai recarregar.`);
+                showToast('success', lang === 'pt' ? `${newScenarios.length} cenarios importados! A pagina vai recarregar.` : `${newScenarios.length} scenarios imported! Page will reload.`);
                 setTimeout(() => window.location.reload(), 1500);
             } catch (_error) {
-                showToast('error', 'Erro ao importar cenarios. Ficheiro invalido.');
+                showToast('error', lang === 'pt' ? 'Erro ao importar cenarios. Ficheiro invalido.' : 'Error importing scenarios. Invalid file.');
             }
         };
         reader.readAsText(file);
@@ -104,9 +104,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
     return (
         <div className="min-h-screen bg-gray-900 text-gray-100">
-            {/* Skip to main content link */}
             <a href="#main-content" className="sr-only focus:not-sr-only absolute top-0 left-0 p-2 bg-white bg-opacity-90 text-black z-50">
-                Pular para conteúdo principal
+                {lang === 'pt' ? 'Pular para conteudo principal' : 'Skip to main content'}
             </a>
 
             <header className="bg-gray-800 border-b border-gray-700">
@@ -114,30 +113,26 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                     <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
                             <div className="flex items-center gap-2">
-                                {/* Logo and Title */}
-                                <span className="text-xl font-semibold">ShiftSim Factory</span>
+                                <span className="text-xl font-semibold">{t.header.title}</span>
                             </div>
 
                             <div className="flex items-center gap-2">
-                                {/* Offline indicator */}
                                 {!isOnline && (
                                     <span className="flex items-center gap-1 text-xs bg-yellow-900 text-yellow-300 px-2 py-1 rounded" role="status" aria-live="polite">
                                         <WifiOff className="w-3 h-3" />
-                                        Offline
+                                        {t.header.offline}
                                     </span>
                                 )}
-                                {/* Backup Button */}
                                 <button
                                     onClick={handleBackup}
                                     className="p-2 hover:bg-gray-700 rounded-lg transition-colors"
-                                    title="Fazer Backup"
-                                    aria-label="Fazer backup das configurações"
+                                    title={t.header.backup}
+                                    aria-label={t.header.backup}
                                 >
                                     <Download className="w-5 h-5 text-gray-400" />
                                 </button>
 
-                                {/* Restore Button */}
-                                <label className="relative inline-flex items-center p-2 hover:bg-gray-700 rounded-lg transition-colors cursor-pointer" title="Restaurar Backup">
+                                <label className="relative inline-flex items-center p-2 hover:bg-gray-700 rounded-lg transition-colors cursor-pointer" title={t.header.restore}>
                                     <Upload className="w-5 h-5 text-gray-400" />
                                     <input
                                         type="file"
@@ -145,29 +140,26 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                                         onChange={handleRestore}
                                         className="hidden"
                                         id="file-restore-input"
-                                        aria-label="Selecionar arquivo de backup para restaurar"
+                                        aria-label={t.header.restore}
                                     />
                                 </label>
 
-                                {/* Settings Button */}
                                 <button
                                     onClick={() => setShowSettings(!showSettings)}
                                     className="p-2 hover:bg-gray-700 rounded-lg transition-colors"
-                                    title="Configurações"
-                                    aria-label="Abrir painel de configurações"
+                                    title={t.header.settings}
+                                    aria-label={t.header.settings}
                                 >
                                     <Settings className="w-5 h-5 text-gray-400" />
                                 </button>
 
-                                {/* Help Button */}
                                 <HelpButton onClick={tutorial.start} />
 
-                                {/* Theme Toggle */}
                                 <button
                                     onClick={toggleTheme}
                                     className="p-2 hover:bg-gray-700 rounded-lg transition-colors"
-                                    title={theme === 'dark' ? 'Tema Claro' : 'Tema Escuro'}
-                                    aria-label={theme === 'dark' ? 'Alternar para tema claro' : 'Alternar para tema escuro'}
+                                    title={theme === 'dark' ? t.header.lightTheme : t.header.darkTheme}
+                                    aria-label={theme === 'dark' ? t.header.lightTheme : t.header.darkTheme}
                                 >
                                     {theme === 'dark' ? (
                                         <Sun className="w-5 h-5 text-yellow-400" />
@@ -181,16 +173,15 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 </div>
             </header>
 
-            {/* Settings Panel */}
             {showSettings && (
                 <div className="bg-gray-800 border-b border-gray-700 p-4">
                     <div className="container mx-auto">
-                        <h3 className="text-lg font-semibold mb-4">Configurações</h3>
+                        <h3 className="text-lg font-semibold mb-4">{t.header.settings}</h3>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div className="bg-gray-700 p-4 rounded-lg">
                                 <h4 className="font-semibold mb-2 text-sm">Backup & Restore</h4>
                                 <p className="text-xs text-gray-400 mb-3">
-                                    Guarde ou restaure todos os seus cenários e configurações.
+                                    {t.header.backup} & {t.header.restore}
                                 </p>
                                 <div className="flex gap-2">
                                     <button
@@ -198,11 +189,11 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                                         className="flex-1 bg-blue-600 hover:bg-blue-700 px-3 py-2 rounded text-sm transition-colors"
                                     >
                                         <Download className="w-4 h-4 inline mr-2" />
-                                        Fazer Backup
+                                        {t.header.backup}
                                     </button>
                                     <label className="relative inline-flex items-center flex-1 bg-green-600 hover:bg-green-700 px-3 py-2 rounded text-sm transition-colors cursor-pointer">
                                         <Upload className="w-4 h-4 inline mr-2" />
-                                        Restaurar
+                                        {t.header.restore}
                                         <input
                                             type="file"
                                             accept=".json"
@@ -214,7 +205,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                                 <div className="mt-2">
                                     <label className="relative inline-flex items-center w-full bg-purple-600 hover:bg-purple-700 px-3 py-2 rounded text-sm transition-colors cursor-pointer">
                                         <FilePlus2 className="w-4 h-4 inline mr-2" />
-                                        Importar Multiplos Cenarios (JSON)
+                                        {t.header.bulkImport}
                                         <input
                                             type="file"
                                             accept=".json"
@@ -226,9 +217,9 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                             </div>
 
                             <div className="bg-gray-700 p-4 rounded-lg">
-                                <h4 className="font-semibold mb-2 text-sm">Tema</h4>
+                                <h4 className="font-semibold mb-2 text-sm">{t.header.theme}</h4>
                                 <p className="text-xs text-gray-400 mb-3">
-                                    Escolha entre tema claro ou escuro.
+                                    {t.header.theme}
                                 </p>
                                 <button
                                     onClick={toggleTheme}
@@ -237,21 +228,21 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                                     {theme === 'dark' ? (
                                         <>
                                             <Sun className="w-4 h-4 inline mr-2" />
-                                            Mudar para Tema Claro
+                                            {t.header.lightTheme}
                                         </>
                                     ) : (
                                         <>
                                             <Moon className="w-4 h-4 inline mr-2" />
-                                            Mudar para Tema Escuro
+                                            {t.header.darkTheme}
                                         </>
                                     )}
                                 </button>
                             </div>
 
                             <div className="bg-gray-700 p-4 rounded-lg">
-                                <h4 className="font-semibold mb-2 text-sm">Idioma</h4>
+                                <h4 className="font-semibold mb-2 text-sm">{lang === 'pt' ? 'Idioma' : 'Language'}</h4>
                                 <p className="text-xs text-gray-400 mb-3">
-                                    Escolha o idioma da aplicacao.
+                                    {lang === 'pt' ? 'Escolha o idioma da aplicacao.' : 'Choose the application language.'}
                                 </p>
                                 <div className="flex gap-2">
                                     <button

@@ -18,6 +18,7 @@ import { useKeyboardShortcuts } from '../hooks/useKeyboardShortcuts';
 import { useDragAndDrop } from '../hooks/useDragAndDrop';
 import { useFocusTrap } from '../hooks/useFocusTrap';
 import { usePreferences } from '../hooks/usePreferences';
+import { useI18n } from '../i18n';
 import { Skeleton } from './Skeleton';
 
 // Lazy load heavy components for better performance
@@ -66,6 +67,8 @@ const Dashboard: React.FC = () => {
     const historyIndexRef = useRef<number>(0);
     const [canUndo, setCanUndo] = useState(false);
     const [canRedo, setCanRedo] = useState(false);
+
+    const { t } = useI18n();
 
     // Check for shared scenario in URL hash on first load
     useEffect(() => {
@@ -396,7 +399,7 @@ const Dashboard: React.FC = () => {
                     aria-expanded={showDemoMode}
                 >
                     <Play className="w-5 h-5" />
-                    Modo Demo
+                    {t.dashboard.demoMode}
                 </button>
                 <button
                     onClick={handleOpenGenerator}
@@ -404,7 +407,7 @@ const Dashboard: React.FC = () => {
                     aria-label="Abrir gerador de horarios"
                 >
                     <Wand2 className="w-5 h-5" />
-                    Gerar Horario
+                    {t.dashboard.generate}
                 </button>
             </div>
 
@@ -473,7 +476,7 @@ const Dashboard: React.FC = () => {
                                     <input
                                         ref={searchInputRef}
                                         type="text"
-                                        placeholder="Pesquisar cenarios... (Ctrl+F)"
+                                        placeholder={`${t.dashboard.search} (Ctrl+F)`}
                                         value={searchTerm}
                                         onChange={handleSearchChange}
                                         className="w-full pl-10 pr-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-blue-500"
@@ -636,7 +639,7 @@ const Dashboard: React.FC = () => {
                             aria-label="Exportar todos os cenarios para Excel"
                         >
                             <Download className="w-5 h-5" aria-hidden="true" />
-                            Excel
+                            {t.dashboard.exportExcel}
                         </button>
                         <button
                             onClick={handleExportAllPDF}
@@ -644,7 +647,7 @@ const Dashboard: React.FC = () => {
                             aria-label="Exportar todos os cenarios para PDF"
                         >
                             <FileText className="w-5 h-5" aria-hidden="true" />
-                            PDF
+                            {t.dashboard.exportPDF}
                         </button>
                         <button
                             onClick={handleExportAllCSV}
@@ -652,7 +655,7 @@ const Dashboard: React.FC = () => {
                             aria-label="Exportar todos os cenarios para CSV"
                         >
                             <Table2 className="w-5 h-5" aria-hidden="true" />
-                            CSV
+                            {t.dashboard.exportCSV}
                         </button>
                         <button
                             onClick={handleExportAllJSON}
@@ -660,13 +663,13 @@ const Dashboard: React.FC = () => {
                             aria-label="Exportar todos os cenarios para JSON"
                         >
                             <Code2 className="w-5 h-5" aria-hidden="true" />
-                            JSON
+                            {t.dashboard.exportJSON}
                         </button>
                     </div>
                 </>
             ) : (
                 <div className="text-center py-12 text-gray-500 border-2 border-dashed border-gray-700 rounded-lg">
-                    <p>Nenhum cenario criado ainda. Utilize o formulario acima para comecar.</p>
+                    <p>{t.dashboard.empty}</p>
                 </div>
             )}
 

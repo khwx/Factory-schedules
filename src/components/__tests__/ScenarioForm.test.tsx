@@ -1,11 +1,14 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import ScenarioForm from '../ScenarioForm';
+import { I18nProvider } from '../../i18n';
 import { Scenario } from '../../types';
+
+const wrapper = ({ children }: { children: React.ReactNode }) => <I18nProvider>{children}</I18nProvider>;
 
 describe('ScenarioForm', () => {
   it('renders the form with all inputs', () => {
-    render(<ScenarioForm onAdd={() => {}} />);
+    render(<ScenarioForm onAdd={() => {}} />, { wrapper });
 
     expect(screen.getByLabelText('Nome do Cenario')).toBeInTheDocument();
     expect(screen.getByLabelText('Equipas')).toBeInTheDocument();
@@ -14,14 +17,14 @@ describe('ScenarioForm', () => {
   });
 
   it('renders submit button', () => {
-    render(<ScenarioForm onAdd={() => {}} />);
+    render(<ScenarioForm onAdd={() => {}} />, { wrapper });
 
     expect(screen.getByRole('button', { name: /adicionar cenario/i })).toBeInTheDocument();
   });
 
   it('does not call onAdd when name is empty', async () => {
     const handleAdd = vi.fn();
-    render(<ScenarioForm onAdd={handleAdd} />);
+    render(<ScenarioForm onAdd={handleAdd} />, { wrapper });
 
     fireEvent.change(screen.getByLabelText('Equipas'), { target: { value: '5' } });
     fireEvent.change(screen.getByPlaceholderText('ex: MM TT NN FFFF'), { target: { value: 'MMTTNNFFFF' } });
@@ -33,7 +36,7 @@ describe('ScenarioForm', () => {
   });
 
   it('shows pattern error for invalid characters', async () => {
-    render(<ScenarioForm onAdd={() => {}} />);
+    render(<ScenarioForm onAdd={() => {}} />, { wrapper });
 
     const patternInput = screen.getByPlaceholderText('ex: MM TT NN FFFF');
     fireEvent.change(patternInput, { target: { value: 'XYZ' } });
@@ -43,7 +46,7 @@ describe('ScenarioForm', () => {
   });
 
   it('shows pattern error for too short pattern', async () => {
-    render(<ScenarioForm onAdd={() => {}} />);
+    render(<ScenarioForm onAdd={() => {}} />, { wrapper });
 
     const patternInput = screen.getByPlaceholderText('ex: MM TT NN FFFF');
     fireEvent.change(patternInput, { target: { value: 'MT' } });
@@ -60,7 +63,7 @@ describe('ScenarioForm', () => {
       pattern: 'MMTTNNFFFF',
     };
 
-    render(<ScenarioForm onAdd={() => {}} onUpdate={() => {}} editingScenario={scenario} />);
+    render(<ScenarioForm onAdd={() => {}} onUpdate={() => {}} editingScenario={scenario} />, { wrapper });
 
     expect(screen.getByRole('button', { name: /atualizar cenario/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /cancelar/i })).toBeInTheDocument();
@@ -73,7 +76,7 @@ describe('ScenarioForm', () => {
       submittedData = data;
     };
 
-    render(<ScenarioForm onAdd={handleSubmit} />);
+    render(<ScenarioForm onAdd={handleSubmit} />, { wrapper });
 
     fireEvent.change(screen.getByLabelText('Nome do Cenario'), { target: { value: 'Test Scenario' } });
     fireEvent.change(screen.getByLabelText('Equipas'), { target: { value: '5' } });

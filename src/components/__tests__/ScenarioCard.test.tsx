@@ -1,7 +1,10 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import ScenarioCard from '../ScenarioCard';
+import { I18nProvider } from '../../i18n';
 import { Scenario } from '../../types';
+
+const wrapper = ({ children }: { children: React.ReactNode }) => <I18nProvider>{children}</I18nProvider>;
 
 const mockScenario: Scenario = {
   id: '1',
@@ -23,7 +26,8 @@ describe('ScenarioCard', () => {
         onExport={() => {}}
         onToggleHidden={() => {}}
         onDuplicate={() => {}}
-      />
+      />,
+      { wrapper }
     );
     
     expect(screen.getByText('Test Scenario')).toBeInTheDocument();
@@ -39,7 +43,8 @@ describe('ScenarioCard', () => {
         onExport={() => {}}
         onToggleHidden={() => {}}
         onDuplicate={() => {}}
-      />
+      />,
+      { wrapper }
     );
     
     expect(screen.getByTestId('drag-handle')).toBeInTheDocument();
@@ -56,7 +61,8 @@ describe('ScenarioCard', () => {
         onExportPDF={() => {}}
         onToggleHidden={() => {}}
         onDuplicate={() => {}}
-      />
+      />,
+      { wrapper }
     );
     
     expect(screen.getByText('PDF')).toBeInTheDocument();
@@ -72,7 +78,8 @@ describe('ScenarioCard', () => {
         onExport={() => {}}
         onToggleHidden={() => {}}
         onDuplicate={() => {}}
-      />
+      />,
+      { wrapper }
     );
     
     expect(screen.queryByText('PDF')).not.toBeInTheDocument();
@@ -89,7 +96,8 @@ describe('ScenarioCard', () => {
         onExport={() => {}}
         onToggleHidden={() => {}}
         onDuplicate={() => {}}
-      />
+      />,
+      { wrapper }
     );
     
     expect(screen.getByText(/multi/i)).toBeInTheDocument();
