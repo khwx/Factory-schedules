@@ -77,7 +77,7 @@ const ScenarioCard: React.FC<ScenarioCardProps> = React.memo(({
 
     return (
         <div 
-            className={`bg-gray-800 rounded-lg border overflow-hidden transition-all duration-200 ${
+            className={`bg-gray-800 rounded-lg border overflow-hidden transition-all duration-200 animate-cardEnter ${
                 isDragging 
                     ? 'opacity-50 border-blue-500 scale-95' 
                     : isDragOver 

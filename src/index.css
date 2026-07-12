@@ -244,3 +244,77 @@ button, a, input, select, textarea {
   clip: auto;
   white-space: normal;
 }
+
+/* Print styles */
+@media print {
+  body {
+    background: white !important;
+    color: #111 !important;
+  }
+
+  header, nav, .no-print,
+  [data-tutorial],
+  button:not(.print-show),
+  .sr-only,
+  footer {
+    display: none !important;
+  }
+
+  main {
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: 100% !important;
+  }
+
+  .bg-gray-800, .bg-gray-900, .bg-gray-700 {
+    background: white !important;
+    border-color: #ddd !important;
+  }
+
+  .text-white, .text-gray-100, .text-gray-300, .text-gray-400 {
+    color: #111 !important;
+  }
+
+  table {
+    border-collapse: collapse !important;
+    width: 100% !important;
+    font-size: 10pt !important;
+  }
+
+  table th, table td {
+    border: 1px solid #999 !important;
+    padding: 4px 8px !important;
+  }
+
+  table th {
+    background: #eee !important;
+    color: #111 !important;
+    font-weight: bold !important;
+  }
+
+  .grid {
+    display: block !important;
+  }
+
+  .grid > * {
+    margin-bottom: 1em !important;
+    break-inside: avoid;
+  }
+
+  a[href]::after {
+    content: none !important;
+  }
+
+  @page {
+    margin: 1.5cm;
+    size: A4 landscape;
+  }
+
+  h1, h2, h3, h4 {
+    break-after: avoid;
+  }
+
+  tr {
+    break-inside: avoid;
+  }
+}

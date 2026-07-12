@@ -8,10 +8,16 @@ interface PresetSelectorProps {
 
 const PresetSelector: React.FC<PresetSelectorProps> = ({ onLoadPreset }) => {
     const [isOpen, setIsOpen] = useState(false);
+    const [activeIndex, setActiveIndex] = useState(-1);
     const containerRef = useRef<HTMLDivElement>(null);
     const buttonRef = useRef<HTMLButtonElement>(null);
+    const listRef = useRef<HTMLDivElement>(null);
+    const itemRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
-    const close = useCallback(() => setIsOpen(false), []);
+    const close = useCallback(() => {
+        setIsOpen(false);
+        setActiveIndex(-1);
+    }, []);
 
     useEffect(() => {
         if (!isOpen) return;
@@ -22,20 +28,67 @@ const PresetSelector: React.FC<PresetSelectorProps> = ({ onLoadPreset }) => {
             }
         };
 
-        const handleEscape = (e: KeyboardEvent) => {
+        const handleKeyDown = (e: KeyboardEvent) => {
             if (e.key === 'Escape') {
                 close();
                 buttonRef.current?.focus();
+                return;
+            }
+
+            if (!isOpen) return;
+
+            switch (e.key) {
+                case 'ArrowDown':
+                    e.preventDefault();
+                    setActiveIndex(prev => {
+                        const next = prev < PRESET_SCENARIOS.length - 1 ? prev + 1 : 0;
+                        itemRefs.current[next]?.scrollIntoView({ block: 'nearest' });
+                        return next;
+                    });
+                    break;
+                case 'ArrowUp':
+                    e.preventDefault();
+                    setActiveIndex(prev => {
+                        const next = prev > 0 ? prev - 1 : PRESET_SCENARIOS.length - 1;
+                        itemRefs.current[next]?.scrollIntoView({ block: 'nearest' });
+                        return next;
+                    });
+                    break;
+                case 'Home':
+                    e.preventDefault();
+                    setActiveIndex(0);
+                    itemRefs.current[0]?.scrollIntoView({ block: 'nearest' });
+                    break;
+                case 'End':
+                    e.preventDefault();
+                    setActiveIndex(PRESET_SCENARIOS.length - 1);
+                    itemRefs.current[PRESET_SCENARIOS.length - 1]?.scrollIntoView({ block: 'nearest' });
+                    break;
+                case 'Enter':
+                case ' ':
+                    if (activeIndex >= 0) {
+                        e.preventDefault();
+                        onLoadPreset(PRESET_SCENARIOS[activeIndex]);
+                        close();
+                        buttonRef.current?.focus();
+                    }
+                    break;
             }
         };
 
         document.addEventListener('mousedown', handleClickOutside);
-        document.addEventListener('keydown', handleEscape);
+        document.addEventListener('keydown', handleKeyDown);
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
-            document.removeEventListener('keydown', handleEscape);
+            document.removeEventListener('keydown', handleKeyDown);
         };
-    }, [isOpen, close]);
+    }, [isOpen, activeIndex, close, onLoadPreset]);
+
+    useEffect(() => {
+        if (isOpen && activeIndex >= 0) {
+            itemRefs.current[activeIndex]?.focus();
+        }
+    }, [isOpen, activeIndex]);
 
     return (
         <div className="relative mb-4" ref={containerRef}>
@@ -54,16 +107,26 @@ const PresetSelector: React.FC<PresetSelectorProps> = ({ onLoadPreset }) => {
             </button>
 
             {isOpen && (
-                <div className="absolute top-full left-0 right-0 mt-2 bg-gray-800 border border-gray-700 rounded-lg shadow-xl z-10 overflow-hidden" role="listbox">
-                    {PRESET_SCENARIOS.map((preset) => (
+                <div
+                    ref={listRef}
+                    className="absolute top-full left-0 right-0 mt-2 bg-gray-800 border border-gray-700 rounded-lg shadow-xl z-10 overflow-hidden max-h-[400px] overflow-y-auto"
+                    role="listbox"
+                    aria-label="Cenarios de exemplo"
+                >
+                    {PRESET_SCENARIOS.map((preset, index) => (
                         <button
                             key={preset.name}
+                            ref={el => { itemRefs.current[index] = el; }}
                             onClick={() => {
                                 onLoadPreset(preset);
                                 close();
                             }}
-                            className="w-full text-left p-4 hover:bg-gray-700 transition-colors border-b border-gray-700 last:border-b-0"
+                            className={`w-full text-left p-4 transition-colors border-b border-gray-700 last:border-b-0 ${
+                                activeIndex === index ? 'bg-gray-700' : 'hover:bg-gray-700'
+                            }`}
                             role="option"
+                            aria-selected={activeIndex === index}
+                            tabIndex={activeIndex === index ? 0 : -1}
                         >
                             <div className="flex items-start justify-between">
                                 <div className="flex-1 min-w-0">
