@@ -1,6 +1,6 @@
 import { DayInfo, Scenario } from '../types';
 import { generateYearCalendar } from './calendar';
-import { getPortugueseHolidays } from './holidays';
+import { getAllHolidays } from './holidays';
 
 export interface LegalRule {
     id: string;
@@ -148,7 +148,7 @@ function countNightShifts(calendar: DayInfo[]): number {
 
 function countHolidaysWorked(calendar: DayInfo[]): number {
     const year = calendar[0]?.date.getFullYear() || new Date().getFullYear();
-    const holidays = getPortugueseHolidays(year);
+    const holidays = getAllHolidays(year);
     const holidayDates = new Set(
         holidays.map(h => {
             const d = new Date(h.date);

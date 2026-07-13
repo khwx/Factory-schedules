@@ -1,5 +1,5 @@
 import { DayInfo, AdvancedMetrics } from '../types';
-import { getPortugueseHolidays, countHolidaysOff, getHolidaysOffList, getHolidaysWorked } from './holidays';
+import { getAllHolidays, countHolidaysOff, getHolidaysOffList, getHolidaysWorked } from './holidays';
 
 /**
  * Calculate advanced metrics from a year calendar
@@ -23,7 +23,7 @@ export const calculateAdvancedMetrics = (calendar: DayInfo[]): AdvancedMetrics =
 
     // Get year from calendar
     const year = calendar[0]?.date.getFullYear() || new Date().getFullYear();
-    const holidays = getPortugueseHolidays(year);
+    const holidays = getAllHolidays(year);
 
     // Analyze consecutive patterns
     for (let i = 0; i < calendar.length; i++) {

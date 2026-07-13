@@ -1,6 +1,6 @@
 import { Scenario } from '../types';
 import { generateYearCalendar } from './calendar';
-import { getPortugueseHolidays } from './holidays';
+import { getAllHolidays } from './holidays';
 
 export interface PayConfig {
     hourlyRate: number;
@@ -37,7 +37,7 @@ export function calculateEstimatedPay(
 ): PayEstimate {
     const year = new Date().getFullYear();
     const calendar = generateYearCalendar(scenario, year, teamIndex);
-    const holidays = getPortugueseHolidays(year);
+    const holidays = getAllHolidays(year);
     const holidayDateSet = new Set(
         holidays.map(h => {
             const d = new Date(h.date);

@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Sun, Moon, Settings, Download, Upload, FilePlus2, WifiOff, Globe } from 'lucide-react';
+import { Sun, Moon, Settings, Download, Upload, FilePlus2, WifiOff, Globe, Plus, Trash2, Calendar } from 'lucide-react';
 import { useTheme } from './contexts/ThemeContext';
 import { useToast } from './contexts/ToastContext';
 import { useI18n } from './i18n';
 import { useTutorial, TutorialOverlay, HelpButton } from './components/Tutorial';
+import { getCustomHolidays, addCustomHoliday, removeCustomHoliday } from './utils/holidays';
 
 interface LayoutProps {
     children: React.ReactNode;
@@ -16,6 +17,14 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     const { showToast } = useToast();
     const { t, lang, setLang } = useI18n();
     const tutorial = useTutorial();
+    const [customHolidays, setCustomHolidays] = useState<Array<{id: string, name: string, month: number, day: number}>>(() => {
+        try {
+            return getCustomHolidays();
+        } catch { return []; }
+    });
+    const [newHolidayName, setNewHolidayName] = useState('');
+    const [newHolidayMonth, setNewHolidayMonth] = useState(0);
+    const [newHolidayDay, setNewHolidayDay] = useState(1);
 
     useEffect(() => {
         const handleOnline = () => setIsOnline(true);
@@ -100,6 +109,29 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         };
         reader.readAsText(file);
         event.target.value = '';
+    };
+
+    const handleAddCustomHoliday = () => {
+        if (!newHolidayName.trim()) {
+            showToast('error', lang === 'pt' ? 'Nome do feriado obrigatorio' : 'Holiday name is required');
+            return;
+        }
+        const holiday = addCustomHoliday({
+            name: newHolidayName.trim(),
+            month: newHolidayMonth,
+            day: newHolidayDay,
+            type: 'custom',
+            isFixed: true,
+        });
+        setCustomHolidays(prev => [...prev, holiday]);
+        setNewHolidayName('');
+        showToast('success', lang === 'pt' ? 'Feriado adicionado' : 'Holiday added');
+    };
+
+    const handleRemoveCustomHoliday = (id: string) => {
+        removeCustomHoliday(id);
+        setCustomHolidays(prev => prev.filter(h => h.id !== id));
+        showToast('success', lang === 'pt' ? 'Feriado removido' : 'Holiday removed');
     };
 
     return (
@@ -260,6 +292,73 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                                         English
                                     </button>
                                 </div>
+                            </div>
+
+                            <div className="bg-gray-700 p-4 rounded-lg">
+                                <h4 className="font-semibold mb-2 text-sm flex items-center gap-2">
+                                    <Calendar className="w-4 h-4 text-blue-400" />
+                                    {lang === 'pt' ? 'Feriados Personalizados' : 'Custom Holidays'}
+                                </h4>
+                                <p className="text-xs text-gray-400 mb-3">
+                                    {lang === 'pt' ? 'Adicione feriados da sua empresa ou regiao.' : 'Add company or regional holidays.'}
+                                </p>
+                                
+                                <div className="flex gap-2 mb-3">
+                                    <input
+                                        type="text"
+                                        value={newHolidayName}
+                                        onChange={e => setNewHolidayName(e.target.value)}
+                                        placeholder={lang === 'pt' ? 'Nome do feriado (ex: Aniversario Empresa)' : 'Holiday name (e.g. Company Anniversary)'}
+                                        className="flex-1 bg-gray-600 border border-gray-500 rounded px-3 py-2 text-white text-sm focus:outline-none focus:border-blue-500"
+                                    />
+                                    <select
+                                        value={newHolidayMonth}
+                                        onChange={e => setNewHolidayMonth(Number(e.target.value))}
+                                        className="w-28 bg-gray-600 border border-gray-500 rounded px-2 py-2 text-white text-sm focus:outline-none focus:border-blue-500"
+                                    >
+                                        {['Janeiro', 'Fevereiro', 'Marco', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'].map((m, i) => (
+                                            <option key={i} value={i}>{m}</option>
+                                        ))}
+                                    </select>
+                                    <select
+                                        value={newHolidayDay}
+                                        onChange={e => setNewHolidayDay(Number(e.target.value))}
+                                        className="w-20 bg-gray-600 border border-gray-500 rounded px-2 py-2 text-white text-sm focus:outline-none focus:border-blue-500"
+                                    >
+                                        {Array.from({ length: 31 }, (_, i) => i + 1).map(d => (
+                                            <option key={d} value={d}>{d}</option>
+                                        ))}
+                                    </select>
+                                    <button
+                                        onClick={handleAddCustomHoliday}
+                                        className="bg-blue-600 hover:bg-blue-700 px-3 py-2 rounded text-sm transition-colors flex items-center gap-1"
+                                    >
+                                        <Plus className="w-4 h-4" />
+                                    </button>
+                                </div>
+
+                                {customHolidays.length > 0 && (
+                                    <div className="space-y-1">
+                                        {customHolidays.map(h => (
+                                            <div key={h.id} className="flex items-center justify-between bg-gray-600 p-2 rounded text-sm">
+                                                <span>{h.name} - {h.day}/{h.month + 1}</span>
+                                                <button
+                                                    onClick={() => handleRemoveCustomHoliday(h.id)}
+                                                    className="text-gray-400 hover:text-red-400"
+                                                    aria-label={lang === 'pt' ? 'Remover feriado' : 'Remove holiday'}
+                                                >
+                                                    <Trash2 className="w-4 h-4" />
+                                                </button>
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
+
+                                {customHolidays.length === 0 && (
+                                    <p className="text-xs text-gray-500 text-center py-2">
+                                        {lang === 'pt' ? 'Nenhum feriado personalizado adicionado.' : 'No custom holidays added.'}
+                                    </p>
+                                )}
                             </div>
                         </div>
                     </div>

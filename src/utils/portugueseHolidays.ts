@@ -28,7 +28,7 @@ function calculateEaster(year: number): Date {
 export interface Holiday {
     name: string;
     date: Date;
-    type: 'national' | 'religious' | 'regional';
+    type: 'national' | 'religious' | 'regional' | 'custom';
     isFixed: boolean;
     monthDay: string; // Format: 'MM-DD' for quick lookup
 }
@@ -193,4 +193,68 @@ export function getHolidaysWorked(calendar: { date: Date; shift: string }[], hol
  */
 export function getTotalHolidaysCount(year: number): number {
     return getPortugueseHolidays(year).length;
+}
+
+// =========== Custom Holidays Support ===========
+
+const CUSTOM_HOLIDAYS_KEY = 'shiftsim_custom_holidays';
+
+export interface CustomHoliday {
+    id: string;
+    name: string;
+    month: number; // 0-11
+    day: number;   // 1-31
+    type: 'national' | 'religious' | 'regional' | 'custom';
+    isFixed: true;
+}
+
+function getStoredCustomHolidays(): CustomHoliday[] {
+    try {
+        const stored = localStorage.getItem(CUSTOM_HOLIDAYS_KEY);
+        return stored ? JSON.parse(stored) : [];
+    } catch {
+        return [];
+    }
+}
+
+function saveCustomHolidays(holidays: CustomHoliday[]): void {
+    try {
+        localStorage.setItem(CUSTOM_HOLIDAYS_KEY, JSON.stringify(holidays));
+    } catch {
+        // ignore quota exceeded
+    }
+}
+
+export function getCustomHolidays(): CustomHoliday[] {
+    return getStoredCustomHolidays();
+}
+
+export function addCustomHoliday(holiday: Omit<CustomHoliday, 'id'>): CustomHoliday {
+    const holidays = getStoredCustomHolidays();
+    const newHoliday: CustomHoliday = {
+        ...holiday,
+        id: crypto.randomUUID(),
+    };
+    saveCustomHolidays([...holidays, newHoliday]);
+    return newHoliday;
+}
+
+export function removeCustomHoliday(id: string): void {
+    const holidays = getStoredCustomHolidays().filter(h => h.id !== id);
+    saveCustomHolidays(holidays);
+}
+
+/**
+ * Get all holidays for a year (Portuguese + custom)
+ */
+export function getAllHolidays(year: number): Holiday[] {
+    const ptHolidays = getPortugueseHolidays(year);
+    const customHolidays = getStoredCustomHolidays().map(ch => ({
+        name: ch.name,
+        date: new Date(year, ch.month, ch.day),
+        type: ch.type,
+        isFixed: true,
+        monthDay: `${String(ch.month + 1).padStart(2, '0')}-${String(ch.day).padStart(2, '0')}`,
+    }));
+    return [...ptHolidays, ...customHolidays].sort((a, b) => a.date.getTime() - b.date.getTime());
 }

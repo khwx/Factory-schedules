@@ -1,6 +1,6 @@
 import { Scenario, YearlyAnalysis } from '../types';
 import { generateYearCalendar, analyzeYearCalendar } from './calendar';
-import { getPortugueseHolidays, countHolidaysOff, getHolidaysWorked } from './holidays';
+import { getAllHolidays, countHolidaysOff, getHolidaysWorked } from './holidays';
 
 export interface TeamAnalysis {
     teamNumber: number;
@@ -30,7 +30,7 @@ export interface CoverageAnalysis {
 export const analyzeTeamFairness = (scenario: Scenario, year: number): FairnessAnalysis => {
     const { teams, pattern } = scenario;
     const teamAnalyses: TeamAnalysis[] = [];
-    const holidays = getPortugueseHolidays(year);
+    const holidays = getAllHolidays(year);
 
     // Generate analysis for each team
     for (let teamNum = 0; teamNum < teams; teamNum++) {

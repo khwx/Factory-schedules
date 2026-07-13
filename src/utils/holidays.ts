@@ -1,7 +1,18 @@
 /**
- * Holidays - Re-exports from centralized portugueseHolidays.ts
- * This file maintains backward compatibility
+ * Holidays - Centralized holiday management with custom holiday support
  */
 
-export { getPortugueseHolidays, isHoliday, getHolidayName, countHolidaysOff, getHolidaysOffList, getHolidaysWorked } from './portugueseHolidays';
-export type { Holiday } from './portugueseHolidays';
+export { 
+    getPortugueseHolidays, 
+    isHoliday, 
+    getHolidayName, 
+    countHolidaysOff, 
+    getHolidaysOffList, 
+    getHolidaysWorked,
+    getCustomHolidays,
+    addCustomHoliday,
+    removeCustomHoliday,
+    getAllHolidays
+} from './portugueseHolidays';
+
+export type { Holiday, CustomHoliday } from './portugueseHolidays';
