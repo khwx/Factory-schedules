@@ -6,6 +6,7 @@ import { useI18n } from '../i18n';
 
 interface ScenarioCardProps {
     scenario: Scenario;
+    searchTerm?: string;
     onDelete: (id: string) => void;
     onEdit: (scenario: Scenario) => void;
     onViewCalendar: (scenario: Scenario) => void;
@@ -31,6 +32,7 @@ interface ScenarioCardProps {
 
 const ScenarioCard: React.FC<ScenarioCardProps> = React.memo(({
     scenario,
+    searchTerm = '',
     onDelete,
     onEdit,
     onViewCalendar,
@@ -75,6 +77,21 @@ const ScenarioCard: React.FC<ScenarioCardProps> = React.memo(({
             case 'F': return 'bg-gray-600';
             default: return 'bg-gray-700';
         }
+    };
+
+    const highlightMatch = (text: string) => {
+        if (!searchTerm) return <span>{text}</span>;
+        const regex = new RegExp(`(${searchTerm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+        const parts = text.split(regex);
+        return (
+            <span>
+                {parts.map((part, i) => regex.test(part) ? (
+                    <mark key={i} className="bg-yellow-300 text-gray-900 rounded px-0.5">{part}</mark>
+                ) : (
+                    <span key={i}>{part}</span>
+                ))}
+            </span>
+        );
     };
 
     return (
@@ -124,7 +141,7 @@ const ScenarioCard: React.FC<ScenarioCardProps> = React.memo(({
                         )}
                     </div>
                     <div>
-                        <h3 className="text-lg font-semibold text-white">{scenario.name}</h3>
+                        <h3 className="text-lg font-semibold text-white">{highlightMatch(scenario.name)}</h3>
                         <p className="text-sm text-gray-400">
                             {scenario.teams} {t.form.teams} &bull; {scenario.shiftDuration}h
                         </p>

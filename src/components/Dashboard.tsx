@@ -544,6 +544,7 @@ const Dashboard: React.FC = () => {
                             <ScenarioCard
                                 key={scenario.id}
                                 scenario={scenario}
+                                searchTerm={searchTerm}
                                 onDelete={handleDeleteScenario}
                                 onEdit={handleEditScenario}
                                 onToggleHidden={handleToggleHidden}
