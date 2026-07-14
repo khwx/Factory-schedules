@@ -6,6 +6,8 @@ interface KeyboardShortcuts {
     onEscape?: () => void;
     onDelete?: () => void;
     onSearch?: () => void;
+    onNewScenario?: () => void;
+    onQuickAction?: (index: number) => void;
 }
 
 export const useKeyboardShortcuts = (shortcuts: KeyboardShortcuts) => {
@@ -51,6 +53,17 @@ export const useKeyboardShortcuts = (shortcuts: KeyboardShortcuts) => {
         if ((e.ctrlKey || e.metaKey) && e.key === 'f') {
             e.preventDefault();
             shortcuts.onSearch?.();
+        }
+
+        // N = New scenario (focus form)
+        if (e.key === 'n' && !e.ctrlKey && !e.metaKey && !e.altKey) {
+            shortcuts.onNewScenario?.();
+        }
+
+        // Ctrl/Cmd + 1-9 = Quick action (view calendar of scenario 1-9)
+        if ((e.ctrlKey || e.metaKey) && e.key >= '1' && e.key <= '9') {
+            e.preventDefault();
+            shortcuts.onQuickAction?.(parseInt(e.key) - 1);
         }
     }, [shortcuts]);
 

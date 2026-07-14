@@ -19,12 +19,13 @@ const MIN_WEEKLY_HOURS = 1;
 const MAX_WEEKLY_HOURS = 60;
 
 const ScenarioForm: React.FC<ScenarioFormProps> = ({ onAdd, onUpdate, onCancelEdit, editingScenario }) => {
-    const { t } = useI18n();
+    const { t, lang } = useI18n();
     const [name, setName] = useState('');
     const [teams, setTeams] = useState(4);
     const [shiftDuration, setShiftDuration] = useState(8);
     const [weeklyHoursContract, setWeeklyHoursContract] = useState(40);
     const [pattern, setPattern] = useState('');
+    const [description, setDescription] = useState('');
     const [patternError, setPatternError] = useState('');
     const [isCalculating, setIsCalculating] = useState(false);
     const nameRef = useRef<HTMLInputElement>(null);
@@ -40,12 +41,14 @@ const ScenarioForm: React.FC<ScenarioFormProps> = ({ onAdd, onUpdate, onCancelEd
             setShiftDuration(editingScenario.shiftDuration);
             setWeeklyHoursContract(editingScenario.weeklyHoursContract || 40);
             setPattern(editingScenario.pattern);
+            setDescription(editingScenario.description || '');
         } else {
             setName('');
             setTeams(4);
             setShiftDuration(8);
             setWeeklyHoursContract(40);
             setPattern('');
+            setDescription('');
         }
         if (nameRef.current) {
             nameRef.current.focus();
@@ -144,6 +147,7 @@ const ScenarioForm: React.FC<ScenarioFormProps> = ({ onAdd, onUpdate, onCancelEd
             shiftDuration,
             weeklyHoursContract,
             pattern: cleanedPattern,
+            description: description.trim() || undefined,
         };
 
         if (editingScenario && onUpdate) {
@@ -158,6 +162,7 @@ const ScenarioForm: React.FC<ScenarioFormProps> = ({ onAdd, onUpdate, onCancelEd
             setShiftDuration(8);
             setWeeklyHoursContract(40);
             setPattern('');
+            setDescription('');
             if (nameRef.current) {
                 nameRef.current.focus();
             }
@@ -301,6 +306,21 @@ const ScenarioForm: React.FC<ScenarioFormProps> = ({ onAdd, onUpdate, onCancelEd
                             {patternError}
                         </p>
                     )}
+                </div>
+
+                <div className="lg:col-span-6">
+                    <label htmlFor="scenario-description" className="block text-sm font-medium text-gray-400 mb-1">
+                        {lang === 'pt' ? 'Descricao (opcional)' : 'Description (optional)'}
+                    </label>
+                    <textarea
+                        id="scenario-description"
+                        value={description}
+                        onChange={e => setDescription(e.target.value)}
+                        placeholder={lang === 'pt' ? 'Notas sobre este cenario...' : 'Notes about this scenario...'}
+                        className="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2 text-white text-sm focus:outline-none focus:border-blue-500 resize-none"
+                        rows={2}
+                        maxLength={200}
+                    />
                 </div>
 
                 <div className="lg:col-span-6 flex justify-end mt-2 gap-2">

@@ -5,6 +5,7 @@ import { useToast } from './contexts/ToastContext';
 import { useI18n } from './i18n';
 import { useTutorial, TutorialOverlay, HelpButton } from './components/Tutorial';
 import { getCustomHolidays, addCustomHoliday, removeCustomHoliday } from './utils/holidays';
+import ImportPreview, { parseImportData } from './components/ImportPreview';
 
 interface LayoutProps {
     children: React.ReactNode;
@@ -25,6 +26,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     const [newHolidayName, setNewHolidayName] = useState('');
     const [newHolidayMonth, setNewHolidayMonth] = useState(0);
     const [newHolidayDay, setNewHolidayDay] = useState(1);
+    const [importPreview, setImportPreview] = useState<Array<{name: string; teams: number; shiftDuration: number; weeklyHoursContract?: number; pattern: string; teamPatterns?: string[]; startDate?: string; description?: string; isValid: boolean; errors: string[]}> | null>(null);
 
     useEffect(() => {
         const handleOnline = () => setIsOnline(true);
@@ -86,29 +88,31 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         reader.onload = (e) => {
             try {
                 const data = JSON.parse(e.target?.result as string);
-
-                if (!data.scenarios || !Array.isArray(data.scenarios)) {
-                    showToast('error', lang === 'pt' ? 'Formato invalido. O ficheiro deve conter um array "scenarios".' : 'Invalid format. File must contain a "scenarios" array.');
+                const parsed = parseImportData(data);
+                if (parsed.length === 0) {
+                    showToast('error', lang === 'pt' ? 'Formato invalido. Nenhum cenario encontrado.' : 'Invalid format. No scenarios found.');
                     return;
                 }
-
-                const existing = JSON.parse(localStorage.getItem('shiftsim_scenarios') || '[]');
-                const newScenarios = data.scenarios.map((s: { name: string; teams: number; shiftDuration: number; pattern: string; }) => ({
-                    ...s,
-                    id: crypto.randomUUID(),
-                }));
-
-                const combined = [...existing, ...newScenarios];
-                localStorage.setItem('shiftsim_scenarios', JSON.stringify(combined));
-
-                showToast('success', lang === 'pt' ? `${newScenarios.length} cenarios importados! A pagina vai recarregar.` : `${newScenarios.length} scenarios imported! Page will reload.`);
-                setTimeout(() => window.location.reload(), 1500);
+                setImportPreview(parsed);
             } catch (_error) {
-                showToast('error', lang === 'pt' ? 'Erro ao importar cenarios. Ficheiro invalido.' : 'Error importing scenarios. Invalid file.');
+                showToast('error', lang === 'pt' ? 'Erro ao ler ficheiro. Formato invalido.' : 'Error reading file. Invalid format.');
             }
         };
         reader.readAsText(file);
         event.target.value = '';
+    };
+
+    const handleConfirmImport = (selected: Array<{name: string; teams: number; shiftDuration: number; weeklyHoursContract?: number; pattern: string; teamPatterns?: string[]; startDate?: string; description?: string}>) => {
+        const existing = JSON.parse(localStorage.getItem('shiftsim_scenarios') || '[]');
+        const newScenarios = selected.map(s => ({
+            ...s,
+            id: crypto.randomUUID(),
+        }));
+        const combined = [...existing, ...newScenarios];
+        localStorage.setItem('shiftsim_scenarios', JSON.stringify(combined));
+        setImportPreview(null);
+        showToast('success', lang === 'pt' ? `${newScenarios.length} cenarios importados! A pagina vai recarregar.` : `${newScenarios.length} scenarios imported! Page will reload.`);
+        setTimeout(() => window.location.reload(), 1500);
     };
 
     const handleAddCustomHoliday = () => {
@@ -368,6 +372,14 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             <main id="main-content" className="container mx-auto py-8">
                 {children}
             </main>
+
+            {importPreview && (
+                <ImportPreview
+                    scenarios={importPreview}
+                    onConfirm={handleConfirmImport}
+                    onCancel={() => setImportPreview(null)}
+                />
+            )}
 
             <TutorialOverlay
                 isActive={tutorial.isActive}

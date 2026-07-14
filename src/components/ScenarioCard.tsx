@@ -145,6 +145,9 @@ const ScenarioCard: React.FC<ScenarioCardProps> = React.memo(({
                         <p className="text-sm text-gray-400">
                             {scenario.teams} {t.form.teams} &bull; {scenario.shiftDuration}h
                         </p>
+                        {scenario.description && (
+                            <p className="text-xs text-gray-500 mt-1 italic">{highlightMatch(scenario.description)}</p>
+                        )}
                     </div>
                 </div>
                 <div className="flex gap-2">

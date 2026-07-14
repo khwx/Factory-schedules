@@ -85,6 +85,7 @@ const Dashboard: React.FC = () => {
                 pattern: sharedData.p,
                 teamPatterns: sharedData.tp,
                 startDate: sharedData.s,
+                description: sharedData.desc,
             };
             updateScenariosWithHistory(prev => [...prev, sharedScenario]);
         }
@@ -159,12 +160,11 @@ const Dashboard: React.FC = () => {
         searchInputRef.current?.focus();
     }, []);
 
-    useKeyboardShortcuts({
-        onUndo: undo,
-        onRedo: redo,
-        onEscape: handleEscape,
-        onSearch: handleSearchFocus,
-    });
+    const handleNewScenario = useCallback(() => {
+        const nameInput = document.getElementById('scenario-name') as HTMLInputElement | null;
+        nameInput?.focus();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, []);
 
     useEffect(() => {
         try {
@@ -214,6 +214,23 @@ const Dashboard: React.FC = () => {
 
         return sorted;
     }, [scenarios, showHidden, searchTerm, filterTeams, sortBy, analyses]);
+
+    const handleQuickAction = useCallback((index: number) => {
+        const scenario = visibleScenarios[index];
+        if (scenario) {
+            setSelectedScenario(scenario);
+            setShowCalendar(true);
+        }
+    }, [visibleScenarios]);
+
+    useKeyboardShortcuts({
+        onUndo: undo,
+        onRedo: redo,
+        onEscape: handleEscape,
+        onSearch: handleSearchFocus,
+        onNewScenario: handleNewScenario,
+        onQuickAction: handleQuickAction,
+    });
 
     // Memoized handlers
     const handleAddScenario = useCallback((newScenario: Omit<Scenario, 'id'>) => {

@@ -8,6 +8,7 @@ interface SharedScenarioData {
     p?: string;
     tp?: string[];
     s?: string;
+    desc?: string;
 }
 
 function encodeScenario(scenario: Scenario): string {
@@ -19,6 +20,7 @@ function encodeScenario(scenario: Scenario): string {
         p: scenario.pattern,
         tp: scenario.teamPatterns,
         s: scenario.startDate,
+        desc: scenario.description,
     };
 
     return btoa(JSON.stringify(shareData));

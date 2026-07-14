@@ -12,6 +12,8 @@ const SHORTCUTS: ShortcutItem[] = [
     { keys: ['Ctrl', 'F'], label: 'Pesquisar cenarios' },
     { keys: ['Alt', '\u2191'], label: 'Mover cenario para cima' },
     { keys: ['Alt', '\u2193'], label: 'Mover cenario para baixo' },
+    { keys: ['N'], label: 'Criar novo cenario (foco no formulario)' },
+    { keys: ['Ctrl', '1-9'], label: 'Ver calendario do cenario 1-9' },
     { keys: ['Esc'], label: 'Fechar modal/painel' },
     { keys: ['?'], label: 'Abrir atalhos de teclado' },
 ];
