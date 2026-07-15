@@ -317,6 +317,28 @@ button, a, input, select, textarea {
   tr {
     break-inside: avoid;
   }
+
+  /* Comparison page print styles */
+  .comparison-print table {
+    font-size: 9pt !important;
+  }
+
+  .comparison-print th,
+  .comparison-print td {
+    padding: 3px 6px !important;
+  }
+
+  .text-green-400 { color: #16a34a !important; }
+  .text-red-400 { color: #dc2626 !important; }
+  .text-yellow-400 { color: #ca8a04 !important; }
+  .text-purple-400 { color: #9333ea !important; }
+  .text-blue-400 { color: #2563eb !important; }
+  .text-pink-400 { color: #db2777 !important; }
+
+  .bg-yellow-500 { background: #eab308 !important; }
+  .bg-orange-500 { background: #f97316 !important; }
+  .bg-blue-600 { background: #2563eb !important; }
+  .bg-gray-600 { background: #9ca3af !important; }
 }
 
 /* Mobile touch targets - ensure minimum 44x44px for interactive elements */
@@ -348,4 +370,52 @@ button, a, input, select, textarea {
   * {
     -webkit-overflow-scrolling: touch;
   }
+}
+
+/* Accessibility: Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Accessibility: High contrast mode */
+@media (prefers-contrast: high) {
+  .border-gray-700 { border-color: #000 !important; }
+  .border-gray-600 { border-color: #333 !important; }
+  .text-gray-400 { color: #fff !important; }
+  .text-gray-500 { color: #eee !important; }
+}
+
+/* Skip link focus */
+.skip-link:focus {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  padding: 1rem 2rem;
+  background: var(--accent-blue);
+  color: white;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+/* Screen reader only but visible on focus */
+.sr-only-focusable:focus {
+  position: static;
+  width: auto;
+  height: auto;
+  padding: inherit;
+  margin: inherit;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+}
+
+/* Keyboard navigation indicator */
+[data-focus-visible-added] {
+  outline: 2px solid var(--accent-blue) !important;
+  outline-offset: 2px !important;
 }

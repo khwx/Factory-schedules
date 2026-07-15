@@ -6,19 +6,20 @@ import Reports from './pages/Reports';
 import TeamRoster from './pages/TeamRoster';
 import AnalyticsDashboard from './pages/AnalyticsDashboard';
 import SettingsPage from './pages/Settings';
+import Comparison from './pages/Comparison';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { ToastProvider } from './contexts/ToastContext';
 import { I18nProvider } from './i18n';
 import ErrorBoundary from './components/ErrorBoundary';
-import { LayoutDashboard, Calendar, FileText, Users, BarChart3, Settings } from 'lucide-react';
+import { LayoutDashboard, Calendar, FileText, Users, BarChart3, Settings, GitCompareArrows } from 'lucide-react';
 
 import { Analytics } from '@vercel/analytics/react';
 
 function Navigation() {
     return (
-        <nav className="bg-gray-800 border-b border-gray-700 sticky top-0 z-30">
+        <nav className="bg-gray-800 border-b border-gray-700 sticky top-0 z-30" role="navigation" aria-label="Main navigation">
             <div className="container mx-auto px-4">
-                <div className="flex items-center gap-1 overflow-x-auto py-2 scrollbar-hide">
+                <div className="flex items-center gap-1 overflow-x-auto py-2 scrollbar-hide" role="menubar">
                     <NavLink
                         to="/"
                         end
@@ -29,8 +30,9 @@ function Navigation() {
                                     : 'text-gray-400 hover:text-white hover:bg-gray-700'
                             }`
                         }
+                        role="menuitem"
                     >
-                        <LayoutDashboard className="w-4 h-4" />
+                        <LayoutDashboard className="w-4 h-4" aria-hidden="true" />
                         Dashboard
                     </NavLink>
                     <NavLink
@@ -42,9 +44,24 @@ function Navigation() {
                                     : 'text-gray-400 hover:text-white hover:bg-gray-700'
                             }`
                         }
+                        role="menuitem"
                     >
-                        <BarChart3 className="w-4 h-4" />
+                        <BarChart3 className="w-4 h-4" aria-hidden="true" />
                         Analitica
+                    </NavLink>
+                    <NavLink
+                        to="/compare"
+                        className={({ isActive }) =>
+                            `flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors whitespace-nowrap ${
+                                isActive
+                                    ? 'bg-blue-600 text-white'
+                                    : 'text-gray-400 hover:text-white hover:bg-gray-700'
+                            }`
+                        }
+                        role="menuitem"
+                    >
+                        <GitCompareArrows className="w-4 h-4" aria-hidden="true" />
+                        Comparar
                     </NavLink>
                     <NavLink
                         to="/calendar"
@@ -55,8 +72,9 @@ function Navigation() {
                                     : 'text-gray-400 hover:text-white hover:bg-gray-700'
                             }`
                         }
+                        role="menuitem"
                     >
-                        <Calendar className="w-4 h-4" />
+                        <Calendar className="w-4 h-4" aria-hidden="true" />
                         Feriados
                     </NavLink>
                     <NavLink
@@ -68,8 +86,9 @@ function Navigation() {
                                     : 'text-gray-400 hover:text-white hover:bg-gray-700'
                             }`
                         }
+                        role="menuitem"
                     >
-                        <Users className="w-4 h-4" />
+                        <Users className="w-4 h-4" aria-hidden="true" />
                         Equipas
                     </NavLink>
                     <NavLink
@@ -81,8 +100,9 @@ function Navigation() {
                                     : 'text-gray-400 hover:text-white hover:bg-gray-700'
                             }`
                         }
+                        role="menuitem"
                     >
-                        <FileText className="w-4 h-4" />
+                        <FileText className="w-4 h-4" aria-hidden="true" />
                         Relatorios
                     </NavLink>
                     <NavLink
@@ -94,8 +114,9 @@ function Navigation() {
                                     : 'text-gray-400 hover:text-white hover:bg-gray-700'
                             }`
                         }
+                        role="menuitem"
                     >
-                        <Settings className="w-4 h-4" />
+                        <Settings className="w-4 h-4" aria-hidden="true" />
                         Configuracoes
                     </NavLink>
                 </div>
@@ -116,6 +137,7 @@ function App() {
                                 <Routes>
                                     <Route path="/" element={<Dashboard />} />
                                     <Route path="/analytics" element={<AnalyticsDashboard />} />
+                                    <Route path="/compare" element={<Comparison />} />
                                     <Route path="/calendar" element={<HolidayCalendar />} />
                                     <Route path="/roster" element={<TeamRoster />} />
                                     <Route path="/reports" element={<Reports />} />
