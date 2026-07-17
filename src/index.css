@@ -370,6 +370,16 @@ button, a, input, select, textarea {
   * {
     -webkit-overflow-scrolling: touch;
   }
+
+  /* Bottom nav spacing */
+  main, #main-content {
+    padding-bottom: 80px !important;
+  }
+}
+
+/* Safe area for iOS notch */
+.safe-area-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 
 /* Accessibility: Reduced motion */
