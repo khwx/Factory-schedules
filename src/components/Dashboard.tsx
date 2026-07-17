@@ -10,6 +10,8 @@ import { exportScenarioToCSV, exportScenarioToJSON, exportComparisonToCSV, expor
 import { downloadICS } from '../utils/icsExport';
 import { checkForSharedScenario, copyShareableLink } from '../utils/shareScenario';
 import { X, Download, Filter, Search, Wand2, Undo2, Redo2, FileText, Table2, Code2, Play } from 'lucide-react';
+import DashboardStats from './DashboardStats';
+import ScheduleDiff from './ScheduleDiff';
 import PresetSelector from './PresetSelector';
 import ICSImporter from './ICSImporter';
 import { PresetScenario, PRESET_SCENARIOS } from '../data/presetScenarios';
@@ -407,6 +409,8 @@ const Dashboard: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4">
             <ICSImporter onImport={handleAddScenario} />
 
+            {scenarios.length > 0 && <DashboardStats scenarios={scenarios} />}
+
             <div className="flex flex-col md:flex-row gap-4 mb-6">
                 <div className="flex-1" data-tutorial="presets">
                     <PresetSelector onLoadPreset={handleLoadPreset} />
@@ -596,6 +600,13 @@ const Dashboard: React.FC = () => {
                         <LazyLoad className="h-64">
                             <ComparisonCharts scenarios={visibleScenarios} analyses={analyses} />
                         </LazyLoad>
+                    )}
+
+                    {/* Schedule Diff */}
+                    {visibleScenarios.length >= 2 && (
+                        <div className="mt-6">
+                            <ScheduleDiff scenarios={visibleScenarios} />
+                        </div>
                     )}
 
                     {/* Advanced Metrics, Multi-Year Analysis, Heatmap and Team Fairness for each scenario */}
