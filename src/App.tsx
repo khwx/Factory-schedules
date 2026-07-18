@@ -5,7 +5,7 @@ import { ThemeProvider } from './contexts/ThemeContext';
 import { ToastProvider } from './contexts/ToastContext';
 import { I18nProvider } from './i18n';
 import ErrorBoundary from './components/ErrorBoundary';
-import { LayoutDashboard, Calendar, FileText, Users, BarChart3, Settings, GitCompareArrows, Euro, BookOpen, HelpCircle, Loader2 } from 'lucide-react';
+import { LayoutDashboard, Calendar, FileText, Users, BarChart3, Settings, GitCompareArrows, Euro, BookOpen, HelpCircle, UserCircle, Loader2 } from 'lucide-react';
 
 import { Analytics } from '@vercel/analytics/react';
 
@@ -19,6 +19,7 @@ const TeamRoster = lazy(() => import('./pages/TeamRoster'));
 const Reports = lazy(() => import('./pages/Reports'));
 const SettingsPage = lazy(() => import('./pages/Settings'));
 const HelpPage = lazy(() => import('./pages/HelpPage'));
+const EmployeeSchedule = lazy(() => import('./pages/EmployeeSchedule'));
 
 function PageLoader() {
     return (
@@ -36,6 +37,7 @@ const NAV_ITEMS = [
     { to: '/templates', icon: BookOpen, label: 'Modelos' },
     { to: '/calendar', icon: Calendar, label: 'Feriados' },
     { to: '/roster', icon: Users, label: 'Equipas' },
+    { to: '/employee', icon: UserCircle, label: 'Colaborador' },
     { to: '/reports', icon: FileText, label: 'Relatorios' },
     { to: '/settings', icon: Settings, label: 'Config' },
     { to: '/help', icon: HelpCircle, label: 'Ajuda' },
@@ -123,6 +125,7 @@ function App() {
                                         <Route path="/templates" element={<ScheduleTemplates />} />
                                         <Route path="/calendar" element={<HolidayCalendar />} />
                                         <Route path="/roster" element={<TeamRoster />} />
+                                        <Route path="/employee" element={<EmployeeSchedule />} />
                                         <Route path="/reports" element={<Reports />} />
                                         <Route path="/settings" element={<SettingsPage />} />
                                         <Route path="/help" element={<HelpPage />} />

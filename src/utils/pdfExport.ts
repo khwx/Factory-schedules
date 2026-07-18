@@ -1,6 +1,7 @@
 import type jsPDF from 'jspdf';
 import { Scenario, AnalysisResult } from '../types';
 import { validateLegalCompliance } from './legalValidator';
+import { generateYearCalendar } from './calendar';
 
 interface AutoTableResult {
     finalY: number;
@@ -11,116 +12,213 @@ function getTableFinalY(doc: jsPDF): number {
     return docWithTable.lastAutoTable?.finalY ?? 0;
 }
 
+const BLUE = [59, 130, 246] as const;
+const GRAY = [128, 128, 128] as const;
+
+function drawBrandedHeader(doc: jsPDF, title: string, subtitle?: string) {
+    const pageWidth = doc.internal.pageSize.getWidth();
+
+    doc.setFillColor(...BLUE);
+    doc.rect(0, 0, pageWidth, 42, 'F');
+
+    doc.setFillColor(255, 255, 255);
+    doc.roundedRect(12, 8, 26, 26, 3, 3, 'F');
+    doc.setFontSize(16);
+    doc.setTextColor(...BLUE);
+    doc.text('SS', 25, 24, { align: 'center' });
+
+    doc.setFontSize(20);
+    doc.setTextColor(255, 255, 255);
+    doc.text('ShiftSim Factory', 44, 18);
+
+    doc.setFontSize(9);
+    doc.setTextColor(200, 220, 255);
+    doc.text('Simulacao Inteligente de Escalas de Turnos', 44, 26);
+
+    doc.setFontSize(10);
+    doc.setTextColor(255, 255, 255);
+    doc.text(title, pageWidth - 14, 18, { align: 'right' });
+
+    if (subtitle) {
+        doc.setFontSize(8);
+        doc.setTextColor(200, 220, 255);
+        doc.text(subtitle, pageWidth - 14, 26, { align: 'right' });
+    }
+
+    doc.setFontSize(7);
+    doc.setTextColor(180, 200, 240);
+    doc.text(`Gerado: ${new Date().toLocaleDateString('pt-PT')} ${new Date().toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' })}`, pageWidth - 14, 34, { align: 'right' });
+
+    return 50;
+}
+
+function drawBrandedFooter(doc: jsPDF, currentPage: number, totalPages: number) {
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const pageHeight = doc.internal.pageSize.getHeight();
+
+    doc.setFillColor(248, 250, 252);
+    doc.rect(0, pageHeight - 18, pageWidth, 18, 'F');
+    doc.setDrawColor(...BLUE);
+    doc.setLineWidth(0.4);
+    doc.line(14, pageHeight - 18, pageWidth - 14, pageHeight - 18);
+
+    doc.setFontSize(7);
+    doc.setTextColor(...GRAY);
+    doc.text('ShiftSim Factory', 14, pageHeight - 10);
+    doc.text('www.shiftsim.com', 14, pageHeight - 5);
+
+    doc.text('Confidencial — Uso Interno', pageWidth / 2, pageHeight - 7, { align: 'center' });
+
+    doc.text(`Pagina ${currentPage} / ${totalPages}`, pageWidth - 14, pageHeight - 10);
+    doc.text(new Date().toLocaleDateString('pt-PT'), pageWidth - 14, pageHeight - 5, { align: 'right' });
+}
+
+function addPageNumbers(doc: jsPDF) {
+    const totalPages = doc.getNumberOfPages();
+    for (let i = 1; i <= totalPages; i++) {
+        doc.setPage(i);
+        drawBrandedFooter(doc, i, totalPages);
+    }
+}
+
+function drawSectionTitle(doc: jsPDF, title: string, y: number) {
+    const pageWidth = doc.internal.pageSize.getWidth();
+    if (y > 260) {
+        doc.addPage();
+        y = 20;
+    }
+    doc.setFillColor(240, 245, 255);
+    doc.roundedRect(14, y - 4, pageWidth - 28, 10, 2, 2, 'F');
+    doc.setFontSize(11);
+    doc.setTextColor(...BLUE);
+    doc.text(title, 18, y + 3);
+    return y + 12;
+}
+
 /**
- * Export single scenario to PDF
+ * Export single scenario to PDF with professional branding
  */
 export const exportScenarioToPDF = async (scenario: Scenario, analysis: AnalysisResult) => {
     const { default: jsPDF } = await import('jspdf');
     const { default: autoTable } = await import('jspdf-autotable');
     const doc = new jsPDF();
-    const pageWidth = doc.internal.pageSize.getWidth();
 
-    // Header
-    doc.setFontSize(20);
-    doc.setTextColor(59, 130, 246); // Blue
-    doc.text('ShiftSim Factory', pageWidth / 2, 20, { align: 'center' });
+    let y = drawBrandedHeader(doc, 'Relatorio de Analise', scenario.name);
 
-    doc.setFontSize(14);
-    doc.setTextColor(0, 0, 0);
-    doc.text(`Análise: ${scenario.name}`, pageWidth / 2, 30, { align: 'center' });
-
-    // Configuration section
-    doc.setFontSize(12);
-    doc.setTextColor(59, 130, 246);
-    doc.text('Configuração', 14, 45);
+    y = drawSectionTitle(doc, 'Configuracao do Cenario', y);
 
     autoTable(doc, {
-        startY: 50,
-        head: [['Parâmetro', 'Valor']],
+        startY: y,
+        head: [['Parametro', 'Valor']],
         body: [
-            ['Número de Equipas', scenario.teams.toString()],
-            ['Duração do Turno', `${scenario.shiftDuration} horas`],
-            ['Padrão de Rotação', scenario.pattern],
+            ['Nome do Cenario', scenario.name],
+            ['Numero de Equipas', scenario.teams.toString()],
+            ['Duracao do Turno', `${scenario.shiftDuration} horas`],
+            ['Padrao de Rotacao', scenario.pattern],
             ...(scenario.weeklyHoursContract ? [['Contrato Semanal', `${scenario.weeklyHoursContract} horas`]] : []),
+            ...(scenario.startDate ? [['Data de Inicio', scenario.startDate]] : []),
         ],
         theme: 'grid',
-        headStyles: { fillColor: [59, 130, 246] },
+        headStyles: { fillColor: [...BLUE], textColor: 255 },
+        alternateRowStyles: { fillColor: [248, 250, 252] },
+        styles: { fontSize: 9, cellPadding: 3 },
+        columnStyles: { 0: { fontStyle: 'bold', cellWidth: 55 } },
     });
 
-    // Metrics section
-    const metricsY = getTableFinalY(doc) + 15;
-    doc.setFontSize(12);
-    doc.setTextColor(59, 130, 246);
-    doc.text('Métricas', 14, metricsY);
+    y = getTableFinalY(doc) + 8;
+    y = drawSectionTitle(doc, 'Metricas Principais', y);
 
     autoTable(doc, {
-        startY: metricsY + 5,
-        head: [['Métrica', 'Valor']],
+        startY: y,
+        head: [['Metrica', 'Valor']],
         body: [
-            ['Média de Horas Semanais', `${analysis.avgWeeklyHours.toFixed(1)} h`],
+            ['Media de Horas Semanais', `${analysis.avgWeeklyHours.toFixed(1)} h`],
             ['Horas Anuais Totais', `${Math.round(analysis.totalAnnualHours)} h`],
             ['Fins de Semana de Folga', `${analysis.weekendsOffPerYear} por ano`],
             ['Total de Dias de Folga', `${analysis.totalOffDaysPerYear} por ano`],
-            ['Média FDS Folga/Mês', `${analysis.weekendsOffPerMonthAvg.toFixed(1)}`],
+            ['Media FDS Folga/Mes', `${analysis.weekendsOffPerMonthAvg.toFixed(1)}`],
         ],
         theme: 'grid',
-        headStyles: { fillColor: [59, 130, 246] },
+        headStyles: { fillColor: [...BLUE], textColor: 255 },
+        alternateRowStyles: { fillColor: [248, 250, 252] },
+        styles: { fontSize: 9, cellPadding: 3 },
+        columnStyles: { 0: { fontStyle: 'bold', cellWidth: 55 } },
     });
 
-    // Advanced metrics
     if (analysis.advancedMetrics) {
-        const advY = getTableFinalY(doc) + 15;
-        doc.setFontSize(12);
-        doc.setTextColor(59, 130, 246);
-        doc.text('Métricas Avançadas', 14, advY);
+        y = getTableFinalY(doc) + 8;
+        y = drawSectionTitle(doc, 'Metricas Avancadas', y);
 
         autoTable(doc, {
-            startY: advY + 5,
-            head: [['Métrica', 'Valor']],
+            startY: y,
+            head: [['Metrica', 'Valor']],
             body: [
-                ['Máx. Dias Consecutivos Trabalho', analysis.advancedMetrics.maxConsecutiveWorkDays.toString()],
-                ['Máx. Dias Consecutivos Folga', analysis.advancedMetrics.maxConsecutiveOffDays.toString()],
-                ['Mini-Férias (3+ dias folga)', analysis.advancedMetrics.miniVacations.toString()],
+                ['Max. Dias Consecutivos Trabalho', analysis.advancedMetrics.maxConsecutiveWorkDays.toString()],
+                ['Max. Dias Consecutivos Folga', analysis.advancedMetrics.maxConsecutiveOffDays.toString()],
+                ['Mini-Ferias (3+ dias folga)', analysis.advancedMetrics.miniVacations.toString()],
                 ['Dias de Folga Isolados', analysis.advancedMetrics.isolatedOffDays.toString()],
-                ['Turnos Nocturnos/Ano', analysis.advancedMetrics.totalNightShifts.toString()],
-                ['Fins de Sexta à Noite Livres', analysis.advancedMetrics.fridayNightsOff.toString()],
+                ['Turnos Noturnos/Ano', analysis.advancedMetrics.totalNightShifts.toString()],
+                ['Fins de Sexta a Noite Livres', analysis.advancedMetrics.fridayNightsOff.toString()],
                 ['Feriados Trabalhados', analysis.advancedMetrics.holidaysWorked.toString()],
                 ['Feriados de Folga', analysis.advancedMetrics.holidaysOff.toString()],
             ],
             theme: 'grid',
-            headStyles: { fillColor: [59, 130, 246] },
+            headStyles: { fillColor: [...BLUE], textColor: 255 },
+            alternateRowStyles: { fillColor: [248, 250, 252] },
+            styles: { fontSize: 9, cellPadding: 3 },
+            columnStyles: { 0: { fontStyle: 'bold', cellWidth: 60 } },
         });
     }
 
-    // Qualitative analysis
-    const qualY = getTableFinalY(doc) + 15;
-    if (qualY < 250) {
-        doc.setFontSize(12);
-        doc.setTextColor(59, 130, 246);
-        doc.text('Análise Qualitativa', 14, qualY);
+    y = getTableFinalY(doc) + 8;
+    y = drawSectionTitle(doc, 'Analise Qualitativa', y);
+
+    autoTable(doc, {
+        startY: y,
+        head: [['Observacao']],
+        body: analysis.qualitative.map(q => [q]),
+        theme: 'grid',
+        headStyles: { fillColor: [...BLUE], textColor: 255 },
+        alternateRowStyles: { fillColor: [248, 250, 252] },
+        styles: { fontSize: 9, cellPadding: 3 },
+    });
+
+    if (scenario.pattern.length <= 14) {
+        y = getTableFinalY(doc) + 8;
+        if (y > 240) { doc.addPage(); y = 20; }
+        y = drawSectionTitle(doc, 'Padrao Visual (30 dias)', y);
+
+        const calendar = generateYearCalendar(scenario, new Date().getFullYear());
+        const first30 = calendar.slice(0, 30);
 
         autoTable(doc, {
-            startY: qualY + 5,
-            head: [['Observação']],
-            body: analysis.qualitative.map(q => [q]),
+            startY: y,
+            head: [['Dia', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15']],
+            body: [
+                ['Turno', ...first30.slice(0, 15).map(d => d.shift)],
+            ],
             theme: 'grid',
-            headStyles: { fillColor: [59, 130, 246] },
+            headStyles: { fillColor: [...BLUE], textColor: 255, fontSize: 7 },
+            styles: { fontSize: 7, cellPadding: 1.5, halign: 'center' },
+            columnStyles: { 0: { halign: 'left', fontStyle: 'bold' } },
+        });
+
+        y = getTableFinalY(doc) + 2;
+        if (y > 260) { doc.addPage(); y = 20; }
+        autoTable(doc, {
+            startY: y,
+            head: [['Dia', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30']],
+            body: [
+                ['Turno', ...first30.slice(15, 30).map(d => d.shift)],
+            ],
+            theme: 'grid',
+            headStyles: { fillColor: [...BLUE], textColor: 255, fontSize: 7 },
+            styles: { fontSize: 7, cellPadding: 1.5, halign: 'center' },
+            columnStyles: { 0: { halign: 'left', fontStyle: 'bold' } },
         });
     }
 
-    // Footer
-    const pageCount = doc.getNumberOfPages();
-    for (let i = 1; i <= pageCount; i++) {
-        doc.setPage(i);
-        doc.setFontSize(8);
-        doc.setTextColor(128, 128, 128);
-        doc.text(
-            `ShiftSim Factory - Gerado em ${new Date().toLocaleDateString('pt-PT')}`,
-            pageWidth / 2,
-            doc.internal.pageSize.getHeight() - 10,
-            { align: 'center' }
-        );
-    }
+    addPageNumbers(doc);
 
     const pdfDateStr = new Date().toISOString().split('T')[0];
     const fileName = `${scenario.name.replace(/[^a-z0-9]/gi, '_')}_Analise_${pdfDateStr}.pdf`;
@@ -128,29 +226,22 @@ export const exportScenarioToPDF = async (scenario: Scenario, analysis: Analysis
 };
 
 /**
- * Export comparison of multiple scenarios to PDF
+ * Export comparison of multiple scenarios to PDF with professional branding
  */
 export const exportComparisonToPDF = async (scenarios: Scenario[], analyses: AnalysisResult[]) => {
     const { default: jsPDF } = await import('jspdf');
     const { default: autoTable } = await import('jspdf-autotable');
     const doc = new jsPDF({ orientation: 'landscape' });
-    const pageWidth = doc.internal.pageSize.getWidth();
 
-    // Header
-    doc.setFontSize(20);
-    doc.setTextColor(59, 130, 246);
-    doc.text('ShiftSim Factory - Comparação', pageWidth / 2, 15, { align: 'center' });
+    let y = drawBrandedHeader(doc, 'Comparacao de Cenarios', `${scenarios.length} cenarios`);
 
-    doc.setFontSize(10);
-    doc.setTextColor(128, 128, 128);
-    doc.text(`${scenarios.length} cenários comparados`, pageWidth / 2, 22, { align: 'center' });
+    y = drawSectionTitle(doc, 'Metricas Comparativas', y);
 
-    // Comparison table
-    const headers = ['Métrica', ...scenarios.map(s => s.name)];
+    const headers = ['Metrica', ...scenarios.map(s => s.name)];
     const body = [
         ['Equipas', ...scenarios.map(s => s.teams.toString())],
         ['Turno (h)', ...scenarios.map(s => s.shiftDuration.toString())],
-        ['Padrão', ...scenarios.map(s => s.pattern)],
+        ['Padrao', ...scenarios.map(s => s.pattern)],
         ['Horas/Semana', ...analyses.map(a => a.avgWeeklyHours.toFixed(1))],
         ['Horas/Ano', ...analyses.map(a => Math.round(a.totalAnnualHours).toString())],
         ['FDS Folga/Ano', ...analyses.map(a => a.weekendsOffPerYear.toString())],
@@ -159,60 +250,43 @@ export const exportComparisonToPDF = async (scenarios: Scenario[], analyses: Ana
 
     if (analyses.some(a => a.advancedMetrics)) {
         body.push(['Dias Consec. Trabalho', ...analyses.map(a => a.advancedMetrics?.maxConsecutiveWorkDays?.toString() || '-')]);
-        body.push(['Mini-Férias', ...analyses.map(a => a.advancedMetrics?.miniVacations?.toString() || '-')]);
-        body.push(['Turnos Nocturnos', ...analyses.map(a => a.advancedMetrics?.totalNightShifts?.toString() || '-')]);
+        body.push(['Mini-Ferias', ...analyses.map(a => a.advancedMetrics?.miniVacations?.toString() || '-')]);
+        body.push(['Turnos Noturnos', ...analyses.map(a => a.advancedMetrics?.totalNightShifts?.toString() || '-')]);
     }
 
     autoTable(doc, {
-        startY: 28,
+        startY: y,
         head: [headers],
         body,
         theme: 'grid',
-        headStyles: { fillColor: [59, 130, 246] },
-        styles: { fontSize: 9 },
-        columnStyles: {
-            0: { fontStyle: 'bold', cellWidth: 40 },
-        },
+        headStyles: { fillColor: [...BLUE], textColor: 255 },
+        alternateRowStyles: { fillColor: [248, 250, 252] },
+        styles: { fontSize: 9, cellPadding: 3 },
+        columnStyles: { 0: { fontStyle: 'bold', cellWidth: 40 } },
     });
 
-    // Qualitative analysis for each scenario
-    const currentY = getTableFinalY(doc) + 15;
-    if (currentY < 150) {
-        doc.setFontSize(12);
-        doc.setTextColor(59, 130, 246);
-        doc.text('Análise Qualitativa', 14, currentY);
+    y = getTableFinalY(doc) + 8;
+    y = drawSectionTitle(doc, 'Analise Qualitativa', y);
 
-        const qualHeaders = ['Cenário', 'Observação'];
-        const qualBody: string[][] = [];
-        scenarios.forEach((scenario, i) => {
-            analyses[i].qualitative.forEach((q, j) => {
-                qualBody.push([j === 0 ? scenario.name : '', q]);
-            });
+    const qualHeaders = ['Cenario', 'Observacao'];
+    const qualBody: string[][] = [];
+    scenarios.forEach((scenario, i) => {
+        analyses[i].qualitative.forEach((q, j) => {
+            qualBody.push([j === 0 ? scenario.name : '', q]);
         });
+    });
 
-        autoTable(doc, {
-            startY: currentY + 5,
-            head: [qualHeaders],
-            body: qualBody,
-            theme: 'grid',
-            headStyles: { fillColor: [59, 130, 246] },
-            styles: { fontSize: 8 },
-        });
-    }
+    autoTable(doc, {
+        startY: y,
+        head: [qualHeaders],
+        body: qualBody,
+        theme: 'grid',
+        headStyles: { fillColor: [...BLUE], textColor: 255 },
+        alternateRowStyles: { fillColor: [248, 250, 252] },
+        styles: { fontSize: 8, cellPadding: 2 },
+    });
 
-    // Footer
-    const pageCount = doc.getNumberOfPages();
-    for (let i = 1; i <= pageCount; i++) {
-        doc.setPage(i);
-        doc.setFontSize(8);
-        doc.setTextColor(128, 128, 128);
-        doc.text(
-            `ShiftSim Factory - Comparação gerada em ${new Date().toLocaleDateString('pt-PT')}`,
-            pageWidth / 2,
-            doc.internal.pageSize.getHeight() - 10,
-            { align: 'center' }
-        );
-    }
+    addPageNumbers(doc);
 
     const cmpDateStr = new Date().toISOString().split('T')[0];
     doc.save(`Comparacao_Cenarios_${cmpDateStr}.pdf`);
@@ -226,64 +300,54 @@ export const exportComplianceReport = async (scenario: Scenario, year?: number):
     const doc = new jsPDF();
     const pageWidth = doc.internal.pageSize.getWidth();
     const dateStr = new Date().toISOString().split('T')[0];
-
     const reports = validateLegalCompliance(scenario, year);
 
-    doc.setFontSize(18);
-    doc.setTextColor(59, 130, 246);
-    doc.text('ShiftSim Factory', pageWidth / 2, 20, { align: 'center' });
-
-    doc.setFontSize(12);
-    doc.setTextColor(128, 128, 128);
-    doc.text('Relatorio de Conformidade Legal', pageWidth / 2, 30, { align: 'center' });
-    doc.text(`Codigo do Trabalho — Auditoria ACT`, pageWidth / 2, 37, { align: 'center' });
-
-    doc.setFontSize(10);
-    doc.text(`${scenario.name} | ${scenario.teams} equipas | ${scenario.shiftDuration}h/turno | Gerado: ${new Date().toLocaleDateString('pt-PT')}`, pageWidth / 2, 45, { align: 'center' });
-
-    let y = 55;
+    let y = drawBrandedHeader(doc, 'Relatorio de Conformidade Legal', `Codigo do Trabalho — Auditoria ACT`);
 
     for (const report of reports) {
-        doc.setFontSize(12);
+        doc.setFontSize(11);
         doc.setTextColor(report.allPassed ? 34 : 200, report.allPassed ? 197 : 30, report.allPassed ? 94 : 30);
-        doc.text(`${report.teamName} — ${report.allPassed ? 'CONFORME' : `NAO CONFORME (${report.criticalFailures} falhas)`}`, 14, y);
-        y += 8;
+
+        if (y > 260) { doc.addPage(); y = 20; }
+
+        doc.setFillColor(report.allPassed ? 240 : 255, report.allPassed ? 248 : 240, report.allPassed ? 240 : 240);
+        doc.roundedRect(14, y - 4, pageWidth - 28, 10, 2, 2, 'F');
+
+        const statusIcon = report.allPassed ? 'CONFORME' : `NAO CONFORME (${report.criticalFailures} falhas)`;
+        doc.text(`${report.teamName} — ${statusIcon}`, 18, y + 3);
+        y += 14;
 
         for (const result of report.results) {
-            if (y > 270) {
+            if (y > 260) {
                 doc.addPage();
                 y = 20;
             }
 
-            doc.setFontSize(9);
-            const color = result.limit === undefined ? [59, 130, 246] : result.passed ? [34, 197, 94] : [239, 68, 68];
+            doc.setFontSize(8);
+            const passed = result.passed;
+            const color = result.limit === undefined ? [...BLUE] : passed ? [34, 197, 94] : [239, 68, 68];
             doc.setTextColor(color[0], color[1], color[2]);
 
-            const status = result.passed ? 'OK' : 'FALHA';
+            const status = passed ? 'OK' : 'FALHA';
             const limit = result.limit !== undefined ? ` (limite: ${result.limit})` : '';
             const actual = result.actual !== undefined ? ` (atual: ${result.actual})` : '';
-            doc.text(`${result.rule.article}: ${result.rule.title}`, 14, y);
-            y += 5;
-            doc.setTextColor(100, 100, 100);
-            doc.text(`  ${status}: ${result.details}${limit}${actual}`, 14, y);
-            y += 8;
+
+            doc.setFillColor(passed ? 245 : 255, passed ? 250 : 245, passed ? 245 : 245);
+            doc.roundedRect(16, y - 3, pageWidth - 32, 12, 1, 1, 'F');
+
+            doc.text(`${result.rule.article}: ${result.rule.title}`, 20, y + 4);
+            doc.setTextColor(...GRAY);
+            doc.text(`  ${status}: ${result.details}${limit}${actual}`, 20, y + 9);
+            y += 14;
         }
 
-        y += 5;
+        y += 6;
     }
 
-    // Footer
-    const pageCount = doc.getNumberOfPages();
-    for (let i = 1; i <= pageCount; i++) {
+    const totalPages = doc.getNumberOfPages();
+    for (let i = 1; i <= totalPages; i++) {
         doc.setPage(i);
-        doc.setFontSize(8);
-        doc.setTextColor(128, 128, 128);
-        doc.text(
-            `ShiftSim Factory — Relatorio de Conformidade — ${dateStr} — Pagina ${i}/${pageCount}`,
-            pageWidth / 2,
-            doc.internal.pageSize.getHeight() - 10,
-            { align: 'center' }
-        );
+        drawBrandedFooter(doc, i, totalPages);
     }
 
     doc.save(`Relatorio_Conformidade_${scenario.name.replace(/[^a-z0-9]/gi, '_')}_${dateStr}.pdf`);
