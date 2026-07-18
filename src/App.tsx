@@ -5,7 +5,7 @@ import { ThemeProvider } from './contexts/ThemeContext';
 import { ToastProvider } from './contexts/ToastContext';
 import { I18nProvider } from './i18n';
 import ErrorBoundary from './components/ErrorBoundary';
-import { LayoutDashboard, Calendar, FileText, Users, BarChart3, Settings, GitCompareArrows, Euro, BookOpen, HelpCircle, UserCircle, Loader2 } from 'lucide-react';
+import { LayoutDashboard, Calendar, FileText, Users, BarChart3, Settings, GitCompareArrows, Euro, BookOpen, HelpCircle, UserCircle, Brain, Loader2 } from 'lucide-react';
 
 import { Analytics } from '@vercel/analytics/react';
 
@@ -20,6 +20,7 @@ const Reports = lazy(() => import('./pages/Reports'));
 const SettingsPage = lazy(() => import('./pages/Settings'));
 const HelpPage = lazy(() => import('./pages/HelpPage'));
 const EmployeeSchedule = lazy(() => import('./pages/EmployeeSchedule'));
+const ScheduleOptimizer = lazy(() => import('./pages/ScheduleOptimizer'));
 
 function PageLoader() {
     return (
@@ -34,6 +35,7 @@ const NAV_ITEMS = [
     { to: '/analytics', icon: BarChart3, label: 'Analitica' },
     { to: '/compare', icon: GitCompareArrows, label: 'Comparar' },
     { to: '/costs', icon: Euro, label: 'Custos' },
+    { to: '/optimizer', icon: Brain, label: 'Otimizar' },
     { to: '/templates', icon: BookOpen, label: 'Modelos' },
     { to: '/calendar', icon: Calendar, label: 'Feriados' },
     { to: '/roster', icon: Users, label: 'Equipas' },
@@ -122,6 +124,7 @@ function App() {
                                         <Route path="/analytics" element={<AnalyticsDashboard />} />
                                         <Route path="/compare" element={<Comparison />} />
                                         <Route path="/costs" element={<CostCalculator />} />
+                                        <Route path="/optimizer" element={<ScheduleOptimizer />} />
                                         <Route path="/templates" element={<ScheduleTemplates />} />
                                         <Route path="/calendar" element={<HolidayCalendar />} />
                                         <Route path="/roster" element={<TeamRoster />} />
