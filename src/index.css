@@ -108,6 +108,18 @@ body {
   background-color: #9CA3AF !important;
 }
 
+.light .bg-gray-50 {
+  background-color: #F3F4F6 !important;
+}
+
+.light .bg-white {
+  background-color: #FFFFFF !important;
+}
+
+.light .bg-gray-100 {
+  background-color: #F3F4F6 !important;
+}
+
 .light .text-white {
   color: var(--text-primary) !important;
 }
@@ -124,12 +136,36 @@ body {
   color: #6B7280 !important;
 }
 
+.light .text-gray-600 {
+  color: #4B5563 !important;
+}
+
+.light .text-gray-700 {
+  color: #374151 !important;
+}
+
+.light .text-gray-800 {
+  color: #1F2937 !important;
+}
+
+.light .text-gray-900 {
+  color: #111827 !important;
+}
+
+.light .border-gray-200 {
+  border-color: #E5E7EB !important;
+}
+
 .light .border-gray-700 {
   border-color: var(--border-color) !important;
 }
 
 .light .border-gray-600 {
   border-color: var(--border-color-hover) !important;
+}
+
+.light .border-gray-300 {
+  border-color: #D1D5DB !important;
 }
 
 /* Light theme specific tweaks */

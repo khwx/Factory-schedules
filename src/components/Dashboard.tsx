@@ -9,10 +9,11 @@ import { exportScenarioToPDF, exportComparisonToPDF } from '../utils/pdfExport';
 import { exportScenarioToCSV, exportScenarioToJSON, exportComparisonToCSV, exportComparisonToJSON } from '../utils/csvJsonExport';
 import { downloadICS } from '../utils/icsExport';
 import { checkForSharedScenario, copyShareableLink } from '../utils/shareScenario';
-import { X, Download, Filter, Search, Wand2, Undo2, Redo2, FileText, Table2, Code2, Play } from 'lucide-react';
+import { X, Download, Filter, Search, Wand2, Undo2, Redo2, FileText, Table2, Code2, Play, Image } from 'lucide-react';
 import DashboardStats from './DashboardStats';
 import ScheduleDiff from './ScheduleDiff';
 import PresetSelector from './PresetSelector';
+import { exportWithBranding } from '../utils/imageExport';
 import ICSImporter from './ICSImporter';
 import { PresetScenario, PRESET_SCENARIOS } from '../data/presetScenarios';
 import GeneratorUI from './ScheduleGenerator';
@@ -305,6 +306,13 @@ const Dashboard: React.FC = () => {
     const handleExportAllJSON = useCallback(() => {
         exportComparisonToJSON(scenarios, analyses);
     }, [scenarios, analyses]);
+
+    const handleExportImage = useCallback(() => {
+        const el = document.querySelector('[data-tutorial="comparison"]') as HTMLElement;
+        if (el) {
+            exportWithBranding(el, 'Dashboard ShiftSim');
+        }
+    }, []);
 
     const handleExportICS = useCallback((scenario: Scenario) => {
         downloadICS(scenario);
@@ -695,6 +703,14 @@ const Dashboard: React.FC = () => {
                         >
                             <Code2 className="w-5 h-5" aria-hidden="true" />
                             {t.dashboard.exportJSON}
+                        </button>
+                        <button
+                            onClick={handleExportImage}
+                            className="bg-purple-600 hover:bg-purple-700 text-white font-medium py-3 px-5 rounded-lg transition-colors flex items-center gap-2"
+                            aria-label="Exportar como imagem"
+                        >
+                            <Image className="w-5 h-5" aria-hidden="true" />
+                            {t.dashboard.exportImage || 'Imagem'}
                         </button>
                     </div>
                 </>
