@@ -9,11 +9,13 @@ import { exportScenarioToPDF, exportComparisonToPDF } from '../utils/pdfExport';
 import { exportScenarioToCSV, exportScenarioToJSON, exportComparisonToCSV, exportComparisonToJSON } from '../utils/csvJsonExport';
 import { downloadICS } from '../utils/icsExport';
 import { checkForSharedScenario, copyShareableLink } from '../utils/shareScenario';
-import { X, Download, Filter, Search, Wand2, Undo2, Redo2, FileText, Table2, Code2, Play, Image } from 'lucide-react';
+import { X, Download, Filter, Search, Wand2, Undo2, Redo2, FileText, Table2, Code2, Play, Image, SlidersHorizontal } from 'lucide-react';
 import DashboardStats from './DashboardStats';
 import ScheduleDiff from './ScheduleDiff';
 import PresetSelector from './PresetSelector';
 import { exportWithBranding } from '../utils/imageExport';
+import BottomSheet from './BottomSheet';
+import FilterChip from './FilterChip';
 import ICSImporter from './ICSImporter';
 import { PresetScenario, PRESET_SCENARIOS } from '../data/presetScenarios';
 import GeneratorUI from './ScheduleGenerator';
@@ -144,6 +146,7 @@ const Dashboard: React.FC = () => {
     const [showCalendar, setShowCalendar] = useState(false);
     const [showMultiTeamCalendar, setShowMultiTeamCalendar] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
+    const [showMobileFilter, setShowMobileFilter] = useState(false);
     const { sortBy, filterTeams, showHidden, setSortBy, setFilterTeams, setShowHidden } = usePreferences();
     const searchInputRef = useRef<HTMLInputElement>(null);
     const calendarModalRef = useFocusTrap(showCalendar);
@@ -561,8 +564,108 @@ const Dashboard: React.FC = () => {
                                     </span>
                                 )}
                             </button>
+
+                            {/* Mobile Filter Button */}
+                            <button
+                                onClick={() => setShowMobileFilter(true)}
+                                className="md:hidden flex items-center gap-2 px-4 py-2 bg-gray-700 hover:bg-gray-600 text-gray-300 rounded-lg transition-colors whitespace-nowrap"
+                            >
+                                <SlidersHorizontal className="w-4 h-4" />
+                                Filtros
+                            </button>
+                        </div>
+
+                        {/* Filter Chips - Desktop */}
+                        <div className="hidden md:flex flex-wrap gap-2 mt-3">
+                            <FilterChip
+                                label="Todos"
+                                active={!filterTeams && !showHidden}
+                                onClick={() => { setFilterTeams(null); setShowHidden(false); }}
+                                count={scenarios.length}
+                                color="blue"
+                            />
+                            <FilterChip
+                                label="Com Turnos Nocturnos"
+                                active={false}
+                                onClick={() => {}}
+                                count={scenarios.filter(s => s.pattern.includes('N')).length}
+                                color="purple"
+                            />
+                            <FilterChip
+                                label="3+ Equipas"
+                                active={filterTeams !== null && filterTeams >= 3}
+                                onClick={() => setFilterTeams(filterTeams === 3 ? null : 3)}
+                                count={scenarios.filter(s => s.teams >= 3).length}
+                                color="green"
+                            />
+                            <FilterChip
+                                label="Escondidos"
+                                active={showHidden}
+                                onClick={() => setShowHidden(!showHidden)}
+                                count={scenarios.filter(s => s.hidden).length}
+                                color="amber"
+                            />
                         </div>
                     </div>
+
+                    {/* Mobile Filter Bottom Sheet */}
+                    <BottomSheet isOpen={showMobileFilter} onClose={() => setShowMobileFilter(false)} title="Filtros e Ordenacao">
+                        <div className="space-y-4">
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-2">Pesquisar</label>
+                                <input
+                                    type="text"
+                                    placeholder="Pesquisar cenarios..."
+                                    value={searchTerm}
+                                    onChange={handleSearchChange}
+                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                                />
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-2">Ordenar por</label>
+                                <select
+                                    value={sortBy}
+                                    onChange={handleSortChange}
+                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                                >
+                                    <option value="name">Nome</option>
+                                    <option value="weekends">Fins de Semana</option>
+                                    <option value="hours">Horas Semanais</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-2">Numero de Equipas</label>
+                                <select
+                                    value={filterTeams ?? ''}
+                                    onChange={handleFilterTeamsChange}
+                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                                >
+                                    <option value="">Todas</option>
+                                    {[...new Set(scenarios.map(s => s.teams))].sort((a, b) => a - b).map(num => (
+                                        <option key={num} value={num}>{num} Equipas</option>
+                                    ))}
+                                </select>
+                            </div>
+
+                            <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                                <span className="text-sm text-gray-700">Mostrar cenarios escondidos</span>
+                                <button
+                                    onClick={toggleShowHidden}
+                                    className={`relative w-11 h-6 rounded-full transition-colors ${showHidden ? 'bg-blue-600' : 'bg-gray-300'}`}
+                                >
+                                    <span className={`absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white transition-transform ${showHidden ? 'translate-x-5' : ''}`} />
+                                </button>
+                            </div>
+
+                            <div className="pt-4 border-t">
+                                <p className="text-xs text-gray-500 text-center">
+                                    {visibleScenarios.length} de {scenarios.length} cenarios visiveis
+                                </p>
+                            </div>
+                        </div>
+                    </BottomSheet>
                 </>
             )}
 
