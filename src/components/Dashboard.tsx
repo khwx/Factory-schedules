@@ -27,6 +27,8 @@ import { usePreferences } from '../hooks/usePreferences';
 import { useI18n } from '../i18n';
 import { LazyLoad } from './LazyErrorBoundary';
 import { ShortcutsHelp, useShortcutsHelp } from './ShortcutsHelp';
+import { useToast } from '../contexts/ToastContext';
+import { saveAutoBackup } from '../utils/backup';
 
 // Lazy load heavy components for better performance
 const YearCalendarView = lazy(() => import('./YearCalendarView'));
@@ -97,6 +99,16 @@ const Dashboard: React.FC = () => {
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    const toast = useToast();
+
+    // Auto-backup scenarios every 5 minutes
+    useEffect(() => {
+        const interval = setInterval(() => {
+            saveAutoBackup(scenarios);
+        }, 5 * 60 * 1000);
+        return () => clearInterval(interval);
+    }, [scenarios]);
 
     const updateScenariosWithHistory = useCallback((newScenarios: Scenario[] | ((prev: Scenario[]) => Scenario[])) => {
         setScenarios((currentScenarios) => {
@@ -254,7 +266,8 @@ const Dashboard: React.FC = () => {
         if (!window.confirm(`Tem a certeza que deseja eliminar "${scenario.name}"?`)) return;
         updateScenariosWithHistory(prev => prev.filter(s => s.id !== id));
         setEditingScenario(prev => prev?.id === id ? null : prev);
-    }, [updateScenariosWithHistory, scenarios]);
+        toast.showToast('success', `"${scenario.name}" eliminado com sucesso`);
+    }, [updateScenariosWithHistory, scenarios, toast]);
 
     const handleEditScenario = useCallback((scenario: Scenario) => {
         setEditingScenario(scenario);
@@ -264,7 +277,8 @@ const Dashboard: React.FC = () => {
     const handleUpdateScenario = useCallback((id: string, updatedData: Omit<Scenario, 'id'>) => {
         updateScenariosWithHistory(prev => prev.map(s => s.id === id ? { ...s, ...updatedData } : s));
         setEditingScenario(null);
-    }, [updateScenariosWithHistory]);
+        toast.showToast('success', 'Cenario atualizado com sucesso');
+    }, [updateScenariosWithHistory, toast]);
 
     const handleCancelEdit = useCallback(() => {
         setEditingScenario(null);
@@ -287,36 +301,43 @@ const Dashboard: React.FC = () => {
 
     const handleExportAll = useCallback(() => {
         exportComparison(scenarios, analyses);
-    }, [scenarios, analyses]);
+        toast.showToast('success', 'Exportado para Excel com sucesso');
+    }, [scenarios, analyses, toast]);
 
     const handleExportAllPDF = useCallback(() => {
         exportComparisonToPDF(scenarios, analyses);
-    }, [scenarios, analyses]);
+        toast.showToast('success', 'Exportado para PDF com sucesso');
+    }, [scenarios, analyses, toast]);
 
     const handleExportCSV = useCallback((scenario: Scenario) => {
         const analysis = calculateAnalysis(scenario);
         exportScenarioToCSV(scenario, analysis);
-    }, []);
+        toast.showToast('success', 'Exportado para CSV');
+    }, [toast]);
 
     const handleExportJSON = useCallback((scenario: Scenario) => {
         const analysis = calculateAnalysis(scenario);
         exportScenarioToJSON(scenario, analysis);
-    }, []);
+        toast.showToast('success', 'Exportado para JSON');
+    }, [toast]);
 
     const handleExportAllCSV = useCallback(() => {
         exportComparisonToCSV(scenarios, analyses);
-    }, [scenarios, analyses]);
+        toast.showToast('success', 'Exportado para CSV');
+    }, [scenarios, analyses, toast]);
 
     const handleExportAllJSON = useCallback(() => {
         exportComparisonToJSON(scenarios, analyses);
-    }, [scenarios, analyses]);
+        toast.showToast('success', 'Exportado para JSON');
+    }, [scenarios, analyses, toast]);
 
     const handleExportImage = useCallback(() => {
         const el = document.querySelector('[data-tutorial="comparison"]') as HTMLElement;
         if (el) {
             exportWithBranding(el, 'Dashboard ShiftSim');
+            toast.showToast('success', 'Imagem exportada');
         }
-    }, []);
+    }, [toast]);
 
     const handleExportICS = useCallback((scenario: Scenario) => {
         downloadICS(scenario);
