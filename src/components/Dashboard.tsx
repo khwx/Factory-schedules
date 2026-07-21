@@ -16,6 +16,7 @@ import PresetSelector from './PresetSelector';
 import { exportWithBranding } from '../utils/imageExport';
 import BottomSheet from './BottomSheet';
 import FilterChip from './FilterChip';
+import QuickActions from './QuickActions';
 import ICSImporter from './ICSImporter';
 import { PresetScenario, PRESET_SCENARIOS } from '../data/presetScenarios';
 import GeneratorUI from './ScheduleGenerator';
@@ -870,6 +871,18 @@ const Dashboard: React.FC = () => {
                     onSelectScenario={handleLoadPreset}
                 />
             </div>
+
+            <QuickActions
+                onNewScenario={() => {
+                    if (editingScenario) {
+                        setEditingScenario(null);
+                    }
+                    setShowGenerator(false);
+                }}
+                onOpenGenerator={() => setShowGenerator(true)}
+                onExport={handleExportAll}
+                onSearch={() => searchInputRef.current?.focus()}
+            />
 
             <ShortcutsHelp isOpen={shortcutsHelp.isOpen} onClose={shortcutsHelp.close} />
         </div>
