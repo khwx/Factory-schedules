@@ -9,7 +9,7 @@ import { exportScenarioToPDF, exportComparisonToPDF } from '../utils/pdfExport';
 import { exportScenarioToCSV, exportScenarioToJSON, exportComparisonToCSV, exportComparisonToJSON } from '../utils/csvJsonExport';
 import { downloadICS } from '../utils/icsExport';
 import { checkForSharedScenario, copyShareableLink } from '../utils/shareScenario';
-import { X, Download, Filter, Search, Wand2, Undo2, Redo2, FileText, Table2, Code2, Play, Image, SlidersHorizontal } from 'lucide-react';
+import { X, Download, Filter, Search, Wand2, Undo2, Redo2, FileText, Table2, Code2, Play, Image, SlidersHorizontal, Upload } from 'lucide-react';
 import DashboardStats from './DashboardStats';
 import ScheduleDiff from './ScheduleDiff';
 import PresetSelector from './PresetSelector';
@@ -29,6 +29,8 @@ import { LazyLoad } from './LazyErrorBoundary';
 import { ShortcutsHelp, useShortcutsHelp } from './ShortcutsHelp';
 import { useToast } from '../contexts/ToastContext';
 import { saveAutoBackup } from '../utils/backup';
+import { loadValidatedScenarios } from '../utils/scenarioValidation';
+import SystemHealth from './SystemHealth';
 
 // Lazy load heavy components for better performance
 const YearCalendarView = lazy(() => import('./YearCalendarView'));
@@ -47,14 +49,8 @@ const PayEstimateDisplay = lazy(() => import('./PayEstimateDisplay'));
 
 const Dashboard: React.FC = () => {
     const [scenarios, setScenarios] = useState<Scenario[]>(() => {
-        const saved = localStorage.getItem('shiftsim_scenarios');
-        if (saved) {
-            try {
-                return JSON.parse(saved);
-            } catch {
-                return [];
-            }
-        }
+        const validated = loadValidatedScenarios();
+        if (validated.length > 0) return validated;
 
         // First visit - load all presets as examples
         const presetsAsScenarios: Scenario[] = PRESET_SCENARIOS.map(preset => ({
@@ -339,6 +335,23 @@ const Dashboard: React.FC = () => {
         }
     }, [toast]);
 
+    const handleImportJSON = useCallback(async () => {
+        try {
+            const { importScenariosFromFile } = await import('../utils/scenarioIO');
+            const imported = await importScenariosFromFile();
+            if (imported.length === 0) {
+                toast.showToast('error', 'Nenhum cenario valido encontrado no ficheiro');
+                return;
+            }
+            const withIds = imported.map(s => ({ ...s, id: crypto.randomUUID() }));
+            updateScenariosWithHistory(prev => [...prev, ...withIds]);
+            toast.showToast('success', `${imported.length} cenario(s) importado(s) com sucesso`);
+        } catch (err) {
+            const msg = err instanceof Error ? err.message : 'Erro ao importar';
+            toast.showToast('error', `Falha ao importar: ${msg}`);
+        }
+    }, [updateScenariosWithHistory, toast]);
+
     const handleExportICS = useCallback((scenario: Scenario) => {
         downloadICS(scenario);
     }, []);
@@ -443,6 +456,8 @@ const Dashboard: React.FC = () => {
             <ICSImporter onImport={handleAddScenario} />
 
             {scenarios.length > 0 && <DashboardStats scenarios={scenarios} />}
+
+            {scenarios.length > 0 && <SystemHealth scenarios={scenarios} />}
 
             <div className="flex flex-col md:flex-row gap-4 mb-6">
                 <div className="flex-1" data-tutorial="presets">
@@ -828,6 +843,14 @@ const Dashboard: React.FC = () => {
                         >
                             <Code2 className="w-5 h-5" aria-hidden="true" />
                             {t.dashboard.exportJSON}
+                        </button>
+                        <button
+                            onClick={handleImportJSON}
+                            className="bg-cyan-600 hover:bg-cyan-700 text-white font-medium py-3 px-5 rounded-lg transition-colors flex items-center gap-2"
+                            aria-label="Importar cenarios de ficheiro JSON"
+                        >
+                            <Upload className="w-5 h-5" aria-hidden="true" />
+                            Importar JSON
                         </button>
                         <button
                             onClick={handleExportImage}
