@@ -31,6 +31,7 @@ export const en: Translations = {
     exportPDF: 'PDF',
     exportCSV: 'CSV',
     exportJSON: 'JSON',
+    importJSON: 'Import JSON',
     exportImage: 'Image',
     comparison: 'Scenario Comparison',
     scenarios: 'scenarios',

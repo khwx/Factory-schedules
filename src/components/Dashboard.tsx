@@ -847,10 +847,10 @@ const Dashboard: React.FC = () => {
                         <button
                             onClick={handleImportJSON}
                             className="bg-cyan-600 hover:bg-cyan-700 text-white font-medium py-3 px-5 rounded-lg transition-colors flex items-center gap-2"
-                            aria-label="Importar cenarios de ficheiro JSON"
+                            aria-label={t.dashboard.importJSON || 'Importar JSON'}
                         >
                             <Upload className="w-5 h-5" aria-hidden="true" />
-                            Importar JSON
+                            {t.dashboard.importJSON || 'Importar JSON'}
                         </button>
                         <button
                             onClick={handleExportImage}

@@ -29,6 +29,7 @@ export const pt = {
     exportPDF: 'PDF',
     exportCSV: 'CSV',
     exportJSON: 'JSON',
+    importJSON: 'Importar JSON',
     exportImage: 'Imagem',
     comparison: 'Comparacao de Cenarios',
     scenarios: 'cenarios',

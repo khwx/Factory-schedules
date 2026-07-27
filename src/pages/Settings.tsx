@@ -1,9 +1,10 @@
 import React, { useState, useMemo } from 'react';
-import { Settings as SettingsIcon, Sun, Moon, Globe, Download, Upload, FilePlus2, Trash2, Plus, Info } from 'lucide-react';
+import { Settings as SettingsIcon, Sun, Moon, Globe, Download, Upload, FilePlus2, Trash2, Plus, Info, Clock } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 import { useToast } from '../contexts/ToastContext';
 import { useI18n } from '../i18n';
 import { getCustomHolidays, addCustomHoliday, removeCustomHoliday } from '../utils/portugueseHolidays';
+import { getAutoBackup, formatBackupAge } from '../utils/backup';
 
 const SettingsPage: React.FC = () => {
     const { theme, toggleTheme } = useTheme();
@@ -232,6 +233,19 @@ const SettingsPage: React.FC = () => {
                             <input type="file" accept=".json" onChange={handleBulkImport} className="hidden" />
                         </label>
                     </div>
+                    {(() => {
+                        const backup = getAutoBackup();
+                        if (backup) {
+                            return (
+                                <div className="mt-3 flex items-center gap-2 text-xs text-gray-500">
+                                    <Clock className="w-3 h-3" />
+                                    {lang === 'pt' ? 'Ultimo backup automatico:' : 'Last auto-backup:'}{' '}
+                                    <span className="text-gray-400">{formatBackupAge(backup.timestamp)}</span>
+                                </div>
+                            );
+                        }
+                        return null;
+                    })()}
                 </div>
 
                 {/* Custom Holidays */}
