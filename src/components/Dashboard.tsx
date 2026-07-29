@@ -31,6 +31,7 @@ import { useToast } from '../contexts/ToastContext';
 import { saveAutoBackup } from '../utils/backup';
 import { loadValidatedScenarios } from '../utils/scenarioValidation';
 import SystemHealth from './SystemHealth';
+import StorageWarning from './StorageWarning';
 
 // Lazy load heavy components for better performance
 const YearCalendarView = lazy(() => import('./YearCalendarView'));
@@ -458,6 +459,8 @@ const Dashboard: React.FC = () => {
             {scenarios.length > 0 && <DashboardStats scenarios={scenarios} />}
 
             {scenarios.length > 0 && <SystemHealth scenarios={scenarios} />}
+
+            <StorageWarning />
 
             <div className="flex flex-col md:flex-row gap-4 mb-6">
                 <div className="flex-1" data-tutorial="presets">
