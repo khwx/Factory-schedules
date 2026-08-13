@@ -7,6 +7,7 @@ import { calculateAnalysis } from '../utils/calculations';
 import { exportComparisonToPDF } from '../utils/pdfExport';
 import { exportComparison } from '../utils/export';
 import { exportComparisonToCSV, exportComparisonToJSON } from '../utils/csvJsonExport';
+import ComplianceComparison from '../components/ComplianceComparison';
 
 interface ComparisonRow {
     label: string;
@@ -387,6 +388,13 @@ const Comparison: React.FC = () => {
                             </tbody>
                         </table>
                     </div>
+                </div>
+            )}
+
+            {/* Legal Compliance Comparison */}
+            {selectedScenarios.length >= 2 && (
+                <div className="mt-6">
+                    <ComplianceComparison scenarios={selectedScenarios} />
                 </div>
             )}
         </div>
