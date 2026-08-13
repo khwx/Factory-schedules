@@ -46,6 +46,7 @@ const TeamAnalysis = lazy(() => import('./TeamAnalysis'));
 const DemoMode = lazy(() => import('./DemoMode'));
 const LegalComplianceBanner = lazy(() => import('./LegalComplianceBanner'));
 const PayEstimateDisplay = lazy(() => import('./PayEstimateDisplay'));
+const ShiftDistributionDisplay = lazy(() => import('./ShiftDistributionDisplay'));
 
 
 const Dashboard: React.FC = () => {
@@ -782,6 +783,9 @@ const Dashboard: React.FC = () => {
                                             scenario={scenario}
                                             analysis={analysis}
                                         />
+                                    </LazyLoad>
+                                    <LazyLoad className="h-48">
+                                        <ShiftDistributionDisplay scenario={scenario} />
                                     </LazyLoad>
                                     <LazyLoad className="h-64">
                                         <WorkloadHeatmap scenario={scenario} />

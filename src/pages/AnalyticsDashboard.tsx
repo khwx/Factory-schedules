@@ -184,7 +184,7 @@ const AnalyticsDashboard: React.FC = () => {
                 <div className="flex items-center justify-between mb-3">
                     <h3 className="text-white font-semibold">{lang === 'pt' ? 'Selecionar Cenarios' : 'Select Scenarios'}</h3>
                     <button onClick={selectAll} className="text-sm text-blue-400 hover:text-blue-300">
-                        {selectedIds.size === scenarios.length ? (lang === 'pt' ? 'Desselecionar' : 'Deselect') : (lang === 'pt' ? 'Selecionar Todos' : 'Select All')}
+                        {selectedIds.size === scenarios.length && scenarios.length > 0 ? (lang === 'pt' ? 'Desselecionar' : 'Deselect') : (lang === 'pt' ? 'Selecionar Todos' : 'Select All')}
                     </button>
                 </div>
                 <div className="flex flex-wrap gap-2">

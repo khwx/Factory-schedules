@@ -14,6 +14,11 @@ interface UseUndoRedoReturn<T> {
     clearHistory: () => void;
 }
 
+interface HistoryFlags {
+    canUndo: boolean;
+    canRedo: boolean;
+}
+
 export function useUndoRedo<T>(
     initialState: T,
     options: UseUndoRedoOptions = {}
@@ -23,6 +28,14 @@ export function useUndoRedo<T>(
     const [state, setInternalState] = useState<T>(initialState);
     const historyRef = useRef<T[]>([initialState]);
     const currentIndexRef = useRef<number>(0);
+    const [flags, setFlags] = useState<HistoryFlags>({ canUndo: false, canRedo: false });
+
+    const syncFlags = useCallback(() => {
+        setFlags({
+            canUndo: currentIndexRef.current > 0,
+            canRedo: currentIndexRef.current < historyRef.current.length - 1,
+        });
+    }, []);
 
     const setState = useCallback((newState: T | ((prev: T) => T)) => {
         setInternalState((currentState) => {
@@ -42,39 +55,40 @@ export function useUndoRedo<T>(
             historyRef.current = newHistory;
             return resolvedState;
         });
-    }, [maxHistory]);
+        syncFlags();
+    }, [maxHistory, syncFlags]);
 
     const undo = useCallback(() => {
         if (currentIndexRef.current > 0) {
             currentIndexRef.current--;
             const previousState = historyRef.current[currentIndexRef.current];
             setInternalState(previousState);
+            syncFlags();
         }
-    }, []);
+    }, [syncFlags]);
 
     const redo = useCallback(() => {
         if (currentIndexRef.current < historyRef.current.length - 1) {
             currentIndexRef.current++;
             const nextState = historyRef.current[currentIndexRef.current];
             setInternalState(nextState);
+            syncFlags();
         }
-    }, []);
+    }, [syncFlags]);
 
     const clearHistory = useCallback(() => {
         historyRef.current = [state];
         currentIndexRef.current = 0;
-    }, [state]);
-
-    const canUndo = currentIndexRef.current > 0;
-    const canRedo = currentIndexRef.current < historyRef.current.length - 1;
+        syncFlags();
+    }, [state, syncFlags]);
 
     return {
         state,
         setState,
         undo,
         redo,
-        canUndo,
-        canRedo,
+        canUndo: flags.canUndo,
+        canRedo: flags.canRedo,
         clearHistory,
     };
 }
