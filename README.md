@@ -37,6 +37,7 @@ Garanta que todas as equipas são tratadas de forma justa ao final do ano:
 *   **Backup e Restore:** Guarde e recupere todos os seus cenários via ficheiro JSON (localStorage).
 *   **Exportação:** Exporte relatórios completos para Excel com múltiplas folhas (Resumo, Calendários anuais, Análise).
 *   **Temas:** Suporte nativo para **Modo Escuro (Dark Mode)** (padrão) e Claro.
+*   **Multilíngue:** Interface disponível em **Português, English e Español** (selecionável em Definições).
 ---
 ## 💻 Stack Tecnológico
 Este projeto foi construído com foco em performance e experiência de utilizador moderna:

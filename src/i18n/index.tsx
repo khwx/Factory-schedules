@@ -1,8 +1,9 @@
 import { createContext, useContext, useState, useCallback, ReactNode } from 'react';
 import { pt, Translations } from './locales/pt';
 import { en } from './locales/en';
+import { es } from './locales/es';
 
-export type Language = 'pt' | 'en';
+export type Language = 'pt' | 'en' | 'es';
 
 interface I18nContextType {
     lang: Language;
@@ -12,7 +13,7 @@ interface I18nContextType {
 
 const I18nContext = createContext<I18nContextType | undefined>(undefined);
 
-const translations: Record<Language, Translations> = { pt, en };
+const translations: Record<Language, Translations> = { pt, en, es };
 
 export function I18nProvider({ children }: { children: ReactNode }) {
     const [lang, setLangState] = useState<Language>(() => {

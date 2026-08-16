@@ -176,10 +176,10 @@ const SettingsPage: React.FC = () => {
                 <div className="bg-gray-800 rounded-lg border border-gray-700 p-6">
                     <h3 className="text-white font-semibold text-lg mb-4 flex items-center gap-2">
                         <Globe className="w-5 h-5 text-green-400" />
-                        {lang === 'pt' ? 'Idioma' : 'Language'}
+                        {lang === 'pt' ? 'Idioma' : lang === 'es' ? 'Idioma' : 'Language'}
                     </h3>
                     <p className="text-gray-400 text-sm mb-4">
-                        {lang === 'pt' ? 'Escolha o idioma da aplicacao.' : 'Choose the application language.'}
+                        {lang === 'pt' ? 'Escolha o idioma da aplicacao.' : lang === 'es' ? 'Elige el idioma de la aplicacion.' : 'Choose the application language.'}
                     </p>
                     <div className="flex gap-3">
                         <button
@@ -199,6 +199,15 @@ const SettingsPage: React.FC = () => {
                         >
                             <Globe className="w-5 h-5" />
                             English
+                        </button>
+                        <button
+                            onClick={() => setLang('es')}
+                            className={`flex-1 px-6 py-3 rounded-lg transition-colors flex items-center justify-center gap-3 ${
+                                lang === 'es' ? 'bg-blue-600 text-white' : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                            }`}
+                        >
+                            <Globe className="w-5 h-5" />
+                            Espanol
                         </button>
                     </div>
                 </div>
