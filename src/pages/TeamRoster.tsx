@@ -43,7 +43,7 @@ function getShiftColor(shift: ShiftType): string {
 
 const TeamRoster: React.FC = () => {
     const { lang } = useI18n();
-    const today = new Date();
+    const today = useMemo(() => new Date(), []);
     const [year, setYear] = useState(today.getFullYear());
     const [month, setMonth] = useState(today.getMonth());
     const [selectedScenarioId, setSelectedScenarioId] = useState<string>('');

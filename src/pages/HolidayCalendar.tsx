@@ -20,7 +20,7 @@ const COUNTRIES: { code: CountryCode; label: string; flag: string }[] = [
 const HolidayCalendar: React.FC = () => {
     const { lang } = useI18n();
     const { showToast } = useToast();
-    const today = new Date();
+    const today = useMemo(() => new Date(), []);
     const [year, setYear] = useState(today.getFullYear());
     const [month, setMonth] = useState(today.getMonth());
     const [country, setCountry] = useState<CountryCode>('PT');

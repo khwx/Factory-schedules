@@ -173,6 +173,22 @@ const ICSImporter: React.FC<ICSImporterProps> = ({ onImport }) => {
                 </button>
             </div>
 
+            {errorMessage && (
+                <div className="bg-red-900/20 border border-red-700 p-4 rounded mb-4">
+                    <div className="flex items-center gap-2">
+                        <AlertCircle className="w-5 h-5 text-red-400" />
+                        <span className="text-red-400 font-semibold">Erro</span>
+                    </div>
+                    <p className="text-sm text-red-300 mt-2">{errorMessage}</p>
+                    <button
+                        onClick={handleReset}
+                        className="mt-3 text-sm text-red-400 hover:text-red-300 underline"
+                    >
+                        Tentar novamente
+                    </button>
+                </div>
+            )}
+
             {!fileContent ? (
                 <div
                     onDragOver={handleDragOver}
@@ -228,23 +244,6 @@ const ICSImporter: React.FC<ICSImporterProps> = ({ onImport }) => {
                             </button>
                         </div>
                     </div>
-
-                    {/* Error Message */}
-                    {errorMessage && (
-                        <div className="bg-red-900/20 border border-red-700 p-4 rounded">
-                            <div className="flex items-center gap-2">
-                                <AlertCircle className="w-5 h-5 text-red-400" />
-                                <span className="text-red-400 font-semibold">Erro</span>
-                            </div>
-                            <p className="text-sm text-red-300 mt-2">{errorMessage}</p>
-                            <button
-                                onClick={handleReset}
-                                className="mt-3 text-sm text-red-400 hover:text-red-300 underline"
-                            >
-                                Tentar novamente
-                            </button>
-                        </div>
-                    )}
 
                     {/* Loading State */}
                     {importStatus === 'loading' && (

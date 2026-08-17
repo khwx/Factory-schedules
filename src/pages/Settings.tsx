@@ -181,10 +181,10 @@ const SettingsPage: React.FC = () => {
                     <p className="text-gray-400 text-sm mb-4">
                         {lang === 'pt' ? 'Escolha o idioma da aplicacao.' : lang === 'es' ? 'Elige el idioma de la aplicacion.' : 'Choose the application language.'}
                     </p>
-                    <div className="flex gap-3">
+                    <div className="grid grid-cols-2 sm:flex gap-3">
                         <button
                             onClick={() => setLang('pt')}
-                            className={`flex-1 px-6 py-3 rounded-lg transition-colors flex items-center justify-center gap-3 ${
+                            className={`flex-1 px-4 py-3 rounded-lg transition-colors flex items-center justify-center gap-2 ${
                                 lang === 'pt' ? 'bg-blue-600 text-white' : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
                             }`}
                         >
@@ -193,7 +193,7 @@ const SettingsPage: React.FC = () => {
                         </button>
                         <button
                             onClick={() => setLang('en')}
-                            className={`flex-1 px-6 py-3 rounded-lg transition-colors flex items-center justify-center gap-3 ${
+                            className={`flex-1 px-4 py-3 rounded-lg transition-colors flex items-center justify-center gap-2 ${
                                 lang === 'en' ? 'bg-blue-600 text-white' : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
                             }`}
                         >
@@ -202,12 +202,21 @@ const SettingsPage: React.FC = () => {
                         </button>
                         <button
                             onClick={() => setLang('es')}
-                            className={`flex-1 px-6 py-3 rounded-lg transition-colors flex items-center justify-center gap-3 ${
+                            className={`flex-1 px-4 py-3 rounded-lg transition-colors flex items-center justify-center gap-2 ${
                                 lang === 'es' ? 'bg-blue-600 text-white' : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
                             }`}
                         >
                             <Globe className="w-5 h-5" />
                             Espanol
+                        </button>
+                        <button
+                            onClick={() => setLang('fr')}
+                            className={`flex-1 px-4 py-3 rounded-lg transition-colors flex items-center justify-center gap-2 ${
+                                lang === 'fr' ? 'bg-blue-600 text-white' : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                            }`}
+                        >
+                            <Globe className="w-5 h-5" />
+                            Français
                         </button>
                     </div>
                 </div>

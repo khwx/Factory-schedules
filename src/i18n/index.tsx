@@ -2,8 +2,23 @@ import { createContext, useContext, useState, useCallback, ReactNode } from 'rea
 import { pt, Translations } from './locales/pt';
 import { en } from './locales/en';
 import { es } from './locales/es';
+import { fr } from './locales/fr';
 
-export type Language = 'pt' | 'en' | 'es';
+export type Language = 'pt' | 'en' | 'es' | 'fr';
+
+const SUPPORTED_LANGUAGES: Language[] = ['pt', 'en', 'es', 'fr'];
+
+export function detectBrowserLanguage(): Language {
+    try {
+        const browserLang = navigator.language?.substring(0, 2).toLowerCase();
+        if (browserLang && SUPPORTED_LANGUAGES.includes(browserLang as Language)) {
+            return browserLang as Language;
+        }
+    } catch {
+        // ignore
+    }
+    return 'pt';
+}
 
 interface I18nContextType {
     lang: Language;
@@ -13,16 +28,19 @@ interface I18nContextType {
 
 const I18nContext = createContext<I18nContextType | undefined>(undefined);
 
-const translations: Record<Language, Translations> = { pt, en, es };
+const translations: Record<Language, Translations> = { pt, en, es, fr };
 
 export function I18nProvider({ children }: { children: ReactNode }) {
     const [lang, setLangState] = useState<Language>(() => {
         try {
             const saved = localStorage.getItem('shiftsim_lang');
-            return (saved as Language) || 'pt';
+            if (saved && SUPPORTED_LANGUAGES.includes(saved as Language)) {
+                return saved as Language;
+            }
         } catch {
-            return 'pt';
+            // ignore
         }
+        return detectBrowserLanguage();
     });
 
     const setLang = useCallback((newLang: Language) => {
