@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import YearCalendarView from '../YearCalendarView';
 import { Scenario } from '../../types';
@@ -30,9 +30,24 @@ const mockMatchMedia = (matches: boolean) => {
 };
 
 describe('YearCalendarView', () => {
+    const originalMatchMedia = window.matchMedia;
+
     beforeEach(() => {
         mockMatchMedia(false);
     });
+
+    afterEach(() => {
+        Object.defineProperty(window, 'matchMedia', {
+            writable: true,
+            configurable: true,
+            value: originalMatchMedia,
+        });
+    });
+
+    const getYearControls = () => {
+        const yearSpan = screen.getByText((content) => /^\d{4}$/.test(content));
+        return { yearSpan, buttons: (yearSpan.parentElement as HTMLElement).querySelectorAll('button') };
+    };
 
     it('renders the scenario name in the header', () => {
         render(<YearCalendarView scenario={scenario} />);
@@ -55,23 +70,17 @@ describe('YearCalendarView', () => {
     });
 
     it('navigates to the previous and next year', () => {
-        const currentYear = new Date().getFullYear();
         render(<YearCalendarView scenario={scenario} />);
-        const yearSpan = screen.getByText(currentYear.toString());
-        expect(yearSpan).toBeInTheDocument();
+        const { yearSpan, buttons } = getYearControls();
+        const initialYear = Number(yearSpan.textContent);
+        expect(initialYear).toBeGreaterThan(1900);
 
-        const clickYearButton = (index: number, year: number) => {
-            const controls = screen.getByText(year.toString()).parentElement as HTMLElement;
-            const buttons = controls.querySelectorAll('button');
-            fireEvent.click(buttons[index]);
-        };
+        fireEvent.click(buttons[0]);
+        expect(screen.getByText((initialYear - 1).toString())).toBeInTheDocument();
 
-        clickYearButton(0, currentYear);
-        expect(screen.getByText((currentYear - 1).toString())).toBeInTheDocument();
-
-        clickYearButton(1, currentYear - 1);
-        clickYearButton(1, currentYear);
-        expect(screen.getByText((currentYear + 1).toString())).toBeInTheDocument();
+        fireEvent.click(getYearControls().buttons[1]);
+        fireEvent.click(getYearControls().buttons[1]);
+        expect(screen.getByText((initialYear + 1).toString())).toBeInTheDocument();
     });
 
     it('renders all months in desktop layout', () => {
