@@ -2,6 +2,21 @@
 
 Log de execuções autónomas do Bot Orquestrador (modelos free: `opencode/hy3-free`).
 
+## Round 43 — 2026-08-17
+**Objetivo:** Adicionar a língua Alemã (`Deutsch / de`), a próxima candidata pendente do Round 42.
+
+**O que foi feito:**
+- **Novo ficheiro `src/i18n/locales/de.ts`:** tradução completa de todas as chaves (mesma estrutura de `pt.ts`) para Alemão.
+- **Registo de `de`:** adicionado `'de'` ao tipo `Language`, a `SUPPORTED_LANGUAGES`, ao `import` e ao record `translations` em `src/i18n/index.tsx`. O `detectBrowserLanguage()` passa a detetar `de-DE`/`de` automaticamente.
+- **Botões de seleção de idioma:** adicionado o botão `Deutsch` no `Layout.tsx` e no `Settings.tsx`, incluindo o respetivo estado ativo.
+- **Labels hardcoded migrados para `de`:** as strings `lang === 'pt' ? 'Idioma' : ...` e a respetiva frase de ajuda nos seletores de idioma passam a incluir o ramo `lang === 'de' ? 'Sprache' : ...` (passo parcial da pendência de migração de strings hardcoded do Round 42).
+- **Testes:** criado `src/i18n/locales/__tests__/de.test.ts` (paridade de chaves com `pt`, valores não-vazios, distinção do PT) — 3 testes. Em `src/i18n/__tests__/index.test.tsx`, corrigidas 2 suposições obsoletas (os testes de "idioma não suportado" usavam `de`, que agora é suportado — trocados para `it`/`it-IT`) e adicionados 3 testes (`de` via browser, `de` via localStorage, fallback `it`).
+
+**Verificação:** `tsc -b` passa (exit 0); `eslint` sem erros (warnings preexistentes); `vitest` → **591 passam** (+5), **0 falham**.
+
+**Decisão registada:** A alemã é a 5ª língua suportada (`pt`, `en`, `es`, `fr`, `de`). Mantém-se pendente: (1) migrar as restantes strings hardcoded fora do sistema i18n para usar `t.*` (ex.: `lang === 'pt' ? 'PT' : 'EN'`, labels de gráficos, mensagens de erro do `ICSImporter`); (2) traduzir essas strings hardcoded para `es`/`de`/`fr` para consistência total; (3) `ICSImporter.drop/jsdom` se ainda falhar.
+
+
 ## Round 42 — 2026-08-17
 **Objetivo:** Detecção automática de idioma do browser + estabilização de testes pendentes.
 
@@ -21,7 +36,7 @@ Log de execuções autónomas do Bot Orquestrador (modelos free: `opencode/hy3-f
 ## Melhorias pendentes / futuras
 - ~~Estabilizar os 4 testes falhando (`ICSImporter` drop/jsdom e `YearCalendarView` seletor de ano/mobile)~~ — `YearCalendarView` corrigido (2 testes passam agora). `ICSImporter.drop/jsdom` permanece pendente se houver falhas.
 - Traduzir para `es` os textos atualmente hardcoded (fora do sistema i18n) em vários componentes/páginas (ex.: mensagens de erro do `ICSImporter`, labels de gráficos, textos de ajuda) para que a troca para Espanhol seja 100% consistente.
-- ~~Adicionar mais línguas~~ — `Français (fr)` já adicionada e testada. Próxima candidata: `Deutsch (de)`.
+- ~~Adicionar mais línguas~~ — `Français (fr)` e `Deutsch (de)` já adicionadas e testadas. Próxima candidata: `Italiano (it)`.
 - ~~Detetar o idioma do browser~~ — Implementado em Round 42 (`detectBrowserLanguage()`).
 - Expandir presets de cenários industriais em `src/data/presetScenarios.ts`.
 - ~~Adicionar testes unitários para utilitários~~ — `shareScenario.ts` e `storageQuota.ts` já têm cobertura.

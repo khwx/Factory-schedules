@@ -3,10 +3,11 @@ import { pt, Translations } from './locales/pt';
 import { en } from './locales/en';
 import { es } from './locales/es';
 import { fr } from './locales/fr';
+import { de } from './locales/de';
 
-export type Language = 'pt' | 'en' | 'es' | 'fr';
+export type Language = 'pt' | 'en' | 'es' | 'fr' | 'de';
 
-const SUPPORTED_LANGUAGES: Language[] = ['pt', 'en', 'es', 'fr'];
+const SUPPORTED_LANGUAGES: Language[] = ['pt', 'en', 'es', 'fr', 'de'];
 
 export function detectBrowserLanguage(): Language {
     try {
@@ -28,7 +29,7 @@ interface I18nContextType {
 
 const I18nContext = createContext<I18nContextType | undefined>(undefined);
 
-const translations: Record<Language, Translations> = { pt, en, es, fr };
+const translations: Record<Language, Translations> = { pt, en, es, fr, de };
 
 export function I18nProvider({ children }: { children: ReactNode }) {
     const [lang, setLangState] = useState<Language>(() => {

@@ -39,8 +39,13 @@ describe('detectBrowserLanguage', () => {
         expect(detectBrowserLanguage()).toBe('fr');
     });
 
-    it('returns "pt" as fallback for unsupported languages', () => {
+    it('returns "de" for de-DE', () => {
         setBrowserLanguage('de-DE');
+        expect(detectBrowserLanguage()).toBe('de');
+    });
+
+    it('returns "pt" as fallback for unsupported languages', () => {
+        setBrowserLanguage('it-IT');
         expect(detectBrowserLanguage()).toBe('pt');
     });
 
@@ -85,7 +90,7 @@ describe('I18nProvider', () => {
     });
 
     it('falls back to pt when localStorage has an unsupported language', () => {
-        localStorage.setItem('shiftsim_lang', 'de');
+        localStorage.setItem('shiftsim_lang', 'it');
         Object.defineProperty(window.navigator, 'language', {
             value: 'en-US',
             configurable: true,
@@ -101,7 +106,7 @@ describe('I18nProvider', () => {
 
     it('defaults to pt when no localStorage and unsupported browser language', () => {
         Object.defineProperty(window.navigator, 'language', {
-            value: 'de-DE',
+            value: 'it-IT',
             configurable: true,
             writable: true,
         });
@@ -111,6 +116,16 @@ describe('I18nProvider', () => {
             </I18nProvider>
         );
         expect(getByTestId('lang').textContent).toBe('pt');
+    });
+
+    it('uses saved de language from localStorage', () => {
+        localStorage.setItem('shiftsim_lang', 'de');
+        const { getByTestId } = render(
+            <I18nProvider>
+                <TestConsumer />
+            </I18nProvider>
+        );
+        expect(getByTestId('lang').textContent).toBe('de');
     });
 
     it('throws when useI18n is used outside I18nProvider', () => {

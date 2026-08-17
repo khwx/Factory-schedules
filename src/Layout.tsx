@@ -276,9 +276,9 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                             </div>
 
                             <div className="bg-gray-700 p-4 rounded-lg">
-                                <h4 className="font-semibold mb-2 text-sm">{lang === 'pt' ? 'Idioma' : lang === 'es' ? 'Idioma' : 'Language'}</h4>
+                                <h4 className="font-semibold mb-2 text-sm">{lang === 'pt' ? 'Idioma' : lang === 'es' ? 'Idioma' : lang === 'de' ? 'Sprache' : 'Language'}</h4>
                                 <p className="text-xs text-gray-400 mb-3">
-                                    {lang === 'pt' ? 'Escolha o idioma da aplicacao.' : lang === 'es' ? 'Elige el idioma de la aplicacion.' : 'Choose the application language.'}
+                                    {lang === 'pt' ? 'Escolha o idioma da aplicacao.' : lang === 'es' ? 'Elige el idioma de la aplicacion.' : lang === 'de' ? 'Wählen Sie die Sprache der Anwendung.' : 'Choose the application language.'}
                                 </p>
                                     <div className="flex gap-2 flex-wrap">
                                         <button
@@ -308,6 +308,13 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                                         >
                                             <Globe className="w-4 h-4" />
                                             Français
+                                        </button>
+                                        <button
+                                            onClick={() => setLang('de')}
+                                            className={`flex-1 px-3 py-2 rounded text-sm transition-colors flex items-center justify-center gap-2 ${lang === 'de' ? 'bg-blue-600 text-white' : 'bg-gray-600 text-gray-300 hover:bg-gray-500'}`}
+                                        >
+                                            <Globe className="w-4 h-4" />
+                                            Deutsch
                                         </button>
                                     </div>
                             </div>
