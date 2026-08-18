@@ -243,6 +243,15 @@ export const pt = {
     valDifferent: 'Diferente',
     selectTwo: 'Selecione dois cenarios para comparar.',
   },
+  dashboardStats: {
+    scenarios: 'Cenarios',
+    totalTeams: 'Total Equipas',
+    avgHours: 'Media Horas',
+    avgWeekends: 'Media FDS',
+    avgOffDays: 'Media Folgas',
+    nightShifts: 'Turnos Noite',
+    fridaysOff: 'Sextas Livres',
+  },
 };
 
 export type Translations = typeof pt;

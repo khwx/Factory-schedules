@@ -9,7 +9,7 @@ interface DashboardStatsProps {
 }
 
 const DashboardStats: React.FC<DashboardStatsProps> = ({ scenarios }) => {
-    const { lang } = useI18n();
+    const { t } = useI18n();
 
     const stats = useMemo(() => {
         if (scenarios.length === 0) return null;
@@ -48,49 +48,49 @@ const DashboardStats: React.FC<DashboardStatsProps> = ({ scenarios }) => {
             <div className="bg-gray-800 rounded-lg border border-gray-700 p-3">
                 <div className="flex items-center gap-2 text-gray-400 mb-1">
                     <Users className="w-3.5 h-3.5" />
-                    <span className="text-xs">{lang === 'pt' ? 'Cenarios' : 'Scenarios'}</span>
+                    <span className="text-xs">{t.dashboardStats.scenarios}</span>
                 </div>
                 <p className="text-xl font-bold text-white">{stats.totalScenarios}</p>
             </div>
             <div className="bg-gray-800 rounded-lg border border-gray-700 p-3">
                 <div className="flex items-center gap-2 text-gray-400 mb-1">
                     <Users className="w-3.5 h-3.5" />
-                    <span className="text-xs">{lang === 'pt' ? 'Total Equipas' : 'Total Teams'}</span>
+                    <span className="text-xs">{t.dashboardStats.totalTeams}</span>
                 </div>
                 <p className="text-xl font-bold text-white">{stats.totalTeams}</p>
             </div>
             <div className="bg-gray-800 rounded-lg border border-gray-700 p-3">
                 <div className="flex items-center gap-2 text-gray-400 mb-1">
                     <Clock className="w-3.5 h-3.5" />
-                    <span className="text-xs">{lang === 'pt' ? 'Media Horas' : 'Avg Hours'}</span>
+                    <span className="text-xs">{t.dashboardStats.avgHours}</span>
                 </div>
                 <p className="text-xl font-bold text-white">{stats.avgHours.toFixed(1)}h</p>
             </div>
             <div className="bg-gray-800 rounded-lg border border-gray-700 p-3">
                 <div className="flex items-center gap-2 text-gray-400 mb-1">
                     <Calendar className="w-3.5 h-3.5" />
-                    <span className="text-xs">{lang === 'pt' ? 'Media FDS' : 'Avg Weekends'}</span>
+                    <span className="text-xs">{t.dashboardStats.avgWeekends}</span>
                 </div>
                 <p className="text-xl font-bold text-green-400">{stats.avgWeekends.toFixed(0)}</p>
             </div>
             <div className="bg-gray-800 rounded-lg border border-gray-700 p-3">
                 <div className="flex items-center gap-2 text-gray-400 mb-1">
                     <Palmtree className="w-3.5 h-3.5" />
-                    <span className="text-xs">{lang === 'pt' ? 'Media Folgas' : 'Avg Off Days'}</span>
+                    <span className="text-xs">{t.dashboardStats.avgOffDays}</span>
                 </div>
                 <p className="text-xl font-bold text-green-400">{stats.avgOffDays.toFixed(0)}</p>
             </div>
             <div className="bg-gray-800 rounded-lg border border-gray-700 p-3">
                 <div className="flex items-center gap-2 text-gray-400 mb-1">
                     <Moon className="w-3.5 h-3.5" />
-                    <span className="text-xs">{lang === 'pt' ? 'Turnos Noite' : 'Night Shifts'}</span>
+                    <span className="text-xs">{t.dashboardStats.nightShifts}</span>
                 </div>
                 <p className="text-xl font-bold text-purple-400">{stats.totalNightShifts}</p>
             </div>
             <div className="bg-gray-800 rounded-lg border border-gray-700 p-3">
                 <div className="flex items-center gap-2 text-gray-400 mb-1">
                     <Coffee className="w-3.5 h-3.5" />
-                    <span className="text-xs">{lang === 'pt' ? 'Sextas Livres' : 'Fridays Off'}</span>
+                    <span className="text-xs">{t.dashboardStats.fridaysOff}</span>
                 </div>
                 <p className="text-xl font-bold text-pink-400">{stats.avgFridayNights.toFixed(0)}</p>
             </div>

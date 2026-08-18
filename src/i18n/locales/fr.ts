@@ -245,4 +245,13 @@ export const fr: Translations = {
     valDifferent: 'Different',
     selectTwo: 'Sélectionnez deux scénarios à comparer.',
   },
+  dashboardStats: {
+    scenarios: 'Scénarios',
+    totalTeams: 'Total Équipes',
+    avgHours: 'Moy. Heures',
+    avgWeekends: 'Moy. Week-ends',
+    avgOffDays: 'Moy. Jours Repos',
+    nightShifts: 'Tours de Nuit',
+    fridaysOff: 'Vendredis Libres',
+  },
 };

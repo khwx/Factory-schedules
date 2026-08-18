@@ -2,6 +2,19 @@
 
 Log de execuções autónomas do Bot Orquestrador (modelos free: `opencode/hy3-free`).
 
+## Round 46 — 2026-08-18
+**Objetivo:** Migrar as strings hardcoded de `DashboardStats.tsx` para o sistema i18n, corrigindo simultaneamente a secção `dashboardStats` em falta em `de.ts` (que quebrava o `tsc -b`).
+
+**Contexto:** O `pt.ts`/`en.ts`/`es.ts`/`fr.ts` já continham a secção `dashboardStats` (7 chaves), mas `de.ts` não a incluía, provocando erro `TS2741` e falha no `tsc -b`. A componente `DashboardStats.tsx` ainda usava ternários `lang === 'pt' ? ... : ...`, só com fallback para Inglês, ignorando `es`/`fr`/`de`.
+
+**O que foi feito:**
+- **`src/i18n/locales/de.ts`:** adicionada a secção `dashboardStats` (7 chaves: scenarios, totalTeams, avgHours, avgWeekends, avgOffDays, nightShifts, fridaysOff) com tradução para Alemão — restaurando a paridade de chaves com `pt` e eliminando o erro `TS2741`.
+- **`src/components/DashboardStats.tsx`:** migradas as 7 strings hardcoded para `t.dashboardStats.*`. O componente passa a usar `t` em vez de `lang` (via `useI18n`), preservando a paridade de keys para todas as línguas.
+
+**Verificação:** `tsc -b` passa (exit 0); `vitest` → **591 passam**, **0 falham** (incluindo os testes de paridade `de`/`es`/`fr` e os testes de `DashboardStats` que esperam strings em `pt`); `eslint` sem erros (apenas warnings pré-existentes).
+
+**Decisão registada:** O patrão de migração (chaves em 5 línguas + reutilização de `t.*` no componente) continua validado. Próximos passos (ver `TODO.md`): migrar `ImportPreview.tsx`, `ScenarioForm.tsx`, `Layout.tsx` (toasts duplicados) e `ICSImporter.tsx`.
+
 ## Round 45 — 2026-08-18
 **Objetivo:** Iniciar a migração das strings hardcoded (`lang === 'pt' ? 'PT' : 'EN'`) para o sistema i18n, começando por `ScheduleDiff.tsx`, e criar o `TODO.md` com o plano de migração pendente.
 

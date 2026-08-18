@@ -245,4 +245,13 @@ export const de: Translations = {
     valDifferent: 'Unterschiedlich',
     selectTwo: 'Wählen Sie zwei Szenarien zum Vergleichen.',
   },
+  dashboardStats: {
+    scenarios: 'Szenarien',
+    totalTeams: 'Gesamte Teams',
+    avgHours: 'Durchschnitt Std.',
+    avgWeekends: 'Durchschnitt Wochenenden',
+    avgOffDays: 'Durchschnitt Freie Tage',
+    nightShifts: 'Nachtschichten',
+    fridaysOff: 'Freie Freitage',
+  },
 };

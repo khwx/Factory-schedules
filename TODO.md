@@ -11,7 +11,7 @@ quebrando a experiência para `es`/`fr`/`de`. Cada item abaixo deve:
 
 ### Ficheiros pendentes (por ordem sugerida)
 - [x] `src/components/ScheduleDiff.tsx` — concluído (secção `scheduleDiff` + reuso `calendar.*`)
-- [ ] `src/components/DashboardStats.tsx` — labels: Scenarios, Total Teams, Avg Hours, Avg Weekends, Avg Off Days, Night Shifts, Fridays Off
+- [x] `src/components/DashboardStats.tsx` — concluído (secção `dashboardStats` + uso `t.dashboardStats.*`)
 - [ ] `src/components/ImportPreview.tsx` — título, total, valid/invalid, noScenarios, selectAllValid, cancel, import N
 - [ ] `src/components/ScenarioForm.tsx` — Description (optional), placeholder notes
 - [ ] `src/Layout.tsx` — toasts de backup/restore/holiday já têm chaves `header.*` duplicadas em hardcoded; migrar para `t.header.*`
