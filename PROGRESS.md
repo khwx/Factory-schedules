@@ -2,6 +2,22 @@
 
 Log de execuções autónomas do Bot Orquestrador (modelos free: `opencode/hy3-free`).
 
+## Round 44 — 2026-08-18
+**Objetivo:** Corrigir a paridade de traduções dos ficheiros de locale (en/es/fr/de) que estavam incompletos face a `pt`, quebrando o `tsc -b`.
+
+**Contexto:** O `tsc -b` falhava com erros `TS2740` porque `en`, `es`, `fr` e `de` (tipados como `Translations = typeof pt`) não continham 103 chaves presentes em `pt` — nomeadamente as chaves extra de `header`/`dashboard` e as secções inteiras `settings` e `icsImporter`. Sem isto, qualquer língua não-Portuguesa quebrasse a compilação.
+
+**O que foi feito:**
+- **`src/i18n/locales/en.ts`:** adicionadas as 103 chaves em falta (header extra, dashboard extra, secção `settings` completa, secção `icsImporter` completa) com traduções para Inglês.
+- **`src/i18n/locales/es.ts`:** adicionadas as 103 chaves em falta com traduções para Espanhol.
+- **`src/i18n/locales/fr.ts`:** adicionadas as 103 chaves em falta com traduções para Francês.
+- **`src/i18n/locales/de.ts`:** adicionadas as 103 chaves em falta com traduções para Alemão.
+
+**Verificação:** `tsc -b` passa (exit 0) — erros `TS2740` eliminados; `eslint` sem erros (apenas warnings pré-existentes); `vitest` → **591 passam**, **0 falham** (os testes de paridade `de`/`es`/`fr` contra `pt` continuam a passar).
+
+**Decisão registada:** A paridade de locale (5 línguas × 220 chaves) está agora restaurada. Mantém-se pendente: (1) migrar as restantes strings hardcoded fora do sistema i18n para usar `t.*` (ex.: `lang === 'pt' ? 'PT' : 'EN'`, labels de gráficos, mensagens de erro do `ICSImporter`); (2) traduzir essas strings para `es`/`de`/`fr` para consistência total; (3) `ICSImporter.drop/jsdom` se ainda falhar.
+
+
 ## Round 43 — 2026-08-17
 **Objetivo:** Adicionar a língua Alemã (`Deutsch / de`), a próxima candidata pendente do Round 42.
 
