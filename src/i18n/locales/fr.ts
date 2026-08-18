@@ -232,4 +232,17 @@ export const fr: Translations = {
     parseError: 'Erreur d\'analyse : {msg}',
     unknownParseError: 'Erreur inconnue lors de l\'analyse du fichier ICS',
   },
+  scheduleDiff: {
+    title: 'Comparaison de Motifs',
+    selectA: 'Sélectionner scénario A',
+    selectB: 'Sélectionner scénario B',
+    days: 'jours',
+    same: 'identiques',
+    different: 'differents',
+    day: 'Jour',
+    colSame: 'Identique',
+    valEqual: 'Identique',
+    valDifferent: 'Different',
+    selectTwo: 'Sélectionnez deux scénarios à comparer.',
+  },
 };

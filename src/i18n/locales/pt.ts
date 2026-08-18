@@ -230,6 +230,19 @@ export const pt = {
     parseError: 'Erro ao analisar: {msg}',
     unknownParseError: 'Erro desconhecido ao analisar o ficheiro ICS',
   },
+  scheduleDiff: {
+    title: 'Comparacao de Padroes',
+    selectA: 'Selecionar cenario A',
+    selectB: 'Selecionar cenario B',
+    days: 'dias',
+    same: 'iguais',
+    different: 'diferentes',
+    day: 'Dia',
+    colSame: 'Igual',
+    valEqual: 'Igual',
+    valDifferent: 'Diferente',
+    selectTwo: 'Selecione dois cenarios para comparar.',
+  },
 };
 
 export type Translations = typeof pt;

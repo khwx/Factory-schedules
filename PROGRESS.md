@@ -2,6 +2,21 @@
 
 Log de execuções autónomas do Bot Orquestrador (modelos free: `opencode/hy3-free`).
 
+## Round 45 — 2026-08-18
+**Objetivo:** Iniciar a migração das strings hardcoded (`lang === 'pt' ? 'PT' : 'EN'`) para o sistema i18n, começando por `ScheduleDiff.tsx`, e criar o `TODO.md` com o plano de migração pendente.
+
+**Contexto:** O Round 44 deixou pendente migrar as strings hardcoded fora do i18n. Múltiplos componentes ainda usam ternários `lang === 'pt' ? ... : ...` que só fazem fallback para Inglês, quebrando a experiência em `es`/`fr`/`de`. Foi criado `TODO.md` a listar todos os ficheiros pendentes e o plano de trabalho.
+
+**O que foi feito:**
+- **`src/components/ScheduleDiff.tsx`:** todas as strings hardcoded migradas para `t.scheduleDiff.*`. Os rótulos de turno (`M/T/N/F`) passam a reutilizar as chaves já existentes `t.calendar.morning/afternoon/night/off` (evitando duplicação). O componente já não depende de `lang`, só de `t`.
+- **`src/i18n/locales/pt.ts`:** nova secção `scheduleDiff` (10 chaves: title, selectA, selectB, days, same, different, day, colSame, valEqual, valDifferent, selectTwo).
+- **`src/i18n/locales/en.ts`, `es.ts`, `fr.ts`, `de.ts`:** mesma secção `scheduleDiff` adicionada (paridade de chaves mantida — requisito dos testes de paridade e do `tsc`).
+- **`TODO.md` (novo):** lista as melhorias pendentes, com foco na migração i18n ficheiro-a-ficheiro, na tradução das strings e na estabilização do `ICSImporter` em jsdom.
+
+**Verificação:** `tsc -b` passa (exit 0); `vitest` → **591 passam**, **0 falham** (incluindo os 22 testes de i18n/paridade); `eslint` sem erros (apenas warnings pré-existentes).
+
+**Decisão registada:** O padrão de migração está estabelecido e validado. Próximos passos (ver `TODO.md`): migrar `DashboardStats.tsx`, `ImportPreview.tsx`, `ScenarioForm.tsx`, `Layout.tsx` (toasts duplicados) e `ICSImporter.tsx`, adicionando sempre as chaves às 5 línguas.
+
 ## Round 44 — 2026-08-18
 **Objetivo:** Corrigir a paridade de traduções dos ficheiros de locale (en/es/fr/de) que estavam incompletos face a `pt`, quebrando o `tsc -b`.
 

@@ -232,4 +232,17 @@ export const es: Translations = {
     parseError: 'Error al analizar: {msg}',
     unknownParseError: 'Error desconocido al analizar el archivo ICS',
   },
+  scheduleDiff: {
+    title: 'Comparacion de Patrones',
+    selectA: 'Seleccionar escenario A',
+    selectB: 'Seleccionar escenario B',
+    days: 'dias',
+    same: 'iguales',
+    different: 'diferentes',
+    day: 'Dia',
+    colSame: 'Igual',
+    valEqual: 'Igual',
+    valDifferent: 'Diferente',
+    selectTwo: 'Seleccione dos escenarios para comparar.',
+  },
 };

@@ -232,4 +232,17 @@ export const en: Translations = {
     parseError: 'Error parsing: {msg}',
     unknownParseError: 'Unknown error parsing the ICS file',
   },
+  scheduleDiff: {
+    title: 'Pattern Comparison',
+    selectA: 'Select scenario A',
+    selectB: 'Select scenario B',
+    days: 'days',
+    same: 'same',
+    different: 'different',
+    day: 'Day',
+    colSame: 'Same',
+    valEqual: 'Same',
+    valDifferent: 'Different',
+    selectTwo: 'Select two scenarios to compare.',
+  },
 };

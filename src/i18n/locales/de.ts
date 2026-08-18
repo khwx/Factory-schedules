@@ -232,4 +232,17 @@ export const de: Translations = {
     parseError: 'Fehler beim Parsen: {msg}',
     unknownParseError: 'Unbekannter Fehler beim Parsen der ICS-Datei',
   },
+  scheduleDiff: {
+    title: 'Mustervergleich',
+    selectA: 'Szenario A auswählen',
+    selectB: 'Szenario B auswählen',
+    days: 'Tage',
+    same: 'gleich',
+    different: 'unterschiedlich',
+    day: 'Tag',
+    colSame: 'Gleich',
+    valEqual: 'Gleich',
+    valDifferent: 'Unterschiedlich',
+    selectTwo: 'Wählen Sie zwei Szenarien zum Vergleichen.',
+  },
 };

@@ -15,7 +15,7 @@ interface DiffResult {
 }
 
 const ScheduleDiff: React.FC<ScheduleDiffProps> = ({ scenarios }) => {
-    const { lang } = useI18n();
+    const { t } = useI18n();
     const [selectedA, setSelectedA] = useState<string>('');
     const [selectedB, setSelectedB] = useState<string>('');
     const [maxDays, setMaxDays] = useState(28);
@@ -55,10 +55,10 @@ const ScheduleDiff: React.FC<ScheduleDiffProps> = ({ scenarios }) => {
 
     const getShiftLabel = (char: string) => {
         switch (char) {
-            case 'M': return lang === 'pt' ? 'Manha' : 'Morning';
-            case 'T': return lang === 'pt' ? 'Tarde' : 'Afternoon';
-            case 'N': return lang === 'pt' ? 'Noite' : 'Night';
-            case 'F': return lang === 'pt' ? 'Folga' : 'Off';
+            case 'M': return t.calendar.morning;
+            case 'T': return t.calendar.afternoon;
+            case 'N': return t.calendar.night;
+            case 'F': return t.calendar.off;
             default: return '?';
         }
     };
@@ -67,7 +67,7 @@ const ScheduleDiff: React.FC<ScheduleDiffProps> = ({ scenarios }) => {
         <div className="bg-gray-800 rounded-lg border border-gray-700 p-4">
             <h3 className="text-white font-semibold mb-4 flex items-center gap-2">
                 <GitCompareArrows className="w-5 h-5 text-blue-400" />
-                {lang === 'pt' ? 'Comparacao de Padroes' : 'Pattern Comparison'}
+                {t.scheduleDiff.title}
             </h3>
 
             <div className="flex flex-col md:flex-row gap-4 mb-4">
@@ -76,7 +76,7 @@ const ScheduleDiff: React.FC<ScheduleDiffProps> = ({ scenarios }) => {
                     onChange={e => setSelectedA(e.target.value)}
                     className="flex-1 bg-gray-700 border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-blue-500"
                 >
-                    <option value="">{lang === 'pt' ? 'Selecionar cenario A' : 'Select scenario A'}</option>
+                    <option value="">{t.scheduleDiff.selectA}</option>
                     {scenarios.map(s => (
                         <option key={s.id} value={s.id}>{s.name}</option>
                     ))}
@@ -91,7 +91,7 @@ const ScheduleDiff: React.FC<ScheduleDiffProps> = ({ scenarios }) => {
                     onChange={e => setSelectedB(e.target.value)}
                     className="flex-1 bg-gray-700 border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-blue-500"
                 >
-                    <option value="">{lang === 'pt' ? 'Selecionar cenario B' : 'Select scenario B'}</option>
+                    <option value="">{t.scheduleDiff.selectB}</option>
                     {scenarios.map(s => (
                         <option key={s.id} value={s.id}>{s.name}</option>
                     ))}
@@ -103,7 +103,7 @@ const ScheduleDiff: React.FC<ScheduleDiffProps> = ({ scenarios }) => {
                     className="bg-gray-700 border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-blue-500 w-32"
                 >
                     {[7, 14, 21, 28, 30, 60].map(d => (
-                        <option key={d} value={d}>{d} {lang === 'pt' ? 'dias' : 'days'}</option>
+                        <option key={d} value={d}>{d} {t.scheduleDiff.days}</option>
                     ))}
                 </select>
             </div>
@@ -115,13 +115,13 @@ const ScheduleDiff: React.FC<ScheduleDiffProps> = ({ scenarios }) => {
                         <div className="flex items-center gap-2">
                             <span className="w-3 h-3 rounded-full bg-green-500" />
                             <span className="text-sm text-gray-400">
-                                {sameCount} {lang === 'pt' ? 'iguais' : 'same'} ({100 - diffPercentage}%)
+                                {sameCount} {t.scheduleDiff.same} ({100 - diffPercentage}%)
                             </span>
                         </div>
                         <div className="flex items-center gap-2">
                             <span className="w-3 h-3 rounded-full bg-red-500" />
                             <span className="text-sm text-gray-400">
-                                {diffCount} {lang === 'pt' ? 'diferentes' : 'different'} ({diffPercentage}%)
+                                {diffCount} {t.scheduleDiff.different} ({diffPercentage}%)
                             </span>
                         </div>
                     </div>
@@ -167,10 +167,10 @@ const ScheduleDiff: React.FC<ScheduleDiffProps> = ({ scenarios }) => {
                         <table className="w-full text-xs">
                             <thead className="sticky top-0 bg-gray-800">
                                 <tr className="border-b border-gray-700">
-                                    <th className="text-left py-1 px-2 text-gray-400">{lang === 'pt' ? 'Dia' : 'Day'}</th>
+                                    <th className="text-left py-1 px-2 text-gray-400">{t.scheduleDiff.day}</th>
                                     <th className="text-center py-1 px-2 text-gray-400">{scenarioA.name}</th>
                                     <th className="text-center py-1 px-2 text-gray-400">{scenarioB.name}</th>
-                                    <th className="text-center py-1 px-2 text-gray-400">{lang === 'pt' ? 'Igual' : 'Same'}</th>
+                                    <th className="text-center py-1 px-2 text-gray-400">{t.scheduleDiff.colSame}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -189,9 +189,9 @@ const ScheduleDiff: React.FC<ScheduleDiffProps> = ({ scenarios }) => {
                                         </td>
                                         <td className="py-1 px-2 text-center">
                                             {d.isDifferent ? (
-                                                <span className="text-red-400">Diferente</span>
+                                                <span className="text-red-400">{t.scheduleDiff.valDifferent}</span>
                                             ) : (
-                                                <span className="text-green-400">Igual</span>
+                                                <span className="text-green-400">{t.scheduleDiff.valEqual}</span>
                                             )}
                                         </td>
                                     </tr>
@@ -202,7 +202,7 @@ const ScheduleDiff: React.FC<ScheduleDiffProps> = ({ scenarios }) => {
                 </>
             ) : (
                 <p className="text-gray-500 text-center py-6">
-                    {lang === 'pt' ? 'Selecione dois cenarios para comparar.' : 'Select two scenarios to compare.'}
+                    {t.scheduleDiff.selectTwo}
                 </p>
             )}
         </div>
