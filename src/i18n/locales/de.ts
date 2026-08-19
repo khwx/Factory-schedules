@@ -113,6 +113,8 @@ export const de: Translations = {
     patternHelp: 'Geben Sie die Schichtfolge für EIN Team ein. Verwenden Sie M (Morgen), T (Nachmittag), N (Nacht), F (Frei). Beispiel: MM TT NN FFFF',
     placeholderName: 'z. B.: 4 Teams - Continental',
     placeholderPattern: 'z. B.: MM TT NN FFFF',
+    description: 'Beschreibung (optional)',
+    placeholderNotes: 'Notizen zu diesem Szenario...',
     errorInvalidChars: 'Nur M (Morgen), T (Nachmittag), N (Nacht) und F (Frei) sind erlaubt',
     errorTooShort: 'Muster zu kurz (Minimum 5 Zeichen)',
     errorTooLong: 'Muster zu lang (Maximum 60 Zeichen)',

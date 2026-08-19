@@ -113,6 +113,8 @@ export const es: Translations = {
     patternHelp: 'Introduce la secuencia de turnos para UN equipo. Usa M (Mañana), T (Tarde), N (Noche), F (Libre). Ejemplo: MM TT NN FFFF',
     placeholderName: 'ej.: 4 Equipos - Continental',
     placeholderPattern: 'ej.: MM TT NN FFFF',
+    description: 'Descripcion (opcional)',
+    placeholderNotes: 'Notas sobre este escenario...',
     errorInvalidChars: 'Solo se permiten M (Mañana), T (Tarde), N (Noche) y F (Libre)',
     errorTooShort: 'Patrón demasiado corto (mínimo 5 caracteres)',
     errorTooLong: 'Patrón demasiado largo (máximo 60 caracteres)',

@@ -113,6 +113,8 @@ export const en: Translations = {
     patternHelp: 'Enter the shift sequence for ONE team. Use M (Morning), T (Afternoon), N (Night), F (Off). Example: MM TT NN FFFF',
     placeholderName: 'e.g.: 4 Teams - Continental',
     placeholderPattern: 'e.g.: MM TT NN FFFF',
+    description: 'Description (optional)',
+    placeholderNotes: 'Notes about this scenario...',
     errorInvalidChars: 'Only M (Morning), T (Afternoon), N (Night) and F (Off) are allowed',
     errorTooShort: 'Pattern too short (minimum 5 characters)',
     errorTooLong: 'Pattern too long (maximum 60 characters)',

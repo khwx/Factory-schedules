@@ -113,6 +113,8 @@ export const fr: Translations = {
     patternHelp: 'Entrez la séquence pour UNE équipe. Utilisez M (Matin), T (Après-midi), N (Nuit), F (Repos). Ex : MM TT NN FFFF',
     placeholderName: 'ex : 4 Équipes - Continental',
     placeholderPattern: 'ex : MM TT NN FFFF',
+    description: 'Description (optionnelle)',
+    placeholderNotes: 'Notes sur ce scenario...',
     errorInvalidChars: 'Seuls M (Matin), T (Après-midi), N (Nuit) et F (Repos) sont autorisés',
     errorTooShort: 'Modèle trop court (minimum 5 caractères)',
     errorTooLong: 'Modèle trop long (maximum 60 caractères)',

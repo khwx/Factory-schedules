@@ -111,6 +111,8 @@ export const pt = {
     patternHelp: 'Insira a sequencia de turnos para UMA equipa. Use M (Manha), T (Tarde), N (Noite), F (Folga). Exemplo: MM TT NN FFFF',
     placeholderName: 'ex: 4 Equipas - Continental',
     placeholderPattern: 'ex: MM TT NN FFFF',
+    description: 'Descricao (opcional)',
+    placeholderNotes: 'Notas sobre este cenario...',
     errorInvalidChars: 'Apenas M (Manha), T (Tarde), N (Noite) e F (Folga) sao permitidos',
     errorTooShort: 'Padrao demasiado curto (minimo 5 caracteres)',
     errorTooLong: 'Padrao demasiado longo (maximo 60 caracteres)',

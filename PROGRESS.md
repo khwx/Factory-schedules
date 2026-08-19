@@ -2,6 +2,19 @@
 
 Log de execuções autónomas do Bot Orquestrador (modelos free: `opencode/hy3-free`).
 
+## Round 48 — 2026-08-19
+**Objetivo:** Migrar as strings hardcoded de `ScenarioForm.tsx` (label da descrição e placeholder das notas) para o sistema i18n (secção `form`), mantendo a paridade de chaves em 5 línguas.
+
+**Contexto:** `ScenarioForm.tsx` usava ternários `lang === 'pt' ? ... : ...` (fallback EN) para a label "Descricao (opcional)" e o placeholder "Notas sobre este cenario...", quebrando a experiência em `es`/`fr`/`de`. O componente já usava `t.form.*` noutros campos; esta migração completa a secção `form` no formulário.
+
+**O que foi feito:**
+- **`src/i18n/locales/{pt,en,es,fr,de}.ts`:** adicionadas as chaves `description` e `placeholderNotes` à secção `form` com tradução para as 5 línguas — mantendo a paridade de chaves.
+- **`src/components/ScenarioForm.tsx`:** substituídos os 2 ternários por `t.form.description` e `t.form.placeholderNotes`. Removido o `lang` não utilizado do `useI18n` (agora só `t`).
+
+**Verificação:** `tsc -b` passa (exit 0); `vitest` → **591 passam**, **0 falham**; `eslint` sem erros.
+
+**Decisão registada:** O padrão de migração continua validado. Próximos passos (ver `TODO.md`): `Layout.tsx` (toasts duplicados), `ICSImporter.tsx` e auditar os restantes componentes.
+
 ## Round 47 — 2026-08-19
 **Objetivo:** Migrar as strings hardcoded de `ImportPreview.tsx` para o sistema i18n (secção `importPreview`), mantendo a paridade de chaves em 5 línguas e os testes de `parseImportData` intactos.
 
