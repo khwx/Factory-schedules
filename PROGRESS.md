@@ -2,6 +2,19 @@
 
 Log de execuções autónomas do Bot Orquestrador (modelos free: `opencode/hy3-free`).
 
+## Round 47 — 2026-08-19
+**Objetivo:** Migrar as strings hardcoded de `ImportPreview.tsx` para o sistema i18n (secção `importPreview`), mantendo a paridade de chaves em 5 línguas e os testes de `parseImportData` intactos.
+
+**Contexto:** `ImportPreview.tsx` usava ternários `lang === 'pt' ? ... : ...` (fallback EN) para o título, total, valid/invalid, noScenarios, selectAllValid, cancel e o botão de importação — quebrando a experiência em `es`/`fr`/`de`. Os testes de `parseImportData` continuam a validar as mensagens de erro de validação (que permanecem em PT, fora do âmbito desta tarefa).
+
+**O que foi feito:**
+- **`src/i18n/locales/{pt,en,es,fr,de}.ts`:** nova secção `importPreview` (8 chaves: title, total, valid, invalid, noScenarios, selectAllValid, cancel, import) com tradução para as 5 línguas — mantendo a paridade de chaves (requisito de `tsc` e dos testes de paridade).
+- **`src/components/ImportPreview.tsx`:** substituídos todos os 7 ternários por `t.importPreview.*`. O componente passa a usar `t` (em vez de `lang`). O botão de importação usa `t.importPreview.import.replace('{count}', String(selected.size))`, mantendo o plural correto por idioma.
+
+**Verificação:** `tsc -b` passa (exit 0); `vitest` → **591 passam**, **0 falham** (incluindo `ImportPreview.test.tsx` e os testes de paridade `de`/`es`/`fr`); `eslint` sem erros (apenas warnings pré-existentes).
+
+**Decisão registada:** O padrão de migração (chaves em 5 línguas + reutilização de `t.*`) continua validado. Próximos passos (ver `TODO.md`): migrar `ScenarioForm.tsx`, `Layout.tsx` (toasts duplicados), `ICSImporter.tsx` e auditar os restantes componentes.
+
 ## Round 46 — 2026-08-18
 **Objetivo:** Migrar as strings hardcoded de `DashboardStats.tsx` para o sistema i18n, corrigindo simultaneamente a secção `dashboardStats` em falta em `de.ts` (que quebrava o `tsc -b`).
 

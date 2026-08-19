@@ -89,7 +89,7 @@ function parseImportData(data: unknown): ParsedScenario[] {
 }
 
 const ImportPreview: React.FC<ImportPreviewProps> = ({ scenarios, onConfirm, onCancel }) => {
-    const { lang } = useI18n();
+    const { t } = useI18n();
     const [selected, setSelected] = useState<Set<number>>(
         () => new Set(scenarios.map((_, i) => i).filter(i => scenarios[i].isValid))
     );
@@ -127,7 +127,7 @@ const ImportPreview: React.FC<ImportPreviewProps> = ({ scenarios, onConfirm, onC
             <div className="bg-gray-800 border border-gray-700 rounded-xl max-w-3xl w-full max-h-[85vh] flex flex-col shadow-2xl">
                 <div className="p-4 border-b border-gray-700 flex justify-between items-center">
                     <h3 className="text-lg font-semibold text-white">
-                        {lang === 'pt' ? 'Pre-visualizacao de Importacao' : 'Import Preview'}
+                        {t.importPreview.title}
                     </h3>
                     <button onClick={onCancel} className="text-gray-400 hover:text-white" aria-label="Fechar">
                         <X className="w-5 h-5" />
@@ -136,18 +136,18 @@ const ImportPreview: React.FC<ImportPreviewProps> = ({ scenarios, onConfirm, onC
 
                 <div className="p-4 border-b border-gray-700 bg-gray-750 flex gap-4 text-sm">
                     <span className="text-gray-300">
-                        {lang === 'pt' ? 'Total:' : 'Total:'} <strong className="text-white">{scenarios.length}</strong>
+                        {t.importPreview.total} <strong className="text-white">{scenarios.length}</strong>
                     </span>
                     {validCount > 0 && (
                         <span className="text-green-400 flex items-center gap-1">
                             <CheckCircle className="w-4 h-4" />
-                            {validCount} {lang === 'pt' ? 'validos' : 'valid'}
+                            {validCount} {t.importPreview.valid}
                         </span>
                     )}
                     {invalidCount > 0 && (
                         <span className="text-red-400 flex items-center gap-1">
                             <AlertTriangle className="w-4 h-4" />
-                            {invalidCount} {lang === 'pt' ? 'invalidos' : 'invalid'}
+                            {invalidCount} {t.importPreview.invalid}
                         </span>
                     )}
                 </div>
@@ -155,7 +155,7 @@ const ImportPreview: React.FC<ImportPreviewProps> = ({ scenarios, onConfirm, onC
                 <div className="flex-1 overflow-auto p-4">
                     {scenarios.length === 0 ? (
                         <p className="text-gray-500 text-center py-8">
-                            {lang === 'pt' ? 'Nenhum cenario encontrado no ficheiro.' : 'No scenarios found in file.'}
+                            {t.importPreview.noScenarios}
                         </p>
                     ) : (
                         <>
@@ -165,10 +165,10 @@ const ImportPreview: React.FC<ImportPreviewProps> = ({ scenarios, onConfirm, onC
                                     checked={selected.size === validCount && validCount > 0}
                                     onChange={toggleAll}
                                     className="rounded border-gray-600 bg-gray-700 text-blue-500 focus:ring-blue-500"
-                                    aria-label={lang === 'pt' ? 'Selecionar todos validos' : 'Select all valid'}
+                                    aria-label={t.importPreview.selectAllValid}
                                 />
                                 <span className="text-sm text-gray-400">
-                                    {lang === 'pt' ? 'Selecionar todos validos' : 'Select all valid'}
+                                    {t.importPreview.selectAllValid}
                                 </span>
                             </div>
 
@@ -234,7 +234,7 @@ const ImportPreview: React.FC<ImportPreviewProps> = ({ scenarios, onConfirm, onC
                         onClick={onCancel}
                         className="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-colors text-sm"
                     >
-                        {lang === 'pt' ? 'Cancelar' : 'Cancel'}
+                        {t.importPreview.cancel}
                     </button>
                     <button
                         onClick={handleConfirm}
@@ -242,7 +242,7 @@ const ImportPreview: React.FC<ImportPreviewProps> = ({ scenarios, onConfirm, onC
                         className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors text-sm flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                         <Download className="w-4 h-4" />
-                        {lang === 'pt' ? `Importar ${selected.size} cenario${selected.size !== 1 ? 's' : ''}` : `Import ${selected.size} scenario${selected.size !== 1 ? 's' : ''}`}
+                        {t.importPreview.import.replace('{count}', String(selected.size))}
                     </button>
                 </div>
             </div>

@@ -254,4 +254,14 @@ export const es: Translations = {
     nightShifts: 'Turnos Noche',
     fridaysOff: 'Viernes Libres',
   },
+  importPreview: {
+    title: 'Vista Previa de Importacion',
+    total: 'Total:',
+    valid: 'validos',
+    invalid: 'invalidos',
+    noScenarios: 'No se encontraron escenarios en el archivo.',
+    selectAllValid: 'Seleccionar todos los validos',
+    cancel: 'Cancelar',
+    import: 'Importar {count} escenario(s)',
+  },
 };

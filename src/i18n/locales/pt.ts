@@ -252,6 +252,16 @@ export const pt = {
     nightShifts: 'Turnos Noite',
     fridaysOff: 'Sextas Livres',
   },
+  importPreview: {
+    title: 'Pre-visualizacao de Importacao',
+    total: 'Total:',
+    valid: 'validos',
+    invalid: 'invalidos',
+    noScenarios: 'Nenhum cenario encontrado no ficheiro.',
+    selectAllValid: 'Selecionar todos validos',
+    cancel: 'Cancelar',
+    import: 'Importar {count} cenario(s)',
+  },
 };
 
 export type Translations = typeof pt;

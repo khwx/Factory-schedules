@@ -254,4 +254,14 @@ export const en: Translations = {
     nightShifts: 'Night Shifts',
     fridaysOff: 'Fridays Off',
   },
+  importPreview: {
+    title: 'Import Preview',
+    total: 'Total:',
+    valid: 'valid',
+    invalid: 'invalid',
+    noScenarios: 'No scenarios found in file.',
+    selectAllValid: 'Select all valid',
+    cancel: 'Cancel',
+    import: 'Import {count} scenario(s)',
+  },
 };

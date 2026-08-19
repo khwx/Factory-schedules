@@ -12,7 +12,7 @@ quebrando a experiência para `es`/`fr`/`de`. Cada item abaixo deve:
 ### Ficheiros pendentes (por ordem sugerida)
 - [x] `src/components/ScheduleDiff.tsx` — concluído (secção `scheduleDiff` + reuso `calendar.*`)
 - [x] `src/components/DashboardStats.tsx` — concluído (secção `dashboardStats` + uso `t.dashboardStats.*`)
-- [ ] `src/components/ImportPreview.tsx` — título, total, valid/invalid, noScenarios, selectAllValid, cancel, import N
+- [x] `src/components/ImportPreview.tsx` — concluído (secção `importPreview` em 5 línguas + uso `t.importPreview.*`)
 - [ ] `src/components/ScenarioForm.tsx` — Description (optional), placeholder notes
 - [ ] `src/Layout.tsx` — toasts de backup/restore/holiday já têm chaves `header.*` duplicadas em hardcoded; migrar para `t.header.*`
 - [ ] `src/components/ICSImporter.tsx` — mensagens de erro hardcoded (ver pendência #3)
