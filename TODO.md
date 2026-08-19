@@ -14,8 +14,8 @@ quebrando a experiência para `es`/`fr`/`de`. Cada item abaixo deve:
 - [x] `src/components/DashboardStats.tsx` — concluído (secção `dashboardStats` + uso `t.dashboardStats.*`)
 - [x] `src/components/ImportPreview.tsx` — concluído (secção `importPreview` em 5 línguas + uso `t.importPreview.*`)
 - [x] `src/components/ScenarioForm.tsx` — concluído (secção `form`: description + placeholderNotes em 5 línguas + uso `t.form.*`)
-- [ ] `src/Layout.tsx` — toasts de backup/restore/holiday já têm chaves `header.*` duplicadas em hardcoded; migrar para `t.header.*`
-- [ ] `src/components/ICSImporter.tsx` — mensagens de erro hardcoded (ver pendência #3)
+- [x] `src/Layout.tsx` — toasts de backup/restore/holiday e rótulos de UI migrados para `t.header.*` (chaves já existiam em 5 línguas); falta apenas os nomes dos meses do seletor de feriados (hardcoded PT)
+- [x] `src/components/ICSImporter.tsx` — concluído (secção `icsImporter` em 5 línguas; 4 chaves novas: expandAria, collapseAria, conflictSummaryOk, conflictSummaryConflicts + uso `t.icsImporter.*`; testes envolvidos com `I18nProvider`)
 - [ ] Restantes: `ComparisonCharts`, `WorkloadHeatmap`, `MultiYearAnalysis`, `TeamAnalysis`, etc. (auditoria completa com `grep -rn "lang === " src --include=*.tsx --include=*.ts`)
 
 ## 2. Traduzir as strings migradas
@@ -24,7 +24,7 @@ em todas as línguas, mas revisar qualidade das traduções).
 
 ## 3. ICSImporter — estabilidade em jsdom
 `ICSImporter.drop`/jsdom pode falhar nos testes (`src/components/__tests__/ICSImporter.test.tsx`).
-Investigar e estabilizar (ou marcar com `it.skip` justificado se dependência de ambiente).
+**Resolvido:** os 4 testes de `ICSImporter` passam com `I18nProvider` (Round 50) — 591 passam, 0 falham. Não requer `it.skip`.
 
 ## 4. Cobertura de testes
 - Manter `vitest` → 0 falhas após cada mudança.

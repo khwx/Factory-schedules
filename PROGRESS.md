@@ -2,6 +2,41 @@
 
 Log de execuções autónomas do Bot Orquestrador (modelos free: `opencode/hy3-free`).
 
+## Round 50 — 2026-08-19
+**Objetivo:** Migrar as strings hardcoded de `src/components/ICSImporter.tsx` para o sistema i18n (secção `icsImporter`), mantendo a paridade de chaves em 5 línguas.
+
+**Contexto:** `ICSImporter.tsx` tinha ~30 strings hardcoded em PT (labels, placeholders, aria-labels, mensagens de erro, estados de carregamento, relatório de conflitos, botões) que quebravam a experiência em `es`/`fr`/`de`. A secção `icsImporter` já existia em `pt/en/es/fr/de` (26 chaves), pelo que a maioria das substituições foi puramente de consumo. Foram adicionadas 4 chaves novas (`expandAria`, `collapseAria`, `conflictSummaryOk`, `conflictSummaryConflicts`) a todas as línguas para cobrir aria-labels e o resumo de conflitos.
+
+**O que foi feito:**
+- **`src/i18n/locales/{pt,en,es,fr,de}.ts`:** adicionadas 4 chaves à secção `icsImporter` (`expandAria`, `collapseAria`, `conflictSummaryOk`, `conflictSummaryConflicts`) com tradução para as 5 línguas — mantendo a paridade de chaves.
+- **`src/components/ICSImporter.tsx`:**
+  - Adicionado `import { useI18n } from '../i18n'` e `const { t } = useI18n();`
+  - Substituídos todos os ~30 literais hardcoded por `t.icsImporter.*`;
+  - `analyzeFile` e `handleFileSelect` passaram a depender de `t` (adicionado a `useCallback` deps);
+  - `getConflictSummary` (utility) substituído por lógica inline usando `t.icsImporter.conflictSummaryOk` / `conflictSummaryConflicts` com `.replace('{count}'...)` / `.replace('{days}'...)` — mantendo o mesmo output em PT;
+  - Removido `getConflictSummary` do import (função e testes preservados no utilitário);
+  - `console.error('Error parsing ICS:', error)` mantido (log, não UI).
+
+**Verificação:** `tsc -b` passa (exit 0); `vitest` → **591 passam**, **0 falham** (incluindo `ICSImporter.test.tsx` com `I18nProvider`); `eslint` 0 erros (37 warnings pré-existentes).
+
+**Decisão registada:** Migração de `ICSImporter.tsx` concluída. Próximos passos (ver `TODO.md`): migrar as restantes páginas com `lang ===` hardcoded (Settings, CostCalculator, AnalyticsDashboard, Comparison, TeamRoster, Reports, ScheduleOptimizer, ScheduleTemplates, HolidayCalendar, WorkforcePlanning, HelpPage).
+
+## Round 49 — 2026-08-19
+**Objetivo:** Migrar as strings hardcoded de `src/Layout.tsx` (toasts de backup/restore/holiday e rótulos de UI) para o sistema i18n (`t.header.*`), removendo os ternários `lang === 'pt' ? ... : ...` (fallback apenas EN).
+
+**Contexto:** `Layout.tsx` duplicava em hardcoded as chaves `header.*` que já existiam (e estavam traduzidas) em `pt/en/es/fr/de` — quebrando a experiência em `es`/`fr`/`de` nos toasts e nos painéis de idioma/feriados. As chaves já existiam em todas as línguas (paridade mantida), pelo que esta tarefa foi puramente de substituição de consumo.
+
+**O que foi feito:**
+- **`src/Layout.tsx`:** substituídos 16 ternários por `t.header.*`:
+  - toasts: `backupSuccess`, `backupError`, `bulkImportNoScenarios`, `bulkImportError`, `bulkImportSuccess` (com `.replace('{count}', ...)`), `holidayNameRequired`, `holidayAdded`, `holidayRemoved`;
+  - UI: `skipToMain`, `languageLabel`, `languageHelp`, `customHolidaysLabel`, `customHolidaysHelp`, `holidayNamePlaceholder`, `removeHoliday`, `noCustomHolidays`.
+  - Mantido `lang` para o realce do botão de idioma ativo (não é string de display).
+- **Nota:** os nomes dos meses do seletor de feriados (`Janeiro`...`Dezembro`) continuam hardcoded em PT — ficam fora do âmbito (requereriam novas chaves `header.months`); apontado para auditoria futura.
+
+**Verificação:** `tsc -b` passa (exit 0); `vitest` → **591 passam**, **0 falham**; as chaves `header.*` já tinham paridade em 5 línguas.
+
+**Decisão registada:** Migração de `Layout.tsx` concluída. Próximos passos (ver `TODO.md`): `src/components/ICSImporter.tsx` (mensagens hardcoded + estabilidade jsdom), e auditoria completa dos restantes componentes.
+
 ## Round 48 — 2026-08-19
 **Objetivo:** Migrar as strings hardcoded de `ScenarioForm.tsx` (label da descrição e placeholder das notas) para o sistema i18n (secção `form`), mantendo a paridade de chaves em 5 línguas.
 

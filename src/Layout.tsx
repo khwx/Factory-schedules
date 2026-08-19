@@ -71,10 +71,10 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 if (data.customHolidays) localStorage.setItem('shiftsim_custom_holidays', data.customHolidays);
                 if (data.theme) localStorage.setItem('shiftsim_theme', data.theme);
 
-                showToast('success', lang === 'pt' ? 'Backup restaurado com sucesso! A pagina vai recarregar.' : 'Backup restored successfully! Page will reload.');
+                showToast('success', t.header.backupSuccess);
                 setTimeout(() => window.location.reload(), 1500);
             } catch (_error) {
-                showToast('error', lang === 'pt' ? 'Erro ao restaurar backup. Ficheiro invalido.' : 'Error restoring backup. Invalid file.');
+                showToast('error', t.header.backupError);
             }
         };
         reader.readAsText(file);
@@ -90,12 +90,12 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 const data = JSON.parse(e.target?.result as string);
                 const parsed = parseImportData(data);
                 if (parsed.length === 0) {
-                    showToast('error', lang === 'pt' ? 'Formato invalido. Nenhum cenario encontrado.' : 'Invalid format. No scenarios found.');
+                    showToast('error', t.header.bulkImportNoScenarios);
                     return;
                 }
                 setImportPreview(parsed);
             } catch (_error) {
-                showToast('error', lang === 'pt' ? 'Erro ao ler ficheiro. Formato invalido.' : 'Error reading file. Invalid format.');
+                showToast('error', t.header.bulkImportError);
             }
         };
         reader.readAsText(file);
@@ -111,13 +111,13 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         const combined = [...existing, ...newScenarios];
         localStorage.setItem('shiftsim_scenarios', JSON.stringify(combined));
         setImportPreview(null);
-        showToast('success', lang === 'pt' ? `${newScenarios.length} cenarios importados! A pagina vai recarregar.` : `${newScenarios.length} scenarios imported! Page will reload.`);
+        showToast('success', t.header.bulkImportSuccess.replace('{count}', String(newScenarios.length)));
         setTimeout(() => window.location.reload(), 1500);
     };
 
     const handleAddCustomHoliday = () => {
         if (!newHolidayName.trim()) {
-            showToast('error', lang === 'pt' ? 'Nome do feriado obrigatorio' : 'Holiday name is required');
+            showToast('error', t.header.holidayNameRequired);
             return;
         }
         const holiday = addCustomHoliday({
@@ -129,19 +129,19 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         });
         setCustomHolidays(prev => [...prev, holiday]);
         setNewHolidayName('');
-        showToast('success', lang === 'pt' ? 'Feriado adicionado' : 'Holiday added');
+        showToast('success', t.header.holidayAdded);
     };
 
     const handleRemoveCustomHoliday = (id: string) => {
         removeCustomHoliday(id);
         setCustomHolidays(prev => prev.filter(h => h.id !== id));
-        showToast('success', lang === 'pt' ? 'Feriado removido' : 'Holiday removed');
+        showToast('success', t.header.holidayRemoved);
     };
 
     return (
         <div className="min-h-screen bg-gray-900 text-gray-100">
             <a href="#main-content" className="sr-only focus:not-sr-only absolute top-0 left-0 p-2 bg-white bg-opacity-90 text-black z-50">
-                {lang === 'pt' ? 'Pular para conteudo principal' : 'Skip to main content'}
+                {t.header.skipToMain}
             </a>
 
             <header className="bg-gray-800 border-b border-gray-700">
@@ -276,9 +276,9 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                             </div>
 
                             <div className="bg-gray-700 p-4 rounded-lg">
-                                <h4 className="font-semibold mb-2 text-sm">{lang === 'pt' ? 'Idioma' : lang === 'es' ? 'Idioma' : lang === 'de' ? 'Sprache' : 'Language'}</h4>
+                                <h4 className="font-semibold mb-2 text-sm">{t.header.languageLabel}</h4>
                                 <p className="text-xs text-gray-400 mb-3">
-                                    {lang === 'pt' ? 'Escolha o idioma da aplicacao.' : lang === 'es' ? 'Elige el idioma de la aplicacion.' : lang === 'de' ? 'Wählen Sie die Sprache der Anwendung.' : 'Choose the application language.'}
+                                    {t.header.languageHelp}
                                 </p>
                                     <div className="flex gap-2 flex-wrap">
                                         <button
@@ -322,10 +322,10 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                             <div className="bg-gray-700 p-4 rounded-lg">
                                 <h4 className="font-semibold mb-2 text-sm flex items-center gap-2">
                                     <Calendar className="w-4 h-4 text-blue-400" />
-                                    {lang === 'pt' ? 'Feriados Personalizados' : 'Custom Holidays'}
+                                    {t.header.customHolidaysLabel}
                                 </h4>
                                 <p className="text-xs text-gray-400 mb-3">
-                                    {lang === 'pt' ? 'Adicione feriados da sua empresa ou regiao.' : 'Add company or regional holidays.'}
+                                    {t.header.customHolidaysHelp}
                                 </p>
                                 
                                 <div className="flex gap-2 mb-3">
@@ -333,7 +333,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                                         type="text"
                                         value={newHolidayName}
                                         onChange={e => setNewHolidayName(e.target.value)}
-                                        placeholder={lang === 'pt' ? 'Nome do feriado (ex: Aniversario Empresa)' : 'Holiday name (e.g. Company Anniversary)'}
+                                        placeholder={t.header.holidayNamePlaceholder}
                                         className="flex-1 bg-gray-600 border border-gray-500 rounded px-3 py-2 text-white text-sm focus:outline-none focus:border-blue-500"
                                     />
                                     <select
@@ -370,7 +370,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                                                 <button
                                                     onClick={() => handleRemoveCustomHoliday(h.id)}
                                                     className="text-gray-400 hover:text-red-400"
-                                                    aria-label={lang === 'pt' ? 'Remover feriado' : 'Remove holiday'}
+                                                    aria-label={t.header.removeHoliday}
                                                 >
                                                     <Trash2 className="w-4 h-4" />
                                                 </button>
@@ -381,7 +381,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
                                 {customHolidays.length === 0 && (
                                     <p className="text-xs text-gray-500 text-center py-2">
-                                        {lang === 'pt' ? 'Nenhum feriado personalizado adicionado.' : 'No custom holidays added.'}
+                                        {t.header.noCustomHolidays}
                                     </p>
                                 )}
                             </div>

@@ -1,8 +1,9 @@
 import React, { useState, useRef, useCallback } from 'react';
 import { Upload, FileText, AlertCircle, CheckCircle, ChevronDown, ChevronUp, Loader2 } from 'lucide-react';
 import { generateScenarioFromICS } from '../utils/icsParser';
-import { findConflicts, getConflictSummary, ConflictReport } from '../utils/conflictValidator';
+import { findConflicts, ConflictReport } from '../utils/conflictValidator';
 import { Scenario } from '../types';
+import { useI18n } from '../i18n';
 
 interface ICSImporterProps {
     onImport: (scenario: Omit<Scenario, 'id'>) => void;
@@ -21,6 +22,7 @@ interface PreviewData {
 type ImportStatus = 'idle' | 'loading' | 'success' | 'error';
 
 const ICSImporter: React.FC<ICSImporterProps> = ({ onImport }) => {
+    const { t } = useI18n();
     const [isExpanded, setIsExpanded] = useState(false);
     const [isDragging, setIsDragging] = useState(false);
     const [fileContent, setFileContent] = useState<string | null>(null);
@@ -42,7 +44,7 @@ const ICSImporter: React.FC<ICSImporterProps> = ({ onImport }) => {
             const scenario = generateScenarioFromICS(content, scenarioName, duration, weeklyHours);
 
             if (scenario.teams === 0) {
-                setErrorMessage('Nenhuma equipa encontrada no ficheiro ICS. Verifique o formato do ficheiro.');
+                setErrorMessage(t.icsImporter.noTeamsFound);
                 setImportStatus('error');
                 return;
             }
@@ -56,24 +58,24 @@ const ICSImporter: React.FC<ICSImporterProps> = ({ onImport }) => {
         } catch (error) {
             console.error('Error parsing ICS:', error);
             setErrorMessage(
-                error instanceof Error 
-                    ? `Erro ao analisar: ${error.message}`
-                    : 'Erro desconhecido ao analisar o ficheiro ICS'
+                error instanceof Error
+                    ? t.icsImporter.parseError.replace('{msg}', error.message)
+                    : t.icsImporter.unknownParseError
             );
             setImportStatus('error');
         }
-    }, []);
+    }, [t]);
 
     const handleFileSelect = useCallback((file: File) => {
         if (!file.name.endsWith('.ics')) {
-            setErrorMessage('Por favor selecione um ficheiro .ics');
+            setErrorMessage(t.icsImporter.invalidFileType);
             setImportStatus('error');
             return;
         }
 
         // Check file size (max 5MB)
         if (file.size > 5 * 1024 * 1024) {
-            setErrorMessage('Ficheiro demasiado grande. Maximo 5MB.');
+            setErrorMessage(t.icsImporter.fileTooLarge);
             setImportStatus('error');
             return;
         }
@@ -86,11 +88,11 @@ const ICSImporter: React.FC<ICSImporterProps> = ({ onImport }) => {
             analyzeFile(content, file.name, shiftDuration, weeklyHoursContract);
         };
         reader.onerror = () => {
-            setErrorMessage('Erro ao ler o ficheiro.');
+            setErrorMessage(t.icsImporter.readError);
             setImportStatus('error');
         };
         reader.readAsText(file);
-    }, [analyzeFile, shiftDuration, weeklyHoursContract]);
+    }, [analyzeFile, shiftDuration, weeklyHoursContract, t]);
 
     const handleImport = useCallback(() => {
         if (!previewData) return;
@@ -134,6 +136,12 @@ const ICSImporter: React.FC<ICSImporterProps> = ({ onImport }) => {
         setIsExpanded(prev => !prev);
     }, []);
 
+    const conflictSummary = conflictReport?.hasConflicts
+        ? t.icsImporter.conflictSummaryConflicts
+            .replace('{count}', String(conflictReport.conflicts.length))
+            .replace('{days}', String(new Set(conflictReport.conflicts.map(c => c.day)).size))
+        : t.icsImporter.conflictSummaryOk;
+
     if (!isExpanded) {
         return (
             <div
@@ -142,14 +150,14 @@ const ICSImporter: React.FC<ICSImporterProps> = ({ onImport }) => {
                 role="button"
                 tabIndex={0}
                 onKeyDown={(e) => e.key === 'Enter' && toggleExpanded()}
-                aria-label="Expandir importador de horarios ICS"
+                aria-label={t.icsImporter.expandAria}
             >
                 <h2 className="text-xl font-semibold flex items-center gap-2 text-gray-200 group-hover:text-white transition-colors">
                     <Upload className="w-5 h-5 text-blue-400" />
-                    Importar Horario (.ics)
+                    {t.icsImporter.title}
                 </h2>
                 <div className="flex items-center gap-2 text-gray-400 group-hover:text-white transition-colors">
-                    <span className="text-sm font-medium">Clique para expandir</span>
+                    <span className="text-sm font-medium">{t.icsImporter.expandLabel}</span>
                     <ChevronDown className="w-5 h-5" />
                 </div>
             </div>
@@ -161,13 +169,13 @@ const ICSImporter: React.FC<ICSImporterProps> = ({ onImport }) => {
             <div className="flex justify-between items-center mb-4">
                 <h2 className="text-xl font-semibold flex items-center gap-2">
                     <Upload className="w-5 h-5 text-blue-400" />
-                    Importar Horario (.ics)
+                    {t.icsImporter.title}
                 </h2>
                 <button
                     onClick={toggleExpanded}
                     className="text-gray-400 hover:text-white p-1 hover:bg-gray-700 rounded transition-colors"
-                    title="Recolher"
-                    aria-label="Recolher importador"
+                    title={t.icsImporter.collapseLabel}
+                    aria-label={t.icsImporter.collapseAria}
                 >
                     <ChevronUp className="w-5 h-5" />
                 </button>
@@ -177,14 +185,14 @@ const ICSImporter: React.FC<ICSImporterProps> = ({ onImport }) => {
                 <div className="bg-red-900/20 border border-red-700 p-4 rounded mb-4">
                     <div className="flex items-center gap-2">
                         <AlertCircle className="w-5 h-5 text-red-400" />
-                        <span className="text-red-400 font-semibold">Erro</span>
+                        <span className="text-red-400 font-semibold">{t.icsImporter.errorLabel}</span>
                     </div>
                     <p className="text-sm text-red-300 mt-2">{errorMessage}</p>
                     <button
                         onClick={handleReset}
                         className="mt-3 text-sm text-red-400 hover:text-red-300 underline"
                     >
-                        Tentar novamente
+                        {t.icsImporter.retry}
                     </button>
                 </div>
             )}
@@ -201,10 +209,10 @@ const ICSImporter: React.FC<ICSImporterProps> = ({ onImport }) => {
                 >
                     <FileText className="w-12 h-12 text-gray-400 mx-auto mb-4" />
                     <p className="text-gray-300 mb-2">
-                        Arraste um ficheiro .ics aqui ou clique para selecionar
+                        {t.icsImporter.dragDropText}
                     </p>
                     <p className="text-gray-500 text-sm mb-4">
-                        Formatos suportados: .ics (Calendar)
+                        {t.icsImporter.supportedFormats}
                     </p>
                     <input
                         ref={fileInputRef}
@@ -212,14 +220,14 @@ const ICSImporter: React.FC<ICSImporterProps> = ({ onImport }) => {
                         accept=".ics"
                         onChange={handleFileInputChange}
                         className="hidden"
-                        aria-label="Selecionar ficheiro ICS"
+                        aria-label={t.icsImporter.selectFileLabel}
                     />
                     <button
                         onClick={() => fileInputRef.current?.click()}
                         className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded transition-colors"
-                        aria-label="Abrir seletor de ficheiros"
+                        aria-label={t.icsImporter.openFilePicker}
                     >
-                        Selecionar Ficheiro
+                        {t.icsImporter.selectFile}
                     </button>
                 </div>
             ) : (
@@ -238,9 +246,9 @@ const ICSImporter: React.FC<ICSImporterProps> = ({ onImport }) => {
                             <button
                                 onClick={handleReset}
                                 className="text-gray-400 hover:text-white text-sm"
-                                aria-label="Remover ficheiro"
+                                aria-label={t.icsImporter.removeFileAria}
                             >
-                                Remover
+                                {t.icsImporter.removeFile}
                             </button>
                         </div>
                     </div>
@@ -249,25 +257,25 @@ const ICSImporter: React.FC<ICSImporterProps> = ({ onImport }) => {
                     {importStatus === 'loading' && (
                         <div className="bg-blue-900/20 border border-blue-700 p-4 rounded text-center">
                             <Loader2 className="w-8 h-8 text-blue-400 animate-spin mx-auto mb-2" />
-                            <p className="text-blue-300">A analisar ficheiro...</p>
+                            <p className="text-blue-300">{t.icsImporter.analyzing}</p>
                         </div>
                     )}
 
                     {/* Preview */}
                     {previewData && importStatus === 'success' && (
                         <div className="bg-gray-900/50 p-4 rounded border border-gray-700">
-                            <h3 className="text-white font-semibold mb-3">Pre-visualizacao</h3>
+                            <h3 className="text-white font-semibold mb-3">{t.icsImporter.preview}</h3>
                             <div className="grid grid-cols-2 gap-4 text-sm">
                                 <div>
-                                    <span className="text-gray-400">Nome:</span>
+                                    <span className="text-gray-400">{t.icsImporter.nameLabel}</span>
                                     <span className="text-white ml-2">{previewData.name}</span>
                                 </div>
                                 <div>
-                                    <span className="text-gray-400">Equipas:</span>
+                                    <span className="text-gray-400">{t.icsImporter.teamsLabel}</span>
                                     <span className="text-white ml-2">{previewData.teams}</span>
                                 </div>
                                 <div>
-                                    <label className="text-gray-400 block mb-1">Duracao Turno (h):</label>
+                                    <label className="text-gray-400 block mb-1">{t.icsImporter.shiftDurationLabel}</label>
                                     <input
                                         type="number"
                                         value={shiftDuration}
@@ -279,7 +287,7 @@ const ICSImporter: React.FC<ICSImporterProps> = ({ onImport }) => {
                                     />
                                 </div>
                                 <div>
-                                    <label className="text-gray-400 block mb-1">Horas Semanais:</label>
+                                    <label className="text-gray-400 block mb-1">{t.icsImporter.weeklyHoursLabel}</label>
                                     <input
                                         type="number"
                                         value={weeklyHoursContract}
@@ -295,11 +303,11 @@ const ICSImporter: React.FC<ICSImporterProps> = ({ onImport }) => {
                             {/* Team Patterns */}
                             {previewData.teamPatterns && previewData.teamPatterns.length > 0 && (
                                 <div className="mt-4">
-                                    <h4 className="text-gray-400 text-sm mb-2">Padroes por Equipa:</h4>
+                                    <h4 className="text-gray-400 text-sm mb-2">{t.icsImporter.teamPatternsLabel}</h4>
                                     <div className="space-y-1">
                                         {previewData.teamPatterns.map((pattern: string, idx: number) => (
                                             <div key={idx} className="flex items-center gap-2 text-xs">
-                                                <span className="text-gray-500 w-16">Turno {String.fromCharCode(65 + idx)}:</span>
+                                                <span className="text-gray-500 w-16">{t.icsImporter.shiftLabel.replace('{letter}', String.fromCharCode(65 + idx))}</span>
                                                 <span className="font-mono text-gray-300">{pattern}</span>
                                             </div>
                                         ))}
@@ -319,27 +327,30 @@ const ICSImporter: React.FC<ICSImporterProps> = ({ onImport }) => {
                                 {conflictReport.hasConflicts ? (
                                     <>
                                         <AlertCircle className="w-5 h-5 text-red-400" />
-                                        <span className="text-red-400 font-semibold">Conflitos Detectados</span>
+                                        <span className="text-red-400 font-semibold">{t.icsImporter.conflictsDetected}</span>
                                     </>
                                 ) : (
                                     <>
                                         <CheckCircle className="w-5 h-5 text-green-400" />
-                                        <span className="text-green-400 font-semibold">Sem Conflitos</span>
+                                        <span className="text-green-400 font-semibold">{t.icsImporter.noConflicts}</span>
                                     </>
                                 )}
                             </div>
-                            <p className="text-sm text-gray-300">{getConflictSummary(conflictReport)}</p>
+                            <p className="text-sm text-gray-300">{conflictSummary}</p>
 
                             {conflictReport.hasConflicts && (
                                 <div className="mt-3 space-y-1">
                                     {conflictReport.conflicts.slice(0, 5).map((conflict, idx) => (
                                         <div key={idx} className="text-xs text-red-300">
-                                            Dia {conflict.day + 1}: Turnos {conflict.teams.join(', ')} em {conflict.shift}
+                                            {t.icsImporter.conflictDetail
+                                                .replace('{day}', String(conflict.day + 1))
+                                                .replace('{teams}', conflict.teams.join(', '))
+                                                .replace('{shift}', conflict.shift)}
                                         </div>
                                     ))}
                                     {conflictReport.conflicts.length > 5 && (
                                         <div className="text-xs text-red-400">
-                                            ... e mais {conflictReport.conflicts.length - 5} conflito(s)
+                                            {t.icsImporter.moreConflicts.replace('{count}', String(conflictReport.conflicts.length - 5))}
                                         </div>
                                     )}
                                 </div>
@@ -354,7 +365,7 @@ const ICSImporter: React.FC<ICSImporterProps> = ({ onImport }) => {
                                 onClick={handleReset}
                                 className="bg-gray-700 hover:bg-gray-600 text-white px-6 py-2 rounded transition-colors"
                             >
-                                Cancelar
+                                {t.icsImporter.cancel}
                             </button>
                             <button
                                 onClick={handleImport}
@@ -363,9 +374,9 @@ const ICSImporter: React.FC<ICSImporterProps> = ({ onImport }) => {
                                     ? 'bg-gray-600 text-gray-400 cursor-not-allowed'
                                     : 'bg-green-600 hover:bg-green-700 text-white'
                                     }`}
-                                aria-label={conflictReport?.hasConflicts ? 'Nao e possivel importar com conflitos' : 'Importar horario'}
+                                aria-label={conflictReport?.hasConflicts ? t.icsImporter.cannotImportConflicts : t.icsImporter.import}
                             >
-                                Importar Horario
+                                {t.icsImporter.import}
                             </button>
                         </div>
                     )}

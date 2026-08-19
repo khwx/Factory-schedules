@@ -1,6 +1,10 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import ICSImporter from '../ICSImporter';
+import { I18nProvider } from '../../i18n';
+
+const renderWithI18n = (ui: React.ReactElement) =>
+    render(<I18nProvider>{ui}</I18nProvider>);
 
 const VALID_ICS = [
     'BEGIN:VCALENDAR',
@@ -25,7 +29,7 @@ const getDropZone = () =>
 
 describe('ICSImporter', () => {
     it('renders collapsed by default and expands on click', () => {
-        render(<ICSImporter onImport={() => {}} />);
+        renderWithI18n(<ICSImporter onImport={() => {}} />);
         expect(screen.getByText(/Importar Horario \(.ics\)/)).toBeInTheDocument();
         expect(screen.queryByText('Selecionar Ficheiro')).not.toBeInTheDocument();
 
@@ -34,7 +38,7 @@ describe('ICSImporter', () => {
     });
 
     it('shows an error for non-ics files', () => {
-        render(<ICSImporter onImport={() => {}} />);
+        renderWithI18n(<ICSImporter onImport={() => {}} />);
         fireEvent.click(screen.getByText(/Importar Horario \(.ics\)/));
 
         fireEvent.drop(getDropZone(), { dataTransfer: { files: [makeFile('notes.txt', 'hello')] } });
@@ -42,7 +46,7 @@ describe('ICSImporter', () => {
     });
 
     it('rejects files larger than 5MB', () => {
-        render(<ICSImporter onImport={() => {}} />);
+        renderWithI18n(<ICSImporter onImport={() => {}} />);
         fireEvent.click(screen.getByText(/Importar Horario \(.ics\)/));
 
         fireEvent.drop(getDropZone(), { dataTransfer: { files: [makeFile('schedule.ics', VALID_ICS, 6 * 1024 * 1024)] } });
@@ -51,7 +55,7 @@ describe('ICSImporter', () => {
 
     it('parses a valid ics and shows a preview with import button', async () => {
         const onImport = vi.fn();
-        render(<ICSImporter onImport={onImport} />);
+        renderWithI18n(<ICSImporter onImport={onImport} />);
         fireEvent.click(screen.getByText(/Importar Horario \(.ics\)/));
 
         fireEvent.drop(getDropZone(), { dataTransfer: { files: [makeFile('schedule.ics', VALID_ICS)] } });
