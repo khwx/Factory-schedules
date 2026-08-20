@@ -3,9 +3,6 @@ import { Users, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useI18n } from '../i18n';
 import { Scenario, ShiftType } from '../types';
 
-const MONTH_NAMES_PT = ['Janeiro', 'Fevereiro', 'Marco', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
-const MONTH_NAMES_EN = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-
 const TEAM_COLORS = [
     'bg-blue-500', 'bg-green-500', 'bg-purple-500', 'bg-orange-500',
     'bg-pink-500', 'bg-teal-500', 'bg-yellow-500', 'bg-red-500',
@@ -42,7 +39,7 @@ function getShiftColor(shift: ShiftType): string {
 }
 
 const TeamRoster: React.FC = () => {
-    const { lang } = useI18n();
+    const { t } = useI18n();
     const today = useMemo(() => new Date(), []);
     const [year, setYear] = useState(today.getFullYear());
     const [month, setMonth] = useState(today.getMonth());
@@ -61,7 +58,7 @@ const TeamRoster: React.FC = () => {
         return scenarios.find(s => s.id === selectedScenarioId) || scenarios[0] || null;
     }, [scenarios, selectedScenarioId]);
 
-    const monthNames = lang === 'pt' ? MONTH_NAMES_PT : MONTH_NAMES_EN;
+    const monthNames = t.calendar.months;
 
     const daysInMonth = new Date(year, month + 1, 0).getDate();
 
@@ -119,15 +116,13 @@ const TeamRoster: React.FC = () => {
     return (
         <div className="max-w-full mx-auto px-4">
             <div className="mb-8">
-                <h1 className="text-3xl font-bold text-white flex items-center gap-3 mb-2">
-                    <Users className="w-8 h-8 text-blue-400" />
-                    {lang === 'pt' ? 'Gestao de Equipas' : 'Team Roster'}
-                </h1>
-                <p className="text-gray-400">
-                    {lang === 'pt'
-                        ? 'Visualize a atribuicao de turnos por equipa para cada dia do mes.'
-                        : 'View team shift assignments for each day of the month.'}
-                </p>
+                    <h1 className="text-3xl font-bold text-white flex items-center gap-3 mb-2">
+                        <Users className="w-8 h-8 text-blue-400" />
+                        {t.teamRoster.title}
+                    </h1>
+                    <p className="text-gray-400">
+                        {t.teamRoster.subtitle}
+                    </p>
             </div>
 
             {/* Controls */}
@@ -139,7 +134,7 @@ const TeamRoster: React.FC = () => {
                 >
                     {scenarios.map(s => (
                         <option key={s.id} value={s.id}>
-                            {s.name} ({s.teams} {lang === 'pt' ? 'equipas' : 'teams'})
+                            {s.name} ({s.teams} {t.teamRoster.teams})
                         </option>
                     ))}
                 </select>
@@ -159,7 +154,7 @@ const TeamRoster: React.FC = () => {
 
             {scenarios.length === 0 ? (
                 <div className="text-center py-12 text-gray-500 border-2 border-dashed border-gray-700 rounded-lg">
-                    <p>{lang === 'pt' ? 'Nenhum cenario disponivel. Crie um primeiro.' : 'No scenarios available. Create one first.'}</p>
+                    <p>{t.teamRoster.noScenarios}</p>
                 </div>
             ) : (
                 <>
@@ -167,19 +162,19 @@ const TeamRoster: React.FC = () => {
                     <div className="flex flex-wrap gap-4 mb-4">
                         <div className="flex items-center gap-2">
                             <span className="w-4 h-4 rounded bg-yellow-500" />
-                            <span className="text-sm text-gray-400">{lang === 'pt' ? 'Manha' : 'Morning'}</span>
+                            <span className="text-sm text-gray-400">{t.calendar.morning}</span>
                         </div>
                         <div className="flex items-center gap-2">
                             <span className="w-4 h-4 rounded bg-orange-500" />
-                            <span className="text-sm text-gray-400">{lang === 'pt' ? 'Tarde' : 'Afternoon'}</span>
+                            <span className="text-sm text-gray-400">{t.calendar.afternoon}</span>
                         </div>
                         <div className="flex items-center gap-2">
                             <span className="w-4 h-4 rounded bg-blue-600" />
-                            <span className="text-sm text-gray-400">{lang === 'pt' ? 'Noite' : 'Night'}</span>
+                            <span className="text-sm text-gray-400">{t.calendar.night}</span>
                         </div>
                         <div className="flex items-center gap-2">
                             <span className="w-4 h-4 rounded bg-gray-600" />
-                            <span className="text-sm text-gray-400">{lang === 'pt' ? 'Folga' : 'Off'}</span>
+                            <span className="text-sm text-gray-400">{t.calendar.off}</span>
                         </div>
                     </div>
 
@@ -189,7 +184,7 @@ const TeamRoster: React.FC = () => {
                             <thead>
                                 <tr className="border-b border-gray-700">
                                     <th className="text-left p-3 text-gray-400 text-sm font-medium sticky left-0 bg-gray-800 z-10 min-w-[60px]">
-                                        {lang === 'pt' ? 'Equipa' : 'Team'}
+                                        {t.teamRoster.team}
                                     </th>
                                     {Array.from({ length: daysInMonth }, (_, i) => i + 1).map(d => {
                                         const isToday = year === today.getFullYear() && month === today.getMonth() && d === today.getDate();
@@ -210,7 +205,7 @@ const TeamRoster: React.FC = () => {
                                         );
                                     })}
                                     <th className="text-center p-2 text-xs text-gray-400 font-medium min-w-[50px]">
-                                        {lang === 'pt' ? 'Folgas' : 'Off'}
+                                        {t.teamRoster.off}
                                     </th>
                                 </tr>
                             </thead>
@@ -231,7 +226,7 @@ const TeamRoster: React.FC = () => {
                                                     } ${s.isToday ? 'ring-2 ring-blue-400' : ''} ${
                                                         s.shift === 'F' ? 'opacity-50' : ''
                                                     }`}
-                                                    title={`${s.day}/${month + 1}: ${s.shift === 'M' ? (lang === 'pt' ? 'Manha' : 'Morning') : s.shift === 'T' ? (lang === 'pt' ? 'Tarde' : 'Afternoon') : s.shift === 'N' ? (lang === 'pt' ? 'Noite' : 'Night') : (lang === 'pt' ? 'Folga' : 'Off')}`}
+                                                    title={`${s.day}/${month + 1}: ${s.shift === 'M' ? t.calendar.morning : s.shift === 'T' ? t.calendar.afternoon : s.shift === 'N' ? t.calendar.night : t.calendar.off}`}
                                                 >
                                                     {getShiftLabel(s.shift)}
                                                 </div>
@@ -244,7 +239,7 @@ const TeamRoster: React.FC = () => {
                                 )) : (
                                     <tr>
                                         <td colSpan={daysInMonth + 2} className="text-center p-8 text-gray-500">
-                                            {lang === 'pt' ? 'Selecione um cenario' : 'Select a scenario'}
+                                            {t.teamRoster.selectScenario}
                                         </td>
                                     </tr>
                                 )}
@@ -260,28 +255,28 @@ const TeamRoster: React.FC = () => {
                                     <div className="flex items-center gap-2 mb-3">
                                         <span className={`w-3 h-3 rounded-full ${TEAM_COLORS[team.team % TEAM_COLORS.length]}`} />
                                         <span className="text-white font-semibold">
-                                            {lang === 'pt' ? 'Equipa' : 'Team'} {team.label}
+                                            {t.teamRoster.team} {team.label}
                                         </span>
                                     </div>
                                     <div className="space-y-2 text-sm">
                                         <div className="flex justify-between">
-                                            <span className="text-gray-400">{lang === 'pt' ? 'Trabalho' : 'Work'}</span>
-                                            <span className="text-white font-medium">{team.workDays} {lang === 'pt' ? 'dias' : 'days'}</span>
+                                            <span className="text-gray-400">{t.teamRoster.work}</span>
+                                            <span className="text-white font-medium">{team.workDays} {t.teamRoster.days}</span>
                                         </div>
                                         <div className="flex justify-between">
-                                            <span className="text-gray-400">{lang === 'pt' ? 'Folgas' : 'Off'}</span>
-                                            <span className="text-green-400 font-medium">{team.offDays} {lang === 'pt' ? 'dias' : 'days'}</span>
+                                            <span className="text-gray-400">{t.teamRoster.off}</span>
+                                            <span className="text-green-400 font-medium">{team.offDays} {t.teamRoster.days}</span>
                                         </div>
                                         <div className="flex justify-between">
-                                            <span className="text-gray-400">{lang === 'pt' ? 'Manhas' : 'Mornings'}</span>
+                                            <span className="text-gray-400">{t.teamRoster.mornings}</span>
                                             <span className="text-yellow-400 font-medium">{team.morningShifts}</span>
                                         </div>
                                         <div className="flex justify-between">
-                                            <span className="text-gray-400">{lang === 'pt' ? 'Tardes' : 'Afternoons'}</span>
+                                            <span className="text-gray-400">{t.teamRoster.afternoons}</span>
                                             <span className="text-orange-400 font-medium">{team.afternoonShifts}</span>
                                         </div>
                                         <div className="flex justify-between">
-                                            <span className="text-gray-400">{lang === 'pt' ? 'Noites' : 'Nights'}</span>
+                                            <span className="text-gray-400">{t.teamRoster.nights}</span>
                                             <span className="text-blue-400 font-medium">{team.nightShifts}</span>
                                         </div>
                                     </div>

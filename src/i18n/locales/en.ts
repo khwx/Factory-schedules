@@ -277,4 +277,18 @@ export const en: Translations = {
     cancel: 'Cancel',
     import: 'Import {count} scenario(s)',
   },
+  teamRoster: {
+    title: 'Team Roster',
+    subtitle: 'View team shift assignments for each day of the month.',
+    teams: 'teams',
+    noScenarios: 'No scenarios available. Create one first.',
+    team: 'Team',
+    off: 'Off',
+    selectScenario: 'Select a scenario',
+    work: 'Work',
+    days: 'days',
+    mornings: 'Mornings',
+    afternoons: 'Afternoons',
+    nights: 'Nights',
+  },
 };

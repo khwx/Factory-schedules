@@ -275,6 +275,20 @@ export const pt = {
     cancel: 'Cancelar',
     import: 'Importar {count} cenario(s)',
   },
+  teamRoster: {
+    title: 'Gestao de Equipas',
+    subtitle: 'Visualize a atribuicao de turnos por equipa para cada dia do mes.',
+    teams: 'equipas',
+    noScenarios: 'Nenhum cenario disponivel. Crie um primeiro.',
+    team: 'Equipa',
+    off: 'Folgas',
+    selectScenario: 'Selecione um cenario',
+    work: 'Trabalho',
+    days: 'dias',
+    mornings: 'Manhas',
+    afternoons: 'Tardes',
+    nights: 'Noites',
+  },
 };
 
 export type Translations = typeof pt;

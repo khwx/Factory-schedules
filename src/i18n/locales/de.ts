@@ -277,4 +277,18 @@ export const de: Translations = {
     cancel: 'Abbrechen',
     import: '{count} Szenario(en) importieren',
   },
+  teamRoster: {
+    title: 'Team-Verwaltung',
+    subtitle: 'Sehen Sie die Schichteinteilung pro Team fur jeden Tag des Monats.',
+    teams: 'Teams',
+    noScenarios: 'Kein Szenario verfugbar. Erstellen Sie zuerst eines.',
+    team: 'Team',
+    off: 'Frei',
+    selectScenario: 'Szenario auswahlen',
+    work: 'Arbeit',
+    days: 'Tage',
+    mornings: 'Morgen',
+    afternoons: 'Nachmittage',
+    nights: 'Nachte',
+  },
 };

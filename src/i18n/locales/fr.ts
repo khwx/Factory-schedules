@@ -277,4 +277,18 @@ export const fr: Translations = {
     cancel: 'Annuler',
     import: 'Importer {count} scenario(s)',
   },
+  teamRoster: {
+    title: 'Gestion d\'Equipe',
+    subtitle: 'Visualisez l\'attribution des tours par equipe pour chaque jour du mois.',
+    teams: 'equipes',
+    noScenarios: 'Aucun scenario disponible. Creez-en un d\'abord.',
+    team: 'Equipe',
+    off: 'Repos',
+    selectScenario: 'Selectionnez un scenario',
+    work: 'Travail',
+    days: 'jours',
+    mornings: 'Matins',
+    afternoons: 'Apres-midis',
+    nights: 'Nuits',
+  },
 };

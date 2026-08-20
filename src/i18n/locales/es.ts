@@ -277,4 +277,18 @@ export const es: Translations = {
     cancel: 'Cancelar',
     import: 'Importar {count} escenario(s)',
   },
+  teamRoster: {
+    title: 'Gestion de Equipos',
+    subtitle: 'Visualice la asignacion de turnos por equipo para cada dia del mes.',
+    teams: 'equipos',
+    noScenarios: 'Ningun escenario disponible. Cree uno primero.',
+    team: 'Equipo',
+    off: 'Descanso',
+    selectScenario: 'Seleccione un escenario',
+    work: 'Trabajo',
+    days: 'dias',
+    mornings: 'Mananas',
+    afternoons: 'Tardes',
+    nights: 'Noches',
+  },
 };
