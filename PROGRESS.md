@@ -2,6 +2,26 @@
 
 Log de execuções autónomas do Bot Orquestrador (modelos free: `opencode/hy3-free`).
 
+## Round 53 — 2026-08-20
+**Objetivo:** Migrar as strings hardcoded de `src/pages/HolidayCalendar.tsx` para o sistema i18n, removendo os ternários `lang === 'pt' ? ... : ...` (fallback apenas EN) e garantindo paridade de chaves em 5 línguas.
+
+**Contexto:** `HolidayCalendar.tsx` tinha ~20 strings hardcoded (título, subtítulo, toasts, rótulos de UI, nomes dos meses via `MONTH_NAMES_PT`/`MONTH_NAMES_EN` e dias via `DAY_NAMES_PT`/`DAY_NAMES_EN`, legenda de tipos de feriado, arias de navegação) que quebravam a experiência em `es`/`fr`/`de`. Parte reutiliza chaves já existentes (`header.holidayNameRequired`/`holidayAdded`/`holidayRemoved`, `calendar.months`).
+
+**O que foi feito:**
+- **`src/i18n/locales/{pt,en,es,fr,de}.ts`:**
+  - Adicionado `calendar.dayNames` (array de 7) em 5 línguas — reutilizável noutros componentes;
+  - Adicionada a secção `holidayCalendar` (12 chaves: `title`, `subtitle`, `national`, `religious`, `regional`, `custom`, `prevMonthAria`, `nextMonthAria`, `addHoliday`, `newCustomHoliday`, `add`, `allHolidaysThisMonth`, `noHolidaysThisMonth`, `remove`) traduzida para as 5 línguas — paridade mantida (validada por `tsc`).
+- **`src/pages/HolidayCalendar.tsx`:**
+  - `const { t } = useI18n();` (removido `lang`);
+  - Removidas constantes `MONTH_NAMES_PT`/`MONTH_NAMES_EN`/`DAY_NAMES_PT`/`DAY_NAMES_EN`; `monthNames`/`dayNames` passam a vir de `t.calendar.months`/`t.calendar.dayNames`;
+  - Toasts de erro/sucesso migrados para `t.header.holidayNameRequired`/`holidayAdded`/`holidayRemoved`;
+  - `getTypeLabel` passou a mapear tipos para `t.holidayCalendar.*` (com fallback);
+  - Todos os restantes ternários de UI/arias substituídos por `t.holidayCalendar.*`.
+
+**Verificação:** `tsc -b` passa (exit 0); `vitest` → **591 passam**, **0 falham**; `eslint` 0 erros (apenas warnings pré-existentes em testes de locales).
+
+**Decisão registada:** Migração de `HolidayCalendar.tsx` concluída. Próximos passos (ver `TODO.md`): migrar as restantes páginas (`WorkforcePlanning`, `HelpPage`, `ScheduleOptimizer`, `Comparison`, `Reports`, `ScheduleTemplates`, `CostCalculator`, `AnalyticsDashboard`) e reaproveitar `calendar.months` no `Layout.tsx`.
+
 ## Round 52 — 2026-08-20
 **Objetivo:** Migrar as strings hardcoded de `src/pages/TeamRoster.tsx` para o sistema i18n, removendo os ternários `lang === 'pt' ? ... : ...` (fallback apenas EN) e garantindo paridade de chaves em 5 línguas.
 

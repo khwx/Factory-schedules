@@ -17,7 +17,8 @@ quebrando a experiência para `es`/`fr`/`de`. Cada item abaixo deve:
 - [x] `src/Layout.tsx` — toasts de backup/restore/holiday e rótulos de UI migrados para `t.header.*` (chaves já existiam em 5 línguas); falta apenas os nomes dos meses do seletor de feriados (hardcoded PT)
 - [x] `src/components/ICSImporter.tsx` — concluído (secção `icsImporter` em 5 línguas; 4 chaves novas: expandAria, collapseAria, conflictSummaryOk, conflictSummaryConflicts + uso `t.icsImporter.*`; testes envolvidos com `I18nProvider`)
 - [x] `src/pages/Settings.tsx` — concluído (Round 51; 6 chaves novas em `settings.*` + array `calendar.months` em 5 línguas; reuso de `header.*`; falta reaproveitar `calendar.months` no `Layout.tsx`)
-- [ ] Restantes páginas (auditoria com `grep -rn "lang === " src`): `WorkforcePlanning.tsx`, `HelpPage.tsx`, `ScheduleOptimizer.tsx`, `Comparison.tsx`, `Reports.tsx`, `ScheduleTemplates.tsx`, `HolidayCalendar.tsx`, `CostCalculator.tsx`, `AnalyticsDashboard.tsx`
+- [x] `src/pages/HolidayCalendar.tsx` — concluído (Round 53; nova secção `holidayCalendar` em 5 línguas; array `calendar.dayNames` em 5 línguas; reuso de `calendar.months` e `header.holidayNameRequired`/`holidayAdded`/`holidayRemoved`; removido hardcoded PT/EN + constantes MONTH_NAMES/DAY_NAMES)
+- [ ] Restantes páginas (auditoria com `grep -rn \"lang === \" src`): `WorkforcePlanning.tsx`, `HelpPage.tsx`, `ScheduleOptimizer.tsx`, `Comparison.tsx`, `Reports.tsx`, `ScheduleTemplates.tsx`, `CostCalculator.tsx`, `AnalyticsDashboard.tsx`
 - [x] `src/pages/TeamRoster.tsx` — concluído (Round 52; nova secção `teamRoster` em 5 línguas; reuso de `calendar.morning`/`afternoon`/`night`/`off` e `calendar.months`; removido hardcoded PT/EN)
 - [ ] `src/Layout.tsx` — reaproveitar `calendar.months` nos nomes dos meses do seletor de feriados (hardcoded PT)
 

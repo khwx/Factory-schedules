@@ -5,11 +5,6 @@ import { useToast } from '../contexts/ToastContext';
 import { getAllHolidays, addCustomHoliday, removeCustomHoliday, type Holiday } from '../utils/portugueseHolidays';
 import { getHolidaysForCountry, type CountryCode } from '../utils/internationalHolidays';
 
-const MONTH_NAMES_PT = ['Janeiro', 'Fevereiro', 'Marco', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
-const MONTH_NAMES_EN = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-const DAY_NAMES_PT = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'];
-const DAY_NAMES_EN = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-
 const COUNTRIES: { code: CountryCode; label: string; flag: string }[] = [
     { code: 'PT', label: 'Portugal', flag: '\u{1F1F5}\u{1F1F9}' },
     { code: 'BR', label: 'Brasil', flag: '\u{1F1E7}\u{1F1F7}' },
@@ -18,7 +13,7 @@ const COUNTRIES: { code: CountryCode; label: string; flag: string }[] = [
 ];
 
 const HolidayCalendar: React.FC = () => {
-    const { lang } = useI18n();
+    const { t } = useI18n();
     const { showToast } = useToast();
     const today = useMemo(() => new Date(), []);
     const [year, setYear] = useState(today.getFullYear());
@@ -29,8 +24,8 @@ const HolidayCalendar: React.FC = () => {
     const [newMonth, setNewMonth] = useState(0);
     const [newDay, setNewDay] = useState(1);
 
-    const monthNames = lang === 'pt' ? MONTH_NAMES_PT : MONTH_NAMES_EN;
-    const dayNames = lang === 'pt' ? DAY_NAMES_PT : DAY_NAMES_EN;
+    const monthNames = t.calendar.months;
+    const dayNames = t.calendar.dayNames;
 
     const holidays = useMemo(() => {
         const countryHolidays = getHolidaysForCountry(country, year);
@@ -78,7 +73,7 @@ const HolidayCalendar: React.FC = () => {
 
     const handleAdd = () => {
         if (!newName.trim()) {
-            showToast('error', lang === 'pt' ? 'Nome obrigatorio' : 'Name is required');
+            showToast('error', t.header.holidayNameRequired);
             return;
         }
         addCustomHoliday({
@@ -90,12 +85,12 @@ const HolidayCalendar: React.FC = () => {
         });
         setNewName('');
         setShowAddForm(false);
-        showToast('success', lang === 'pt' ? 'Feriado adicionado' : 'Holiday added');
+        showToast('success', t.header.holidayAdded);
     };
 
     const handleRemove = (id: string) => {
         removeCustomHoliday(id);
-        showToast('success', lang === 'pt' ? 'Feriado removido' : 'Holiday removed');
+        showToast('success', t.header.holidayRemoved);
     };
 
     const getTypeColor = (type: string) => {
@@ -108,43 +103,36 @@ const HolidayCalendar: React.FC = () => {
         }
     };
 
-    const getTypeLabel = (type: string) => {
-        if (lang === 'pt') {
-            switch (type) {
-                case 'national': return 'Nacional';
-                case 'religious': return 'Religioso';
-                case 'regional': return 'Regional';
-                case 'custom': return 'Personalizado';
-                default: return type;
-            }
-        }
-        return type.charAt(0).toUpperCase() + type.slice(1);
+    const typeLabels: Record<string, string> = {
+        national: t.holidayCalendar.national,
+        religious: t.holidayCalendar.religious,
+        regional: t.holidayCalendar.regional,
+        custom: t.holidayCalendar.custom,
     };
+    const getTypeLabel = (type: string) => typeLabels[type] ?? type;
 
     return (
         <div className="max-w-6xl mx-auto px-4">
             <div className="mb-8">
                 <h1 className="text-3xl font-bold text-white flex items-center gap-3 mb-2">
                     <Calendar className="w-8 h-8 text-blue-400" />
-                    {lang === 'pt' ? 'Calendario de Feriados' : 'Holiday Calendar'}
+                    {t.holidayCalendar.title}
                 </h1>
                 <p className="text-gray-400">
-                    {lang === 'pt'
-                        ? 'Visualize e gere feriados nacionais, religiosos e personalizados.'
-                        : 'View and manage national, religious, and custom holidays.'}
+                    {t.holidayCalendar.subtitle}
                 </p>
             </div>
 
             {/* Controls */}
             <div className="flex flex-col md:flex-row gap-4 mb-6">
                 <div className="flex items-center gap-2">
-                    <button onClick={prevMonth} className="p-2 bg-gray-700 hover:bg-gray-600 rounded-lg transition-colors" aria-label="Mes anterior">
+                    <button onClick={prevMonth} className="p-2 bg-gray-700 hover:bg-gray-600 rounded-lg transition-colors" aria-label={t.holidayCalendar.prevMonthAria}>
                         <ChevronLeft className="w-5 h-5 text-white" />
                     </button>
                     <span className="text-white font-semibold text-lg min-w-[180px] text-center">
                         {monthNames[month]} {year}
                     </span>
-                    <button onClick={nextMonth} className="p-2 bg-gray-700 hover:bg-gray-600 rounded-lg transition-colors" aria-label="Proximo mes">
+                    <button onClick={nextMonth} className="p-2 bg-gray-700 hover:bg-gray-600 rounded-lg transition-colors" aria-label={t.holidayCalendar.nextMonthAria}>
                         <ChevronRight className="w-5 h-5 text-white" />
                     </button>
                 </div>
@@ -164,7 +152,7 @@ const HolidayCalendar: React.FC = () => {
                     className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors ml-auto"
                 >
                     <Plus className="w-4 h-4" />
-                    {lang === 'pt' ? 'Adicionar Feriado' : 'Add Holiday'}
+                    {t.holidayCalendar.addHoliday}
                 </button>
             </div>
 
@@ -172,14 +160,14 @@ const HolidayCalendar: React.FC = () => {
             {showAddForm && (
                 <div className="bg-gray-800 p-4 rounded-lg border border-gray-700 mb-6">
                     <h3 className="text-white font-semibold mb-3">
-                        {lang === 'pt' ? 'Novo Feriado Personalizado' : 'New Custom Holiday'}
+                        {t.holidayCalendar.newCustomHoliday}
                     </h3>
                     <div className="flex flex-col md:flex-row gap-3">
                         <input
                             type="text"
                             value={newName}
                             onChange={e => setNewName(e.target.value)}
-                            placeholder={lang === 'pt' ? 'Nome do feriado' : 'Holiday name'}
+                            placeholder={t.header.holidayNamePlaceholder}
                             className="flex-1 bg-gray-700 border border-gray-600 rounded px-3 py-2 text-white focus:outline-none focus:border-blue-500"
                         />
                         <select
@@ -205,7 +193,7 @@ const HolidayCalendar: React.FC = () => {
                             className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition-colors flex items-center gap-2"
                         >
                             <Plus className="w-4 h-4" />
-                            {lang === 'pt' ? 'Adicionar' : 'Add'}
+                            {t.holidayCalendar.add}
                         </button>
                     </div>
                 </div>
@@ -257,11 +245,11 @@ const HolidayCalendar: React.FC = () => {
             {/* Holiday List */}
             <div className="bg-gray-800 rounded-lg border border-gray-700 p-4">
                 <h3 className="text-white font-semibold mb-4">
-                    {lang === 'pt' ? 'Todos os Feriados do Mes' : 'All Holidays This Month'}
+                    {t.holidayCalendar.allHolidaysThisMonth}
                 </h3>
                 {holidays.length === 0 ? (
                     <p className="text-gray-500 text-center py-4">
-                        {lang === 'pt' ? 'Nenhum feriado neste mes.' : 'No holidays this month.'}
+                        {t.holidayCalendar.noHolidaysThisMonth}
                     </p>
                 ) : (
                     <div className="space-y-2">
@@ -280,7 +268,7 @@ const HolidayCalendar: React.FC = () => {
                                     <button
                                         onClick={() => handleRemove(h.monthDay)}
                                         className="text-gray-400 hover:text-red-400 transition-colors"
-                                        aria-label={lang === 'pt' ? 'Remover' : 'Remove'}
+                                        aria-label={t.holidayCalendar.remove}
                                     >
                                         <Trash2 className="w-4 h-4" />
                                     </button>
