@@ -160,6 +160,7 @@ export const fr: Translations = {
     night: 'Nuit',
     off: 'Repos',
     weekendOff: 'Week-end de repos',
+    months: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
   },
   demo: {
     title: 'Mode démo',
@@ -198,6 +199,12 @@ export const fr: Translations = {
     dangerZoneLabel: 'Zone de danger',
     dangerZoneHelp: 'Supprimer toutes les données de l\'application (scénarios, jours fériés personnalisés, préférences).',
     clearAllData: 'Tout effacer',
+    backupSuccess: 'Sauvegarde creee avec succes !',
+    bulkImportInvalid: 'Format invalide.',
+    bulkImportError: 'Erreur d\'importation.',
+    confirmClearData: 'Etes-vous sur ? Cela supprimera TOUTES les donnees.',
+    dataCleared: 'Donnees effacees ! La page va recharger.',
+    license: 'Licence : MIT',
   },
   icsImporter: {
     title: 'Importer un horaire (.ics)',

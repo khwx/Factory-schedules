@@ -160,6 +160,7 @@ export const de: Translations = {
     night: 'Nacht',
     off: 'Frei',
     weekendOff: 'Wochenende frei',
+    months: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
   },
   demo: {
     title: 'Demomodus',
@@ -198,6 +199,12 @@ export const de: Translations = {
     dangerZoneLabel: 'Gefahrenzone',
     dangerZoneHelp: 'Alle Anwendungsdaten löschen (Szenarien, benutzerdefinierte Feiertage, Einstellungen).',
     clearAllData: 'Alle Daten löschen',
+    backupSuccess: 'Sicherung erfolgreich erstellt!',
+    bulkImportInvalid: 'Ungültiges Format.',
+    bulkImportError: 'Importfehler.',
+    confirmClearData: 'Sind Sie sicher? Dies löscht ALLE Daten.',
+    dataCleared: 'Daten gelöscht! Die Seite wird neu geladen.',
+    license: 'Lizenz: MIT',
   },
   icsImporter: {
     title: 'Zeitplan importieren (.ics)',

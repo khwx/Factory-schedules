@@ -2,6 +2,26 @@
 
 Log de execuções autónomas do Bot Orquestrador (modelos free: `opencode/hy3-free`).
 
+## Round 51 — 2026-08-20
+**Objetivo:** Migrar as strings hardcoded de `src/pages/Settings.tsx` para o sistema i18n, removendo os ternários `lang === 'pt' ? ... : ...` (fallback apenas EN) e garantindo paridade de chaves em 5 línguas.
+
+**Contexto:** `Settings.tsx` tinha ~40 strings hardcoded (títulos, ajudas, toasts de backup/restore/import/holiday/clear, rótulos de UI, nomes dos meses do seletor de feriados) que quebravam a experiência em `es`/`fr`/`de`. A maioria mapeava para chaves já existentes em `settings.*`/`header.*` (traduzidas), pelo que a tarefa foi sobretudo de substituição de consumo, com a adição de 6 chaves novas e do array `calendar.months`.
+
+**O que foi feito:**
+- **`src/i18n/locales/{pt,en,es,fr,de}.ts`:**
+  - Adicionadas 6 chaves à secção `settings` (`backupSuccess`, `bulkImportInvalid`, `bulkImportError`, `confirmClearData`, `dataCleared`, `license`) com tradução para as 5 línguas — paridade mantida (validada por `tsc`);
+  - Adicionado `calendar.months` (array de 12 nomes de mês) a todas as línguas — reutilizável também pelo seletor de feriados do `Layout.tsx` (pendente de migração).
+- **`src/pages/Settings.tsx`:**
+  - `const { lang, setLang, t } = useI18n();` (adicionado `t`);
+  - `monthNames` agora vem de `t.calendar.months` (fim do hardcoded PT/EN);
+  - Substituídos todos os ternários de UI por `t.settings.*` e de toasts por `t.settings.*` / `t.header.*` (reuso de chaves existentes: `backupSuccess`, `backupError`, `bulkImportSuccess`, `holidayNameRequired`, `holidayAdded`, `holidayRemoved`);
+  - `{count}` resolvido via `.replace('{count}', ...)` em `backupCount` e `bulkImportSuccess`; `{age}` via `.replace('{age}', '')` em `lastAutoBackup`;
+  - Mantidos os ternários de estilo dos botões de idioma (`lang === 'pt'`, etc.) — são de apresentação, não de texto.
+
+**Verificação:** `tsc -b` passa (exit 0); `vitest` → **591 passam**, **0 falham**; `eslint` 0 erros (warnings pré-existentes).
+
+**Decisão registada:** Migração de `Settings.tsx` concluída. Próximos passos (ver `TODO.md`): migrar as restantes páginas (`WorkforcePlanning`, `HelpPage`, `ScheduleOptimizer`, `Comparison`, `TeamRoster`, `Reports`, `ScheduleTemplates`, `HolidayCalendar`, `CostCalculator`, `AnalyticsDashboard`) e reaproveitar `calendar.months` no `Layout.tsx`.
+
 ## Round 50 — 2026-08-19
 **Objetivo:** Migrar as strings hardcoded de `src/components/ICSImporter.tsx` para o sistema i18n (secção `icsImporter`), mantendo a paridade de chaves em 5 línguas.
 

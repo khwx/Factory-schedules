@@ -160,6 +160,7 @@ export const en: Translations = {
     night: 'Night',
     off: 'Off',
     weekendOff: 'Weekend Off',
+    months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
   },
   demo: {
     title: 'Demo Mode',
@@ -198,6 +199,12 @@ export const en: Translations = {
     dangerZoneLabel: 'Danger Zone',
     dangerZoneHelp: 'Delete all application data (scenarios, custom holidays, preferences).',
     clearAllData: 'Clear All Data',
+    backupSuccess: 'Backup created successfully!',
+    bulkImportInvalid: 'Invalid format.',
+    bulkImportError: 'Import error.',
+    confirmClearData: 'Are you sure? This will delete ALL data.',
+    dataCleared: 'Data cleared! Page will reload.',
+    license: 'License: MIT',
   },
   icsImporter: {
     title: 'Import Schedule (.ics)',

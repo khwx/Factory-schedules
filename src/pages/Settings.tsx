@@ -9,7 +9,7 @@ import { getAutoBackup, formatBackupAge } from '../utils/backup';
 const SettingsPage: React.FC = () => {
     const { theme, toggleTheme } = useTheme();
     const { showToast } = useToast();
-    const { lang, setLang } = useI18n();
+    const { lang, setLang, t } = useI18n();
 
     const [customHolidays, setCustomHolidays] = useState<Array<{ id: string; name: string; month: number; day: number }>>(() => {
         try { return getCustomHolidays(); }
@@ -19,9 +19,7 @@ const SettingsPage: React.FC = () => {
     const [newHolidayMonth, setNewHolidayMonth] = useState(0);
     const [newHolidayDay, setNewHolidayDay] = useState(1);
 
-    const monthNames = lang === 'pt'
-        ? ['Janeiro', 'Fevereiro', 'Marco', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro']
-        : ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    const monthNames = t.calendar.months;
 
     const handleBackup = () => {
         const data = {
@@ -39,7 +37,7 @@ const SettingsPage: React.FC = () => {
         a.click();
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
-        showToast('success', lang === 'pt' ? 'Backup feito com sucesso!' : 'Backup successful!');
+        showToast('success', t.settings.backupSuccess);
     };
 
     const handleRestore = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -52,10 +50,10 @@ const SettingsPage: React.FC = () => {
                 if (data.scenarios) localStorage.setItem('shiftsim_scenarios', data.scenarios);
                 if (data.customHolidays) localStorage.setItem('shiftsim_custom_holidays', data.customHolidays);
                 if (data.theme) localStorage.setItem('shiftsim_theme', data.theme);
-                showToast('success', lang === 'pt' ? 'Backup restaurado! A pagina vai recarregar.' : 'Backup restored! Page will reload.');
+                showToast('success', t.header.backupSuccess);
                 setTimeout(() => window.location.reload(), 1500);
             } catch {
-                showToast('error', lang === 'pt' ? 'Erro ao restaurar backup.' : 'Error restoring backup.');
+                showToast('error', t.header.backupError);
             }
         };
         reader.readAsText(file);
@@ -70,7 +68,7 @@ const SettingsPage: React.FC = () => {
             try {
                 const data = JSON.parse(e.target?.result as string);
                 if (!data.scenarios || !Array.isArray(data.scenarios)) {
-                    showToast('error', lang === 'pt' ? 'Formato invalido.' : 'Invalid format.');
+                    showToast('error', t.settings.bulkImportInvalid);
                     return;
                 }
                 const existing = JSON.parse(localStorage.getItem('shiftsim_scenarios') || '[]');
@@ -79,10 +77,10 @@ const SettingsPage: React.FC = () => {
                     id: crypto.randomUUID(),
                 }));
                 localStorage.setItem('shiftsim_scenarios', JSON.stringify([...existing, ...newScenarios]));
-                showToast('success', lang === 'pt' ? `${newScenarios.length} cenarios importados!` : `${newScenarios.length} scenarios imported!`);
+                showToast('success', t.header.bulkImportSuccess.replace('{count}', String(newScenarios.length)));
                 setTimeout(() => window.location.reload(), 1500);
             } catch {
-                showToast('error', lang === 'pt' ? 'Erro ao importar.' : 'Import error.');
+                showToast('error', t.settings.bulkImportError);
             }
         };
         reader.readAsText(file);
@@ -91,7 +89,7 @@ const SettingsPage: React.FC = () => {
 
     const handleAddHoliday = () => {
         if (!newHolidayName.trim()) {
-            showToast('error', lang === 'pt' ? 'Nome obrigatorio' : 'Name is required');
+            showToast('error', t.header.holidayNameRequired);
             return;
         }
         const holiday = addCustomHoliday({
@@ -103,23 +101,23 @@ const SettingsPage: React.FC = () => {
         });
         setCustomHolidays(prev => [...prev, holiday]);
         setNewHolidayName('');
-        showToast('success', lang === 'pt' ? 'Feriado adicionado' : 'Holiday added');
+        showToast('success', t.header.holidayAdded);
     };
 
     const handleRemoveHoliday = (id: string) => {
         removeCustomHoliday(id);
         setCustomHolidays(prev => prev.filter(h => h.id !== id));
-        showToast('success', lang === 'pt' ? 'Feriado removido' : 'Holiday removed');
+        showToast('success', t.header.holidayRemoved);
     };
 
     const handleClearAllData = () => {
-        if (!window.confirm(lang === 'pt' ? 'Tem certeza? Isto ira apagar TODOS os dados.' : 'Are you sure? This will delete ALL data.')) return;
+        if (!window.confirm(t.settings.confirmClearData)) return;
         localStorage.removeItem('shiftsim_scenarios');
         localStorage.removeItem('shiftsim_custom_holidays');
         localStorage.removeItem('shiftsim_theme');
         localStorage.removeItem('shiftsim_lang');
         localStorage.removeItem('shiftsim_preferences');
-        showToast('success', lang === 'pt' ? 'Dados apagados! A pagina vai recarregar.' : 'Data cleared! Page will reload.');
+        showToast('success', t.settings.dataCleared);
         setTimeout(() => window.location.reload(), 1500);
     };
 
@@ -135,12 +133,10 @@ const SettingsPage: React.FC = () => {
             <div className="mb-8">
                 <h1 className="text-3xl font-bold text-white flex items-center gap-3 mb-2">
                     <SettingsIcon className="w-8 h-8 text-blue-400" />
-                    {lang === 'pt' ? 'Configuracoes' : 'Settings'}
+                    {t.settings.title}
                 </h1>
                 <p className="text-gray-400">
-                    {lang === 'pt'
-                        ? 'Gerir tema, idioma, dados e preferencias da aplicacao.'
-                        : 'Manage theme, language, data, and application preferences.'}
+                    {t.settings.description}
                 </p>
             </div>
 
@@ -149,10 +145,10 @@ const SettingsPage: React.FC = () => {
                 <div className="bg-gray-800 rounded-lg border border-gray-700 p-6">
                     <h3 className="text-white font-semibold text-lg mb-4 flex items-center gap-2">
                         {theme === 'dark' ? <Moon className="w-5 h-5 text-blue-400" /> : <Sun className="w-5 h-5 text-yellow-400" />}
-                        {lang === 'pt' ? 'Tema' : 'Theme'}
+                        {t.settings.themeLabel}
                     </h3>
                     <p className="text-gray-400 text-sm mb-4">
-                        {lang === 'pt' ? 'Escolha entre tema claro e escuro.' : 'Choose between light and dark theme.'}
+                        {t.settings.themeHelp}
                     </p>
                     <button
                         onClick={toggleTheme}
@@ -161,12 +157,12 @@ const SettingsPage: React.FC = () => {
                         {theme === 'dark' ? (
                             <>
                                 <Sun className="w-5 h-5 text-yellow-400" />
-                                {lang === 'pt' ? 'Mudar para Tema Claro' : 'Switch to Light Theme'}
+                                {t.settings.switchToLight}
                             </>
                         ) : (
                             <>
                                 <Moon className="w-5 h-5 text-blue-400" />
-                                {lang === 'pt' ? 'Mudar para Tema Escuro' : 'Switch to Dark Theme'}
+                                {t.settings.switchToDark}
                             </>
                         )}
                     </button>
@@ -176,10 +172,10 @@ const SettingsPage: React.FC = () => {
                 <div className="bg-gray-800 rounded-lg border border-gray-700 p-6">
                     <h3 className="text-white font-semibold text-lg mb-4 flex items-center gap-2">
                         <Globe className="w-5 h-5 text-green-400" />
-                        {lang === 'pt' ? 'Idioma' : lang === 'es' ? 'Idioma' : lang === 'de' ? 'Sprache' : 'Language'}
+                        {t.settings.languageLabel}
                     </h3>
                     <p className="text-gray-400 text-sm mb-4">
-                        {lang === 'pt' ? 'Escolha o idioma da aplicacao.' : lang === 'es' ? 'Elige el idioma de la aplicacion.' : lang === 'de' ? 'Wählen Sie die Sprache der Anwendung.' : 'Choose the application language.'}
+                        {t.settings.languageHelp}
                     </p>
                     <div className="grid grid-cols-2 sm:flex gap-3">
                         <button
@@ -234,12 +230,10 @@ const SettingsPage: React.FC = () => {
                 <div className="bg-gray-800 rounded-lg border border-gray-700 p-6">
                     <h3 className="text-white font-semibold text-lg mb-4 flex items-center gap-2">
                         <Download className="w-5 h-5 text-purple-400" />
-                        {lang === 'pt' ? 'Backup e Restauracao' : 'Backup & Restore'}
+                        {t.settings.backupRestoreLabel}
                     </h3>
                     <p className="text-gray-400 text-sm mb-4">
-                        {lang === 'pt'
-                            ? `Atualmente tem ${scenarioCount} cenario${scenarioCount !== 1 ? 's' : ''} guardado${scenarioCount !== 1 ? 's' : ''}.`
-                            : `You currently have ${scenarioCount} saved scenario${scenarioCount !== 1 ? 's' : ''}.`}
+                        {t.settings.backupCount.replace('{count}', String(scenarioCount))}
                     </p>
                     <div className="flex flex-col sm:flex-row gap-3">
                         <button
@@ -247,16 +241,16 @@ const SettingsPage: React.FC = () => {
                             className="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg transition-colors flex items-center justify-center gap-2"
                         >
                             <Download className="w-5 h-5" />
-                            {lang === 'pt' ? 'Fazer Backup' : 'Download Backup'}
+                            {t.settings.backupDownload}
                         </button>
                         <label className="flex-1 bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg transition-colors flex items-center justify-center gap-2 cursor-pointer">
                             <Upload className="w-5 h-5" />
-                            {lang === 'pt' ? 'Restaurar Backup' : 'Restore Backup'}
+                            {t.settings.backupRestore}
                             <input type="file" accept=".json" onChange={handleRestore} className="hidden" />
                         </label>
                         <label className="flex-1 bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg transition-colors flex items-center justify-center gap-2 cursor-pointer">
                             <FilePlus2 className="w-5 h-5" />
-                            {lang === 'pt' ? 'Importar Cenarios' : 'Import Scenarios'}
+                            {t.settings.importScenarios}
                             <input type="file" accept=".json" onChange={handleBulkImport} className="hidden" />
                         </label>
                     </div>
@@ -266,7 +260,7 @@ const SettingsPage: React.FC = () => {
                             return (
                                 <div className="mt-3 flex items-center gap-2 text-xs text-gray-500">
                                     <Clock className="w-3 h-3" />
-                                    {lang === 'pt' ? 'Ultimo backup automatico:' : 'Last auto-backup:'}{' '}
+                                    {t.settings.lastAutoBackup.replace('{age}', '')}
                                     <span className="text-gray-400">{formatBackupAge(backup.timestamp)}</span>
                                 </div>
                             );
@@ -279,12 +273,10 @@ const SettingsPage: React.FC = () => {
                 <div className="bg-gray-800 rounded-lg border border-gray-700 p-6">
                     <h3 className="text-white font-semibold text-lg mb-4 flex items-center gap-2">
                         <Plus className="w-5 h-5 text-yellow-400" />
-                        {lang === 'pt' ? 'Feriados Personalizados' : 'Custom Holidays'}
+                        {t.settings.customHolidaysLabel}
                     </h3>
                     <p className="text-gray-400 text-sm mb-4">
-                        {lang === 'pt'
-                            ? 'Adicione feriados da sua empresa ou regiao local.'
-                            : 'Add your company or regional holidays.'}
+                        {t.settings.customHolidaysHelp}
                     </p>
 
                     <div className="flex flex-col sm:flex-row gap-3 mb-4">
@@ -292,7 +284,7 @@ const SettingsPage: React.FC = () => {
                             type="text"
                             value={newHolidayName}
                             onChange={e => setNewHolidayName(e.target.value)}
-                            placeholder={lang === 'pt' ? 'Nome do feriado' : 'Holiday name'}
+                            placeholder={t.settings.holidayNamePlaceholder}
                             className="flex-1 bg-gray-700 border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-blue-500"
                         />
                         <select
@@ -318,7 +310,7 @@ const SettingsPage: React.FC = () => {
                             className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition-colors flex items-center gap-2"
                         >
                             <Plus className="w-4 h-4" />
-                            {lang === 'pt' ? 'Adicionar' : 'Add'}
+                            {t.settings.addHoliday}
                         </button>
                     </div>
 
@@ -333,7 +325,7 @@ const SettingsPage: React.FC = () => {
                                     <button
                                         onClick={() => handleRemoveHoliday(h.id)}
                                         className="text-gray-400 hover:text-red-400 transition-colors p-2"
-                                        aria-label={lang === 'pt' ? 'Remover' : 'Remove'}
+                                        aria-label={t.settings.removeHoliday}
                                     >
                                         <Trash2 className="w-4 h-4" />
                                     </button>
@@ -342,7 +334,7 @@ const SettingsPage: React.FC = () => {
                         </div>
                     ) : (
                         <p className="text-gray-500 text-center py-4">
-                            {lang === 'pt' ? 'Nenhum feriado personalizado.' : 'No custom holidays.'}
+                            {t.settings.noCustomHolidays}
                         </p>
                     )}
                 </div>
@@ -351,31 +343,29 @@ const SettingsPage: React.FC = () => {
                 <div className="bg-gray-800 rounded-lg border border-gray-700 p-6">
                     <h3 className="text-white font-semibold text-lg mb-4 flex items-center gap-2">
                         <Info className="w-5 h-5 text-gray-400" />
-                        {lang === 'pt' ? 'Sobre a Aplicacao' : 'About'}
+                        {t.settings.aboutLabel}
                     </h3>
                     <div className="space-y-2 text-sm text-gray-400">
                         <p><strong className="text-gray-300">ShiftSim Factory</strong> v1.0.0</p>
-                        <p>{lang === 'pt' ? 'Simulador de escalas industriais para o mercado portugues.' : 'Industrial shift schedule simulator for the Portuguese market.'}</p>
-                        <p>{lang === 'pt' ? 'Licenca: MIT' : 'License: MIT'}</p>
+                        <p>{t.settings.aboutDescription}</p>
+                        <p>{t.settings.license}</p>
                     </div>
                 </div>
 
                 {/* Danger Zone */}
                 <div className="bg-gray-800 rounded-lg border border-red-500/30 p-6">
                     <h3 className="text-red-400 font-semibold text-lg mb-4">
-                        {lang === 'pt' ? 'Zona de Perigo' : 'Danger Zone'}
+                        {t.settings.dangerZoneLabel}
                     </h3>
                     <p className="text-gray-400 text-sm mb-4">
-                        {lang === 'pt'
-                            ? 'Apagar todos os dados da aplicacao (cenarios, feriados personalizados, preferencias).'
-                            : 'Delete all application data (scenarios, custom holidays, preferences).'}
+                        {t.settings.dangerZoneHelp}
                     </p>
                     <button
                         onClick={handleClearAllData}
                         className="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg transition-colors flex items-center gap-2"
                     >
                         <Trash2 className="w-5 h-5" />
-                        {lang === 'pt' ? 'Apagar Todos os Dados' : 'Clear All Data'}
+                        {t.settings.clearAllData}
                     </button>
                 </div>
             </div>

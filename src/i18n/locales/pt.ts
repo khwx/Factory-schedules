@@ -158,6 +158,7 @@ export const pt = {
     night: 'Noite',
     off: 'Folga',
     weekendOff: 'FDS Folga',
+    months: ['Janeiro', 'Fevereiro', 'Marco', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
   },
   demo: {
     title: 'Modo Demonstracao',
@@ -196,6 +197,12 @@ export const pt = {
     dangerZoneLabel: 'Zona de Perigo',
     dangerZoneHelp: 'Apagar todos os dados da aplicacao (cenarios, feriados personalizados, preferencias).',
     clearAllData: 'Apagar Todos os Dados',
+    backupSuccess: 'Backup feito com sucesso!',
+    bulkImportInvalid: 'Formato invalido.',
+    bulkImportError: 'Erro ao importar.',
+    confirmClearData: 'Tem certeza? Isto ira apagar TODOS os dados.',
+    dataCleared: 'Dados apagados! A pagina vai recarregar.',
+    license: 'Licenca: MIT',
   },
   icsImporter: {
     title: 'Importar Horario (.ics)',

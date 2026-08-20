@@ -16,7 +16,9 @@ quebrando a experiência para `es`/`fr`/`de`. Cada item abaixo deve:
 - [x] `src/components/ScenarioForm.tsx` — concluído (secção `form`: description + placeholderNotes em 5 línguas + uso `t.form.*`)
 - [x] `src/Layout.tsx` — toasts de backup/restore/holiday e rótulos de UI migrados para `t.header.*` (chaves já existiam em 5 línguas); falta apenas os nomes dos meses do seletor de feriados (hardcoded PT)
 - [x] `src/components/ICSImporter.tsx` — concluído (secção `icsImporter` em 5 línguas; 4 chaves novas: expandAria, collapseAria, conflictSummaryOk, conflictSummaryConflicts + uso `t.icsImporter.*`; testes envolvidos com `I18nProvider`)
-- [ ] Restantes: `ComparisonCharts`, `WorkloadHeatmap`, `MultiYearAnalysis`, `TeamAnalysis`, etc. (auditoria completa com `grep -rn "lang === " src --include=*.tsx --include=*.ts`)
+- [x] `src/pages/Settings.tsx` — concluído (Round 51; 6 chaves novas em `settings.*` + array `calendar.months` em 5 línguas; reuso de `header.*`; falta reaproveitar `calendar.months` no `Layout.tsx`)
+- [ ] Restantes páginas (auditoria com `grep -rn "lang === " src`): `WorkforcePlanning.tsx`, `HelpPage.tsx`, `ScheduleOptimizer.tsx`, `Comparison.tsx`, `TeamRoster.tsx`, `Reports.tsx`, `ScheduleTemplates.tsx`, `HolidayCalendar.tsx`, `CostCalculator.tsx`, `AnalyticsDashboard.tsx`
+- [ ] `src/Layout.tsx` — reaproveitar `calendar.months` nos nomes dos meses do seletor de feriados (hardcoded PT)
 
 ## 2. Traduzir as strings migradas
 Após migrar, garantir tradução completa em `es`/`fr`/`de` (as chaves já foram criadas
