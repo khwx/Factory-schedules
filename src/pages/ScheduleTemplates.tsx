@@ -201,7 +201,7 @@ const TEMPLATES: IndustryTemplate[] = [
 ];
 
 const ScheduleTemplates: React.FC = () => {
-    const { lang } = useI18n();
+    const { lang, t } = useI18n();
     const { showToast } = useToast();
     const [selectedIndustry, setSelectedIndustry] = useState<string | null>(null);
 
@@ -220,7 +220,7 @@ const ScheduleTemplates: React.FC = () => {
         };
 
         localStorage.setItem('shiftsim_scenarios', JSON.stringify([...existing, newScenario]));
-        showToast('success', lang === 'pt' ? `"${template.name}" adicionado!` : `"${template.name}" added!`);
+        showToast('success', t.scheduleTemplates.toastAdded.replace('{name}', template.name));
     };
 
     const handleImportAll = (template: IndustryTemplate) => {
@@ -233,7 +233,7 @@ const ScheduleTemplates: React.FC = () => {
         }));
 
         localStorage.setItem('shiftsim_scenarios', JSON.stringify([...existing, ...newScenarios]));
-        showToast('success', lang === 'pt' ? `${newScenarios.length} cenarios adicionados!` : `${newScenarios.length} scenarios added!`);
+        showToast('success', t.scheduleTemplates.toastScenariosAdded.replace('{count}', String(newScenarios.length)));
     };
 
     return (
@@ -241,12 +241,10 @@ const ScheduleTemplates: React.FC = () => {
             <div className="mb-8">
                 <h1 className="text-3xl font-bold text-white flex items-center gap-3 mb-2">
                     <BookOpen className="w-8 h-8 text-blue-400" />
-                    {lang === 'pt' ? 'Modelos por Industria' : 'Industry Templates'}
+                    {t.scheduleTemplates.title}
                 </h1>
                 <p className="text-gray-400">
-                    {lang === 'pt'
-                        ? 'Escolha um modelo pre-configurado para o seu setor e importe directamente.'
-                        : 'Choose a pre-configured template for your industry and import directly.'}
+                    {t.scheduleTemplates.subtitle}
                 </p>
             </div>
 
@@ -274,7 +272,7 @@ const ScheduleTemplates: React.FC = () => {
                                     {lang === 'pt' ? template.description : template.descriptionEn}
                                 </p>
                                 <p className="text-xs text-gray-500 mt-2">
-                                    {template.scenarios.length} {lang === 'pt' ? 'modelos disponiveis' : 'templates available'}
+                                    {template.scenarios.length} {t.scheduleTemplates.templatesAvailable}
                                 </p>
                             </div>
                         </div>
@@ -310,7 +308,7 @@ const ScheduleTemplates: React.FC = () => {
                                         className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm flex items-center gap-2"
                                     >
                                         <Download className="w-4 h-4" />
-                                        {lang === 'pt' ? 'Importar Todos' : 'Import All'}
+                                        {t.scheduleTemplates.importAll}
                                     </button>
                                 </div>
 
@@ -319,8 +317,8 @@ const ScheduleTemplates: React.FC = () => {
                                         <div key={i} className="bg-gray-700/50 rounded-lg border border-gray-600 p-4">
                                             <h4 className="text-white font-medium mb-2">{scenario.name}</h4>
                                             <div className="space-y-1 text-sm text-gray-400 mb-4">
-                                                <p>{scenario.teams} {lang === 'pt' ? 'equipas' : 'teams'} &bull; {scenario.shiftDuration}h</p>
-                                                <p>{lang === 'pt' ? 'Contrato' : 'Contract'}: {scenario.weeklyHoursContract}h</p>
+                                                <p>{scenario.teams} {t.scheduleTemplates.teamsUnit} &bull; {scenario.shiftDuration}h</p>
+                                                <p>{t.scheduleTemplates.contract}: {scenario.weeklyHoursContract}h</p>
                                                 <p className="font-mono text-xs">{scenario.pattern}</p>
                                             </div>
 
@@ -344,7 +342,7 @@ const ScheduleTemplates: React.FC = () => {
                                                 className="w-full bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm flex items-center justify-center gap-2"
                                             >
                                                 <Plus className="w-4 h-4" />
-                                                {lang === 'pt' ? 'Importar' : 'Import'}
+                                                {t.scheduleTemplates.import}
                                             </button>
                                         </div>
                                     ))}
@@ -358,29 +356,29 @@ const ScheduleTemplates: React.FC = () => {
             {/* Quick Start Guide */}
             <div className="mt-8 bg-gray-800 rounded-xl border border-gray-700 p-6">
                 <h2 className="text-xl font-semibold text-white mb-4">
-                    {lang === 'pt' ? 'Como Funciona' : 'How It Works'}
+                    {t.scheduleTemplates.howItWorks}
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div className="text-center">
                         <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-3">
                             <span className="text-white font-bold text-xl">1</span>
                         </div>
-                        <h3 className="text-white font-medium mb-2">{lang === 'pt' ? 'Escolha a Industria' : 'Choose Industry'}</h3>
-                        <p className="text-sm text-gray-400">{lang === 'pt' ? 'Selecione o setor que mais se aproxima da sua necessidade.' : 'Select the sector closest to your need.'}</p>
+                        <h3 className="text-white font-medium mb-2">{t.scheduleTemplates.step1Title}</h3>
+                        <p className="text-sm text-gray-400">{t.scheduleTemplates.step1Desc}</p>
                     </div>
                     <div className="text-center">
                         <div className="w-12 h-12 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-3">
                             <span className="text-white font-bold text-xl">2</span>
                         </div>
-                        <h3 className="text-white font-medium mb-2">{lang === 'pt' ? 'Importe o Modelo' : 'Import Template'}</h3>
-                        <p className="text-sm text-gray-400">{lang === 'pt' ? 'Importe um ou varios modelos para o seu dashboard.' : 'Import one or more templates to your dashboard.'}</p>
+                        <h3 className="text-white font-medium mb-2">{t.scheduleTemplates.step2Title}</h3>
+                        <p className="text-sm text-gray-400">{t.scheduleTemplates.step2Desc}</p>
                     </div>
                     <div className="text-center">
                         <div className="w-12 h-12 bg-purple-600 rounded-full flex items-center justify-center mx-auto mb-3">
                             <span className="text-white font-bold text-xl">3</span>
                         </div>
-                        <h3 className="text-white font-medium mb-2">{lang === 'pt' ? 'Personalize' : 'Customize'}</h3>
-                        <p className="text-sm text-gray-400">{lang === 'pt' ? 'Ajuste os padroes, equipas e configuracoes ao seu gosto.' : 'Adjust patterns, teams, and settings to your liking.'}</p>
+                        <h3 className="text-white font-medium mb-2">{t.scheduleTemplates.step3Title}</h3>
+                        <p className="text-sm text-gray-400">{t.scheduleTemplates.step3Desc}</p>
                     </div>
                 </div>
             </div>

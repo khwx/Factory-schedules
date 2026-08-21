@@ -2,6 +2,25 @@
 
 Log de execuções autónomas do Bot Orquestrador (modelos free: `opencode/hy3-free`).
 
+## Round 54 — 2026-08-21
+**Objetivo:** Migrar as strings hardcoded de `src/pages/CostCalculator.tsx` para o sistema i18n, removendo todos os ternários `lang === 'pt' ? ... : ...` e garantindo paridade de chaves em 5 línguas.
+
+**Contexto:** `CostCalculator.tsx` era o pior ofensor do projeto — **~55 ternários** `lang === 'pt'` espalhados por todo o componente (título, subtítulo, rótulos de configuração salarial, notas legais, cartões de resumo, tabela de detalhe, gráficos, projeção mensal, distribuição de custos, comparação entre equipas e resumo anual). O componente não usava `t()` — apenas `lang` para selecionar manualmente entre PT e EN, quebrando a experiência em `es`/`fr`/`de`.
+
+**O que foi feito:**
+- **`src/i18n/locales/{pt,en,es,fr,de}.ts`:**
+  - Adicionada a secção `costCalculator` (35 chaves: `title`, `subtitle`, `scenario`, `teams`, `payConfig`, `hourlyRate`, `nightPremium`, `holidayPremium`, `weekendPremium`, `numberOfTeams`, `notes`, `noteNight`, `noteHoliday`, `noteEstimated`, `hoursPerTeam`, `costPerTeam`, `totalCost`, `monthlyAvg`, `breakdownTitle`, `colType`, `colHours`, `colRate`, `colSubtotal`, `regular`, `night`, `holiday`, `weekend`, `totalPerTeam`, `monthlyProjection`, `costDistribution`, `teamComparison`, `annualSummary`, `totalTeams`, `costPerYear`, `costPerMonth`, `costPerDay`, `emptyState`) traduzida para as 5 línguas — paridade mantida (validada por `tsc`).
+- **`src/pages/CostCalculator.tsx`:**
+  - `const { t } = useI18n();` (removido `lang`);
+  - Todos os ~55 ternários `lang === 'pt' ? ... : ...` substituídos por `t.costCalculator.*`;
+  - Nomes dos meses na projeção mensal passam a vir de `t.calendar.months` (com `substring(0, 3)` para abreviaturas);
+  - Labels dos dados do gráfico (pieData) migrados para `t.costCalculator.regular`/`night`/`holiday`/`weekend`;
+  - Reutilizada chave `calendar.months` para projeção mensal.
+
+**Verificação:** `tsc -b` passa (exit 0); `vitest` → **591 passam**, **0 falham**.
+
+**Decisão registada:** Migração de `CostCalculator.tsx` concluída. Próximos passos (ver `TODO.md`): migrar `AnalyticsDashboard.tsx` (pior ofensor restante: ~45 ternários), `HelpPage.tsx` (FAQ hardcoded), `ScheduleTemplates.tsx` (nomes de templates) e `Layout.tsx` (meses hardcoded do seletor de feriados).
+
 ## Round 53 — 2026-08-20
 **Objetivo:** Migrar as strings hardcoded de `src/pages/HolidayCalendar.tsx` para o sistema i18n, removendo os ternários `lang === 'pt' ? ... : ...` (fallback apenas EN) e garantindo paridade de chaves em 5 línguas.
 

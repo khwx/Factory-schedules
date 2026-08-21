@@ -9,7 +9,7 @@ import { calculateEstimatedPay, formatCurrency, DEFAULT_PAY_CONFIG, type PayConf
 const COLORS = ['#60A5FA', '#4ADE80', '#F472B6', '#FBBF24', '#A78BFA'];
 
 const CostCalculator: React.FC = () => {
-    const { lang } = useI18n();
+    const { t } = useI18n();
     const [selectedId, setSelectedId] = useState<string>('');
     const [teamCount, setTeamCount] = useState(1);
     const [hourlyRate, setHourlyRate] = useState(DEFAULT_PAY_CONFIG.hourlyRate);
@@ -54,7 +54,7 @@ const CostCalculator: React.FC = () => {
         for (let i = 0; i < Math.min(teamCount, selectedScenario.teams); i++) {
             const estimate = calculateEstimatedPay(selectedScenario, i, payConfig);
             data.push({
-                name: `${lang === 'pt' ? 'Equipa' : 'Team'} ${String.fromCharCode(65 + i)}`,
+                name: `${t.costCalculator.scenario} ${String.fromCharCode(65 + i)}`,
                 'Horas Regulares': estimate.regularHours,
                 'Horas Noite': estimate.nightHours,
                 'Horas Feriado': estimate.holidayHours,
@@ -63,14 +63,12 @@ const CostCalculator: React.FC = () => {
             });
         }
         return data;
-    }, [selectedScenario, teamCount, payConfig, payEstimate, lang]);
+    }, [selectedScenario, teamCount, payConfig, payEstimate, t]);
 
     // Monthly cost projection
     const monthlyProjection = useMemo(() => {
         if (!payEstimate) return [];
-        const months = lang === 'pt'
-            ? ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez']
-            : ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        const months = t.calendar.months.map(m => m.substring(0, 3));
 
         let cumulative = 0;
         return months.map((month) => {
@@ -82,18 +80,18 @@ const CostCalculator: React.FC = () => {
                 'Custo Acumulado': Math.round(cumulative),
             };
         });
-    }, [payEstimate, lang]);
+    }, [payEstimate, t]);
 
     // Cost breakdown pie
     const pieData = useMemo(() => {
         if (!payEstimate) return [];
         return [
-            { name: lang === 'pt' ? 'Regular' : 'Regular', value: payEstimate.regularPay },
-            { name: lang === 'pt' ? 'Noite' : 'Night', value: payEstimate.nightPay },
-            { name: lang === 'pt' ? 'Feriado' : 'Holiday', value: payEstimate.holidayPay },
-            { name: lang === 'pt' ? 'FDS' : 'Weekend', value: payEstimate.weekendPay },
+            { name: t.costCalculator.regular, value: payEstimate.regularPay },
+            { name: t.costCalculator.night, value: payEstimate.nightPay },
+            { name: t.costCalculator.holiday, value: payEstimate.holidayPay },
+            { name: t.costCalculator.weekend, value: payEstimate.weekendPay },
         ].filter(d => d.value > 0);
-    }, [payEstimate, lang]);
+    }, [payEstimate, t]);
 
     const totalTeamCost = useMemo(() => {
         if (!payEstimate) return 0;
@@ -112,12 +110,10 @@ const CostCalculator: React.FC = () => {
             <div className="mb-8">
                 <h1 className="text-3xl font-bold text-white flex items-center gap-3 mb-2">
                     <Euro className="w-8 h-8 text-blue-400" />
-                    {lang === 'pt' ? 'Calculadora de Custos' : 'Cost Calculator'}
+                    {t.costCalculator.title}
                 </h1>
                 <p className="text-gray-400">
-                    {lang === 'pt'
-                        ? 'Simule custos laborais por cenario, equipa e tipo de turno.'
-                        : 'Simulate labor costs by scenario, team, and shift type.'}
+                    {t.costCalculator.subtitle}
                 </p>
             </div>
 
@@ -128,7 +124,7 @@ const CostCalculator: React.FC = () => {
                     <div className="bg-gray-800 rounded-lg border border-gray-700 p-4">
                         <h3 className="text-white font-semibold mb-3 flex items-center gap-2">
                             <Calculator className="w-5 h-5 text-blue-400" />
-                            {lang === 'pt' ? 'Cenario' : 'Scenario'}
+                            {t.costCalculator.scenario}
                         </h3>
                         <select
                             value={selectedId || (scenarios[0]?.id || '')}
@@ -137,7 +133,7 @@ const CostCalculator: React.FC = () => {
                         >
                             {scenarios.map(s => (
                                 <option key={s.id} value={s.id}>
-                                    {s.name} ({s.teams} {lang === 'pt' ? 'equipas' : 'teams'})
+                                    {s.name} ({s.teams} {t.costCalculator.teams})
                                 </option>
                             ))}
                         </select>
@@ -146,12 +142,12 @@ const CostCalculator: React.FC = () => {
                     {/* Pay Configuration */}
                     <div className="bg-gray-800 rounded-lg border border-gray-700 p-4">
                         <h3 className="text-white font-semibold mb-3">
-                            {lang === 'pt' ? 'Configuracao Salarial' : 'Pay Configuration'}
+                            {t.costCalculator.payConfig}
                         </h3>
                         <div className="space-y-4">
                             <div>
                                 <label className="block text-sm text-gray-400 mb-1">
-                                    {lang === 'pt' ? 'Taxa Horaria (EUR)' : 'Hourly Rate (EUR)'}
+                                    {t.costCalculator.hourlyRate}
                                 </label>
                                 <input
                                     type="number"
@@ -165,7 +161,7 @@ const CostCalculator: React.FC = () => {
                             </div>
                             <div>
                                 <label className="block text-sm text-gray-400 mb-1">
-                                    {lang === 'pt' ? 'Acrescimo Noturno (%)' : 'Night Premium (%)'}
+                                    {t.costCalculator.nightPremium}
                                 </label>
                                 <input
                                     type="number"
@@ -178,7 +174,7 @@ const CostCalculator: React.FC = () => {
                             </div>
                             <div>
                                 <label className="block text-sm text-gray-400 mb-1">
-                                    {lang === 'pt' ? 'Acrescimo Feriado (%)' : 'Holiday Premium (%)'}
+                                    {t.costCalculator.holidayPremium}
                                 </label>
                                 <input
                                     type="number"
@@ -191,7 +187,7 @@ const CostCalculator: React.FC = () => {
                             </div>
                             <div>
                                 <label className="block text-sm text-gray-400 mb-1">
-                                    {lang === 'pt' ? 'Acrescimo FDS (%)' : 'Weekend Premium (%)'}
+                                    {t.costCalculator.weekendPremium}
                                 </label>
                                 <input
                                     type="number"
@@ -204,7 +200,7 @@ const CostCalculator: React.FC = () => {
                             </div>
                             <div>
                                 <label className="block text-sm text-gray-400 mb-1">
-                                    {lang === 'pt' ? 'Numero de Equipas' : 'Number of Teams'}
+                                    {t.costCalculator.numberOfTeams}
                                 </label>
                                 <input
                                     type="number"
@@ -222,12 +218,12 @@ const CostCalculator: React.FC = () => {
                     <div className="bg-gray-800 rounded-lg border border-gray-700 p-4">
                         <h3 className="text-white font-semibold mb-2 flex items-center gap-2">
                             <Info className="w-5 h-5 text-gray-400" />
-                            {lang === 'pt' ? 'Notas' : 'Notes'}
+                            {t.costCalculator.notes}
                         </h3>
                         <ul className="text-xs text-gray-400 space-y-1">
-                            <li>{lang === 'pt' ? 'Acrescimo noturno: 25% minimo legal PT' : 'Night premium: 25% minimum legal PT'}</li>
-                            <li>{lang === 'pt' ? 'Acrescimo feriado: 100% dia util, 50% dia descanso' : 'Holiday premium: 100% work day, 50% rest day'}</li>
-                            <li>{lang === 'pt' ? 'Valores estimados, sujeitos a negociacao coletiva' : 'Estimated values, subject to collective bargaining'}</li>
+                            <li>{t.costCalculator.noteNight}</li>
+                            <li>{t.costCalculator.noteHoliday}</li>
+                            <li>{t.costCalculator.noteEstimated}</li>
                         </ul>
                     </div>
                 </div>
@@ -241,28 +237,28 @@ const CostCalculator: React.FC = () => {
                                 <div className="bg-gray-800 rounded-lg border border-gray-700 p-4">
                                     <div className="flex items-center gap-2 text-gray-400 mb-1">
                                         <Clock className="w-4 h-4" />
-                                        <span className="text-xs">{lang === 'pt' ? 'Horas/Equipa' : 'Hours/Team'}</span>
+                                        <span className="text-xs">{t.costCalculator.hoursPerTeam}</span>
                                     </div>
                                     <p className="text-2xl font-bold text-white">{payEstimate.totalHours.toLocaleString()}h</p>
                                 </div>
                                 <div className="bg-gray-800 rounded-lg border border-gray-700 p-4">
                                     <div className="flex items-center gap-2 text-gray-400 mb-1">
                                         <Euro className="w-4 h-4" />
-                                        <span className="text-xs">{lang === 'pt' ? 'Custo/Equipa' : 'Cost/Team'}</span>
+                                        <span className="text-xs">{t.costCalculator.costPerTeam}</span>
                                     </div>
                                     <p className="text-2xl font-bold text-white">{formatCurrency(payEstimate.totalPay)}</p>
                                 </div>
                                 <div className="bg-gray-800 rounded-lg border border-gray-700 p-4">
                                     <div className="flex items-center gap-2 text-gray-400 mb-1">
                                         <Users className="w-4 h-4" />
-                                        <span className="text-xs">{lang === 'pt' ? 'Custo Total' : 'Total Cost'}</span>
+                                        <span className="text-xs">{t.costCalculator.totalCost}</span>
                                     </div>
                                     <p className="text-2xl font-bold text-blue-400">{formatCurrency(totalTeamCost)}</p>
                                 </div>
                                 <div className="bg-gray-800 rounded-lg border border-gray-700 p-4">
                                     <div className="flex items-center gap-2 text-gray-400 mb-1">
                                         <TrendingUp className="w-4 h-4" />
-                                        <span className="text-xs">{lang === 'pt' ? 'Media Mensal' : 'Monthly Avg'}</span>
+                                        <span className="text-xs">{t.costCalculator.monthlyAvg}</span>
                                     </div>
                                     <p className="text-2xl font-bold text-green-400">{formatCurrency(totalTeamCost / 12)}</p>
                                 </div>
@@ -271,44 +267,44 @@ const CostCalculator: React.FC = () => {
                             {/* Cost Breakdown Table */}
                             <div className="bg-gray-800 rounded-lg border border-gray-700 p-4">
                                 <h3 className="text-white font-semibold mb-4">
-                                    {lang === 'pt' ? 'Detalhe por Tipo de Turno' : 'Breakdown by Shift Type'}
+                                    {t.costCalculator.breakdownTitle}
                                 </h3>
                                 <table className="w-full text-sm">
                                     <thead>
                                         <tr className="border-b border-gray-700">
-                                            <th className="text-left py-2 text-gray-400">{lang === 'pt' ? 'Tipo' : 'Type'}</th>
-                                            <th className="text-right py-2 text-gray-400">{lang === 'pt' ? 'Horas' : 'Hours'}</th>
-                                            <th className="text-right py-2 text-gray-400">{lang === 'pt' ? 'Taxa' : 'Rate'}</th>
-                                            <th className="text-right py-2 text-gray-400">{lang === 'pt' ? 'Subtotal' : 'Subtotal'}</th>
+                                            <th className="text-left py-2 text-gray-400">{t.costCalculator.colType}</th>
+                                            <th className="text-right py-2 text-gray-400">{t.costCalculator.colHours}</th>
+                                            <th className="text-right py-2 text-gray-400">{t.costCalculator.colRate}</th>
+                                            <th className="text-right py-2 text-gray-400">{t.costCalculator.colSubtotal}</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr className="border-b border-gray-700/50">
-                                            <td className="py-2 text-gray-300">{lang === 'pt' ? 'Regular (M/T)' : 'Regular (M/T)'}</td>
+                                            <td className="py-2 text-gray-300">{t.costCalculator.regular} (M/T)</td>
                                             <td className="py-2 text-right text-white">{payEstimate.regularHours}h</td>
                                             <td className="py-2 text-right text-gray-400">{formatCurrency(hourlyRate)}/h</td>
                                             <td className="py-2 text-right text-white font-medium">{formatCurrency(payEstimate.regularPay)}</td>
                                         </tr>
                                         <tr className="border-b border-gray-700/50">
-                                            <td className="py-2 text-gray-300">{lang === 'pt' ? 'Noite (N)' : 'Night (N)'}</td>
+                                            <td className="py-2 text-gray-300">{t.costCalculator.night} (N)</td>
                                             <td className="py-2 text-right text-white">{payEstimate.nightHours}h</td>
                                             <td className="py-2 text-right text-purple-400">{formatCurrency(hourlyRate * (1 + nightPremium / 100))}/h</td>
                                             <td className="py-2 text-right text-white font-medium">{formatCurrency(payEstimate.nightPay)}</td>
                                         </tr>
                                         <tr className="border-b border-gray-700/50">
-                                            <td className="py-2 text-gray-300">{lang === 'pt' ? 'Feriado' : 'Holiday'}</td>
+                                            <td className="py-2 text-gray-300">{t.costCalculator.holiday}</td>
                                             <td className="py-2 text-right text-white">{payEstimate.holidayHours}h</td>
                                             <td className="py-2 text-right text-yellow-400">{formatCurrency(hourlyRate * (1 + holidayPremium / 100))}/h</td>
                                             <td className="py-2 text-right text-white font-medium">{formatCurrency(payEstimate.holidayPay)}</td>
                                         </tr>
                                         <tr className="border-b border-gray-700/50">
-                                            <td className="py-2 text-gray-300">{lang === 'pt' ? 'Fim de Semana' : 'Weekend'}</td>
+                                            <td className="py-2 text-gray-300">{t.costCalculator.weekend}</td>
                                             <td className="py-2 text-right text-white">{payEstimate.weekendHours}h</td>
                                             <td className="py-2 text-right text-green-400">{formatCurrency(hourlyRate * (1 + weekendPremium / 100))}/h</td>
                                             <td className="py-2 text-right text-white font-medium">{formatCurrency(payEstimate.weekendPay)}</td>
                                         </tr>
                                         <tr className="bg-gray-700/30">
-                                            <td className="py-2 text-white font-semibold" colSpan={3}>{lang === 'pt' ? 'Total por Equipa' : 'Total per Team'}</td>
+                                            <td className="py-2 text-white font-semibold" colSpan={3}>{t.costCalculator.totalPerTeam}</td>
                                             <td className="py-2 text-right text-white font-bold text-lg">{formatCurrency(payEstimate.totalPay)}</td>
                                         </tr>
                                     </tbody>
@@ -321,7 +317,7 @@ const CostCalculator: React.FC = () => {
                                 <div className="bg-gray-800 rounded-lg border border-gray-700 p-4">
                                     <h3 className="text-white font-semibold mb-4 flex items-center gap-2">
                                         <TrendingUp className="w-5 h-5 text-green-400" />
-                                        {lang === 'pt' ? 'Projecao Mensal' : 'Monthly Projection'}
+                                        {t.costCalculator.monthlyProjection}
                                     </h3>
                                     <ResponsiveContainer width="100%" height={250}>
                                         <BarChart data={monthlyProjection}>
@@ -338,7 +334,7 @@ const CostCalculator: React.FC = () => {
                                 {/* Cost Breakdown Pie */}
                                 <div className="bg-gray-800 rounded-lg border border-gray-700 p-4">
                                     <h3 className="text-white font-semibold mb-4">
-                                        {lang === 'pt' ? 'Distribuicao de Custo' : 'Cost Distribution'}
+                                        {t.costCalculator.costDistribution}
                                     </h3>
                                     <ResponsiveContainer width="100%" height={250}>
                                         <PieChart>
@@ -366,7 +362,7 @@ const CostCalculator: React.FC = () => {
                             {teamCostData.length > 1 && (
                                 <div className="bg-gray-800 rounded-lg border border-gray-700 p-4">
                                     <h3 className="text-white font-semibold mb-4">
-                                        {lang === 'pt' ? 'Comparacao entre Equipas' : 'Team Comparison'}
+                                        {t.costCalculator.teamComparison}
                                     </h3>
                                     <ResponsiveContainer width="100%" height={250}>
                                         <BarChart data={teamCostData}>
@@ -387,23 +383,23 @@ const CostCalculator: React.FC = () => {
                             {/* Annual Summary */}
                             <div className="bg-gradient-to-br from-blue-900/30 to-purple-900/30 rounded-lg border border-blue-500/20 p-6">
                                 <h3 className="text-white font-semibold text-lg mb-4">
-                                    {lang === 'pt' ? 'Resumo Anual' : 'Annual Summary'}
+                                    {t.costCalculator.annualSummary}
                                 </h3>
                                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                                     <div>
-                                        <p className="text-xs text-gray-400">{lang === 'pt' ? 'Total Equipas' : 'Total Teams'}</p>
+                                        <p className="text-xs text-gray-400">{t.costCalculator.totalTeams}</p>
                                         <p className="text-xl font-bold text-white">{teamCount}</p>
                                     </div>
                                     <div>
-                                        <p className="text-xs text-gray-400">{lang === 'pt' ? 'Custo Total/Ano' : 'Total Cost/Year'}</p>
+                                        <p className="text-xs text-gray-400">{t.costCalculator.costPerYear}</p>
                                         <p className="text-xl font-bold text-blue-400">{formatCurrency(totalTeamCost)}</p>
                                     </div>
                                     <div>
-                                        <p className="text-xs text-gray-400">{lang === 'pt' ? 'Custo Total/Mes' : 'Total Cost/Month'}</p>
+                                        <p className="text-xs text-gray-400">{t.costCalculator.costPerMonth}</p>
                                         <p className="text-xl font-bold text-green-400">{formatCurrency(totalTeamCost / 12)}</p>
                                     </div>
                                     <div>
-                                        <p className="text-xs text-gray-400">{lang === 'pt' ? 'Custo Total/Dia' : 'Total Cost/Day'}</p>
+                                        <p className="text-xs text-gray-400">{t.costCalculator.costPerDay}</p>
                                         <p className="text-xl font-bold text-yellow-400">{formatCurrency(totalTeamCost / 365)}</p>
                                     </div>
                                 </div>
@@ -412,7 +408,7 @@ const CostCalculator: React.FC = () => {
                     ) : (
                         <div className="text-center py-12 text-gray-500 border-2 border-dashed border-gray-700 rounded-lg">
                             <Euro className="w-12 h-12 mx-auto mb-4 opacity-50" />
-                            <p>{lang === 'pt' ? 'Selecione um cenario para calcular custos.' : 'Select a scenario to calculate costs.'}</p>
+                            <p>{t.costCalculator.emptyState}</p>
                         </div>
                     )}
                 </div>

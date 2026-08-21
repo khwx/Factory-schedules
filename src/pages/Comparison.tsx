@@ -19,7 +19,7 @@ interface ComparisonRow {
 }
 
 const Comparison: React.FC = () => {
-    const { lang } = useI18n();
+    const { t } = useI18n();
     const { showToast } = useToast();
     const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
     const [highlightBest, setHighlightBest] = useState(true);
@@ -69,29 +69,29 @@ const Comparison: React.FC = () => {
         if (selectedAnalyses.length === 0) return [];
         return [
             {
-                label: lang === 'pt' ? 'Padrao' : 'Pattern',
+                label: t.comparison.rowPattern,
                 values: selectedScenarios.map(s => s.pattern.length),
                 category: 'config',
             },
             {
-                label: lang === 'pt' ? 'Equipas' : 'Teams',
+                label: t.comparison.rowTeams,
                 values: selectedScenarios.map(s => s.teams),
                 category: 'config',
             },
             {
-                label: lang === 'pt' ? 'Duracao Turno' : 'Shift Duration',
+                label: t.comparison.rowShiftDuration,
                 values: selectedScenarios.map(s => s.shiftDuration),
                 unit: 'h',
                 category: 'config',
             },
             {
-                label: lang === 'pt' ? 'Horas Contrato' : 'Contract Hours',
+                label: t.comparison.rowContractHours,
                 values: selectedScenarios.map(s => s.weeklyHoursContract || 40),
                 unit: 'h',
                 category: 'config',
             },
             {
-                label: lang === 'pt' ? 'Horas Semanais Medias' : 'Avg Weekly Hours',
+                label: t.comparison.rowAvgWeeklyHours,
                 values: selectedAnalyses.map(a => a?.avgWeeklyHours || 0),
                 unit: 'h',
                 better: 'lower',
@@ -99,62 +99,62 @@ const Comparison: React.FC = () => {
                 category: 'metric',
             },
             {
-                label: lang === 'pt' ? 'Horas Anuais Totais' : 'Total Annual Hours',
+                label: t.comparison.rowTotalAnnualHours,
                 values: selectedAnalyses.map(a => a?.totalAnnualHours || 0),
                 unit: 'h',
                 format: (v) => Math.round(v).toLocaleString(),
                 category: 'metric',
             },
             {
-                label: lang === 'pt' ? 'Fins de Semana Folga' : 'Weekends Off',
+                label: t.comparison.rowWeekendsOff,
                 values: selectedAnalyses.map(a => a?.weekendsOffPerYear || 0),
                 better: 'higher',
                 category: 'metric',
             },
             {
-                label: lang === 'pt' ? 'Total Dias Folga' : 'Total Off Days',
+                label: t.comparison.rowTotalOffDays,
                 values: selectedAnalyses.map(a => a?.totalOffDaysPerYear || 0),
                 better: 'higher',
                 category: 'metric',
             },
             {
-                label: lang === 'pt' ? 'Max Dias Trabalho Consec.' : 'Max Consec. Work Days',
+                label: t.comparison.rowMaxConsecWorkDays,
                 values: selectedAnalyses.map(a => a?.advancedMetrics?.maxConsecutiveWorkDays || 0),
                 better: 'lower',
                 category: 'quality',
             },
             {
-                label: lang === 'pt' ? 'Max Dias Folga Consec.' : 'Max Consec. Off Days',
+                label: t.comparison.rowMaxConsecOffDays,
                 values: selectedAnalyses.map(a => a?.advancedMetrics?.maxConsecutiveOffDays || 0),
                 better: 'higher',
                 category: 'quality',
             },
             {
-                label: lang === 'pt' ? 'Mini-Ferias (3+ dias)' : 'Mini Vacations (3+ days)',
+                label: t.comparison.rowMiniVacations,
                 values: selectedAnalyses.map(a => a?.advancedMetrics?.miniVacations || 0),
                 better: 'higher',
                 category: 'quality',
             },
             {
-                label: lang === 'pt' ? 'Turnos Noite/Ano' : 'Night Shifts/Year',
+                label: t.comparison.rowNightShiftsYear,
                 values: selectedAnalyses.map(a => a?.advancedMetrics?.totalNightShifts || 0),
                 better: 'lower',
                 category: 'quality',
             },
             {
-                label: lang === 'pt' ? 'Sextas Livres' : 'Fridays Off',
+                label: t.comparison.rowFridaysOff,
                 values: selectedAnalyses.map(a => a?.advancedMetrics?.fridayNightsOff || 0),
                 better: 'higher',
                 category: 'quality',
             },
             {
-                label: lang === 'pt' ? 'Feriados Trabalhados' : 'Holidays Worked',
+                label: t.comparison.rowHolidaysWorked,
                 values: selectedAnalyses.map(a => a?.advancedMetrics?.holidaysWorked || 0),
                 better: 'lower',
                 category: 'quality',
             },
         ];
-    }, [selectedScenarios, selectedAnalyses, lang]);
+    }, [selectedScenarios, selectedAnalyses, t]);
 
     const getBestIndex = (row: ComparisonRow): number | null => {
         if (!row.better || row.values.length < 2) return null;
@@ -201,16 +201,16 @@ const Comparison: React.FC = () => {
             else if (format === 'excel') await exportComparison(selectedScenarios, selectedAnalyses);
             else if (format === 'csv') exportComparisonToCSV(selectedScenarios, selectedAnalyses);
             else exportComparisonToJSON(selectedScenarios, selectedAnalyses);
-            showToast('success', lang === 'pt' ? 'Exportado!' : 'Exported!');
+            showToast('success', t.comparison.toastExported);
         } catch {
-            showToast('error', lang === 'pt' ? 'Erro ao exportar' : 'Export error');
+            showToast('error', t.comparison.toastExportError);
         }
     };
 
     const categories = [
-        { key: 'config', label: lang === 'pt' ? 'Configuracao' : 'Configuration' },
-        { key: 'metric', label: lang === 'pt' ? 'Metricas' : 'Metrics' },
-        { key: 'quality', label: lang === 'pt' ? 'Qualidade de Vida' : 'Quality of Life' },
+        { key: 'config', label: t.comparison.categoryConfig },
+        { key: 'metric', label: t.comparison.categoryMetric },
+        { key: 'quality', label: t.comparison.categoryQuality },
     ] as const;
 
     return (
@@ -218,19 +218,17 @@ const Comparison: React.FC = () => {
             <div className="mb-8">
                 <h1 className="text-3xl font-bold text-white flex items-center gap-3 mb-2">
                     <GitCompareArrows className="w-8 h-8 text-blue-400" />
-                    {lang === 'pt' ? 'Comparacao de Cenarios' : 'Scenario Comparison'}
+                    {t.comparison.title}
                 </h1>
                 <p className="text-gray-400">
-                    {lang === 'pt'
-                        ? 'Compare cenarios lado a lado com indicadores de melhor/pior.'
-                        : 'Compare scenarios side by side with best/worst indicators.'}
+                    {t.comparison.subtitle}
                 </p>
             </div>
 
             {/* Scenario Selection */}
             <div className="bg-gray-800 rounded-lg border border-gray-700 p-4 mb-6 no-print">
                 <div className="flex items-center justify-between mb-3">
-                    <h3 className="text-white font-semibold">{lang === 'pt' ? 'Selecionar' : 'Select'}</h3>
+                    <h3 className="text-white font-semibold">{t.comparison.select}</h3>
                     <div className="flex items-center gap-4">
                         <label className="flex items-center gap-2 text-sm text-gray-400">
                             <input
@@ -239,10 +237,10 @@ const Comparison: React.FC = () => {
                                 onChange={e => setHighlightBest(e.target.checked)}
                                 className="rounded border-gray-600 bg-gray-700 text-blue-500"
                             />
-                            {lang === 'pt' ? 'Destacar melhor/pior' : 'Highlight best/worst'}
+                            {t.comparison.highlightBest}
                         </label>
                         <button onClick={selectAll} className="text-sm text-blue-400 hover:text-blue-300">
-                            {selectedIds.size === scenarios.length ? (lang === 'pt' ? 'Desselecionar' : 'Deselect') : (lang === 'pt' ? 'Todos' : 'All')}
+                            {selectedIds.size === scenarios.length ? t.comparison.deselect : t.comparison.all}
                         </button>
                     </div>
                 </div>
@@ -268,7 +266,7 @@ const Comparison: React.FC = () => {
                 <div className="flex gap-2 mb-6 no-print">
                     <button onClick={handlePrint} className="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-lg text-sm flex items-center gap-2">
                         <Printer className="w-4 h-4" />
-                        {lang === 'pt' ? 'Imprimir' : 'Print'}
+                        {t.comparison.print}
                     </button>
                     <button onClick={() => handleExport('pdf')} className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm flex items-center gap-2">
                         <Download className="w-4 h-4" />
@@ -288,7 +286,7 @@ const Comparison: React.FC = () => {
             {selectedScenarios.length < 2 ? (
                 <div className="text-center py-12 text-gray-500 border-2 border-dashed border-gray-700 rounded-lg">
                     <GitCompareArrows className="w-12 h-12 mx-auto mb-4 opacity-50" />
-                    <p>{lang === 'pt' ? 'Selecione pelo menos 2 cenarios para comparar.' : 'Select at least 2 scenarios to compare.'}</p>
+                    <p>{t.comparison.selectAtLeast2}</p>
                 </div>
             ) : (
                 <div className="bg-gray-800 rounded-lg border border-gray-700 overflow-hidden comparison-print">
@@ -297,13 +295,13 @@ const Comparison: React.FC = () => {
                             <thead>
                                 <tr>
                                     <th className="p-4 bg-gray-900/50 text-gray-400 font-medium border-b border-gray-700 w-1/5">
-                                        {lang === 'pt' ? 'Metrica' : 'Metric'}
+                                        {t.comparison.metric}
                                     </th>
                                     {selectedScenarios.map(s => (
                                         <th key={s.id} className="p-4 bg-gray-900/50 text-white font-semibold border-b border-gray-700 border-l border-gray-700">
                                             {s.name}
                                             <div className="text-xs text-gray-500 font-normal mt-1">
-                                                {s.teams} {lang === 'pt' ? 'equipas' : 'teams'} &bull; {s.shiftDuration}h
+                                                {s.teams} {t.comparison.teamsUnit} &bull; {s.shiftDuration}h
                                             </div>
                                         </th>
                                     ))}
@@ -337,12 +335,12 @@ const Comparison: React.FC = () => {
                                 {/* Qualitative Analysis */}
                                 <tr className="bg-gray-900/30">
                                     <td className="p-3 border-b border-gray-700 text-gray-300 font-semibold text-sm" colSpan={selectedScenarios.length + 1}>
-                                        {lang === 'pt' ? 'Analise Qualitativa' : 'Qualitative Analysis'}
+                                        {t.comparison.qualitativeAnalysis}
                                     </td>
                                 </tr>
                                 <tr>
                                     <td className="p-3 border-b border-gray-700 text-gray-300 text-sm align-top">
-                                        {lang === 'pt' ? 'Observacoes' : 'Observations'}
+                                        {t.comparison.observations}
                                     </td>
                                     {selectedAnalyses.map((analysis, i) => (
                                         <td key={i} className="p-3 border-b border-gray-700 border-l border-gray-700 align-top">
@@ -358,12 +356,12 @@ const Comparison: React.FC = () => {
                                 {/* Pattern Visual */}
                                 <tr className="bg-gray-900/30">
                                     <td className="p-3 border-b border-gray-700 text-gray-300 font-semibold text-sm" colSpan={selectedScenarios.length + 1}>
-                                        {lang === 'pt' ? 'Visualizacao do Padrao' : 'Pattern Visualization'}
+                                        {t.comparison.patternViz}
                                     </td>
                                 </tr>
                                 <tr>
                                     <td className="p-3 border-b border-gray-700 text-gray-300 text-sm">
-                                        {lang === 'pt' ? 'Padrao' : 'Pattern'}
+                                        {t.comparison.patternLabel}
                                     </td>
                                     {selectedScenarios.map(s => (
                                         <td key={s.id} className="p-3 border-b border-gray-700 border-l border-gray-700">

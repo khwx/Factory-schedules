@@ -17,11 +17,11 @@ const IMPACT_COLORS = {
     low: 'bg-blue-100 text-blue-800 border-blue-200',
 };
 
-const CATEGORY_LABELS: Record<string, { pt: string; en: string }> = {
-    balance: { pt: 'Equilibrio', en: 'Balance' },
-    compliance: { pt: 'Conformidade', en: 'Compliance' },
-    comfort: { pt: 'Conforto', en: 'Comfort' },
-    efficiency: { pt: 'Eficiencia', en: 'Efficiency' },
+const CATEGORY_KEYS: Record<string, 'categoryBalance' | 'categoryCompliance' | 'categoryComfort' | 'categoryEfficiency'> = {
+    balance: 'categoryBalance',
+    compliance: 'categoryCompliance',
+    comfort: 'categoryComfort',
+    efficiency: 'categoryEfficiency',
 };
 
 function ScoreGauge({ score }: { score: number }) {
@@ -54,7 +54,7 @@ function ScoreGauge({ score }: { score: number }) {
 }
 
 export default function ScheduleOptimizer() {
-    const { lang } = useI18n();
+    const { lang, t } = useI18n();
     const [selectedId, setSelectedId] = useState('');
     const [showAlternatives, setShowAlternatives] = useState(false);
 
@@ -92,10 +92,10 @@ export default function ScheduleOptimizer() {
                 <div>
                     <h1 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
                         <Brain className="h-6 w-6 text-purple-600" />
-                        {lang === 'pt' ? 'Otimizador de Escalas' : 'Schedule Optimizer'}
+                        {t.scheduleOptimizer.title}
                     </h1>
                     <p className="text-sm text-gray-500 mt-1">
-                        {lang === 'pt' ? 'Analise e melhore o seu cenario de turnos' : 'Analyze and improve your shift scenario'}
+                        {t.scheduleOptimizer.subtitle}
                     </p>
                 </div>
             </div>
@@ -116,22 +116,22 @@ export default function ScheduleOptimizer() {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 flex flex-col items-center">
                     <h3 className="text-sm font-semibold text-gray-500 mb-4 uppercase tracking-wide">
-                        {lang === 'pt' ? 'Pontuacao Global' : 'Overall Score'}
+                        {t.scheduleOptimizer.overallScore}
                     </h3>
                     <ScoreGauge score={result.score} />
                     <p className="mt-3 text-sm text-gray-600 text-center">
                         {result.score >= 75
-                            ? (lang === 'pt' ? 'Cenario bem equilibrado' : 'Well-balanced scenario')
+                            ? t.scheduleOptimizer.scoreWellBalanced
                             : result.score >= 50
-                                ? (lang === 'pt' ? 'Cenario com margem de melhoria' : 'Room for improvement')
-                                : (lang === 'pt' ? 'Cenario precisa de atencao' : 'Needs attention')
+                                ? t.scheduleOptimizer.scoreRoom
+                                : t.scheduleOptimizer.scoreNeedsAttention
                         }
                     </p>
                 </div>
 
                 <div className="lg:col-span-2 bg-white rounded-xl shadow-sm border border-gray-200 p-6">
                     <h3 className="text-sm font-semibold text-gray-500 mb-4 uppercase tracking-wide">
-                        {lang === 'pt' ? 'Constraintes' : 'Constraints'}
+                        {t.scheduleOptimizer.constraints}
                     </h3>
                     <div className="space-y-3">
                         {result.constraints.map(c => {
@@ -170,7 +170,7 @@ export default function ScheduleOptimizer() {
             <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
                 <h3 className="text-sm font-semibold text-gray-500 mb-4 uppercase tracking-wide flex items-center gap-2">
                     <Lightbulb className="h-4 w-4 text-amber-500" />
-                    {lang === 'pt' ? 'Sugestoes de Melhoria' : 'Improvement Suggestions'}
+                    {t.scheduleOptimizer.suggestions}
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {result.suggestions.map(s => (
@@ -180,7 +180,7 @@ export default function ScheduleOptimizer() {
                                     {lang === 'pt' ? s.title : s.titleEn}
                                 </h4>
                                 <span className={clsx('text-[10px] px-2 py-0.5 rounded-full border font-medium', IMPACT_COLORS[s.impact])}>
-                                    {s.impact === 'high' ? (lang === 'pt' ? 'Alto' : 'High') : s.impact === 'medium' ? (lang === 'pt' ? 'Medio' : 'Medium') : (lang === 'pt' ? 'Baixo' : 'Low')}
+                                    {s.impact === 'high' ? t.scheduleOptimizer.impactHigh : s.impact === 'medium' ? t.scheduleOptimizer.impactMedium : t.scheduleOptimizer.impactLow}
                                 </span>
                             </div>
                             <p className="text-xs text-gray-600 mb-2">
@@ -188,9 +188,9 @@ export default function ScheduleOptimizer() {
                             </p>
                             <div className="flex items-center justify-between">
                                 <span className={clsx('text-[10px] px-2 py-0.5 rounded-full',
-                                    CATEGORY_LABELS[s.category]?.pt ? 'bg-gray-100 text-gray-600' : 'bg-gray-100 text-gray-600'
+                                    'bg-gray-100 text-gray-600'
                                 )}>
-                                    {lang === 'pt' ? CATEGORY_LABELS[s.category]?.pt : CATEGORY_LABELS[s.category]?.en}
+                                    {t.scheduleOptimizer[CATEGORY_KEYS[s.category]]}
                                 </span>
                                 {s.scoreImprovement > 0 && (
                                     <span className="text-[10px] text-emerald-600 font-medium flex items-center gap-1">
@@ -211,7 +211,7 @@ export default function ScheduleOptimizer() {
                 >
                     <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide flex items-center gap-2">
                         <RefreshCw className="h-4 w-4 text-blue-500" />
-                        {lang === 'pt' ? 'Padroes Alternativos Recomendados' : 'Recommended Alternative Patterns'}
+                        {t.scheduleOptimizer.alternativePatterns}
                     </h3>
                     <ArrowRight className={clsx('h-4 w-4 text-gray-400 transition-transform', showAlternatives && 'rotate-90')} />
                 </button>

@@ -9,7 +9,7 @@ import { exportComparisonToCSV, exportComparisonToJSON } from '../utils/csvJsonE
 import { exportComparison } from '../utils/export';
 
 const Reports: React.FC = () => {
-    const { lang } = useI18n();
+    const { t } = useI18n();
     const { showToast } = useToast();
     const [selectedScenarios, setSelectedScenarios] = useState<Set<string>>(new Set());
     const [reportType, setReportType] = useState<'summary' | 'detailed' | 'comparison'>('summary');
@@ -70,7 +70,7 @@ const Reports: React.FC = () => {
 
     const handleExport = async () => {
         if (selectedScenarioList.length === 0) {
-            showToast('error', lang === 'pt' ? 'Selecione pelo menos um cenario' : 'Select at least one scenario');
+            showToast('error', t.reports.toastSelectOne);
             return;
         }
 
@@ -84,9 +84,9 @@ const Reports: React.FC = () => {
             } else {
                 exportComparisonToJSON(selectedScenarioList, selectedAnalyses);
             }
-            showToast('success', lang === 'pt' ? 'Relatorio exportado!' : 'Report exported!');
+            showToast('success', t.reports.toastExported);
         } catch {
-            showToast('error', lang === 'pt' ? 'Erro ao exportar' : 'Export error');
+            showToast('error', t.reports.toastExportError);
         }
     };
 
@@ -94,17 +94,17 @@ const Reports: React.FC = () => {
         const analysis = calculateAnalysis(scenario);
         const items: string[] = [];
 
-        if (analysis.avgWeeklyHours <= 35) items.push(lang === 'pt' ? 'Horas confortaveis' : 'Comfortable hours');
-        else if (analysis.avgWeeklyHours <= 40) items.push(lang === 'pt' ? 'Horas normais' : 'Normal hours');
-        else items.push(lang === 'pt' ? 'Excedente de horas' : 'Overtime');
+        if (analysis.avgWeeklyHours <= 35) items.push(t.reports.qComfortableHours);
+        else if (analysis.avgWeeklyHours <= 40) items.push(t.reports.qNormalHours);
+        else items.push(t.reports.qOvertime);
 
-        if (analysis.weekendsOffPerYear >= 40) items.push(lang === 'pt' ? 'Muitos fins de semana livres' : 'Many free weekends');
-        else if (analysis.weekendsOffPerYear >= 20) items.push(lang === 'pt' ? 'Fins de semana moderados' : 'Moderate weekends');
-        else items.push(lang === 'pt' ? 'Poucos fins de semana livres' : 'Few free weekends');
+        if (analysis.weekendsOffPerYear >= 40) items.push(t.reports.qManyWeekends);
+        else if (analysis.weekendsOffPerYear >= 20) items.push(t.reports.qModerateWeekends);
+        else items.push(t.reports.qFewWeekends);
 
         if (analysis.advancedMetrics) {
-            if (analysis.advancedMetrics.maxConsecutiveWorkDays <= 5) items.push(lang === 'pt' ? 'Sequencias de trabalho razoaveis' : 'Reasonable work sequences');
-            else items.push(lang === 'pt' ? 'Sequencias longas de trabalho' : 'Long work sequences');
+            if (analysis.advancedMetrics.maxConsecutiveWorkDays <= 5) items.push(t.reports.qReasonableSequences);
+            else items.push(t.reports.qLongSequences);
         }
 
         return items;
@@ -115,12 +115,10 @@ const Reports: React.FC = () => {
             <div className="mb-8">
                 <h1 className="text-3xl font-bold text-white flex items-center gap-3 mb-2">
                     <FileText className="w-8 h-8 text-blue-400" />
-                    {lang === 'pt' ? 'Relatorios' : 'Reports'}
+                    {t.reports.title}
                 </h1>
                 <p className="text-gray-400">
-                    {lang === 'pt'
-                        ? 'Gere relatorios detalhados dos seus cenarios de escalas.'
-                        : 'Generate detailed reports from your shift scenarios.'}
+                    {t.reports.subtitle}
                 </p>
             </div>
 
@@ -128,21 +126,21 @@ const Reports: React.FC = () => {
             <div className="bg-gray-800 rounded-lg border border-gray-700 p-4 mb-6">
                 <div className="flex items-center justify-between mb-4">
                     <h3 className="text-white font-semibold">
-                        {lang === 'pt' ? 'Selecionar Cenarios' : 'Select Scenarios'}
+                        {t.reports.selectScenarios}
                     </h3>
                     <button
                         onClick={selectAll}
                         className="text-sm text-blue-400 hover:text-blue-300 transition-colors"
                     >
                         {selectedScenarios.size === scenarios.length
-                            ? (lang === 'pt' ? 'Desselecionar todos' : 'Deselect all')
-                            : (lang === 'pt' ? 'Selecionar todos' : 'Select all')}
+                            ? t.reports.deselectAll
+                            : t.reports.selectAll}
                     </button>
                 </div>
 
                 {scenarios.length === 0 ? (
                     <p className="text-gray-500 text-center py-4">
-                        {lang === 'pt' ? 'Nenhum cenario disponivel. Crie um primeiro.' : 'No scenarios available. Create one first.'}
+                        {t.reports.noScenarios}
                     </p>
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
@@ -164,7 +162,7 @@ const Reports: React.FC = () => {
                                 <div className="flex-1 min-w-0">
                                     <p className="text-white font-medium truncate">{s.name}</p>
                                     <p className="text-xs text-gray-400">
-                                        {s.teams} {lang === 'pt' ? 'equipas' : 'teams'} &bull; {s.shiftDuration}h
+                                        {s.teams} {t.reports.teamsUnit} &bull; {s.shiftDuration}h
                                     </p>
                                 </div>
                                 <span className="text-xs text-gray-500">#{i + 1}</span>
@@ -180,35 +178,35 @@ const Reports: React.FC = () => {
                     <div className="bg-gray-800 rounded-lg border border-gray-700 p-4">
                         <div className="flex items-center gap-2 text-gray-400 mb-1">
                             <Users className="w-4 h-4" />
-                            <span className="text-xs">{lang === 'pt' ? 'Cenarios' : 'Scenarios'}</span>
+                            <span className="text-xs">{t.reports.statScenarios}</span>
                         </div>
                         <p className="text-2xl font-bold text-white">{summaryStats.totalScenarios}</p>
                     </div>
                     <div className="bg-gray-800 rounded-lg border border-gray-700 p-4">
                         <div className="flex items-center gap-2 text-gray-400 mb-1">
                             <Clock className="w-4 h-4" />
-                            <span className="text-xs">{lang === 'pt' ? 'Media Horas/Sem' : 'Avg Hours/Week'}</span>
+                            <span className="text-xs">{t.reports.statAvgHours}</span>
                         </div>
                         <p className="text-2xl font-bold text-white">{summaryStats.avgHours.toFixed(1)}h</p>
                     </div>
                     <div className="bg-gray-800 rounded-lg border border-gray-700 p-4">
                         <div className="flex items-center gap-2 text-gray-400 mb-1">
                             <Calendar className="w-4 h-4" />
-                            <span className="text-xs">{lang === 'pt' ? 'Media FDS/Ano' : 'Avg Weekends/Year'}</span>
+                            <span className="text-xs">{t.reports.statAvgWeekends}</span>
                         </div>
                         <p className="text-2xl font-bold text-green-400">{summaryStats.avgWeekends.toFixed(0)}</p>
                     </div>
                     <div className="bg-gray-800 rounded-lg border border-gray-700 p-4">
                         <div className="flex items-center gap-2 text-gray-400 mb-1">
                             <Calendar className="w-4 h-4" />
-                            <span className="text-xs">{lang === 'pt' ? 'Media Folgas/Ano' : 'Avg Off Days/Year'}</span>
+                            <span className="text-xs">{t.reports.statAvgOffDays}</span>
                         </div>
                         <p className="text-2xl font-bold text-green-400">{summaryStats.avgOffDays.toFixed(0)}</p>
                     </div>
                     <div className="bg-gray-800 rounded-lg border border-gray-700 p-4">
                         <div className="flex items-center gap-2 text-gray-400 mb-1">
                             <TrendingUp className="w-4 h-4" />
-                            <span className="text-xs">{lang === 'pt' ? 'Total Horas/Ano' : 'Total Hours/Year'}</span>
+                            <span className="text-xs">{t.reports.statTotalHours}</span>
                         </div>
                         <p className="text-2xl font-bold text-white">{summaryStats.totalHours.toLocaleString()}h</p>
                     </div>
@@ -219,19 +217,19 @@ const Reports: React.FC = () => {
             {selectedScenarios.size > 0 && (
                 <div className="bg-gray-800 rounded-lg border border-gray-700 p-4 mb-6">
                     <h3 className="text-white font-semibold mb-4">
-                        {lang === 'pt' ? 'Gerar Relatorio' : 'Generate Report'}
+                        {t.reports.generateReport}
                     </h3>
 
                     <div className="flex flex-col md:flex-row gap-4 mb-4">
                         <div className="flex-1">
                             <label className="block text-sm text-gray-400 mb-2">
-                                {lang === 'pt' ? 'Tipo de Relatorio' : 'Report Type'}
+                                {t.reports.reportType}
                             </label>
                             <div className="flex gap-2">
                                 {[
-                                    { value: 'summary', label: lang === 'pt' ? 'Resumo' : 'Summary' },
-                                    { value: 'detailed', label: lang === 'pt' ? 'Detalhado' : 'Detailed' },
-                                    { value: 'comparison', label: lang === 'pt' ? 'Comparacao' : 'Comparison' },
+                                    { value: 'summary', label: t.reports.typeSummary },
+                                    { value: 'detailed', label: t.reports.typeDetailed },
+                                    { value: 'comparison', label: t.reports.typeComparison },
                                 ].map(opt => (
                                     <button
                                         key={opt.value}
@@ -250,7 +248,7 @@ const Reports: React.FC = () => {
 
                         <div className="flex-1">
                             <label className="block text-sm text-gray-400 mb-2">
-                                {lang === 'pt' ? 'Formato de Exportacao' : 'Export Format'}
+                                {t.reports.exportFormat}
                             </label>
                             <div className="flex gap-2">
                                 {[
@@ -280,7 +278,7 @@ const Reports: React.FC = () => {
                         className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg transition-colors flex items-center gap-2"
                     >
                         <Download className="w-5 h-5" />
-                        {lang === 'pt' ? `Exportar ${selectedScenarios.size} cenario${selectedScenarios.size !== 1 ? 's' : ''}` : `Export ${selectedScenarios.size} scenario${selectedScenarios.size !== 1 ? 's' : ''}`}
+                        {t.reports.exportButton.replace('{count}', String(selectedScenarios.size))}
                     </button>
                 </div>
             )}
@@ -290,8 +288,8 @@ const Reports: React.FC = () => {
                 <div className="space-y-4">
                     <h3 className="text-white font-semibold">
                         {reportType === 'summary'
-                            ? (lang === 'pt' ? 'Resumo dos Cenarios' : 'Scenario Summary')
-                            : (lang === 'pt' ? 'Relatorio Detalhado' : 'Detailed Report')}
+                            ? t.reports.summaryTitle
+                            : t.reports.detailedTitle}
                     </h3>
                     {selectedScenarioList.map((scenario, i) => {
                         const analysis = analyses[scenarios.findIndex(s => s.id === scenario.id)];
@@ -308,19 +306,19 @@ const Reports: React.FC = () => {
                                 {reportType === 'summary' ? (
                                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                                         <div>
-                                            <p className="text-xs text-gray-400">{lang === 'pt' ? 'Horas/Semana' : 'Hours/Week'}</p>
+                                            <p className="text-xs text-gray-400">{t.reports.hoursWeek}</p>
                                             <p className="text-lg font-bold text-white">{analysis.avgWeeklyHours.toFixed(1)}h</p>
                                         </div>
                                         <div>
-                                            <p className="text-xs text-gray-400">{lang === 'pt' ? 'Horas/Ano' : 'Hours/Year'}</p>
+                                            <p className="text-xs text-gray-400">{t.reports.hoursYear}</p>
                                             <p className="text-lg font-bold text-white">{analysis.totalAnnualHours.toLocaleString()}h</p>
                                         </div>
                                         <div>
-                                            <p className="text-xs text-gray-400">{lang === 'pt' ? 'FDS/Ano' : 'Weekends/Year'}</p>
+                                            <p className="text-xs text-gray-400">{t.reports.weekendsYear}</p>
                                             <p className="text-lg font-bold text-green-400">{analysis.weekendsOffPerYear}</p>
                                         </div>
                                         <div>
-                                            <p className="text-xs text-gray-400">{lang === 'pt' ? 'Folgas/Ano' : 'Off Days/Year'}</p>
+                                            <p className="text-xs text-gray-400">{t.reports.offDaysYear}</p>
                                             <p className="text-lg font-bold text-green-400">{analysis.totalOffDaysPerYear}</p>
                                         </div>
                                     </div>
@@ -328,44 +326,44 @@ const Reports: React.FC = () => {
                                     <div className="space-y-3">
                                         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                                             <div>
-                                                <p className="text-xs text-gray-400">{lang === 'pt' ? 'Equipas' : 'Teams'}</p>
+                                                <p className="text-xs text-gray-400">{t.reports.teams}</p>
                                                 <p className="text-white font-medium">{scenario.teams}</p>
                                             </div>
                                             <div>
-                                                <p className="text-xs text-gray-400">{lang === 'pt' ? 'Turno' : 'Shift'}</p>
+                                                <p className="text-xs text-gray-400">{t.reports.shift}</p>
                                                 <p className="text-white font-medium">{scenario.shiftDuration}h</p>
                                             </div>
                                             <div>
-                                                <p className="text-xs text-gray-400">{lang === 'pt' ? 'Padrao' : 'Pattern'}</p>
+                                                <p className="text-xs text-gray-400">{t.reports.pattern}</p>
                                                 <p className="text-white font-mono text-sm">{scenario.pattern}</p>
                                             </div>
                                             <div>
-                                                <p className="text-xs text-gray-400">{lang === 'pt' ? 'Contrato' : 'Contract'}</p>
+                                                <p className="text-xs text-gray-400">{t.reports.contract}</p>
                                                 <p className="text-white font-medium">{scenario.weeklyHoursContract || 40}h</p>
                                             </div>
                                         </div>
                                         {analysis.advancedMetrics && (
                                             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-2 border-t border-gray-700">
                                                 <div>
-                                                    <p className="text-xs text-gray-400">{lang === 'pt' ? 'Max Trabalho Consec.' : 'Max Consec. Work'}</p>
-                                                    <p className="text-white font-medium">{analysis.advancedMetrics.maxConsecutiveWorkDays} {lang === 'pt' ? 'dias' : 'days'}</p>
+                                                    <p className="text-xs text-gray-400">{t.reports.maxConsecWork}</p>
+                                                    <p className="text-white font-medium">{analysis.advancedMetrics.maxConsecutiveWorkDays} {t.reports.days}</p>
                                                 </div>
                                                 <div>
-                                                    <p className="text-xs text-gray-400">{lang === 'pt' ? 'Max Folga Consec.' : 'Max Consec. Off'}</p>
-                                                    <p className="text-white font-medium">{analysis.advancedMetrics.maxConsecutiveOffDays} {lang === 'pt' ? 'dias' : 'days'}</p>
+                                                    <p className="text-xs text-gray-400">{t.reports.maxConsecOff}</p>
+                                                    <p className="text-white font-medium">{analysis.advancedMetrics.maxConsecutiveOffDays} {t.reports.days}</p>
                                                 </div>
                                                 <div>
-                                                    <p className="text-xs text-gray-400">{lang === 'pt' ? 'Mini-Ferias' : 'Mini Vacations'}</p>
+                                                    <p className="text-xs text-gray-400">{t.reports.miniVacations}</p>
                                                     <p className="text-white font-medium">{analysis.advancedMetrics.miniVacations}</p>
                                                 </div>
                                                 <div>
-                                                    <p className="text-xs text-gray-400">{lang === 'pt' ? 'Turnos Noite' : 'Night Shifts'}</p>
+                                                    <p className="text-xs text-gray-400">{t.reports.nightShifts}</p>
                                                     <p className="text-white font-medium">{analysis.advancedMetrics.totalNightShifts}</p>
                                                 </div>
                                             </div>
                                         )}
                                         <div className="pt-2 border-t border-gray-700">
-                                            <p className="text-xs text-gray-400 mb-2">{lang === 'pt' ? 'Avaliacao Qualitativa' : 'Qualitative Assessment'}</p>
+                                                <p className="text-xs text-gray-400 mb-2">{t.reports.qualitative}</p>
                                             <div className="flex flex-wrap gap-2">
                                                 {qualItems.map((item, j) => (
                                                     <span key={j} className="text-xs bg-gray-700 text-gray-300 px-2 py-1 rounded">
@@ -376,7 +374,7 @@ const Reports: React.FC = () => {
                                         </div>
                                         {scenario.description && (
                                             <div className="pt-2 border-t border-gray-700">
-                                                <p className="text-xs text-gray-400 mb-1">{lang === 'pt' ? 'Notas' : 'Notes'}</p>
+                                                <p className="text-xs text-gray-400 mb-1">{t.reports.notes}</p>
                                                 <p className="text-sm text-gray-300 italic">{scenario.description}</p>
                                             </div>
                                         )}

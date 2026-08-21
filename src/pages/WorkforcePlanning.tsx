@@ -6,8 +6,6 @@ import { getAllHolidays } from '../utils/portugueseHolidays';
 import { Users, TrendingUp, AlertTriangle, CheckCircle, Plus, Minus, ArrowUpRight, ArrowDownRight } from 'lucide-react';
 import { clsx } from 'clsx';
 
-const MONTH_NAMES_PT = ['Janeiro', 'Fevereiro', 'Marco', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
-
 interface StaffingRule {
     id: string;
     month: number; // 0-11
@@ -26,7 +24,7 @@ const DEFAULT_STAFFING_RULES: StaffingRule[] = [
 ];
 
 export default function WorkforcePlanning() {
-    const { lang } = useI18n();
+    const { t } = useI18n();
     const [selectedId, setSelectedId] = useState('');
     const [staffPerTeam, setStaffPerTeam] = useState(5);
     const [teamCount, setTeamCount] = useState(4);
@@ -115,7 +113,7 @@ export default function WorkforcePlanning() {
 
             results.push({
                 month,
-                monthName: MONTH_NAMES_PT[month],
+                monthName: t.calendar.months[month],
                 totalStaff,
                 availableStaff,
                 deficit,
@@ -162,8 +160,8 @@ export default function WorkforcePlanning() {
             <div className="max-w-4xl mx-auto p-6">
                 <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-8 text-center">
                     <Users className="h-12 w-12 mx-auto mb-4 text-gray-400" />
-                    <h2 className="text-xl font-semibold text-gray-800 mb-2">Planeamento de Equipas</h2>
-                    <p className="text-gray-500">Crie ou selecione um cenario para planear as necessidades de pessoal.</p>
+                    <h2 className="text-xl font-semibold text-gray-800 mb-2">{t.workforcePlanning.noScenarioTitle}</h2>
+                    <p className="text-gray-500">{t.workforcePlanning.noScenarioDesc}</p>
                 </div>
             </div>
         );
@@ -175,10 +173,10 @@ export default function WorkforcePlanning() {
                 <div>
                     <h1 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
                         <Users className="h-6 w-6 text-indigo-600" />
-                        {lang === 'pt' ? 'Planeamento de Pessoal' : 'Workforce Planning'}
+                        {t.workforcePlanning.title}
                     </h1>
                     <p className="text-sm text-gray-500 mt-1">
-                        {lang === 'pt' ? 'Planeie as necessidades de equipas por mes com base no cenario' : 'Plan team staffing needs per month based on scenario'}
+                        {t.workforcePlanning.subtitle}
                     </p>
                 </div>
             </div>
@@ -186,7 +184,7 @@ export default function WorkforcePlanning() {
             <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 md:p-6">
                 <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-6">
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Cenario</label>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">{t.workforcePlanning.scenarioLabel}</label>
                         <select
                             value={activeId}
                             onChange={e => setSelectedId(e.target.value)}
@@ -198,7 +196,7 @@ export default function WorkforcePlanning() {
                         </select>
                     </div>
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Equipas</label>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">{t.workforcePlanning.teamsLabel}</label>
                         <input
                             type="number"
                             value={teamCount}
@@ -209,7 +207,7 @@ export default function WorkforcePlanning() {
                         />
                     </div>
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Pessoas/Equipa</label>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">{t.workforcePlanning.staffPerTeamLabel}</label>
                         <input
                             type="number"
                             value={staffPerTeam}
@@ -220,7 +218,7 @@ export default function WorkforcePlanning() {
                         />
                     </div>
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Total Pessoal</label>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">{t.workforcePlanning.totalStaff}</label>
                         <input
                             type="number"
                             value={staffPerTeam * teamCount}
@@ -234,29 +232,29 @@ export default function WorkforcePlanning() {
                             className="flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
                         >
                             <Plus className="h-4 w-4" />
-                            {lang === 'pt' ? 'Regra Personalizada' : 'Custom Rule'}
+                            {t.workforcePlanning.customRule}
                         </button>
                     </div>
                 </div>
 
                 {showAddRule && (
                     <div className="mb-6 p-4 bg-indigo-50 rounded-lg border border-indigo-200">
-                        <h4 className="font-medium text-indigo-800 mb-3">{lang === 'pt' ? 'Adicionar Regra de Pessoal' : 'Add Staffing Rule'}</h4>
+                        <h4 className="font-medium text-indigo-800 mb-3">{t.workforcePlanning.addStaffingRule}</h4>
                         <div className="grid grid-cols-1 md:grid-cols-5 gap-3">
                             <div>
-                                <label className="block text-xs text-gray-500 mb-1">Mes</label>
+                                <label className="block text-xs text-gray-500 mb-1">{t.workforcePlanning.monthLabel}</label>
                                 <select
                                     value={newRuleMonth}
                                     onChange={e => setNewRuleMonth(Number(e.target.value))}
                                     className="w-full border border-gray-300 rounded px-2 py-1.5 text-sm"
                                 >
-                                    {MONTH_NAMES_PT.map((m, i) => (
+                                    {t.calendar.months.map((m, i) => (
                                         <option key={i} value={i}>{m}</option>
                                     ))}
                                 </select>
                             </div>
                             <div>
-                                <label className="block text-xs text-gray-500 mb-1">Minimo</label>
+                                <label className="block text-xs text-gray-500 mb-1">{t.workforcePlanning.minLabel}</label>
                                 <input
                                     type="number"
                                     value={newRuleMin}
@@ -266,7 +264,7 @@ export default function WorkforcePlanning() {
                                 />
                             </div>
                             <div>
-                                <label className="block text-xs text-gray-500 mb-1">Maximo</label>
+                                <label className="block text-xs text-gray-500 mb-1">{t.workforcePlanning.maxLabel}</label>
                                 <input
                                     type="number"
                                     value={newRuleMax}
@@ -276,22 +274,22 @@ export default function WorkforcePlanning() {
                                 />
                             </div>
                             <div className="md:col-span-2">
-                                <label className="block text-xs text-gray-500 mb-1">Descricao</label>
+                                <label className="block text-xs text-gray-500 mb-1">{t.workforcePlanning.descriptionLabel}</label>
                                 <input
                                     type="text"
                                     value={newRuleDesc}
                                     onChange={e => setNewRuleDesc(e.target.value)}
-                                    placeholder={lang === 'pt' ? 'Ex: Pico de producao sazonal' : 'Ex: Seasonal production peak'}
+                                    placeholder={t.workforcePlanning.placeholderDesc}
                                     className="w-full border border-gray-300 rounded px-2 py-1.5 text-sm"
                                 />
                             </div>
                         </div>
                         <div className="flex gap-2 mt-3">
                             <button onClick={handleAddRule} className="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 text-sm">
-                                {lang === 'pt' ? 'Adicionar' : 'Add'}
+                                {t.workforcePlanning.add}
                             </button>
                             <button onClick={() => setShowAddRule(false)} className="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 text-sm">
-                                {lang === 'pt' ? 'Cancelar' : 'Cancel'}
+                                {t.workforcePlanning.cancel}
                             </button>
                         </div>
                     </div>
@@ -299,11 +297,11 @@ export default function WorkforcePlanning() {
 
                 {customRules.length > 0 && (
                     <div className="mb-6">
-                        <h4 className="text-sm font-medium text-gray-700 mb-2">{lang === 'pt' ? 'Regras Personalizadas' : 'Custom Rules'}</h4>
+                        <h4 className="text-sm font-medium text-gray-700 mb-2">{t.workforcePlanning.customRules}</h4>
                         <div className="flex flex-wrap gap-2">
                             {customRules.map(r => (
                                 <div key={r.id} className="flex items-center gap-2 px-3 py-1.5 bg-gray-100 rounded-lg text-sm">
-                                    <span className="font-medium">{MONTH_NAMES_PT[r.month]}</span>
+                                    <span className="font-medium">{t.calendar.months[r.month]}</span>
                                     <span className="text-gray-500">{r.minStaff}-{r.maxStaff} pessoas</span>
                                     <span className="text-gray-400">-</span>
                                     <span className="text-gray-600">{r.description}</span>
@@ -324,7 +322,7 @@ export default function WorkforcePlanning() {
                             <CheckCircle className="h-6 w-6 text-emerald-600" />
                         </div>
                         <div>
-                            <p className="text-sm text-gray-500">{lang === 'pt' ? 'Meses OK' : 'Months OK'}</p>
+                            <p className="text-sm text-gray-500">{t.workforcePlanning.monthsOK}</p>
                             <p className="text-2xl font-bold text-emerald-600">{12 - monthsWithIssues}</p>
                         </div>
                     </div>
@@ -335,7 +333,7 @@ export default function WorkforcePlanning() {
                             <AlertTriangle className="h-6 w-6 text-red-600" />
                         </div>
                         <div>
-                            <p className="text-sm text-gray-500">{lang === 'pt' ? 'Deficit Total' : 'Total Deficit'}</p>
+                            <p className="text-sm text-gray-500">{t.workforcePlanning.totalDeficit}</p>
                             <p className="text-2xl font-bold text-red-600">{totalDeficit}</p>
                         </div>
                     </div>
@@ -346,7 +344,7 @@ export default function WorkforcePlanning() {
                             <TrendingUp className="h-6 w-6 text-amber-600" />
                         </div>
                         <div>
-                            <p className="text-sm text-gray-500">{lang === 'pt' ? 'Excedente Total' : 'Total Surplus'}</p>
+                            <p className="text-sm text-gray-500">{t.workforcePlanning.totalSurplus}</p>
                             <p className="text-2xl font-bold text-amber-600">{totalSurplus}</p>
                         </div>
                     </div>
@@ -357,7 +355,7 @@ export default function WorkforcePlanning() {
                             <Users className="h-6 w-6 text-indigo-600" />
                         </div>
                         <div>
-                            <p className="text-sm text-gray-500">{lang === 'pt' ? 'Total Pessoal' : 'Total Staff'}</p>
+                            <p className="text-sm text-gray-500">{t.workforcePlanning.totalStaff}</p>
                             <p className="text-2xl font-bold text-indigo-600">{staffPerTeam * teamCount}</p>
                         </div>
                     </div>
@@ -367,22 +365,22 @@ export default function WorkforcePlanning() {
             <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
                 <div className="p-4 border-b border-gray-200">
                     <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide">
-                        {lang === 'pt' ? 'Analise Mensal de Necessidades' : 'Monthly Staffing Analysis'}
+                        {t.workforcePlanning.monthlyAnalysis}
                     </h3>
                 </div>
                 <div className="divide-y divide-gray-100">
                     <div className="grid grid-cols-12 gap-1 px-4 py-2 bg-gray-50 text-xs font-medium text-gray-500">
-                        <div className="col-span-2">{lang === 'pt' ? 'Mes' : 'Month'}</div>
-                        <div className="col-span-1 text-center">Total</div>
-                        <div className="col-span-1 text-center">Disp.</div>
-                        <div className="col-span-1 text-center">Min</div>
-                        <div className="col-span-1 text-center">Max</div>
-                        <div className="col-span-1 text-center">Status</div>
-                        <div className="col-span-1 text-center">Def.</div>
-                        <div className="col-span-1 text-center">Exc.</div>
-                        <div className="col-span-1 text-center">D.Trab.</div>
-                        <div className="col-span-1 text-center">Feriados</div>
-                        <div className="col-span-2">Acao</div>
+                        <div className="col-span-2">{t.workforcePlanning.colMonth}</div>
+                        <div className="col-span-1 text-center">{t.workforcePlanning.colTotal}</div>
+                        <div className="col-span-1 text-center">{t.workforcePlanning.colAvailable}</div>
+                        <div className="col-span-1 text-center">{t.workforcePlanning.colMin}</div>
+                        <div className="col-span-1 text-center">{t.workforcePlanning.colMax}</div>
+                        <div className="col-span-1 text-center">{t.workforcePlanning.colStatus}</div>
+                        <div className="col-span-1 text-center">{t.workforcePlanning.colDeficit}</div>
+                        <div className="col-span-1 text-center">{t.workforcePlanning.colSurplus}</div>
+                        <div className="col-span-1 text-center">{t.workforcePlanning.colWorkDays}</div>
+                        <div className="col-span-1 text-center">{t.workforcePlanning.colHolidays}</div>
+                        <div className="col-span-2">{t.workforcePlanning.colAction}</div>
                     </div>
                     {monthlyAnalysis.map(m => (
                         <div key={m.month} className="grid grid-cols-12 gap-1 px-4 py-3 items-center hover:bg-gray-50">
@@ -398,9 +396,9 @@ export default function WorkforcePlanning() {
                                     m.status === 'deficit' ? 'bg-red-100 text-red-700' :
                                     'bg-amber-100 text-amber-700'
                                 )}>
-                                    {m.status === 'ok' ? (lang === 'pt' ? 'OK' : 'OK') :
-                                    m.status === 'deficit' ? (lang === 'pt' ? 'Falta' : 'Deficit') :
-                                    (lang === 'pt' ? 'Exced.' : 'Surplus')}
+                                    {m.status === 'ok' ? t.workforcePlanning.statusOK :
+                                    m.status === 'deficit' ? t.workforcePlanning.statusDeficit :
+                                    t.workforcePlanning.statusSurplus}
                                 </span>
                             </div>
                             <div className="col-span-1 text-center text-sm text-red-600 font-medium">{m.deficit > 0 ? m.deficit : '-'}</div>
@@ -411,17 +409,17 @@ export default function WorkforcePlanning() {
                                 {m.status === 'deficit' && (
                                     <div className="flex items-center gap-1 text-red-600 text-xs">
                                         <ArrowUpRight className="h-3 w-3" />
-                                        <span>{lang === 'pt' ? 'Contratar' : 'Hire'}: {m.deficit}</span>
+                                        <span>{t.workforcePlanning.hire}: {m.deficit}</span>
                                     </div>
                                 )}
                                 {m.status === 'surplus' && (
                                     <div className="flex items-center gap-1 text-amber-600 text-xs">
                                         <ArrowDownRight className="h-3 w-3" />
-                                        <span>{lang === 'pt' ? 'Redistribuir' : 'Reallocate'}: {m.surplus}</span>
+                                        <span>{t.workforcePlanning.reallocate}: {m.surplus}</span>
                                     </div>
                                 )}
                                 {m.status === 'ok' && (
-                                    <span className="text-emerald-600 text-xs">{lang === 'pt' ? 'Equilibrado' : 'Balanced'}</span>
+                                    <span className="text-emerald-600 text-xs">{t.workforcePlanning.balanced}</span>
                                 )}
                             </div>
                         </div>
@@ -431,7 +429,7 @@ export default function WorkforcePlanning() {
 
             <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
                 <h3 className="text-sm font-semibold text-gray-500 mb-4 uppercase tracking-wide">
-                    {lang === 'pt' ? 'Resumo de Contratacoes Sugeridas' : 'Suggested Hiring Summary'}
+                    {t.workforcePlanning.suggestedHiring}
                 </h3>
                 <div className="space-y-2">
                     {monthlyAnalysis.filter(m => m.status === 'deficit').map(m => (
@@ -442,12 +440,12 @@ export default function WorkforcePlanning() {
                                 </div>
                                 <div>
                                     <p className="font-medium text-gray-800">{m.monthName}</p>
-                                    <p className="text-xs text-gray-500">{m.workDays} dias uteis, {m.holidays} feriados</p>
+                                    <p className="text-xs text-gray-500">{m.workDays} {t.workforcePlanning.workDaysText}, {m.holidays} {t.workforcePlanning.holidaysText}</p>
                                 </div>
                             </div>
                             <div className="text-right">
-                                <p className="text-lg font-bold text-red-600">+{m.deficit} {lang === 'pt' ? 'pessoas' : 'people'}</p>
-                                <p className="text-xs text-gray-500">Disponiveis: {m.availableStaff} / Min: {m.minRequired}</p>
+                                <p className="text-lg font-bold text-red-600">+{m.deficit} {t.workforcePlanning.people}</p>
+                                <p className="text-xs text-gray-500">{t.workforcePlanning.availableText}: {m.availableStaff} / Min: {m.minRequired}</p>
                             </div>
                         </div>
                     ))}
@@ -459,19 +457,19 @@ export default function WorkforcePlanning() {
                                 </div>
                                 <div>
                                     <p className="font-medium text-gray-800">{m.monthName}</p>
-                                    <p className="text-xs text-gray-500">{lang === 'pt' ? 'Excedente de pessoal' : 'Staff surplus'}</p>
+                                    <p className="text-xs text-gray-500">{t.workforcePlanning.surplusStaff}</p>
                                 </div>
                             </div>
                             <div className="text-right">
-                                <p className="text-lg font-bold text-amber-600">-{m.surplus} {lang === 'pt' ? 'pessoas' : 'people'}</p>
-                                <p className="text-xs text-gray-500">Disponiveis: {m.availableStaff} / Max: {m.maxAllowed}</p>
+                                <p className="text-lg font-bold text-amber-600">-{m.surplus} {t.workforcePlanning.people}</p>
+                                <p className="text-xs text-gray-500">{t.workforcePlanning.availableText}: {m.availableStaff} / Max: {m.maxAllowed}</p>
                             </div>
                         </div>
                     ))}
                     {monthlyAnalysis.every(m => m.status === 'ok') && (
                         <div className="text-center py-8 text-gray-500">
                             <CheckCircle className="h-12 w-12 mx-auto mb-3 text-emerald-400" />
-                            <p>{lang === 'pt' ? 'Todas as necessidades estao atendidas!' : 'All staffing needs are met!'}</p>
+                            <p>{t.workforcePlanning.allMet}</p>
                         </div>
                     )}
                 </div>
