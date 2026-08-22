@@ -8,7 +8,7 @@ import { calculateAnalysis } from '../utils/calculations';
 const COLORS = ['#60A5FA', '#4ADE80', '#F472B6', '#FBBF24', '#A78BFA', '#FB923C', '#2DD4BF', '#F87171'];
 
 const AnalyticsDashboard: React.FC = () => {
-    const { lang } = useI18n();
+    const { t } = useI18n();
     const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
 
     const scenarios = useMemo(() => {
@@ -57,12 +57,12 @@ const AnalyticsDashboard: React.FC = () => {
         if (selectedScenarios.length === 0) return [];
 
         const metrics = [
-            { key: 'weekends', label: lang === 'pt' ? 'Fins de Semana' : 'Weekends', max: 60 },
-            { key: 'offDays', label: lang === 'pt' ? 'Dias Folga' : 'Off Days', max: 150 },
-            { key: 'hours', label: lang === 'pt' ? 'Horas Semanais' : 'Weekly Hours', max: 50 },
-            { key: 'nights', label: lang === 'pt' ? 'Turnos Noite' : 'Night Shifts', max: 150 },
-            { key: 'fridayOff', label: lang === 'pt' ? 'Sextas Livres' : 'Fridays Off', max: 52 },
-            { key: 'miniVacations', label: lang === 'pt' ? 'Mini-Ferias' : 'Mini Vacations', max: 20 },
+            { key: 'weekends', label: t.analyticsDashboard.radarWeekends, max: 60 },
+            { key: 'offDays', label: t.analyticsDashboard.radarOffDays, max: 150 },
+            { key: 'hours', label: t.analyticsDashboard.radarWeeklyHours, max: 50 },
+            { key: 'nights', label: t.analyticsDashboard.radarNightShifts, max: 150 },
+            { key: 'fridayOff', label: t.analyticsDashboard.radarFridaysOff, max: 52 },
+            { key: 'miniVacations', label: t.analyticsDashboard.radarMiniVacations, max: 20 },
         ];
 
         return metrics.map(m => {
@@ -85,7 +85,7 @@ const AnalyticsDashboard: React.FC = () => {
             });
             return dataPoint;
         });
-    }, [selectedScenarios, selectedAnalyses, lang]);
+    }, [selectedScenarios, selectedAnalyses, t]);
 
     // Pie chart: distribution of shift types across all selected scenarios
     const pieData = useMemo(() => {
@@ -106,12 +106,12 @@ const AnalyticsDashboard: React.FC = () => {
         });
 
         return [
-            { name: lang === 'pt' ? 'Manha' : 'Morning', value: morning },
-            { name: lang === 'pt' ? 'Tarde' : 'Afternoon', value: afternoon },
-            { name: lang === 'pt' ? 'Noite' : 'Night', value: night },
-            { name: lang === 'pt' ? 'Folga' : 'Off', value: off },
+            { name: t.analyticsDashboard.shiftMorning, value: morning },
+            { name: t.analyticsDashboard.shiftAfternoon, value: afternoon },
+            { name: t.analyticsDashboard.shiftNight, value: night },
+            { name: t.analyticsDashboard.shiftOff, value: off },
         ].filter(d => d.value > 0);
-    }, [selectedScenarios, lang]);
+    }, [selectedScenarios, t]);
 
     // Scatter: hours vs weekends (bubble = teams)
     const scatterData = useMemo(() => {
@@ -135,12 +135,12 @@ const AnalyticsDashboard: React.FC = () => {
             const shortName = s.name.length > 15 ? s.name.substring(0, 15) + '...' : s.name;
             return {
                 name: shortName,
-                [lang === 'pt' ? 'Horas/Semana' : 'Hours/Week']: a.avgWeeklyHours,
-                [lang === 'pt' ? 'FDS/Ano' : 'Weekends/Year']: a.weekendsOffPerYear,
-                [lang === 'pt' ? 'Folgas/Ano' : 'Off Days/Year']: a.totalOffDaysPerYear,
+                [t.analyticsDashboard.barHoursPerWeek]: a.avgWeeklyHours,
+                [t.analyticsDashboard.barWeekendsPerYear]: a.weekendsOffPerYear,
+                [t.analyticsDashboard.barOffDaysPerYear]: a.totalOffDaysPerYear,
             };
         }).filter(Boolean);
-    }, [selectedScenarios, selectedAnalyses, lang]);
+    }, [selectedScenarios, selectedAnalyses, t]);
 
     // Night shift impact line chart
     const nightImpactData = useMemo(() => {
@@ -151,12 +151,12 @@ const AnalyticsDashboard: React.FC = () => {
             const shortName = s.name.length > 15 ? s.name.substring(0, 15) + '...' : s.name;
             return {
                 name: shortName,
-                [lang === 'pt' ? 'Turnos Noite' : 'Night Shifts']: am?.totalNightShifts || 0,
-                [lang === 'pt' ? 'Noites Consec.' : 'Consec. Nights']: am?.maxConsecutiveNightShifts || 0,
-                [lang === 'pt' ? 'Sextas Livres' : 'Fridays Off']: am?.fridayNightsOff || 0,
+                [t.analyticsDashboard.nightShifts]: am?.totalNightShifts || 0,
+                [t.analyticsDashboard.consecutiveNights]: am?.maxConsecutiveNightShifts || 0,
+                [t.analyticsDashboard.fridaysOff]: am?.fridayNightsOff || 0,
             };
         }).filter(Boolean);
-    }, [selectedScenarios, selectedAnalyses, lang]);
+    }, [selectedScenarios, selectedAnalyses, t]);
 
     const tooltipStyle = {
         backgroundColor: '#1F2937',
@@ -170,21 +170,19 @@ const AnalyticsDashboard: React.FC = () => {
             <div className="mb-8">
                 <h1 className="text-3xl font-bold text-white flex items-center gap-3 mb-2">
                     <BarChart3 className="w-8 h-8 text-blue-400" />
-                    {lang === 'pt' ? 'Painel Analitico' : 'Analytics Dashboard'}
+                    {t.analyticsDashboard.title}
                 </h1>
                 <p className="text-gray-400">
-                    {lang === 'pt'
-                        ? 'Visualizacoes avancadas e comparacoes entre cenarios.'
-                        : 'Advanced visualizations and scenario comparisons.'}
+                    {t.analyticsDashboard.subtitle}
                 </p>
             </div>
 
             {/* Scenario Selection */}
             <div className="bg-gray-800 rounded-lg border border-gray-700 p-4 mb-6">
                 <div className="flex items-center justify-between mb-3">
-                    <h3 className="text-white font-semibold">{lang === 'pt' ? 'Selecionar Cenarios' : 'Select Scenarios'}</h3>
+                    <h3 className="text-white font-semibold">{t.analyticsDashboard.selectScenarios}</h3>
                     <button onClick={selectAll} className="text-sm text-blue-400 hover:text-blue-300">
-                        {selectedIds.size === scenarios.length && scenarios.length > 0 ? (lang === 'pt' ? 'Desselecionar' : 'Deselect') : (lang === 'pt' ? 'Selecionar Todos' : 'Select All')}
+                        {selectedIds.size === scenarios.length && scenarios.length > 0 ? t.analyticsDashboard.deselect : t.analyticsDashboard.selectAll}
                     </button>
                 </div>
                 <div className="flex flex-wrap gap-2">
@@ -208,7 +206,7 @@ const AnalyticsDashboard: React.FC = () => {
             {selectedScenarios.length === 0 ? (
                 <div className="text-center py-12 text-gray-500 border-2 border-dashed border-gray-700 rounded-lg">
                     <BarChart3 className="w-12 h-12 mx-auto mb-4 opacity-50" />
-                    <p>{lang === 'pt' ? 'Selecione cenarios para ver as analises.' : 'Select scenarios to view analytics.'}</p>
+                    <p>{t.analyticsDashboard.emptyState}</p>
                 </div>
             ) : (
                 <div className="space-y-6">
@@ -217,14 +215,14 @@ const AnalyticsDashboard: React.FC = () => {
                         <div className="bg-gray-800 rounded-lg border border-gray-700 p-4">
                             <div className="flex items-center gap-2 text-gray-400 mb-1">
                                 <Users className="w-4 h-4" />
-                                <span className="text-xs">{lang === 'pt' ? 'Cenarios' : 'Scenarios'}</span>
+                                <span className="text-xs">{t.analyticsDashboard.scenarios}</span>
                             </div>
                             <p className="text-2xl font-bold text-white">{selectedScenarios.length}</p>
                         </div>
                         <div className="bg-gray-800 rounded-lg border border-gray-700 p-4">
                             <div className="flex items-center gap-2 text-gray-400 mb-1">
                                 <Clock className="w-4 h-4" />
-                                <span className="text-xs">{lang === 'pt' ? 'Media Horas' : 'Avg Hours'}</span>
+                                <span className="text-xs">{t.analyticsDashboard.avgHours}</span>
                             </div>
                             <p className="text-2xl font-bold text-white">
                                 {(selectedAnalyses.reduce((s, a) => s + (a?.avgWeeklyHours || 0), 0) / selectedScenarios.length).toFixed(1)}h
@@ -233,7 +231,7 @@ const AnalyticsDashboard: React.FC = () => {
                         <div className="bg-gray-800 rounded-lg border border-gray-700 p-4">
                             <div className="flex items-center gap-2 text-gray-400 mb-1">
                                 <Calendar className="w-4 h-4" />
-                                <span className="text-xs">{lang === 'pt' ? 'Media FDS' : 'Avg Weekends'}</span>
+                                <span className="text-xs">{t.analyticsDashboard.avgWeekends}</span>
                             </div>
                             <p className="text-2xl font-bold text-green-400">
                                 {(selectedAnalyses.reduce((s, a) => s + (a?.weekendsOffPerYear || 0), 0) / selectedScenarios.length).toFixed(0)}
@@ -242,7 +240,7 @@ const AnalyticsDashboard: React.FC = () => {
                         <div className="bg-gray-800 rounded-lg border border-gray-700 p-4">
                             <div className="flex items-center gap-2 text-gray-400 mb-1">
                                 <Zap className="w-4 h-4" />
-                                <span className="text-xs">{lang === 'pt' ? 'Noites Mes' : 'Nights/Month'}</span>
+                                <span className="text-xs">{t.analyticsDashboard.nightsPerMonth}</span>
                             </div>
                             <p className="text-2xl font-bold text-purple-400">
                                 {(selectedAnalyses.reduce((s, a) => s + (a?.advancedMetrics?.nightShiftsPerMonth || 0), 0) / selectedScenarios.length).toFixed(1)}
@@ -254,7 +252,7 @@ const AnalyticsDashboard: React.FC = () => {
                     <div className="bg-gray-800 rounded-lg border border-gray-700 p-4">
                         <h3 className="text-white font-semibold mb-4 flex items-center gap-2">
                             <BarChart3 className="w-5 h-5 text-blue-400" />
-                            {lang === 'pt' ? 'Comparacao de Metricas' : 'Metrics Comparison'}
+                            {t.analyticsDashboard.metricsComparison}
                         </h3>
                         <ResponsiveContainer width="100%" height={300}>
                             <BarChart data={comparisonBarData}>
@@ -263,9 +261,9 @@ const AnalyticsDashboard: React.FC = () => {
                                 <YAxis stroke="#9CA3AF" tick={{ fill: '#9CA3AF' }} />
                                 <Tooltip contentStyle={tooltipStyle} />
                                 <Legend wrapperStyle={{ color: '#9CA3AF' }} />
-                                <Bar dataKey={lang === 'pt' ? 'Horas/Semana' : 'Hours/Week'} fill="#60A5FA" />
-                                <Bar dataKey={lang === 'pt' ? 'FDS/Ano' : 'Weekends/Year'} fill="#4ADE80" />
-                                <Bar dataKey={lang === 'pt' ? 'Folgas/Ano' : 'Off Days/Year'} fill="#A78BFA" />
+                                <Bar dataKey={t.analyticsDashboard.barHoursPerWeek} fill="#60A5FA" />
+                                <Bar dataKey={t.analyticsDashboard.barWeekendsPerYear} fill="#4ADE80" />
+                                <Bar dataKey={t.analyticsDashboard.barOffDaysPerYear} fill="#A78BFA" />
                             </BarChart>
                         </ResponsiveContainer>
                     </div>
@@ -276,7 +274,7 @@ const AnalyticsDashboard: React.FC = () => {
                         <div className="bg-gray-800 rounded-lg border border-gray-700 p-4">
                             <h3 className="text-white font-semibold mb-4 flex items-center gap-2">
                                 <Activity className="w-5 h-5 text-green-400" />
-                                {lang === 'pt' ? 'Perfil de Qualidade' : 'Quality Profile'}
+                                {t.analyticsDashboard.qualityProfile}
                             </h3>
                             <ResponsiveContainer width="100%" height={300}>
                                 <RadarChart data={radarData}>
@@ -306,7 +304,7 @@ const AnalyticsDashboard: React.FC = () => {
                         <div className="bg-gray-800 rounded-lg border border-gray-700 p-4">
                             <h3 className="text-white font-semibold mb-4 flex items-center gap-2">
                                 <PieChart className="w-5 h-5 text-yellow-400" />
-                                {lang === 'pt' ? 'Distribuicao de Turnos' : 'Shift Distribution'}
+                                {t.analyticsDashboard.shiftDistribution}
                             </h3>
                             <ResponsiveContainer width="100%" height={300}>
                                 <RePieChart>
@@ -334,7 +332,7 @@ const AnalyticsDashboard: React.FC = () => {
                     <div className="bg-gray-800 rounded-lg border border-gray-700 p-4">
                         <h3 className="text-white font-semibold mb-4 flex items-center gap-2">
                             <TrendingUp className="w-5 h-5 text-purple-400" />
-                            {lang === 'pt' ? 'Impacto do Turno Noturno' : 'Night Shift Impact'}
+                            {t.analyticsDashboard.nightShiftImpact}
                         </h3>
                         <ResponsiveContainer width="100%" height={250}>
                             <LineChart data={nightImpactData}>
@@ -343,9 +341,9 @@ const AnalyticsDashboard: React.FC = () => {
                                 <YAxis stroke="#9CA3AF" tick={{ fill: '#9CA3AF' }} />
                                 <Tooltip contentStyle={tooltipStyle} />
                                 <Legend wrapperStyle={{ color: '#9CA3AF' }} />
-                                <Line type="monotone" dataKey={lang === 'pt' ? 'Turnos Noite' : 'Night Shifts'} stroke="#A78BFA" strokeWidth={2} dot={{ r: 4 }} />
-                                <Line type="monotone" dataKey={lang === 'pt' ? 'Noites Consec.' : 'Consec. Nights'} stroke="#F472B6" strokeWidth={2} dot={{ r: 4 }} />
-                                <Line type="monotone" dataKey={lang === 'pt' ? 'Sextas Livres' : 'Fridays Off'} stroke="#4ADE80" strokeWidth={2} dot={{ r: 4 }} />
+                                <Line type="monotone" dataKey={t.analyticsDashboard.nightShifts} stroke="#A78BFA" strokeWidth={2} dot={{ r: 4 }} />
+                                <Line type="monotone" dataKey={t.analyticsDashboard.consecutiveNights} stroke="#F472B6" strokeWidth={2} dot={{ r: 4 }} />
+                                <Line type="monotone" dataKey={t.analyticsDashboard.fridaysOff} stroke="#4ADE80" strokeWidth={2} dot={{ r: 4 }} />
                             </LineChart>
                         </ResponsiveContainer>
                     </div>
@@ -354,19 +352,19 @@ const AnalyticsDashboard: React.FC = () => {
                     <div className="bg-gray-800 rounded-lg border border-gray-700 p-4">
                         <h3 className="text-white font-semibold mb-4 flex items-center gap-2">
                             <TrendingUp className="w-5 h-5 text-pink-400" />
-                            {lang === 'pt' ? 'Horas vs Fins de Semana (tamanho = equipas)' : 'Hours vs Weekends (size = teams)'}
+                            {t.analyticsDashboard.hoursVsWeekends}
                         </h3>
                         <ResponsiveContainer width="100%" height={300}>
                             <ScatterChart>
                                 <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-                                <XAxis dataKey="hours" name={lang === 'pt' ? 'Horas' : 'Hours'} stroke="#9CA3AF" tick={{ fill: '#9CA3AF' }} label={{ value: lang === 'pt' ? 'Horas/Semana' : 'Hours/Week', position: 'insideBottom', offset: -5, fill: '#9CA3AF' }} />
-                                <YAxis dataKey="weekends" name={lang === 'pt' ? 'FDS' : 'Weekends'} stroke="#9CA3AF" tick={{ fill: '#9CA3AF' }} label={{ value: lang === 'pt' ? 'FDS/Ano' : 'Weekends/Year', angle: -90, position: 'insideLeft', fill: '#9CA3AF' }} />
-                                <ZAxis dataKey="teams" range={[100, 500]} name={lang === 'pt' ? 'Equipas' : 'Teams'} />
+                                <XAxis dataKey="hours" name={t.analyticsDashboard.axisHours} stroke="#9CA3AF" tick={{ fill: '#9CA3AF' }} label={{ value: t.analyticsDashboard.barHoursPerWeek, position: 'insideBottom', offset: -5, fill: '#9CA3AF' }} />
+                                <YAxis dataKey="weekends" name={t.analyticsDashboard.axisWeekends} stroke="#9CA3AF" tick={{ fill: '#9CA3AF' }} label={{ value: t.analyticsDashboard.barWeekendsPerYear, angle: -90, position: 'insideLeft', fill: '#9CA3AF' }} />
+                                <ZAxis dataKey="teams" range={[100, 500]} name={t.analyticsDashboard.axisTeams} />
                                 <Tooltip
                                     contentStyle={tooltipStyle}
                                     formatter={(_: unknown, __: unknown, props: { payload?: { name?: string; hours?: number; weekends?: number; teams?: number } }) => {
                                         const p = props.payload;
-                                        return [`${p?.name || ''} (${p?.teams || 0} equipas)`, ''];
+                                        return [`${p?.name || ''} (${p?.teams || 0} ${t.analyticsDashboard.teamsUnit})`, ''];
                                     }}
                                 />
                                 <Scatter data={scatterData} fill="#F472B6" />

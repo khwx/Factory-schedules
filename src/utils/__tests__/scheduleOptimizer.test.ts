@@ -48,7 +48,7 @@ describe('optimizeSchedule', () => {
         const first = result.alternativePatterns[0];
         expect(first.pattern).toBeDefined();
         expect(first.score).toBeGreaterThanOrEqual(0);
-        expect(first.description).toBeDefined();
+        expect(first.descriptionKey).toBeDefined();
     });
 
     it('should detect high score for balanced schedule', () => {

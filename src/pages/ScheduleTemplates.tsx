@@ -3,17 +3,18 @@ import { BookOpen, Plus, Download, Factory, Hospital, ShoppingCart, Building, Ut
 import { useI18n } from '../i18n';
 import { useToast } from '../contexts/ToastContext';
 import { Scenario } from '../types';
+import type { Translations } from '../i18n/locales/pt';
+
+type StKey = keyof Translations['scheduleTemplates'];
 
 interface IndustryTemplate {
     id: string;
-    name: string;
-    nameEn: string;
     icon: React.ReactNode;
     color: string;
-    description: string;
-    descriptionEn: string;
+    nameKey: StKey;
+    descKey: StKey;
     scenarios: Array<{
-        name: string;
+        nameKey: StKey;
         teams: number;
         shiftDuration: number;
         weeklyHoursContract: number;
@@ -25,15 +26,13 @@ interface IndustryTemplate {
 const TEMPLATES: IndustryTemplate[] = [
     {
         id: 'manufacturing',
-        name: 'Industria / Fabrico',
-        nameEn: 'Manufacturing',
+        nameKey: 'industryManufacturingName',
+        descKey: 'industryManufacturingDesc',
         icon: <Factory className="w-6 h-6" />,
         color: 'bg-blue-600',
-        description: 'Turnos continuos 24/7 para fabrico industrial',
-        descriptionEn: 'Continuous 24/7 shifts for industrial manufacturing',
         scenarios: [
             {
-                name: '4 Equipas - 2 Turnos (8h)',
+                nameKey: 'templateMfg4Teams2Shifts',
                 teams: 4,
                 shiftDuration: 8,
                 weeklyHoursContract: 40,
@@ -41,7 +40,7 @@ const TEMPLATES: IndustryTemplate[] = [
                 teamPatterns: ['MMTTNNFF', 'NNFFMMTT', 'TTNNFFMM', 'FFMMTTNN'],
             },
             {
-                name: '3 Equipas - 3 Turnos (8h)',
+                nameKey: 'templateMfg3Teams3Shifts',
                 teams: 3,
                 shiftDuration: 8,
                 weeklyHoursContract: 40,
@@ -49,7 +48,7 @@ const TEMPLATES: IndustryTemplate[] = [
                 teamPatterns: ['MMTTNN', 'NNMMTT', 'TTNNMM'],
             },
             {
-                name: '5 Equipas - 4 Turnos (7h)',
+                nameKey: 'templateMfg5Teams4Shifts',
                 teams: 5,
                 shiftDuration: 7,
                 weeklyHoursContract: 35,
@@ -66,15 +65,13 @@ const TEMPLATES: IndustryTemplate[] = [
     },
     {
         id: 'healthcare',
-        name: 'Saude / Hospitalar',
-        nameEn: 'Healthcare',
+        nameKey: 'industryHealthcareName',
+        descKey: 'industryHealthcareDesc',
         icon: <Hospital className="w-6 h-6" />,
         color: 'bg-green-600',
-        description: 'Cobertura 24h com enfermeiros e medicos',
-        descriptionEn: '24h coverage with nurses and doctors',
         scenarios: [
             {
-                name: '3 Equipas - 12h (Enfermagem)',
+                nameKey: 'templateHealthcare3Teams12h',
                 teams: 3,
                 shiftDuration: 12,
                 weeklyHoursContract: 36,
@@ -82,7 +79,7 @@ const TEMPLATES: IndustryTemplate[] = [
                 teamPatterns: ['NNNFFFMMMFFF', 'MMMFFFNNNFFF', 'FFFNNNMMMFFF'],
             },
             {
-                name: '4 Equipas - 8h (Hospital)',
+                nameKey: 'templateHealthcare4Teams8h',
                 teams: 4,
                 shiftDuration: 8,
                 weeklyHoursContract: 40,
@@ -93,15 +90,13 @@ const TEMPLATES: IndustryTemplate[] = [
     },
     {
         id: 'retail',
-        name: 'Retalho / Comercio',
-        nameEn: 'Retail',
+        nameKey: 'industryRetailName',
+        descKey: 'industryRetailDesc',
         icon: <ShoppingCart className="w-6 h-6" />,
         color: 'bg-purple-600',
-        description: 'Horarios para lojas e centros comerciais',
-        descriptionEn: 'Schedules for shops and shopping centers',
         scenarios: [
             {
-                name: '3 Equipas - 6 dias/semana',
+                nameKey: 'templateRetail3Teams6Days',
                 teams: 3,
                 shiftDuration: 8,
                 weeklyHoursContract: 48,
@@ -109,7 +104,7 @@ const TEMPLATES: IndustryTemplate[] = [
                 teamPatterns: ['MMMMMMF', 'FMMMMMM', 'MMFMMMM'],
             },
             {
-                name: '2 Equipas - Turnos Rotativos',
+                nameKey: 'templateRetail2TeamsRotating',
                 teams: 2,
                 shiftDuration: 8,
                 weeklyHoursContract: 40,
@@ -120,22 +115,20 @@ const TEMPLATES: IndustryTemplate[] = [
     },
     {
         id: 'office',
-        name: 'Escritorio / Servicos',
-        nameEn: 'Office',
+        nameKey: 'industryOfficeName',
+        descKey: 'industryOfficeDesc',
         icon: <Building className="w-6 h-6" />,
         color: 'bg-yellow-600',
-        description: 'Horarios de escritorio com flexibilidade',
-        descriptionEn: 'Office schedules with flexibility',
         scenarios: [
             {
-                name: '1 Equipa - 5x2 (Horario Comercial)',
+                nameKey: 'templateOffice1Team5x2',
                 teams: 1,
                 shiftDuration: 8,
                 weeklyHoursContract: 40,
                 pattern: 'MMMMMFF',
             },
             {
-                name: '2 Equipas - Horario Flexivel',
+                nameKey: 'templateOffice2TeamsFlexible',
                 teams: 2,
                 shiftDuration: 8,
                 weeklyHoursContract: 40,
@@ -146,15 +139,13 @@ const TEMPLATES: IndustryTemplate[] = [
     },
     {
         id: 'hospitality',
-        name: 'Hotelaria / Restauracao',
-        nameEn: 'Hospitality',
+        nameKey: 'industryHospitalityName',
+        descKey: 'industryHospitalityDesc',
         icon: <Utensils className="w-6 h-6" />,
         color: 'bg-orange-600',
-        description: 'Turnos para hoteis e restaurantes',
-        descriptionEn: 'Shifts for hotels and restaurants',
         scenarios: [
             {
-                name: '3 Equipas - Pequeno Hotel',
+                nameKey: 'templateHospitality3Teams',
                 teams: 3,
                 shiftDuration: 8,
                 weeklyHoursContract: 40,
@@ -162,7 +153,7 @@ const TEMPLATES: IndustryTemplate[] = [
                 teamPatterns: ['MMMTTNNNFF', 'NNNFFMMMTT', 'TTNNNFFMMM'],
             },
             {
-                name: '2 Equipas - Restaurante',
+                nameKey: 'templateHospitality2Teams',
                 teams: 2,
                 shiftDuration: 6,
                 weeklyHoursContract: 36,
@@ -173,15 +164,13 @@ const TEMPLATES: IndustryTemplate[] = [
     },
     {
         id: 'logistics',
-        name: 'Logistica / Transportes',
-        nameEn: 'Logistics',
+        nameKey: 'industryLogisticsName',
+        descKey: 'industryLogisticsDesc',
         icon: <Wrench className="w-6 h-6" />,
         color: 'bg-red-600',
-        description: 'Turnos para armazens e distribuicao',
-        descriptionEn: 'Shifts for warehouses and distribution',
         scenarios: [
             {
-                name: '4 Equipas - Armazem 24h',
+                nameKey: 'templateLogistics4Teams',
                 teams: 4,
                 shiftDuration: 8,
                 weeklyHoursContract: 40,
@@ -189,7 +178,7 @@ const TEMPLATES: IndustryTemplate[] = [
                 teamPatterns: ['MMTTNNFF', 'TTNNFFMM', 'NNFFMMTT', 'FFMMTTNN'],
             },
             {
-                name: '3 Equipas - Distribuicao',
+                nameKey: 'templateLogistics3Teams',
                 teams: 3,
                 shiftDuration: 10,
                 weeklyHoursContract: 40,
@@ -201,7 +190,7 @@ const TEMPLATES: IndustryTemplate[] = [
 ];
 
 const ScheduleTemplates: React.FC = () => {
-    const { lang, t } = useI18n();
+    const { t } = useI18n();
     const { showToast } = useToast();
     const [selectedIndustry, setSelectedIndustry] = useState<string | null>(null);
 
@@ -211,7 +200,7 @@ const ScheduleTemplates: React.FC = () => {
 
         const newScenario: Scenario = {
             id: crypto.randomUUID(),
-            name: template.name,
+            name: t.scheduleTemplates[template.nameKey],
             teams: template.teams,
             shiftDuration: template.shiftDuration,
             weeklyHoursContract: template.weeklyHoursContract,
@@ -220,7 +209,7 @@ const ScheduleTemplates: React.FC = () => {
         };
 
         localStorage.setItem('shiftsim_scenarios', JSON.stringify([...existing, newScenario]));
-        showToast('success', t.scheduleTemplates.toastAdded.replace('{name}', template.name));
+        showToast('success', t.scheduleTemplates.toastAdded.replace('{name}', t.scheduleTemplates[template.nameKey]));
     };
 
     const handleImportAll = (template: IndustryTemplate) => {
@@ -228,8 +217,13 @@ const ScheduleTemplates: React.FC = () => {
         const existing: Scenario[] = saved ? JSON.parse(saved) : [];
 
         const newScenarios = template.scenarios.map(s => ({
-            ...s,
             id: crypto.randomUUID(),
+            name: t.scheduleTemplates[s.nameKey],
+            teams: s.teams,
+            shiftDuration: s.shiftDuration,
+            weeklyHoursContract: s.weeklyHoursContract,
+            pattern: s.pattern,
+            teamPatterns: s.teamPatterns,
         }));
 
         localStorage.setItem('shiftsim_scenarios', JSON.stringify([...existing, ...newScenarios]));
@@ -266,10 +260,10 @@ const ScheduleTemplates: React.FC = () => {
                             </div>
                             <div className="flex-1">
                                 <h3 className="text-white font-semibold text-lg">
-                                    {lang === 'pt' ? template.name : template.nameEn}
+                                    {t.scheduleTemplates[template.nameKey]}
                                 </h3>
                                 <p className="text-sm text-gray-400 mt-1">
-                                    {lang === 'pt' ? template.description : template.descriptionEn}
+                                    {t.scheduleTemplates[template.descKey]}
                                 </p>
                                 <p className="text-xs text-gray-500 mt-2">
                                     {template.scenarios.length} {t.scheduleTemplates.templatesAvailable}
@@ -296,10 +290,10 @@ const ScheduleTemplates: React.FC = () => {
                                         </div>
                                         <div>
                                             <h2 className="text-xl font-semibold text-white">
-                                                {lang === 'pt' ? template.name : template.nameEn}
+                                                {t.scheduleTemplates[template.nameKey]}
                                             </h2>
                                             <p className="text-sm text-gray-400">
-                                                {lang === 'pt' ? template.description : template.descriptionEn}
+                                                {t.scheduleTemplates[template.descKey]}
                                             </p>
                                         </div>
                                     </div>
@@ -315,7 +309,7 @@ const ScheduleTemplates: React.FC = () => {
                                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                                     {template.scenarios.map((scenario, i) => (
                                         <div key={i} className="bg-gray-700/50 rounded-lg border border-gray-600 p-4">
-                                            <h4 className="text-white font-medium mb-2">{scenario.name}</h4>
+                                            <h4 className="text-white font-medium mb-2">{t.scheduleTemplates[scenario.nameKey]}</h4>
                                             <div className="space-y-1 text-sm text-gray-400 mb-4">
                                                 <p>{scenario.teams} {t.scheduleTemplates.teamsUnit} &bull; {scenario.shiftDuration}h</p>
                                                 <p>{t.scheduleTemplates.contract}: {scenario.weeklyHoursContract}h</p>

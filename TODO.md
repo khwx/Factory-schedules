@@ -19,9 +19,13 @@ quebrando a experiência para `es`/`fr`/`de`. Cada item abaixo deve:
 - [x] `src/pages/Settings.tsx` — concluído (Round 51; 6 chaves novas em `settings.*` + array `calendar.months` em 5 línguas; reuso de `header.*`; falta reaproveitar `calendar.months` no `Layout.tsx`)
 - [x] `src/pages/HolidayCalendar.tsx` — concluído (Round 53; nova secção `holidayCalendar` em 5 línguas; array `calendar.dayNames` em 5 línguas; reuso de `calendar.months` e `header.holidayNameRequired`/`holidayAdded`/`holidayRemoved`; removido hardcoded PT/EN + constantes MONTH_NAMES/DAY_NAMES)
 - [x] `src/pages/CostCalculator.tsx` — concluído (Round 54; nova secção `costCalculator` em 5 línguas com 35 chaves; reuso de `calendar.months` para meses; removido ~55 ternários lang === 'pt')
-- [ ] Restantes páginas (auditoria com `grep -rn \"lang === \" src`): `WorkforcePlanning.tsx`, `HelpPage.tsx`, `ScheduleOptimizer.tsx`, `Comparison.tsx`, `Reports.tsx`, `ScheduleTemplates.tsx`, `AnalyticsDashboard.tsx`
+- [x] `src/pages/HelpPage.tsx` — concluído (Round 55; FAQ/funcionalidades/atalhos migrados para `t.helpPage.*`; removido ~hardcoded PT/EN)
+- [x] `src/pages/ScheduleOptimizer.tsx` — concluído (Round 55; nova secção `scheduleOptimizer` em 5 línguas + motor em `src/utils/scheduleOptimizer.ts` com constraints/sugestões/padrões alternativos; uso `t.scheduleOptimizer.*`)
+- [x] `src/pages/AnalyticsDashboard.tsx` — concluído (Round 55; migração de rótulos/gráficos para `t.analyticsDashboard.*`)
+- [x] `src/pages/ScheduleTemplates.tsx` — concluído (Round 55; indústrias/cenários migrados para chaves `industry*Name`/`industry*Desc`/`template*` existentes em 5 línguas; removido `name`/`nameEn`/`description` hardcoded e ternários `lang === 'pt'`)
+- [ ] Restantes páginas (auditoria `grep -rn \"lang === \" src` + strings hardcoded): `WorkforcePlanning.tsx`, `Comparison.tsx`, `Reports.tsx`
 - [x] `src/pages/TeamRoster.tsx` — concluído (Round 52; nova secção `teamRoster` em 5 línguas; reuso de `calendar.morning`/`afternoon`/`night`/`off` e `calendar.months`; removido hardcoded PT/EN)
-- [ ] `src/Layout.tsx` — reaproveitar `calendar.months` nos nomes dos meses do seletor de feriados (hardcoded PT)
+- [x] `src/Layout.tsx` — reaproveitar `calendar.months` nos nomes dos meses do seletor de feriados (hardcoded PT) — concluído (Round 55)
 
 ## 2. Traduzir as strings migradas
 Após migrar, garantir tradução completa em `es`/`fr`/`de` (as chaves já foram criadas

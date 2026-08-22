@@ -2,6 +2,23 @@
 
 Log de execuções autónomas do Bot Orquestrador (modelos free: `opencode/hy3-free`).
 
+## Round 55 — 2026-08-22
+**Objetivo:** Finalizar e corrigir a ronda de migração i18n pendente no working tree (HelpPage, ScheduleOptimizer, AnalyticsDashboard, ScheduleTemplates, Layout) e o novo motor `scheduleOptimizer`, deixando o projeto a compilar e com os testes a passar, depois fazer push.
+
+**Contexto:** O working tree tinha um conjunto de alterações não commitadas de uma ronda anterior interrompida, num estado **quebrado**: (1) a secção `scheduleOptimizer` tinha sido adicionada em duplicado em `src/i18n/locales/{pt,en,es,fr,de}.ts` (TS1117 — objeto com chave repetida); (2) `src/utils/scheduleOptimizer.ts` referenciava `calculateScore(...)` que não estava definida (TS2304); (3) o teste `src/utils/__tests__/scheduleOptimizer.test.ts` usava `first.description` num tipo que passou a ter `descriptionKey`. Além disso, `src/pages/ScheduleTemplates.tsx` ainda usava `name`/`nameEn`/`description`/`descriptionEn` hardcoded com ternários `lang === 'pt'`, apesar de as chaves `industry*Name`/`industry*Desc`/`template*` já existirem nos locales.
+
+**O que foi feito:**
+- **`src/i18n/locales/{pt,en,es,fr,de}.ts`:** removida a secção `scheduleOptimizer` duplicada (a pequena, incompleta) de cada ficheiro, mantida a secção completa (com `noScenario*`, `constraint*`, `suggestion*`, `alternativePattern*`). Paridade de chaves preservada nas 5 línguas.
+- **`src/utils/scheduleOptimizer.ts`:** implementada `calculateScore(analysis)` (0–100, ponderada pelos `status` das constraints) usada por `generateAlternatives` e `optimizeSchedule`.
+- **`src/utils/__tests__/scheduleOptimizer.test.ts`:** corrigido `first.description` → `first.descriptionKey`.
+- **`src/pages/ScheduleTemplates.tsx`:** substituídas as strings hardcoded `name`/`nameEn`/`description`/`descriptionEn` e os ternários `lang === 'pt'` por chaves i18n existentes (`industry*Name`, `industry*Desc`, `template*`), via `nameKey`/`descKey` tipados (`StKey`); o nome do cenário importado passa a ser a tradução atual.
+- **`src/Layout.tsx`:** seletor de feriados agora reutiliza `t.calendar.months` (removeu array PT hardcoded).
+- **`src/pages/HelpPage.tsx`, `src/pages/ScheduleOptimizer.tsx`, `src/pages/AnalyticsDashboard.tsx`:** concluídas as migrações i18n iniciadas na ronda anterior (uso de `t.helpPage.*`, `t.scheduleOptimizer.*`, `t.analyticsDashboard.*`).
+
+**Verificação:** `tsc -b` passa (exit 0); `vitest` → **591 passam**, **0 falham**.
+
+**Decisão registada:** Migração i18n de HelpPage/ScheduleOptimizer/AnalyticsDashboard/ScheduleTemplates/Layout concluída e estado quebrado corrigido. Próximos passos (ver `TODO.md`): auditar `WorkforcePlanning.tsx`, `Comparison.tsx` e `Reports.tsx` quanto a strings hardcoded PT/EN.
+
 ## Round 54 — 2026-08-21
 **Objetivo:** Migrar as strings hardcoded de `src/pages/CostCalculator.tsx` para o sistema i18n, removendo todos os ternários `lang === 'pt' ? ... : ...` e garantindo paridade de chaves em 5 línguas.
 

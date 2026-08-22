@@ -24,6 +24,39 @@ const CATEGORY_KEYS: Record<string, 'categoryBalance' | 'categoryCompliance' | '
     efficiency: 'categoryEfficiency',
 };
 
+const CONSTRAINT_NAME_KEYS: Record<string, string> = {
+    hours: 'constraintHoursName',
+    consecutive_work: 'constraintConsecutiveWorkName',
+    night_shifts: 'constraintNightShiftsName',
+    weekends: 'constraintWeekendsName',
+    mini_vacations: 'constraintMiniVacationsName',
+    friday_nights: 'constraintFridayNightsName',
+};
+
+const SUGGESTION_TITLE_KEYS: Record<string, string> = {
+    adjust_hours: 'suggestionAdjustHoursTitle',
+    reduce_consecutive: 'suggestionReduceConsecutiveTitle',
+    reduce_nights: 'suggestionReduceNightsTitle',
+    more_weekends: 'suggestionMoreWeekendsTitle',
+    add_mini_vacations: 'suggestionAddMiniVacationsTitle',
+    friday_nights_off: 'suggestionFridayNightsOffTitle',
+    good_overall: 'suggestionGoodOverallTitle',
+};
+
+const SUGGESTION_DESC_KEYS: Record<string, string> = {
+    adjust_hours: 'suggestionAdjustHoursDesc',
+    reduce_consecutive: 'suggestionReduceConsecutiveDesc',
+    reduce_nights: 'suggestionReduceNightsDesc',
+    more_weekends: 'suggestionMoreWeekendsDesc',
+    add_mini_vacations: 'suggestionAddMiniVacationsDesc',
+    friday_nights_off: 'suggestionFridayNightsOffDesc',
+    good_overall: 'suggestionGoodOverallDesc',
+};
+
+function interpolate(template: string, params: Record<string, string | number>): string {
+    return template.replace(/\{(\w+)\}/g, (_, key) => String(params[key] ?? ''));
+}
+
 function ScoreGauge({ score }: { score: number }) {
     const circumference = 2 * Math.PI * 45;
     const offset = circumference - (score / 100) * circumference;
@@ -54,7 +87,7 @@ function ScoreGauge({ score }: { score: number }) {
 }
 
 export default function ScheduleOptimizer() {
-    const { lang, t } = useI18n();
+    const { t } = useI18n();
     const [selectedId, setSelectedId] = useState('');
     const [showAlternatives, setShowAlternatives] = useState(false);
 
@@ -79,8 +112,8 @@ export default function ScheduleOptimizer() {
             <div className="max-w-4xl mx-auto p-6">
                 <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-8 text-center">
                     <Brain className="h-12 w-12 mx-auto mb-4 text-gray-400" />
-                    <h2 className="text-xl font-semibold text-gray-800 mb-2">Otimizador de Escalas</h2>
-                    <p className="text-gray-500">Crie ou selecione um cenario para otimizar.</p>
+                    <h2 className="text-xl font-semibold text-gray-800 mb-2">{t.scheduleOptimizer.noScenarioTitle}</h2>
+                    <p className="text-gray-500">{t.scheduleOptimizer.noScenarioDesc}</p>
                 </div>
             </div>
         );
@@ -101,7 +134,7 @@ export default function ScheduleOptimizer() {
             </div>
 
             <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 md:p-6 no-print">
-                <label className="block text-sm font-medium text-gray-700 mb-1">Cenario</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">{t.scheduleOptimizer.scenarioLabel}</label>
                 <select
                     value={activeId}
                     onChange={e => setSelectedId(e.target.value)}
@@ -137,13 +170,14 @@ export default function ScheduleOptimizer() {
                         {result.constraints.map(c => {
                             const style = STATUS_COLORS[c.status];
                             const Icon = style.icon;
+                            const nameKey = CONSTRAINT_NAME_KEYS[c.id];
                             return (
                                 <div key={c.id} className={clsx('flex items-center gap-3 p-3 rounded-lg border', style.bg, style.border)}>
                                     <Icon className={clsx('h-5 w-5 flex-shrink-0', style.text)} />
                                     <div className="flex-1 min-w-0">
                                         <div className="flex items-center justify-between">
                                             <span className="font-medium text-gray-800 text-sm">
-                                                {lang === 'pt' ? c.name : c.nameEn}
+                                                {t.scheduleOptimizer[nameKey as keyof typeof t.scheduleOptimizer] as string}
                                             </span>
                                             <span className="text-xs text-gray-500">
                                                 {c.current} / {c.target}
@@ -177,19 +211,20 @@ export default function ScheduleOptimizer() {
                         <div key={s.id} className="p-4 rounded-lg border border-gray-200 hover:border-purple-300 transition-colors">
                             <div className="flex items-start justify-between gap-2 mb-2">
                                 <h4 className="font-medium text-gray-800 text-sm">
-                                    {lang === 'pt' ? s.title : s.titleEn}
+                                    {t.scheduleOptimizer[SUGGESTION_TITLE_KEYS[s.id] as keyof typeof t.scheduleOptimizer] as string}
                                 </h4>
                                 <span className={clsx('text-[10px] px-2 py-0.5 rounded-full border font-medium', IMPACT_COLORS[s.impact])}>
                                     {s.impact === 'high' ? t.scheduleOptimizer.impactHigh : s.impact === 'medium' ? t.scheduleOptimizer.impactMedium : t.scheduleOptimizer.impactLow}
                                 </span>
                             </div>
                             <p className="text-xs text-gray-600 mb-2">
-                                {lang === 'pt' ? s.description : s.descriptionEn}
+                                {interpolate(
+                                    t.scheduleOptimizer[SUGGESTION_DESC_KEYS[s.id] as keyof typeof t.scheduleOptimizer] as string,
+                                    s.params || {}
+                                )}
                             </p>
                             <div className="flex items-center justify-between">
-                                <span className={clsx('text-[10px] px-2 py-0.5 rounded-full',
-                                    'bg-gray-100 text-gray-600'
-                                )}>
+                                <span className={clsx('text-[10px] px-2 py-0.5 rounded-full', 'bg-gray-100 text-gray-600')}>
                                     {t.scheduleOptimizer[CATEGORY_KEYS[s.category]]}
                                 </span>
                                 {s.scoreImprovement > 0 && (
@@ -230,7 +265,7 @@ export default function ScheduleOptimizer() {
                                     <div className="flex items-center gap-3">
                                         <code className="text-sm font-mono bg-gray-100 px-2 py-1 rounded">{alt.pattern}</code>
                                         <span className="text-xs text-gray-500">
-                                            {lang === 'pt' ? alt.description : alt.descriptionEn}
+                                            {t.scheduleOptimizer[`alternativePattern${alt.descriptionKey}` as keyof typeof t.scheduleOptimizer] as string}
                                         </span>
                                     </div>
                                 </div>

@@ -341,7 +341,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                                         onChange={e => setNewHolidayMonth(Number(e.target.value))}
                                         className="w-28 bg-gray-600 border border-gray-500 rounded px-2 py-2 text-white text-sm focus:outline-none focus:border-blue-500"
                                     >
-                                        {['Janeiro', 'Fevereiro', 'Marco', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'].map((m, i) => (
+                                        {t.calendar.months.map((m, i) => (
                                             <option key={i} value={i}>{m}</option>
                                         ))}
                                     </select>
