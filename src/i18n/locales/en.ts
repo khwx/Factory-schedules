@@ -436,6 +436,7 @@ export const en: Translations = {
     rowNightShiftsYear: 'Night Shifts/Year',
     rowFridaysOff: 'Fridays Off',
     rowHolidaysWorked: 'Holidays Worked',
+    dayLabel: 'Day {n}',
   },
   reports: {
     title: 'Reports',

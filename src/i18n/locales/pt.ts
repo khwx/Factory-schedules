@@ -434,6 +434,7 @@ export const pt = {
     rowNightShiftsYear: 'Turnos Noite/Ano',
     rowFridaysOff: 'Sextas Livres',
     rowHolidaysWorked: 'Feriados Trabalhados',
+    dayLabel: 'Dia {n}',
   },
   reports: {
     title: 'Relatorios',

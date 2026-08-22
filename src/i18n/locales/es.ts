@@ -436,6 +436,7 @@ export const es: Translations = {
     rowNightShiftsYear: 'Turnos Noche/Ano',
     rowFridaysOff: 'Viernes Libres',
     rowHolidaysWorked: 'Feriados Trabajados',
+    dayLabel: 'Dia {n}',
   },
   reports: {
     title: 'Informes',

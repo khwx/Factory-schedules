@@ -24,7 +24,7 @@ const DEFAULT_STAFFING_RULES: StaffingRule[] = [
 ];
 
 export default function WorkforcePlanning() {
-    const { t } = useI18n();
+    const { t, lang } = useI18n();
     const [selectedId, setSelectedId] = useState('');
     const [staffPerTeam, setStaffPerTeam] = useState(5);
     const [teamCount, setTeamCount] = useState(4);
@@ -302,9 +302,9 @@ export default function WorkforcePlanning() {
                             {customRules.map(r => (
                                 <div key={r.id} className="flex items-center gap-2 px-3 py-1.5 bg-gray-100 rounded-lg text-sm">
                                     <span className="font-medium">{t.calendar.months[r.month]}</span>
-                                    <span className="text-gray-500">{r.minStaff}-{r.maxStaff} pessoas</span>
+                                    <span className="text-gray-500">{r.minStaff}-{r.maxStaff} {t.workforcePlanning.people}</span>
                                     <span className="text-gray-400">-</span>
-                                    <span className="text-gray-600">{r.description}</span>
+                                     <span className="text-gray-600">{lang === 'en' ? r.descriptionEn : r.description}</span>
                                     <button onClick={() => handleRemoveRule(r.id)} className="text-red-500 hover:text-red-700 ml-1">
                                         <Minus className="h-3 w-3" />
                                     </button>

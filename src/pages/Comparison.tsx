@@ -375,7 +375,7 @@ const Comparison: React.FC = () => {
                                                                 : ch === 'N' ? 'bg-blue-600'
                                                                 : 'bg-gray-600'
                                                         }`}
-                                                        title={`Day ${i + 1}: ${ch}`}
+                                                        title={`${t.comparison.dayLabel.replace('{n}', String(i + 1))}: ${ch}`}
                                                     />
                                                 ))}
                                             </div>

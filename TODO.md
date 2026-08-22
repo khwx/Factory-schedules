@@ -23,7 +23,7 @@ quebrando a experiência para `es`/`fr`/`de`. Cada item abaixo deve:
 - [x] `src/pages/ScheduleOptimizer.tsx` — concluído (Round 55; nova secção `scheduleOptimizer` em 5 línguas + motor em `src/utils/scheduleOptimizer.ts` com constraints/sugestões/padrões alternativos; uso `t.scheduleOptimizer.*`)
 - [x] `src/pages/AnalyticsDashboard.tsx` — concluído (Round 55; migração de rótulos/gráficos para `t.analyticsDashboard.*`)
 - [x] `src/pages/ScheduleTemplates.tsx` — concluído (Round 55; indústrias/cenários migrados para chaves `industry*Name`/`industry*Desc`/`template*` existentes em 5 línguas; removido `name`/`nameEn`/`description` hardcoded e ternários `lang === 'pt'`)
-- [ ] Restantes páginas (auditoria `grep -rn \"lang === \" src` + strings hardcoded): `WorkforcePlanning.tsx`, `Comparison.tsx`, `Reports.tsx`
+- [x] `WorkforcePlanning.tsx`, `Comparison.tsx`, `Reports.tsx` — concluído (Round 56; auditoria `grep -rn "lang === " src` só retorna Layout/Settings (seletor de idioma); corrigidas strings hardcoded restantes: "pessoas"→`t.workforcePlanning.people` em WorkforcePlanning, descrições das regras de pessoal agora respeitam `lang` (description/descriptionEn); "Day {n}"→`t.comparison.dayLabel` em Comparison; Reports já 100% em `t.reports.*` (rótulos de formato PDF/Excel/CSV/JSON mantidos como identificadores de ficheiro))
 - [x] `src/pages/TeamRoster.tsx` — concluído (Round 52; nova secção `teamRoster` em 5 línguas; reuso de `calendar.morning`/`afternoon`/`night`/`off` e `calendar.months`; removido hardcoded PT/EN)
 - [x] `src/Layout.tsx` — reaproveitar `calendar.months` nos nomes dos meses do seletor de feriados (hardcoded PT) — concluído (Round 55)
 

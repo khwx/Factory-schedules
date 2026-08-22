@@ -2,6 +2,21 @@
 
 Log de execuções autónomas do Bot Orquestrador (modelos free: `opencode/hy3-free`).
 
+## Round 56 — 2026-08-22
+**Objetivo:** Auditar e corrigir as strings hardcoded remanescentes em `WorkforcePlanning.tsx`, `Comparison.tsx` e `Reports.tsx` (últimas páginas pendentes da migração i18n).
+
+**Contexto:** O `grep -rn "lang === " src` só retorna `Layout.tsx` e `Settings.tsx` (ambos são o seletor de idioma, não strings de UI). As três páginas já usavam massivamente `t.*`, mas restavam algumas strings literais quebrando a experiência fora de PT/EN.
+
+**O que foi feito:**
+- **`src/pages/WorkforcePlanning.tsx`:** substituída a string literal `"pessoas"` por `t.workforcePlanning.people` (chave já existente); as descrições das regras de pessoal (`DEFAULT_STAFFING_RULES` e regras personalizadas) passaram a respeitar `lang` (`descriptionEn` para `en`, `description` para as restantes) em vez de mostrar sempre PT.
+- **`src/pages/Comparison.tsx`:** a legenda do padrão `title="Day N: X"` passou a `t.comparison.dayLabel` (template `Dia {n}`/`Day {n}`/`Jour {n}`/`Tag {n}`), adicionada a chave `dayLabel` às 5 línguas.
+- **`src/pages/Reports.tsx`:** confirmada já 100% em `t.reports.*`; os rótulos de formato (`PDF`/`Excel`/`CSV`/`JSON`) foram mantidos como identificadores de ficheiro (não são strings traduzíveis).
+- **`src/i18n/locales/{pt,en,es,fr,de}.ts`:** adicionada a chave `comparison.dayLabel` (paridade mantida, validada por `tsc`).
+
+**Verificação:** `tsc -b` passa (exit 0); `vitest` → **591 passam**, **0 falham**.
+
+**Decisão registada:** Auditoria i18n das páginas concluída — o projeto já não tem strings hardcoded de UI PT/EN fora do seletor de idioma. Próximos passos (ver `TODO.md` secção 2): revisar a qualidade das traduções em `es`/`fr`/`de` das secções recentes (`costCalculator`, `scheduleOptimizer`, `analyticsDashboard`, `workforcePlanning`, `comparison`).
+
 ## Round 55 — 2026-08-22
 **Objetivo:** Finalizar e corrigir a ronda de migração i18n pendente no working tree (HelpPage, ScheduleOptimizer, AnalyticsDashboard, ScheduleTemplates, Layout) e o novo motor `scheduleOptimizer`, deixando o projeto a compilar e com os testes a passar, depois fazer push.
 
