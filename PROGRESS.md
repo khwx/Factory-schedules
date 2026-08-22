@@ -2,6 +2,20 @@
 
 Log de execuções autónomas do Bot Orquestrador (modelos free: `opencode/hy3-free`).
 
+## Round 57 — 2026-08-22
+**Objetivo:** Revisar a qualidade das traduções em `es`/`fr`/`de` das secções recentes migradas (TODO.md secção 2): `costCalculator`, `scheduleOptimizer`, `analyticsDashboard`, `workforcePlanning`, `comparison` (e `reports`).
+
+**Contexto:** As 5 línguas (pt/en/es/fr/de) têm paridade total de chaves nestas secções (validado por `tsc` e pelo teste de paridade de locales). A auditoria focou-se em erros gramaticais reais, mantendo a convenção ASCII (sem acentos) já usada em todo o projeto.
+
+**O que foi corrigido (qualidade de tradução):**
+- **`es.ts`:** `suggestionReduceConsecutiveDesc` → `dias libres` (plural, era `dias de libre`); `suggestionMoreWeekendsTitle`/`suggestionMoreWeekendsDesc` → `fines de semana libres` (plural, era `de libre`).
+- **`fr.ts`:** `qModerateWeekends` → `Week-ends moderes` (masculino plural, era `moderees`); `workDaysText` → `jours ouvres` (plural, era `ouvre`); `scheduleOptimizer.title` → `Optimiseur d'Horaires` (elisação antes de vogal, era `de Horaires`).
+- **`de.ts`:** `noteEstimated` → `Geschaetzte Werte, abhaengig von Tarifverhandlung` (adjetivo/acordo, era `Geschaetzta ... unterliegen Kollektivverhandlung`); `selectScenarios`→`Szenarien auswaehlen`, `deselect`→`Abwaehlen`, `selectAll`→`Alle auswaehlen` (infinitivos corretos, eram `Auswahlen`/`Abwahlen`/`Alle Auswahlen`).
+
+**Verificação:** `tsc -b` passa (exit 0); `vitest` → **591 passam**, **0 falham**.
+
+**Decisão registada:** Secção 2 (qualidade de traduções) revista para as secções recentes — corrigidos os erros gramaticais detetados em es/fr/de. Próximos passos sugeridos: alargar a revisão de qualidade a secções mais antigas (`reports`, `holidayCalendar`, `scheduleTemplates`, `settings`, `helpPage`) e/ou adicionar testes de cobertura de UI por idioma.
+
 ## Round 56 — 2026-08-22
 **Objetivo:** Auditar e corrigir as strings hardcoded remanescentes em `WorkforcePlanning.tsx`, `Comparison.tsx` e `Reports.tsx` (últimas páginas pendentes da migração i18n).
 

@@ -30,6 +30,8 @@ quebrando a experiência para `es`/`fr`/`de`. Cada item abaixo deve:
 ## 2. Traduzir as strings migradas
 Após migrar, garantir tradução completa em `es`/`fr`/`de` (as chaves já foram criadas
 em todas as línguas, mas revisar qualidade das traduções).
+- [x] `costCalculator`, `scheduleOptimizer`, `analyticsDashboard`, `workforcePlanning`, `comparison`, `reports` — revisadas e corrigidos erros gramaticais em es/fr/de (Round 57)
+- [ ] Alargar a revisão de qualidade a secções mais antigas (`holidayCalendar`, `scheduleTemplates`, `settings`, `helpPage`, `dashboardStats`, `importPreview`, `icsImporter`, `scenarioForm`, `teamRoster`, `scheduleDiff`)
 
 ## 3. ICSImporter — estabilidade em jsdom
 `ICSImporter.drop`/jsdom pode falhar nos testes (`src/components/__tests__/ICSImporter.test.tsx`).
