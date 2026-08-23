@@ -2,6 +2,19 @@
 
 Log de execuções autónomas do Bot Orquestrador (modelos free: `opencode/hy3-free`).
 
+## Round 59 — 2026-08-23
+**Objetivo:** Concluir a Secção 5 do TODO.md — documentação de "Línguas suportadas" no README.
+
+**Contexto:** As 5 línguas (pt/en/es/fr/de) estão 100% migradas e auditadas (Rounds 57–58). No entanto o README continha informação desatualizada: a linha "Multilíngue" referia apenas 3 idiomas (Português, English, Español), quando na realidade o projeto suporta os 5.
+
+**O que foi feito:**
+- Corrigido o bullet "Multilíngue" em README.md (secção Funcionalidades) para referenciar os 5 idiomas.
+- Adicionada nova secção **"🌍 Línguas Suportadas"** ao README com tabela de estado (pt/en/es/fr/de), nota sobre paridade total de chaves validada por `tsc` e testes de locales, e menção à seleção em Definições + persistência em `localStorage`.
+
+**Verificação:** Alteração exclusivamente documental (README.md); não afeta `tsc` nem `vitest`. `git status` limpo após commit.
+
+**Decisão registada:** TODO.md Secção 5 (documentação) concluída — todas as secções do TODO estão agora marcadas como feitas. Próximos passos sugeridos: expandir funcionalidades (ex: nova métrica QoL, ou exportação ICS de horários gerados).
+
 ## Round 58 — 2026-08-22
 **Objetivo:** Revisar a qualidade das traduções em `es`/`fr`/`de` das secções mais antigas (TODO.md secção 2 — alargamento da auditoria): `reports`, `holidayCalendar`, `scheduleTemplates`, `settings`, `helpPage`.
 

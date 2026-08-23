@@ -44,4 +44,4 @@ em todas as línguas, mas revisar qualidade das traduções).
 
 ## 5. Documentação
 - Manter `PROGRESS.md` atualizado por round.
-- README: adicionar secção "Línguas suportadas" (pt/en/es/fr/de).
+- [x] README: adicionar secção "Línguas suportadas" (pt/en/es/fr/de) — concluído (Round 59).
