@@ -1,5 +1,6 @@
 import { Scenario, DayInfo, ShiftType } from '../types';
 import { generateYearCalendar } from './calendar';
+import { pt, Translations } from '../i18n/locales/pt';
 
 interface ICSEvent {
     startDate: Date;
@@ -9,12 +10,18 @@ interface ICSEvent {
     uid: string;
 }
 
-const SHIFT_NAMES: Record<ShiftType, string> = {
-    M: 'Manha',
-    T: 'Tarde',
-    N: 'Noite',
-    F: 'Folga',
-};
+function shiftName(shift: ShiftType, t: Translations): string {
+    switch (shift) {
+        case 'M': return t.calendar.morning;
+        case 'T': return t.calendar.afternoon;
+        case 'N': return t.calendar.night;
+        case 'F': return t.calendar.off;
+    }
+}
+
+function teamName(teamIndex: number, t: Translations): string {
+    return `${t.teamRoster.team} ${String.fromCharCode(65 + teamIndex)}`;
+}
 
 function formatICSDate(date: Date): string {
     const pad = (n: number) => n.toString().padStart(2, '0');
@@ -31,7 +38,8 @@ function generateEventsFromCalendar(
     scenarioId: string,
     scenarioName: string,
     teamIndex: number,
-    teamName: string,
+    teamLabel: string,
+    t: Translations,
 ): ICSEvent[] {
     const events: ICSEvent[] = [];
     let blockStart = -1;
@@ -47,8 +55,8 @@ function generateEventsFromCalendar(
                 events.push({
                     startDate: calendar[blockStart].date,
                     endDate: calendar[i - 1].date,
-                    summary: `${SHIFT_NAMES[blockShift]} — ${teamName} (${scenarioName})`,
-                    description: `${teamName}: ${blockShift} de ${SHIFT_NAMES[blockShift]} (${shiftDuration}h por dia)`,
+                    summary: `${shiftName(blockShift, t)} — ${teamLabel} (${scenarioName})`,
+                    description: `${teamLabel}: ${blockShift} (${shiftName(blockShift, t)}) — ${shiftDuration}h`,
                     uid: generateEventUID(scenarioId, teamIndex, blockStart),
                 });
                 blockStart = i;
@@ -58,8 +66,8 @@ function generateEventsFromCalendar(
             events.push({
                 startDate: calendar[blockStart].date,
                 endDate: calendar[i - 1].date,
-                summary: `${SHIFT_NAMES[blockShift]} — ${teamName} (${scenarioName})`,
-                description: `${teamName}: ${blockShift} de ${SHIFT_NAMES[blockShift]} (${shiftDuration}h por dia)`,
+                summary: `${shiftName(blockShift, t)} — ${teamLabel} (${scenarioName})`,
+                description: `${teamLabel}: ${blockShift} (${shiftName(blockShift, t)}) — ${shiftDuration}h`,
                 uid: generateEventUID(scenarioId, teamIndex, blockStart),
             });
             blockStart = -1;
@@ -71,8 +79,8 @@ function generateEventsFromCalendar(
         events.push({
             startDate: calendar[blockStart].date,
             endDate: calendar[calendar.length - 1].date,
-            summary: `${SHIFT_NAMES[blockShift]} — ${teamName} (${scenarioName})`,
-            description: `${teamName}: ${blockShift} de ${SHIFT_NAMES[blockShift]} (${shiftDuration}h por dia)`,
+            summary: `${shiftName(blockShift, t)} — ${teamLabel} (${scenarioName})`,
+            description: `${teamLabel}: ${blockShift} (${shiftName(blockShift, t)}) — ${shiftDuration}h`,
             uid: generateEventUID(scenarioId, teamIndex, blockStart),
         });
     }
@@ -80,7 +88,7 @@ function generateEventsFromCalendar(
     return events;
 }
 
-export function exportScenarioToICS(scenario: Scenario, year?: number, teamIndex?: number): string {
+export function exportScenarioToICS(scenario: Scenario, year?: number, teamIndex?: number, t: Translations = pt): string {
     const y = year ?? new Date().getFullYear();
 
     const lines: string[] = [
@@ -100,8 +108,8 @@ export function exportScenarioToICS(scenario: Scenario, year?: number, teamIndex
 
     for (let team = startTeam; team < endTeam && team < scenario.teams; team++) {
         const calendar = generateYearCalendar(scenario, y, team);
-        const teamName = `Equipa ${String.fromCharCode(65 + team)}`;
-        const events = generateEventsFromCalendar(calendar, scenario.shiftDuration, scenario.id, scenario.name, team, teamName);
+        const teamLabel = teamName(team, t);
+        const events = generateEventsFromCalendar(calendar, scenario.shiftDuration, scenario.id, scenario.name, team, teamLabel, t);
 
         for (const event of events) {
             const startDate = new Date(event.startDate);
@@ -122,7 +130,7 @@ export function exportScenarioToICS(scenario: Scenario, year?: number, teamIndex
             lines.push('BEGIN:VALARM');
             lines.push('TRIGGER:-PT30M');
             lines.push('ACTION:DISPLAY');
-            lines.push(`DESCRIPTION:Turno: ${event.summary}`);
+            lines.push(`DESCRIPTION:${event.summary}`);
             lines.push('END:VALARM');
             lines.push('END:VEVENT');
         }
@@ -133,8 +141,8 @@ export function exportScenarioToICS(scenario: Scenario, year?: number, teamIndex
     return lines.join('\r\n') + '\r\n';
 }
 
-export function downloadICS(scenario: Scenario, year?: number): void {
-    const icsContent = exportScenarioToICS(scenario, year);
+export function downloadICS(scenario: Scenario, year?: number, t: Translations = pt): void {
+    const icsContent = exportScenarioToICS(scenario, year, undefined, t);
     const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -148,15 +156,15 @@ export function downloadICS(scenario: Scenario, year?: number): void {
     URL.revokeObjectURL(url);
 }
 
-export function getGoogleCalendarLink(scenario: Scenario, year?: number): string {
-    const icsContent = exportScenarioToICS(scenario, year);
+export function getGoogleCalendarLink(scenario: Scenario, year?: number, t: Translations = pt): string {
+    const icsContent = exportScenarioToICS(scenario, year, undefined, t);
     const encoded = encodeURIComponent(icsContent.trim());
     const dataUri = `data:text/calendar;charset=utf-8,${encoded}`;
     return `https://calendar.google.com/calendar/render?cid=${encodeURIComponent(dataUri)}`;
 }
 
-export function getOutlookCalendarLink(scenario: Scenario, year?: number): string {
-    const icsContent = exportScenarioToICS(scenario, year);
+export function getOutlookCalendarLink(scenario: Scenario, year?: number, t: Translations = pt): string {
+    const icsContent = exportScenarioToICS(scenario, year, undefined, t);
     const encoded = encodeURIComponent(icsContent.trim());
     const dataUri = `data:text/calendar;charset=utf-8,${encoded}`;
     return `https://outlook.office.com/calendar/addcalendar?url=${encodeURIComponent(dataUri)}`;

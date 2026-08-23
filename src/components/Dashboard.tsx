@@ -355,8 +355,8 @@ const Dashboard: React.FC = () => {
     }, [updateScenariosWithHistory, toast]);
 
     const handleExportICS = useCallback((scenario: Scenario) => {
-        downloadICS(scenario);
-    }, []);
+        downloadICS(scenario, undefined, t);
+    }, [t]);
 
     const handleShareScenario = useCallback((scenario: Scenario) => {
         copyShareableLink(scenario);

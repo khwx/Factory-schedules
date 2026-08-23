@@ -2,6 +2,20 @@
 
 Log de execuções autónomas do Bot Orquestrador (modelos free: `opencode/hy3-free`).
 
+## Round 60 — 2026-08-23
+**Objetivo:** Tornar a exportação ICS (e os links Google/Outlook) multilíngue, alinhada com o objetivo de i18n do projeto.
+
+**Contexto:** O `utils/icsExport.ts` já implementa a exportação ICS de horários gerados (sugerida na Round 59 como "exportação ICS de horários gerados"), mas os nomes de turno (`Manha`/`Tarde`/`Noite`/`Folga`) e a etiqueta de equipa (`Equipa`) estavam hardcoded em PT. Tal quebrava a experiência multilíngue (es/fr/de/en) e ia contra o esforço de i18n concluído nas Rounds 57–58.
+
+**O que foi feito:**
+- `src/utils/icsExport.ts`: as funções `exportScenarioToICS`, `downloadICS`, `getGoogleCalendarLink` e `getOutlookCalendarLink` passam a aceitar um parâmetro opcional `t: Translations` (default `pt` para manter compatibilidade/retrocompatibilidade). Os nomes de turno usam `t.calendar.morning/afternoon/night/off` e a etiqueta de equipa usa `t.teamRoster.team`, reutilizando chaves já existentes em pt/en/es/fr/de (sem novas chaves → sem risco para o teste de paridade de locales).
+- `src/components/Dashboard.tsx`: `handleExportICS` agora passa `t` (do `useI18n`) ao `downloadICS`, exportando o calendário no idioma da interface.
+- `src/utils/__tests__/icsExport.test.ts`: atualizado (removida dependência da string hardcoded "Turno") e adicionados testes de localização: `en` produz "Morning"/"Team A" e ausência de "Manha"/"Equipa"; default sem `t` mantém PT.
+
+**Verificação:** `tsc -b` → exit 0; `vitest` → **593 passam** (vs 591 anteriores, +2 testes novos), **0 falham**; `eslint` → 0 erros (avisos pré-existentes em Dashboard, não relacionados).
+
+**Decisão registada:** Exportação ICS agora respeita o idioma da UI. Próximos passos sugeridos: aplicar a mesma localização aos metadados `X-WR-CALDESC` (atualmente em PT) ou expandir com nova métrica QoL no analisador.
+
 ## Round 59 — 2026-08-23
 **Objetivo:** Concluir a Secção 5 do TODO.md — documentação de "Línguas suportadas" no README.
 

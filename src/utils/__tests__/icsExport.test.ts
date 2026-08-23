@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { exportScenarioToICS, getGoogleCalendarLink, getOutlookCalendarLink } from '../icsExport';
 import { Scenario } from '../../types';
+import { en } from '../../i18n/locales/en';
 
 const testScenario: Scenario = {
     id: 'ics-test',
@@ -79,9 +80,24 @@ describe('icsExport', () => {
             expect(ics).toContain('Equipa B');
         });
 
-        it('should include shift type in descriptions', () => {
+        it('should include shift type in descriptions (default pt)', () => {
             const ics = exportScenarioToICS(testScenario, 2025, 0);
-            expect(ics).toMatch(/DESCRIPTION:.*Turno/);
+            expect(ics).toMatch(/DESCRIPTION:.*Manha/);
+            expect(ics).toMatch(/DESCRIPTION:.*Equipa A/);
+        });
+
+        it('should localize shift and team names when a translations object is provided', () => {
+            const ics = exportScenarioToICS(testScenario, 2025, 0, en);
+            expect(ics).toContain('Morning');
+            expect(ics).toContain('Team A');
+            expect(ics).not.toContain('Manha');
+            expect(ics).not.toContain('Equipa');
+        });
+
+        it('should fall back to pt when no translations are provided', () => {
+            const ics = exportScenarioToICS(testScenario, 2025, 0);
+            expect(ics).toContain('Manha');
+            expect(ics).toContain('Equipa A');
         });
 
         it('should include CATEGORIES', () => {
