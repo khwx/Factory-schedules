@@ -160,6 +160,7 @@ export const pt = {
     weekendOff: 'FDS Folga',
     months: ['Janeiro', 'Fevereiro', 'Marco', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
     dayNames: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
+    icsDescription: 'Horario gerado pelo ShiftSim Factory — {teams} equipas, turnos de {hours}h',
   },
   holidayCalendar: {
     title: 'Calendario de Feriados',

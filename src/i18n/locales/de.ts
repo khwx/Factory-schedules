@@ -162,6 +162,7 @@ export const de: Translations = {
     weekendOff: 'Wochenende frei',
     months: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
     dayNames: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'],
+    icsDescription: 'Von ShiftSim Factory erzeugter Plan — {teams} Teams, {hours}h Schichten',
   },
 holidayCalendar: {
     title: 'Feiertagskalender',

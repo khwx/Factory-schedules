@@ -45,3 +45,12 @@ em todas as línguas, mas revisar qualidade das traduções).
 ## 5. Documentação
 - Manter `PROGRESS.md` atualizado por round.
 - [x] README: adicionar secção "Línguas suportadas" (pt/en/es/fr/de) — concluído (Round 59).
+
+## 6. Melhorias pendentes (novas — pós Round 61)
+Expansão de funcionalidades e melhorias contínuas, por ordem de prioridade sugerida:
+- [ ] **Analisador QoL — nova métrica:** adicionar índice de "recuperação/regularidade" (ex: dias de folga após blocos de noite, variação de início de turno) e respetivas chaves i18n em 5 línguas + teste.
+- [ ] **ICS — exportação por período:** permitir escolher intervalo de datas (mês/trimestre) na exportação ICS, reutilizando `generateYearCalendar` com offset.
+- [ ] **ICS — `PRODID` neutro:** atualizar `PRODID:-//ShiftSim Factory//PT` para identificador estável independente do idioma.
+- [ ] **Dashboard — atalho de teclado para exportação ICS:** estender atalhos existentes para disparar `downloadICS`.
+- [ ] **Acessibilidade:** auditoria de `aria-label` nos gráficos do `AnalyticsDashboard` (Recharts) e respetiva tradução.
+- [ ] **Testes:** aumentar cobertura de `scheduleOptimizer.ts` (constraints/sugestões) com casos limite.

@@ -98,7 +98,7 @@ export function exportScenarioToICS(scenario: Scenario, year?: number, teamIndex
         'CALSCALE:GREGORIAN',
         'METHOD:PUBLISH',
         `X-WR-CALNAME:${scenario.name}`,
-        `X-WR-CALDESC:Horario gerado pelo ShiftSim Factory — ${scenario.teams} equipas, turnos de ${scenario.shiftDuration}h`,
+        `X-WR-CALDESC:${t.calendar.icsDescription.replace('{teams}', String(scenario.teams)).replace('{hours}', String(scenario.shiftDuration))}`,
         'X-PUBLISHED-TTL:PT12H',
         'REFRESH-INTERVAL;VALUE=DURATION:PT12H',
     ];
