@@ -329,6 +329,7 @@ holidayCalendar: {
       'Wiederholen',
       'Szenarien suchen',
       'Neues Szenario (Formular fokussieren)',
+      'ICS des ausgewaehlten Szenarios exportieren',
       'Kalender des Szenarios 1-9 anzeigen',
       'Szenario hoch/runter bewegen',
       'Tastenkuerzel oeffnen',

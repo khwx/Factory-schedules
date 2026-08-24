@@ -17,7 +17,7 @@ const HelpPage: React.FC = () => {
     const sections = t.helpPage.sections;
     const sectionIcons = [BarChart3, Calculator, Users, Calendar, FileText, Settings];
     const shortcuts = [
-        'Ctrl + Z', 'Ctrl + Shift + Z', 'Ctrl + F', 'N', 'Ctrl + 1-9', 'Alt + ↑/↓', '?', 'Esc',
+        'Ctrl + Z', 'Ctrl + Shift + Z', 'Ctrl + F', 'N', 'E', 'Ctrl + 1-9', 'Alt + ↑/↓', '?', 'Esc',
     ];
 
     // Group FAQ by category

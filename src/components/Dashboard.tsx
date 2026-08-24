@@ -241,15 +241,6 @@ const Dashboard: React.FC = () => {
         }
     }, [visibleScenarios]);
 
-    useKeyboardShortcuts({
-        onUndo: undo,
-        onRedo: redo,
-        onEscape: handleEscape,
-        onSearch: handleSearchFocus,
-        onNewScenario: handleNewScenario,
-        onQuickAction: handleQuickAction,
-    });
-
     // Memoized handlers
     const handleAddScenario = useCallback((newScenario: Omit<Scenario, 'id'>) => {
         const scenario: Scenario = {
@@ -360,6 +351,23 @@ const Dashboard: React.FC = () => {
         const period = icsPeriodForRange(icsRange, year);
         downloadICS(scenario, year, t, period);
     }, [t, icsRange]);
+
+    const handleExportICSShortcut = useCallback(() => {
+        const scenario = selectedScenario ?? visibleScenarios[0];
+        if (scenario) {
+            handleExportICS(scenario);
+        }
+    }, [selectedScenario, visibleScenarios, handleExportICS]);
+
+    useKeyboardShortcuts({
+        onUndo: undo,
+        onRedo: redo,
+        onEscape: handleEscape,
+        onSearch: handleSearchFocus,
+        onNewScenario: handleNewScenario,
+        onQuickAction: handleQuickAction,
+        onExportICS: handleExportICSShortcut,
+    });
 
     const handleShareScenario = useCallback((scenario: Scenario) => {
         copyShareableLink(scenario);

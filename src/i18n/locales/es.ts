@@ -329,6 +329,7 @@ export const es: Translations = {
       'Rehacer',
       'Buscar escenarios',
       'Nuevo escenario (enfocar formulario)',
+      'Exportar ICS del escenario seleccionado',
       'Ver calendario del escenario 1-9',
       'Mover escenario arriba/abajo',
       'Abrir atajos',

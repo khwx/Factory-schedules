@@ -329,6 +329,7 @@ export const en: Translations = {
       'Redo',
       'Search scenarios',
       'New scenario (focus form)',
+      'Export ICS of selected scenario',
       'View calendar of scenario 1-9',
       'Move scenario up/down',
       'Open shortcuts',

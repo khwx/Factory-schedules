@@ -327,6 +327,7 @@ export const pt = {
       'Refazer',
       'Pesquisar cenarios',
       'Novo cenario (foco no formulario)',
+      'Exportar ICS do cenario selecionado',
       'Ver calendario do cenario 1-9',
       'Mover cenario para cima/baixo',
       'Abrir atalhos',

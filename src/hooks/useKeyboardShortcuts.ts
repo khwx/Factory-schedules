@@ -8,6 +8,7 @@ interface KeyboardShortcuts {
     onSearch?: () => void;
     onNewScenario?: () => void;
     onQuickAction?: (index: number) => void;
+    onExportICS?: () => void;
 }
 
 export const useKeyboardShortcuts = (shortcuts: KeyboardShortcuts) => {
@@ -58,6 +59,11 @@ export const useKeyboardShortcuts = (shortcuts: KeyboardShortcuts) => {
         // N = New scenario (focus form)
         if (e.key === 'n' && !e.ctrlKey && !e.metaKey && !e.altKey) {
             shortcuts.onNewScenario?.();
+        }
+
+        // E = Export ICS (when a scenario is selected)
+        if (e.key === 'e' && !e.ctrlKey && !e.metaKey && !e.altKey) {
+            shortcuts.onExportICS?.();
         }
 
         // Ctrl/Cmd + 1-9 = Quick action (view calendar of scenario 1-9)

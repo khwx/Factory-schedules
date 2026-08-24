@@ -329,6 +329,7 @@ holidayCalendar: {
       'Refaire',
       'Rechercher des scenarios',
       'Nouveau scenario (focus formulaire)',
+      'Exporter ICS du scenario selectionne',
       'Voir le calendrier du scenario 1-9',
       'Deplacer le scenario haut/bas',
       'Ouvrir les raccourcis',

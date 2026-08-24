@@ -2,6 +2,23 @@
 
 Log de execuções autónomas do Bot Orquestrador (modelos free: `opencode/hy3-free`).
 
+## Round 65 — 2026-08-24
+**Objetivo:** Adicionar atalho de teclado para exportação ICS (4ª tarefa pendente da secção 6 do TODO.md).
+
+**Contexto:** A exportação ICS por cenário exigia clicar no botão do cartão. Adicionar o atalho `E` (sem modificadores) permite exportar rapidamente o ICS do cenário selecionado ou do primeiro visível.
+
+**O que foi feito:**
+- `src/hooks/useKeyboardShortcuts.ts`: nova opção `onExportICS` no interface `KeyboardShortcuts`; handler para tecla `E` (sem Ctrl/Meta/Alt) que dispara o callback.
+- `src/components/ShortcutsHelp.tsx`: nova entrada `E` → "Exportar ICS do cenario selecionado" na lista de atalhos.
+- `src/i18n/locales/{pt,en,es,fr,de}.ts`: nova string em `helpPage.shortcuts` para o atalho (9.º item) — paridade de chaves mantida.
+- `src/components/Dashboard.tsx`: novo `handleExportICSShortcut` que usa `selectedScenario ?? visibleScenarios[0]` e passa para `handleExportICS`; registado em `useKeyboardShortcuts`.
+- `src/pages/HelpPage.tsx`: atalho `E` adicionado à grelha de atalhos.
+
+**Verificação:** `tsc -b` → exit 0; `vitest` → 601 passam, 0 falham.
+
+**Decisão registada:** O atalho `E` exporta o ICS do cenário selecionado (para calendário) ou, se nenhum estiver selecionado, do primeiro cenário visível. Próximos passos sugeridos (secção 6 do TODO): auditoria de `aria-label` nos gráficos do AnalyticsDashboard, ou aumentar cobertura de testes de `scheduleOptimizer.ts`.
+
+
 ## Round 64 — 2026-08-24
 **Objetivo:** Permitir escolher o intervalo de datas na exportação ICS (1ª tarefa pendente da secção 6 do TODO.md).
 
