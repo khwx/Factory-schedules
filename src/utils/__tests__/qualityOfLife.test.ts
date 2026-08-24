@@ -33,6 +33,26 @@ describe('calculateQualityOfLifeScore', () => {
         expect(score.breakdown).toHaveProperty('consecutiveRest');
         expect(score.breakdown).toHaveProperty('nightShiftImpact');
         expect(score.breakdown).toHaveProperty('holidaysCoverage');
+        expect(score.breakdown).toHaveProperty('recoveryRegularity');
+    });
+
+    it('should compute recoveryRegularity in 0-100 and reward rest after nights', () => {
+        // Pattern with night block followed by ample rest should score high on recovery
+        const scenario = createScenario({ pattern: 'MMTTNNFFFF' });
+        const analysis = calculateAnalysis(scenario);
+        const score = calculateQualityOfLifeScore(scenario, analysis, 2026);
+        expect(score.breakdown.recoveryRegularity).toBeGreaterThanOrEqual(0);
+        expect(score.breakdown.recoveryRegularity).toBeLessThanOrEqual(100);
+        // 2 nights then 4 off -> recovery after nights is full (avg rest >= 2)
+        expect(score.breakdown.recoveryRegularity).toBeGreaterThan(70);
+    });
+
+    it('should give full recovery score when there are no night shifts', () => {
+        const scenario = createScenario({ pattern: 'MMMMFFFF' });
+        const analysis = calculateAnalysis(scenario);
+        const score = calculateQualityOfLifeScore(scenario, analysis, 2026);
+        // No night blocks -> recovery component = 100; regularity from uniform work runs = 100
+        expect(score.breakdown.recoveryRegularity).toBe(100);
     });
 
     it('should assign a valid grade', () => {

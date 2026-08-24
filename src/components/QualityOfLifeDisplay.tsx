@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import { Scenario, AnalysisResult } from '../types';
 import { calculateQualityOfLifeScore, detectCriticalPeriods } from '../utils/qualityOfLife';
 import { Heart, TrendingUp, AlertTriangle, Award } from 'lucide-react';
+import { useI18n } from '../i18n';
 
 interface QualityOfLifeDisplayProps {
     scenario: Scenario;
@@ -10,6 +11,7 @@ interface QualityOfLifeDisplayProps {
 }
 
 const QualityOfLifeDisplay: React.FC<QualityOfLifeDisplayProps> = ({ scenario, analysis, year = new Date().getFullYear() }) => {
+    const { t } = useI18n();
     const qolScore = useMemo(() => {
         return calculateQualityOfLifeScore(scenario, analysis, year);
     }, [scenario, analysis, year]);
@@ -65,7 +67,7 @@ const QualityOfLifeDisplay: React.FC<QualityOfLifeDisplayProps> = ({ scenario, a
             <div className="bg-gray-800 rounded-lg border border-gray-700 overflow-hidden">
                 <div className="p-4 border-b border-gray-700 flex items-center gap-2">
                     <Heart className="w-5 h-5 text-pink-400" />
-                    <h3 className="text-lg font-semibold text-white">Score de Qualidade de Vida - {scenario.name}</h3>
+                    <h3 className="text-lg font-semibold text-white">{t.qol.title} - {scenario.name}</h3>
                 </div>
 
                 <div className="p-6">
@@ -80,19 +82,19 @@ const QualityOfLifeDisplay: React.FC<QualityOfLifeDisplayProps> = ({ scenario, a
                             </div>
                             <div>
                                 <div className="text-2xl font-bold text-white">{qolScore.overall}%</div>
-                                <div className="text-sm text-gray-400">Pontuação Geral</div>
+                                <div className="text-sm text-gray-400">{t.qol.overall}</div>
                             </div>
                         </div>
 
                         <div className="text-right">
                             <Award className="w-12 h-12 text-yellow-400 mb-2 inline-block" />
                             <div className="text-sm text-gray-400">
-                                {qolScore.grade === 'A+' && 'Excelente!'}
-                                {qolScore.grade === 'A' && 'Muito Bom'}
-                                {qolScore.grade === 'B' && 'Bom'}
-                                {qolScore.grade === 'C' && 'Aceitável'}
-                                {qolScore.grade === 'D' && 'Necessita Melhoria'}
-                                {qolScore.grade === 'F' && 'Crítico'}
+                                {qolScore.grade === 'A+' && t.qol.gradeAplus}
+                                {qolScore.grade === 'A' && t.qol.gradeA}
+                                {qolScore.grade === 'B' && t.qol.gradeB}
+                                {qolScore.grade === 'C' && t.qol.gradeC}
+                                {qolScore.grade === 'D' && t.qol.gradeD}
+                                {qolScore.grade === 'F' && t.qol.gradeF}
                             </div>
                         </div>
                     </div>
@@ -101,16 +103,17 @@ const QualityOfLifeDisplay: React.FC<QualityOfLifeDisplayProps> = ({ scenario, a
                     <div className="space-y-4">
                         <h4 className="text-sm font-semibold text-gray-300 flex items-center gap-2">
                             <TrendingUp className="w-4 h-4" />
-                            Análise Detalhada
+                            {t.qol.detailedAnalysis}
                         </h4>
 
                         {Object.entries(qolScore.breakdown).map(([key, value]) => {
                             const labels: { [key: string]: string } = {
-                                weekendsCoverage: 'Cobertura de Fins de Semana',
-                                workLifeBalance: 'Equilíbrio Trabalho-Vida',
-                                consecutiveRest: 'Qualidade do Descanso',
-                                nightShiftImpact: 'Impacto de Turnos Noturnos',
-                                holidaysCoverage: 'Cobertura de Feriados',
+                                weekendsCoverage: t.qol.weekendsCoverage,
+                                workLifeBalance: t.qol.workLifeBalance,
+                                consecutiveRest: t.qol.consecutiveRest,
+                                nightShiftImpact: t.qol.nightShiftImpact,
+                                holidaysCoverage: t.qol.holidaysCoverage,
+                                recoveryRegularity: t.qol.recoveryRegularity,
                             };
 
                             return (
@@ -125,6 +128,9 @@ const QualityOfLifeDisplay: React.FC<QualityOfLifeDisplayProps> = ({ scenario, a
                                             style={{ width: `${value}%` }}
                                         ></div>
                                     </div>
+                                    {key === 'recoveryRegularity' && (
+                                        <div className="text-[11px] text-gray-500">{t.qol.recoveryRegularityDesc}</div>
+                                    )}
                                 </div>
                             );
                         })}
@@ -132,7 +138,7 @@ const QualityOfLifeDisplay: React.FC<QualityOfLifeDisplayProps> = ({ scenario, a
 
                     {/* Insights */}
                     <div className="mt-6 space-y-2">
-                        <h4 className="text-sm font-semibold text-gray-300">Observações</h4>
+                        <h4 className="text-sm font-semibold text-gray-300">{t.qol.observations}</h4>
                         {qolScore.insights.map((insight, idx) => (
                             <div
                                 key={idx}
@@ -153,7 +159,7 @@ const QualityOfLifeDisplay: React.FC<QualityOfLifeDisplayProps> = ({ scenario, a
                 <div className="bg-gray-800 rounded-lg border border-gray-700 overflow-hidden">
                     <div className="p-4 border-b border-gray-700 flex items-center gap-2">
                         <AlertTriangle className="w-5 h-5 text-red-400" />
-                        <h3 className="text-lg font-semibold text-white">Períodos Críticos Identificados</h3>
+                        <h3 className="text-lg font-semibold text-white">{t.qol.criticalPeriods}</h3>
                         <span className="ml-auto bg-red-600 text-white text-xs px-2 py-1 rounded-full">
                             {criticalPeriods.length}
                         </span>
@@ -176,7 +182,7 @@ const QualityOfLifeDisplay: React.FC<QualityOfLifeDisplayProps> = ({ scenario, a
                                                         : 'bg-yellow-600 text-white'
                                                     }`}
                                             >
-                                                {period.severity === 'high' ? 'Crítica' : period.severity === 'medium' ? 'Média' : 'Baixa'}
+                                                {period.severity === 'high' ? t.qol.severityHigh : period.severity === 'medium' ? t.qol.severityMedium : t.qol.severityLow}
                                             </span>
                                             <span className="text-sm font-semibold text-white leading-tight">{period.description}</span>
                                         </div>
@@ -187,7 +193,7 @@ const QualityOfLifeDisplay: React.FC<QualityOfLifeDisplayProps> = ({ scenario, a
                                     </div>
                                     <div className="text-right pl-2">
                                         <div className="text-xl font-bold text-white">{period.daysAffected}</div>
-                                        <div className="text-[10px] text-gray-400 uppercase">dias</div>
+                                        <div className="text-[10px] text-gray-400 uppercase">{t.qol.days}</div>
                                     </div>
                                 </div>
                             </div>

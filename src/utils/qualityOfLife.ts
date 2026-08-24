@@ -10,6 +10,7 @@ export interface QualityOfLifeScore {
         consecutiveRest: number; // 0-100
         nightShiftImpact: number; // 0-100
         holidaysCoverage: number; // 0-100
+        recoveryRegularity: number; // 0-100
     };
     grade: 'A+' | 'A' | 'B' | 'C' | 'D' | 'F';
     insights: string[];
@@ -82,13 +83,63 @@ export function calculateQualityOfLifeScore(
     const totalHolidays = holidayMonthDays.length + customHolidays.length;
     const holidaysCoverage = totalHolidays > 0 ? (holidaysOff / totalHolidays) * 100 : 0;
 
+    // 6. Recovery & Regularity
+    // Recovery after night blocks: average consecutive rest days following each night block.
+    // Regularity: consistency of work-block lengths (lower std-dev -> more regular).
+    let recoverySum = 0;
+    let nightBlockCount = 0;
+    let cursor = 0;
+    while (cursor < calendar.length) {
+        if (calendar[cursor].shift === 'N') {
+            let end = cursor;
+            while (end < calendar.length && calendar[end].shift === 'N') end++;
+            let rest = 0;
+            let k = end;
+            while (k < calendar.length && calendar[k].shift === 'F') {
+                rest++;
+                k++;
+            }
+            recoverySum += rest;
+            nightBlockCount++;
+            cursor = end;
+        } else {
+            cursor++;
+        }
+    }
+    const recoveryAfterNights = nightBlockCount === 0
+        ? 100
+        : Math.min(100, (recoverySum / nightBlockCount) * 50);
+
+    const workRuns: number[] = [];
+    let run = 0;
+    calendar.forEach(day => {
+        if (day.shift !== 'F') {
+            run++;
+        } else {
+            if (run > 0) workRuns.push(run);
+            run = 0;
+        }
+    });
+    if (run > 0) workRuns.push(run);
+
+    let regularity = 100;
+    if (workRuns.length > 1) {
+        const mean = workRuns.reduce((a, b) => a + b, 0) / workRuns.length;
+        const variance = workRuns.reduce((a, b) => a + (b - mean) ** 2, 0) / workRuns.length;
+        const std = Math.sqrt(variance);
+        regularity = Math.max(0, 100 - std * 25);
+    }
+
+    const recoveryRegularity = Math.round((recoveryAfterNights + regularity) / 2);
+
     // Calculate overall score (weighted average)
     const overall = (
-        weekendsCoverage * 0.30 +
-        hoursScore * 0.20 +
-        consecutiveRest * 0.20 +
-        nightShiftImpact * 0.20 +
-        holidaysCoverage * 0.10
+        weekendsCoverage * 0.25 +
+        hoursScore * 0.15 +
+        consecutiveRest * 0.15 +
+        nightShiftImpact * 0.15 +
+        holidaysCoverage * 0.10 +
+        recoveryRegularity * 0.20
     );
 
     // Determine grade
@@ -129,6 +180,17 @@ export function calculateQualityOfLifeScore(
         insights.push('Baixa cobertura de feriados pode reduzir tempo com familia.');
     }
 
+    if (recoveryAfterNights >= 80 && regularity >= 80) {
+        insights.push('Bom indice de recuperacao e regularidade: descanso apos noites e padrao previsivel.');
+    } else {
+        if (recoveryAfterNights < 60) {
+            insights.push('Poucos dias de folga apos blocos de noite podem prejudicar a recuperacao.');
+        }
+        if (regularity < 60) {
+            insights.push('Padrao irregular (blocos de trabalho com tamanhos variados) dificulta o planeamento.');
+        }
+    }
+
     return {
         overall: Math.round(overall),
         breakdown: {
@@ -137,6 +199,7 @@ export function calculateQualityOfLifeScore(
             consecutiveRest: Math.round(consecutiveRest),
             nightShiftImpact: Math.round(nightShiftImpact),
             holidaysCoverage: Math.round(holidaysCoverage),
+            recoveryRegularity: recoveryRegularity,
         },
         grade,
         insights,

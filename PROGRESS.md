@@ -2,6 +2,25 @@
 
 Log de execuções autónomas do Bot Orquestrador (modelos free: `opencode/hy3-free`).
 
+## Round 62 — 2026-08-24
+**Objetivo:** Adicionar nova métrica de "recuperação/regularidade" ao analisador QoL (primeira tarefa pendente da secção 6 do TODO.md).
+
+**Contexto:** O analisador QoL (`src/utils/qualityOfLife.ts`) calculava 5 sub-scores (fins de semana, equilíbrio trabalho-vida, descanso consecutivo, impacto de noite, feriados) mas não media a capacidade de recuperação após blocos de noite nem a previsibilidade do padrão — aspetos centrais da qualidade de vida operária.
+
+**O que foi feito:**
+- `src/utils/qualityOfLife.ts`: nova métrica `recoveryRegularity` no `breakdown`, combinando:
+  - `recoveryAfterNights` — média de dias de folga imediatamente após cada bloco de noite (sem noites → 100);
+  - `regularity` — consistência dos blocos de trabalho (desvio-padrão dos comprimentos de blocos; padrão uniforme → 100).
+  - Reequilibradas as ponderações do score global (0.25/0.15/0.15/0.15/0.10/0.20) para acomodar a nova métrica (soma = 1.0) e adicionado 1 insight sobre recuperação/regularidade.
+- `src/i18n/locales/{pt,en,es,fr,de}.ts`: nova secção `qol` (rótulos dos 6 sub-scores, descrição da nova métrica, graus A+→F, severidades e títulos de secção) — paridade de chaves mantida (`tsc` valida).
+- `src/components/QualityOfLifeDisplay.tsx`: passou a usar `t.qol.*` (antes hardcoded PT — quebrava es/fr/de), incluindo grau, severidade, "dias" e descrição da nova métrica. Adicionado `useI18n`.
+- `src/components/__tests__/QualityOfLifeDisplay.test.tsx`: envolvido em `I18nProvider` e atualizadas asserções (inclui nova métrica "Recuperacao/Recovery").
+- `src/utils/__tests__/qualityOfLife.test.ts`: +2 testes (recoveryRegularity em 0-100 e alto p/ `MMTTNNFFFF`; 100 p/ padrão sem noites `MMMMFFFF`).
+
+**Verificação:** `tsc -b` → exit 0; `vitest` → **597 passam** (vs 595 anteriores, +2 testes novos), **0 falham**; `eslint` → 0 erros nos ficheiros alterados.
+
+**Decisão registada:** QoL passa a apresentar 6 sub-scores, agora 100% multilíngue no ecrã. Próximos passos sugeridos (secção 6 do TODO): exportação ICS por período personalizado, ou `PRODID` neutro na exportação ICS.
+
 ## Round 61 — 2026-08-23
 **Objetivo:** Localizar os metadados `X-WR-CALDESC` da exportação ICS (sugerido na Round 60 como próximo passo).
 
