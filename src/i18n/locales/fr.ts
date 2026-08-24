@@ -688,4 +688,14 @@ holidayCalendar: {
     severityLow: 'Basse',
     days: 'jours',
   },
+  icsExport: {
+    periodLabel: 'Periode',
+    rangeFull: 'Annee Complete',
+    rangeH1: '1er Semestre',
+    rangeH2: '2nd Semestre',
+    rangeQ1: '1er Trimestre',
+    rangeQ2: '2e Trimestre',
+    rangeQ3: '3e Trimestre',
+    rangeQ4: '4e Trimestre',
+  },
 };

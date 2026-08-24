@@ -688,4 +688,14 @@ export const es: Translations = {
     severityLow: 'Baja',
     days: 'dias',
   },
+  icsExport: {
+    periodLabel: 'Periodo',
+    rangeFull: 'Ano Completo',
+    rangeH1: '1er Semestre',
+    rangeH2: '2do Semestre',
+    rangeQ1: '1er Trimestre',
+    rangeQ2: '2do Trimestre',
+    rangeQ3: '3er Trimestre',
+    rangeQ4: '4to Trimestre',
+  },
 };

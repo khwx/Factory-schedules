@@ -2,6 +2,23 @@
 
 Log de execuções autónomas do Bot Orquestrador (modelos free: `opencode/hy3-free`).
 
+## Round 64 — 2026-08-24
+**Objetivo:** Permitir escolher o intervalo de datas na exportação ICS (1ª tarefa pendente da secção 6 do TODO.md).
+
+**Contexto:** A exportação ICS gerava sempre o ano completo, sem opção de exportar apenas um semestre ou trimestre — útil para importar apenas parte do horário num calendário externo.
+
+**O que foi feito:**
+- `src/utils/icsExport.ts`: nova interface `ICSExportPeriod` e tipo `ICSExportRange` (`'full'|'h1'|'h2'|'q1'|'q2'|'q3'|'q4'`); helper `icsPeriodForRange(range, year)` que calcula o intervalo de datas; `exportScenarioToICS` agora filtra os `VEVENT` por sobreposição com o período; `downloadICS`/`getGoogleCalendarLink`/`getOutlookCalendarLink` aceitam `period` e o nome do ficheiro ICS passa a incluir o intervalo.
+- `src/i18n/locales/{pt,en,es,fr,de}.ts`: nova secção `icsExport` (rótulo do período + 7 opções de intervalo) — paridade de chaves mantida.
+- `src/components/Dashboard.tsx`: seletor de período (`#ics-period`) na barra de exportação; `handleExportICS` aplica o período escolhido (ano corrente) à exportação ICS de cada cenário.
+- `src/utils/__tests__/icsExport.test.ts`: 4 novos testes de filtragem por período (helper `icsPeriodForRange`, subset de eventos, validade).
+
+**Verificação:** `tsc -b` → exit 0; `vitest` → 601 passam, 0 falham.
+
+**Decisão registada:** O período aplica-se à exportação ICS por cenário (não à exportação "Excel/PDF Todos"). Próximos passos sugeridos (secção 6 do TODO): atalho de teclado para exportação ICS, ou auditoria de `aria-label` nos gráficos do AnalyticsDashboard.
+
+
+
 ## Round 63 — 2026-08-24
 **Objetivo:** Tornar o `PRODID` da exportação ICS estável e independente do idioma (2ª tarefa pendente da secção 6 do TODO.md).
 

@@ -688,4 +688,14 @@ holidayCalendar: {
     severityLow: 'Niedrig',
     days: 'Tage',
   },
+  icsExport: {
+    periodLabel: 'Zeitraum',
+    rangeFull: 'Ganzes Jahr',
+    rangeH1: '1. Halbjahr',
+    rangeH2: '2. Halbjahr',
+    rangeQ1: '1. Quartal',
+    rangeQ2: '2. Quartal',
+    rangeQ3: '3. Quartal',
+    rangeQ4: '4. Quartal',
+  },
 };

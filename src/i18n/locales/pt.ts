@@ -686,6 +686,16 @@ export const pt = {
     severityLow: 'Baixa',
     days: 'dias',
   },
+  icsExport: {
+    periodLabel: 'Periodo',
+    rangeFull: 'Ano Completo',
+    rangeH1: '1º Semestre',
+    rangeH2: '2º Semestre',
+    rangeQ1: '1º Trimestre',
+    rangeQ2: '2º Trimestre',
+    rangeQ3: '3º Trimestre',
+    rangeQ4: '4º Trimestre',
+  },
 };
 
 export type Translations = typeof pt;

@@ -10,6 +10,33 @@ interface ICSEvent {
     uid: string;
 }
 
+export interface ICSExportPeriod {
+    start: Date;
+    end: Date;
+}
+
+export type ICSExportRange = 'full' | 'h1' | 'h2' | 'q1' | 'q2' | 'q3' | 'q4';
+
+export function icsPeriodForRange(range: ICSExportRange, year: number): ICSExportPeriod | undefined {
+    if (range === 'full') return undefined;
+    const ranges: Record<Exclude<ICSExportRange, 'full'>, [number, number]> = {
+        h1: [0, 5],
+        h2: [6, 11],
+        q1: [0, 2],
+        q2: [3, 5],
+        q3: [6, 8],
+        q4: [9, 11],
+    };
+    const [startMonth, endMonth] = ranges[range];
+    const start = new Date(year, startMonth, 1);
+    const end = new Date(year, endMonth + 1, 0, 23, 59, 59, 0);
+    return { start, end };
+}
+
+function eventOverlapsPeriod(event: ICSEvent, period: ICSExportPeriod): boolean {
+    return event.startDate <= period.end && event.endDate >= period.start;
+}
+
 function shiftName(shift: ShiftType, t: Translations): string {
     switch (shift) {
         case 'M': return t.calendar.morning;
@@ -88,7 +115,13 @@ function generateEventsFromCalendar(
     return events;
 }
 
-export function exportScenarioToICS(scenario: Scenario, year?: number, teamIndex?: number, t: Translations = pt): string {
+export function exportScenarioToICS(
+    scenario: Scenario,
+    year?: number,
+    teamIndex?: number,
+    t: Translations = pt,
+    period?: ICSExportPeriod,
+): string {
     const y = year ?? new Date().getFullYear();
 
     const lines: string[] = [
@@ -110,8 +143,9 @@ export function exportScenarioToICS(scenario: Scenario, year?: number, teamIndex
         const calendar = generateYearCalendar(scenario, y, team);
         const teamLabel = teamName(team, t);
         const events = generateEventsFromCalendar(calendar, scenario.shiftDuration, scenario.id, scenario.name, team, teamLabel, t);
+        const filteredEvents = period ? events.filter(e => eventOverlapsPeriod(e, period)) : events;
 
-        for (const event of events) {
+        for (const event of filteredEvents) {
             const startDate = new Date(event.startDate);
             startDate.setHours(0, 0, 0, 0);
 
@@ -141,30 +175,33 @@ export function exportScenarioToICS(scenario: Scenario, year?: number, teamIndex
     return lines.join('\r\n') + '\r\n';
 }
 
-export function downloadICS(scenario: Scenario, year?: number, t: Translations = pt): void {
-    const icsContent = exportScenarioToICS(scenario, year, undefined, t);
+export function downloadICS(scenario: Scenario, year?: number, t: Translations = pt, period?: ICSExportPeriod): void {
+    const icsContent = exportScenarioToICS(scenario, year, undefined, t, period);
     const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
 
     const dateStr = new Date().toISOString().split('T')[0];
-    a.download = `${scenario.name.replace(/[^a-z0-9]/gi, '_')}_${dateStr}.ics`;
+    const rangeSuffix = period
+        ? `_${period.start.toISOString().split('T')[0]}_${period.end.toISOString().split('T')[0]}`
+        : '';
+    a.download = `${scenario.name.replace(/[^a-z0-9]/gi, '_')}_${dateStr}${rangeSuffix}.ics`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
 }
 
-export function getGoogleCalendarLink(scenario: Scenario, year?: number, t: Translations = pt): string {
-    const icsContent = exportScenarioToICS(scenario, year, undefined, t);
+export function getGoogleCalendarLink(scenario: Scenario, year?: number, t: Translations = pt, period?: ICSExportPeriod): string {
+    const icsContent = exportScenarioToICS(scenario, year, undefined, t, period);
     const encoded = encodeURIComponent(icsContent.trim());
     const dataUri = `data:text/calendar;charset=utf-8,${encoded}`;
     return `https://calendar.google.com/calendar/render?cid=${encodeURIComponent(dataUri)}`;
 }
 
-export function getOutlookCalendarLink(scenario: Scenario, year?: number, t: Translations = pt): string {
-    const icsContent = exportScenarioToICS(scenario, year, undefined, t);
+export function getOutlookCalendarLink(scenario: Scenario, year?: number, t: Translations = pt, period?: ICSExportPeriod): string {
+    const icsContent = exportScenarioToICS(scenario, year, undefined, t, period);
     const encoded = encodeURIComponent(icsContent.trim());
     const dataUri = `data:text/calendar;charset=utf-8,${encoded}`;
     return `https://outlook.office.com/calendar/addcalendar?url=${encodeURIComponent(dataUri)}`;

@@ -688,4 +688,14 @@ export const en: Translations = {
     severityLow: 'Low',
     days: 'days',
   },
+  icsExport: {
+    periodLabel: 'Period',
+    rangeFull: 'Full Year',
+    rangeH1: 'First Half',
+    rangeH2: 'Second Half',
+    rangeQ1: 'Q1',
+    rangeQ2: 'Q2',
+    rangeQ3: 'Q3',
+    rangeQ4: 'Q4',
+  },
 };

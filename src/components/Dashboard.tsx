@@ -7,7 +7,7 @@ import { calculateAnalysis } from '../utils/calculations';
 import { exportToExcel, exportComparison } from '../utils/export';
 import { exportScenarioToPDF, exportComparisonToPDF } from '../utils/pdfExport';
 import { exportScenarioToCSV, exportScenarioToJSON, exportComparisonToCSV, exportComparisonToJSON } from '../utils/csvJsonExport';
-import { downloadICS } from '../utils/icsExport';
+import { downloadICS, icsPeriodForRange, ICSExportRange } from '../utils/icsExport';
 import { checkForSharedScenario, copyShareableLink } from '../utils/shareScenario';
 import { X, Download, Filter, Search, Wand2, Undo2, Redo2, FileText, Table2, Code2, Play, Image, SlidersHorizontal, Upload } from 'lucide-react';
 import DashboardStats from './DashboardStats';
@@ -163,6 +163,7 @@ const Dashboard: React.FC = () => {
     const calendarModalRef = useFocusTrap(showCalendar);
     const generatorModalRef = useFocusTrap(showGenerator);
     const [showDemoMode, setShowDemoMode] = useState(false);
+    const [icsRange, setIcsRange] = useState<ICSExportRange>('full');
 
     // Keyboard shortcuts
     const handleEscape = useCallback(() => {
@@ -355,8 +356,10 @@ const Dashboard: React.FC = () => {
     }, [updateScenariosWithHistory, toast]);
 
     const handleExportICS = useCallback((scenario: Scenario) => {
-        downloadICS(scenario, undefined, t);
-    }, [t]);
+        const year = new Date().getFullYear();
+        const period = icsPeriodForRange(icsRange, year);
+        downloadICS(scenario, year, t, period);
+    }, [t, icsRange]);
 
     const handleShareScenario = useCallback((scenario: Scenario) => {
         copyShareableLink(scenario);
@@ -817,8 +820,29 @@ const Dashboard: React.FC = () => {
                         })}
                     </div>
 
+                    {/* ICS period selector (applies to per-scenario ICS export) */}
+                    <div className="mt-8 flex flex-wrap items-center justify-center gap-2">
+                        <label htmlFor="ics-period" className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                            {t.icsExport.periodLabel}
+                        </label>
+                        <select
+                            id="ics-period"
+                            value={icsRange}
+                            onChange={(e) => setIcsRange(e.target.value as ICSExportRange)}
+                            className="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200"
+                        >
+                            <option value="full">{t.icsExport.rangeFull}</option>
+                            <option value="h1">{t.icsExport.rangeH1}</option>
+                            <option value="h2">{t.icsExport.rangeH2}</option>
+                            <option value="q1">{t.icsExport.rangeQ1}</option>
+                            <option value="q2">{t.icsExport.rangeQ2}</option>
+                            <option value="q3">{t.icsExport.rangeQ3}</option>
+                            <option value="q4">{t.icsExport.rangeQ4}</option>
+                        </select>
+                    </div>
+
                     {/* Export All Buttons */}
-                    <div className="mt-8 flex flex-wrap justify-center gap-3">
+                    <div className="mt-4 flex flex-wrap justify-center gap-3">
                         <button
                             onClick={handleExportAll}
                             className="bg-green-600 hover:bg-green-700 text-white font-medium py-3 px-5 rounded-lg transition-colors flex items-center gap-2"

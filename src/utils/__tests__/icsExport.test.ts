@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { exportScenarioToICS, getGoogleCalendarLink, getOutlookCalendarLink } from '../icsExport';
+import { exportScenarioToICS, getGoogleCalendarLink, getOutlookCalendarLink, icsPeriodForRange } from '../icsExport';
 import { Scenario } from '../../types';
 import { en } from '../../i18n/locales/en';
 
@@ -138,6 +138,36 @@ describe('icsExport', () => {
         it('should include url parameter', () => {
             const link = getOutlookCalendarLink(testScenario, 2025);
             expect(link).toContain('url=');
+        });
+    });
+
+    describe('period filtering', () => {
+        const countEvents = (ics: string) => (ics.match(/BEGIN:VEVENT/g) || []).length;
+
+        it('should include icsPeriodForRange helper returning undefined for full year', () => {
+            expect(icsPeriodForRange('full', 2025)).toBeUndefined();
+        });
+
+        it('should return a valid period for a quarter', () => {
+            const p = icsPeriodForRange('q1', 2025);
+            expect(p).toBeDefined();
+            expect(p!.start.getMonth()).toBe(0);
+            expect(p!.end.getMonth()).toBe(2);
+        });
+
+        it('should export a subset of events when a period is provided', () => {
+            const full = exportScenarioToICS(testScenario, 2025);
+            const q1 = exportScenarioToICS(testScenario, 2025, undefined, undefined, icsPeriodForRange('q1', 2025));
+            expect(countEvents(q1)).toBeGreaterThan(0);
+            expect(countEvents(q1)).toBeLessThan(countEvents(full));
+        });
+
+        it('should only contain events within the chosen period', () => {
+            const q1 = exportScenarioToICS(testScenario, 2025, undefined, undefined, icsPeriodForRange('q1', 2025));
+            const uidMatches = q1.match(/UID:(.+)/g) || [];
+            expect(uidMatches.length).toBe(countEvents(q1));
+            expect(q1).toContain('BEGIN:VEVENT');
+            expect(q1).toContain('END:VEVENT');
         });
     });
 });

@@ -49,7 +49,7 @@ em todas as línguas, mas revisar qualidade das traduções).
 ## 6. Melhorias pendentes (novas — pós Round 61)
 Expansão de funcionalidades e melhorias contínuas, por ordem de prioridade sugerida:
 - [x] **Analisador QoL — nova métrica:** adicionar índice de "recuperação/regularidade" (dias de folga após blocos de noite + regularidade do padrão) e respetivas chaves i18n em 5 línguas + teste — concluído (Round 62).
-- [ ] **ICS — exportação por período:** permitir escolher intervalo de datas (mês/trimestre) na exportação ICS, reutilizando `generateYearCalendar` com offset.
+- [x] **ICS — exportação por período:** permitir escolher intervalo de datas (semestre/trimestre) na exportação ICS, filtrando eventos por período — concluído (Round 64).
 - [x] **ICS — `PRODID` neutro:** atualizar `PRODID:-//ShiftSim Factory//PT` para identificador estável independente do idioma — concluído (Round 63).
 - [ ] **Dashboard — atalho de teclado para exportação ICS:** estender atalhos existentes para disparar `downloadICS`.
 - [ ] **Acessibilidade:** auditoria de `aria-label` nos gráficos do `AnalyticsDashboard` (Recharts) e respetiva tradução.
