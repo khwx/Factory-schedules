@@ -2,6 +2,19 @@
 
 Log de execuções autónomas do Bot Orquestrador (modelos free: `opencode/hy3-free`).
 
+## Round 63 — 2026-08-24
+**Objetivo:** Tornar o `PRODID` da exportação ICS estável e independente do idioma (2ª tarefa pendente da secção 6 do TODO.md).
+
+**Contexto:** O `PRODID` continha o sufixo `//PT`, o que sugeria uma dependência do idioma da interface e era inconsistente com a exportação multilíngue (nomes de turno/equipa e `X-WR-CALDESC` já traduzidos).
+
+**O que foi feito:**
+- `src/utils/icsExport.ts`: `PRODID:-//ShiftSim Factory//PT` → `PRODID:-//ShiftSim Factory//Schedule Generator//EN` (identificador estável, idioma neutro `EN` conforme RFC 5545, não dependente do UI locale).
+- `src/utils/__tests__/icsExport.test.ts`: atualizada a asserção do `PRODID` para o novo valor.
+
+**Verificação:** `tsc -b` → exit 0; `vitest` (icsExport) → 21 passam, 0 falham.
+
+**Decisão registada:** `PRODID` agora é estável e não varia com o idioma selecionado. Próximos passos sugeridos (secção 6 do TODO): exportação ICS por período personalizado, ou atalho de teclado para exportação ICS.
+
 ## Round 62 — 2026-08-24
 **Objetivo:** Adicionar nova métrica de "recuperação/regularidade" ao analisador QoL (primeira tarefa pendente da secção 6 do TODO.md).
 

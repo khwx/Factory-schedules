@@ -94,7 +94,7 @@ export function exportScenarioToICS(scenario: Scenario, year?: number, teamIndex
     const lines: string[] = [
         'BEGIN:VCALENDAR',
         'VERSION:2.0',
-        'PRODID:-//ShiftSim Factory//PT',
+        'PRODID:-//ShiftSim Factory//Schedule Generator//EN',
         'CALSCALE:GREGORIAN',
         'METHOD:PUBLISH',
         `X-WR-CALNAME:${scenario.name}`,

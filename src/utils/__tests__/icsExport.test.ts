@@ -27,7 +27,7 @@ describe('icsExport', () => {
 
         it('should include PRODID', () => {
             const ics = exportScenarioToICS(testScenario, 2025);
-            expect(ics).toContain('PRODID:-//ShiftSim Factory//PT');
+            expect(ics).toContain('PRODID:-//ShiftSim Factory//Schedule Generator//EN');
         });
 
         it('should include scenario name in X-WR-CALNAME', () => {
