@@ -2,7 +2,19 @@
 
 Log de execuções autónomas do Bot Orquestrador (modelos free: `opencode/hy3-free`).
 
-## Round 65 — 2026-08-24
+## Round 66 — 2026-08-29
+**Objetivo:** Auditoria de `aria-label` nos gráficos do `AnalyticsDashboard` (1ª tarefa pendente da secção 6 do TODO.md — acessibilidade dos gráficos Recharts).
+
+**Contexto:** Os 5 gráficos do painel analítico (barras, radar, circular, linhas e dispersão) eram SVGs invisíveis para leitores de ecrã, sem rótulo descritivo. O `ResponsiveContainer` do Recharts não propaga `role`/`aria-label` para o DOM (destrutura props específicas), pelo que o wrapper `div` é a abordagem sólida.
+
+**O que foi feito:**
+- `src/i18n/locales/{pt,en,es,fr,de}.ts`: 5 chaves novas em `analyticsDashboard` — `metricsComparisonAria`, `qualityProfileAria`, `shiftDistributionAria`, `nightShiftImpactAria`, `hoursVsWeekendsAria` — com descrições acessíveis por gráfico (paridade de chaves mantida; `tsc` valida).
+- `src/pages/AnalyticsDashboard.tsx`: cada gráfico Recharts envolvido num `<div role="img" aria-label={t.analyticsDashboard.*Aria}>` — barras, radar, pie, linhas e dispersão agora expõem um rótulo traduzido aos leitores de ecrã.
+- `src/pages/__tests__/AnalyticsDashboard.test.tsx`: +1 teste que seleciona todos os cenários e verifica os 5 `role="img"` com `aria-label` traduzidos.
+
+**Verificação:** `tsc -b` → exit 0; `vitest` → **602 passam** (vs 601 anteriores, +1 teste novo), **0 falham**; `eslint` → 0 erros nos ficheiros alterados.
+
+**Decisão registada:** Gráficos do AnalyticsDashboard passam a ter `aria-label` traduzido em 5 línguas (`role="img"`). Próximo passo sugerido (secção 6 do TODO): aumentar cobertura de testes de `scheduleOptimizer.ts` (constraints/sugestões) com casos limite.
 **Objetivo:** Adicionar atalho de teclado para exportação ICS (4ª tarefa pendente da secção 6 do TODO.md).
 
 **Contexto:** A exportação ICS por cenário exigia clicar no botão do cartão. Adicionar o atalho `E` (sem modificadores) permite exportar rapidamente o ICS do cenário selecionado ou do primeiro visível.

@@ -254,18 +254,20 @@ const AnalyticsDashboard: React.FC = () => {
                             <BarChart3 className="w-5 h-5 text-blue-400" />
                             {t.analyticsDashboard.metricsComparison}
                         </h3>
-                        <ResponsiveContainer width="100%" height={300}>
-                            <BarChart data={comparisonBarData}>
-                                <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-                                <XAxis dataKey="name" stroke="#9CA3AF" tick={{ fill: '#9CA3AF', fontSize: 11 }} />
-                                <YAxis stroke="#9CA3AF" tick={{ fill: '#9CA3AF' }} />
-                                <Tooltip contentStyle={tooltipStyle} />
-                                <Legend wrapperStyle={{ color: '#9CA3AF' }} />
-                                <Bar dataKey={t.analyticsDashboard.barHoursPerWeek} fill="#60A5FA" />
-                                <Bar dataKey={t.analyticsDashboard.barWeekendsPerYear} fill="#4ADE80" />
-                                <Bar dataKey={t.analyticsDashboard.barOffDaysPerYear} fill="#A78BFA" />
-                            </BarChart>
-                        </ResponsiveContainer>
+                        <div role="img" aria-label={t.analyticsDashboard.metricsComparisonAria}>
+                            <ResponsiveContainer width="100%" height={300}>
+                                <BarChart data={comparisonBarData}>
+                                    <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+                                    <XAxis dataKey="name" stroke="#9CA3AF" tick={{ fill: '#9CA3AF', fontSize: 11 }} />
+                                    <YAxis stroke="#9CA3AF" tick={{ fill: '#9CA3AF' }} />
+                                    <Tooltip contentStyle={tooltipStyle} />
+                                    <Legend wrapperStyle={{ color: '#9CA3AF' }} />
+                                    <Bar dataKey={t.analyticsDashboard.barHoursPerWeek} fill="#60A5FA" />
+                                    <Bar dataKey={t.analyticsDashboard.barWeekendsPerYear} fill="#4ADE80" />
+                                    <Bar dataKey={t.analyticsDashboard.barOffDaysPerYear} fill="#A78BFA" />
+                                </BarChart>
+                            </ResponsiveContainer>
+                        </div>
                     </div>
 
                     {/* Radar + Pie Row */}
@@ -276,28 +278,30 @@ const AnalyticsDashboard: React.FC = () => {
                                 <Activity className="w-5 h-5 text-green-400" />
                                 {t.analyticsDashboard.qualityProfile}
                             </h3>
-                            <ResponsiveContainer width="100%" height={300}>
-                                <RadarChart data={radarData}>
-                                    <PolarGrid stroke="#374151" />
-                                    <PolarAngleAxis dataKey="metric" tick={{ fill: '#9CA3AF', fontSize: 11 }} />
-                                    <PolarRadiusAxis tick={{ fill: '#6B7280', fontSize: 10 }} domain={[0, 100]} />
-                                    {selectedScenarios.map((s, i) => {
-                                        const shortName = s.name.length > 12 ? s.name.substring(0, 12) + '...' : s.name;
-                                        return (
-                                            <Radar
-                                                key={s.id}
-                                                name={shortName}
-                                                dataKey={shortName}
-                                                stroke={COLORS[i % COLORS.length]}
-                                                fill={COLORS[i % COLORS.length]}
-                                                fillOpacity={0.15}
-                                            />
-                                        );
-                                    })}
-                                    <Legend wrapperStyle={{ color: '#9CA3AF' }} />
-                                    <Tooltip contentStyle={tooltipStyle} />
-                                </RadarChart>
-                            </ResponsiveContainer>
+                            <div role="img" aria-label={t.analyticsDashboard.qualityProfileAria}>
+                                <ResponsiveContainer width="100%" height={300}>
+                                    <RadarChart data={radarData}>
+                                        <PolarGrid stroke="#374151" />
+                                        <PolarAngleAxis dataKey="metric" tick={{ fill: '#9CA3AF', fontSize: 11 }} />
+                                        <PolarRadiusAxis tick={{ fill: '#6B7280', fontSize: 10 }} domain={[0, 100]} />
+                                        {selectedScenarios.map((s, i) => {
+                                            const shortName = s.name.length > 12 ? s.name.substring(0, 12) + '...' : s.name;
+                                            return (
+                                                <Radar
+                                                    key={s.id}
+                                                    name={shortName}
+                                                    dataKey={shortName}
+                                                    stroke={COLORS[i % COLORS.length]}
+                                                    fill={COLORS[i % COLORS.length]}
+                                                    fillOpacity={0.15}
+                                                />
+                                            );
+                                        })}
+                                        <Legend wrapperStyle={{ color: '#9CA3AF' }} />
+                                        <Tooltip contentStyle={tooltipStyle} />
+                                    </RadarChart>
+                                </ResponsiveContainer>
+                            </div>
                         </div>
 
                         {/* Pie Chart */}
@@ -306,25 +310,27 @@ const AnalyticsDashboard: React.FC = () => {
                                 <PieChart className="w-5 h-5 text-yellow-400" />
                                 {t.analyticsDashboard.shiftDistribution}
                             </h3>
-                            <ResponsiveContainer width="100%" height={300}>
-                                <RePieChart>
-                                    <Pie
-                                        data={pieData}
-                                        cx="50%"
-                                        cy="50%"
-                                        innerRadius={60}
-                                        outerRadius={100}
-                                        paddingAngle={3}
-                                        dataKey="value"
-                                        label={({ name, percent }: { name?: string; percent?: number }) => `${name || ''} ${((percent || 0) * 100).toFixed(0)}%`}
-                                    >
-                                        {pieData.map((_, i) => (
-                                            <Cell key={i} fill={['#FBBF24', '#FB923C', '#6366F1', '#6B7280'][i]} />
-                                        ))}
-                                    </Pie>
-                                    <Tooltip contentStyle={tooltipStyle} />
-                                </RePieChart>
-                            </ResponsiveContainer>
+                            <div role="img" aria-label={t.analyticsDashboard.shiftDistributionAria}>
+                                <ResponsiveContainer width="100%" height={300}>
+                                    <RePieChart>
+                                        <Pie
+                                            data={pieData}
+                                            cx="50%"
+                                            cy="50%"
+                                            innerRadius={60}
+                                            outerRadius={100}
+                                            paddingAngle={3}
+                                            dataKey="value"
+                                            label={({ name, percent }: { name?: string; percent?: number }) => `${name || ''} ${((percent || 0) * 100).toFixed(0)}%`}
+                                        >
+                                            {pieData.map((_, i) => (
+                                                <Cell key={i} fill={['#FBBF24', '#FB923C', '#6366F1', '#6B7280'][i]} />
+                                            ))}
+                                        </Pie>
+                                        <Tooltip contentStyle={tooltipStyle} />
+                                    </RePieChart>
+                                </ResponsiveContainer>
+                            </div>
                         </div>
                     </div>
 
@@ -334,18 +340,20 @@ const AnalyticsDashboard: React.FC = () => {
                             <TrendingUp className="w-5 h-5 text-purple-400" />
                             {t.analyticsDashboard.nightShiftImpact}
                         </h3>
-                        <ResponsiveContainer width="100%" height={250}>
-                            <LineChart data={nightImpactData}>
-                                <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-                                <XAxis dataKey="name" stroke="#9CA3AF" tick={{ fill: '#9CA3AF', fontSize: 11 }} />
-                                <YAxis stroke="#9CA3AF" tick={{ fill: '#9CA3AF' }} />
-                                <Tooltip contentStyle={tooltipStyle} />
-                                <Legend wrapperStyle={{ color: '#9CA3AF' }} />
-                                <Line type="monotone" dataKey={t.analyticsDashboard.nightShifts} stroke="#A78BFA" strokeWidth={2} dot={{ r: 4 }} />
-                                <Line type="monotone" dataKey={t.analyticsDashboard.consecutiveNights} stroke="#F472B6" strokeWidth={2} dot={{ r: 4 }} />
-                                <Line type="monotone" dataKey={t.analyticsDashboard.fridaysOff} stroke="#4ADE80" strokeWidth={2} dot={{ r: 4 }} />
-                            </LineChart>
-                        </ResponsiveContainer>
+                        <div role="img" aria-label={t.analyticsDashboard.nightShiftImpactAria}>
+                            <ResponsiveContainer width="100%" height={250}>
+                                <LineChart data={nightImpactData}>
+                                    <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+                                    <XAxis dataKey="name" stroke="#9CA3AF" tick={{ fill: '#9CA3AF', fontSize: 11 }} />
+                                    <YAxis stroke="#9CA3AF" tick={{ fill: '#9CA3AF' }} />
+                                    <Tooltip contentStyle={tooltipStyle} />
+                                    <Legend wrapperStyle={{ color: '#9CA3AF' }} />
+                                    <Line type="monotone" dataKey={t.analyticsDashboard.nightShifts} stroke="#A78BFA" strokeWidth={2} dot={{ r: 4 }} />
+                                    <Line type="monotone" dataKey={t.analyticsDashboard.consecutiveNights} stroke="#F472B6" strokeWidth={2} dot={{ r: 4 }} />
+                                    <Line type="monotone" dataKey={t.analyticsDashboard.fridaysOff} stroke="#4ADE80" strokeWidth={2} dot={{ r: 4 }} />
+                                </LineChart>
+                            </ResponsiveContainer>
+                        </div>
                     </div>
 
                     {/* Scatter: Hours vs Weekends */}
@@ -354,22 +362,24 @@ const AnalyticsDashboard: React.FC = () => {
                             <TrendingUp className="w-5 h-5 text-pink-400" />
                             {t.analyticsDashboard.hoursVsWeekends}
                         </h3>
-                        <ResponsiveContainer width="100%" height={300}>
-                            <ScatterChart>
-                                <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-                                <XAxis dataKey="hours" name={t.analyticsDashboard.axisHours} stroke="#9CA3AF" tick={{ fill: '#9CA3AF' }} label={{ value: t.analyticsDashboard.barHoursPerWeek, position: 'insideBottom', offset: -5, fill: '#9CA3AF' }} />
-                                <YAxis dataKey="weekends" name={t.analyticsDashboard.axisWeekends} stroke="#9CA3AF" tick={{ fill: '#9CA3AF' }} label={{ value: t.analyticsDashboard.barWeekendsPerYear, angle: -90, position: 'insideLeft', fill: '#9CA3AF' }} />
-                                <ZAxis dataKey="teams" range={[100, 500]} name={t.analyticsDashboard.axisTeams} />
-                                <Tooltip
-                                    contentStyle={tooltipStyle}
-                                    formatter={(_: unknown, __: unknown, props: { payload?: { name?: string; hours?: number; weekends?: number; teams?: number } }) => {
-                                        const p = props.payload;
-                                        return [`${p?.name || ''} (${p?.teams || 0} ${t.analyticsDashboard.teamsUnit})`, ''];
-                                    }}
-                                />
-                                <Scatter data={scatterData} fill="#F472B6" />
-                            </ScatterChart>
-                        </ResponsiveContainer>
+                        <div role="img" aria-label={t.analyticsDashboard.hoursVsWeekendsAria}>
+                            <ResponsiveContainer width="100%" height={300}>
+                                <ScatterChart>
+                                    <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+                                    <XAxis dataKey="hours" name={t.analyticsDashboard.axisHours} stroke="#9CA3AF" tick={{ fill: '#9CA3AF' }} label={{ value: t.analyticsDashboard.barHoursPerWeek, position: 'insideBottom', offset: -5, fill: '#9CA3AF' }} />
+                                    <YAxis dataKey="weekends" name={t.analyticsDashboard.axisWeekends} stroke="#9CA3AF" tick={{ fill: '#9CA3AF' }} label={{ value: t.analyticsDashboard.barWeekendsPerYear, angle: -90, position: 'insideLeft', fill: '#9CA3AF' }} />
+                                    <ZAxis dataKey="teams" range={[100, 500]} name={t.analyticsDashboard.axisTeams} />
+                                    <Tooltip
+                                        contentStyle={tooltipStyle}
+                                        formatter={(_: unknown, __: unknown, props: { payload?: { name?: string; hours?: number; weekends?: number; teams?: number } }) => {
+                                            const p = props.payload;
+                                            return [`${p?.name || ''} (${p?.teams || 0} ${t.analyticsDashboard.teamsUnit})`, ''];
+                                        }}
+                                    />
+                                    <Scatter data={scatterData} fill="#F472B6" />
+                                </ScatterChart>
+                            </ResponsiveContainer>
+                        </div>
                     </div>
                 </div>
             )}

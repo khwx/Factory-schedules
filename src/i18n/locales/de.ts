@@ -607,6 +607,11 @@ holidayCalendar: {
     axisWeekends: 'FDS',
     axisTeams: 'Teams',
     teamsUnit: 'Teams',
+    metricsComparisonAria: 'Balkendiagramm: Metrikvergleich zwischen Szenarien',
+    qualityProfileAria: 'Radar-Diagramm: Qualitaetsprofil je Szenario',
+    shiftDistributionAria: 'Kreisdiagramm: Verteilung der Schichten',
+    nightShiftImpactAria: 'Liniendiagramm: Auswirkung der Nachtschichten',
+    hoursVsWeekendsAria: 'Streudiagramm: Stunden vs. Wochenenden (Groesse = Teams)',
   },
   scheduleOptimizer: {
     title: 'Schicht-Optimierer',

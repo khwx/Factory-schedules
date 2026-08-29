@@ -607,6 +607,11 @@ holidayCalendar: {
     axisWeekends: 'FDS',
     axisTeams: 'Equipes',
     teamsUnit: 'equipes',
+    metricsComparisonAria: 'Diagramme en barres: comparaison de metriques entre scenarios',
+    qualityProfileAria: 'Graphique radar: profil de qualite par scenario',
+    shiftDistributionAria: 'Graphique circulaire: distribution des postes',
+    nightShiftImpactAria: 'Graphique en lignes: impact du travail de nuit',
+    hoursVsWeekendsAria: 'Nuage de points: heures vs week-ends (taille = equipes)',
   },
   scheduleOptimizer: {
     title: 'Optimiseur d\'Horaires',

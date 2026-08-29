@@ -607,6 +607,11 @@ export const en: Translations = {
     axisWeekends: 'Weekends',
     axisTeams: 'Teams',
     teamsUnit: 'teams',
+    metricsComparisonAria: 'Bar chart: metric comparison across scenarios',
+    qualityProfileAria: 'Radar chart: quality profile per scenario',
+    shiftDistributionAria: 'Pie chart: shift type distribution',
+    nightShiftImpactAria: 'Line chart: night shift impact',
+    hoursVsWeekendsAria: 'Scatter plot: hours vs weekends (size = teams)',
   },
   scheduleOptimizer: {
     title: 'Schedule Optimizer',

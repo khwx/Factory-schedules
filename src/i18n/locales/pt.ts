@@ -605,6 +605,11 @@ export const pt = {
     axisWeekends: 'FDS',
     axisTeams: 'Equipas',
     teamsUnit: 'equipas',
+    metricsComparisonAria: 'Grafico de barras: comparacao de metricas entre cenarios',
+    qualityProfileAria: 'Grafico radar: perfil de qualidade por cenario',
+    shiftDistributionAria: 'Grafico circular: distribuicao de turnos',
+    nightShiftImpactAria: 'Grafico de linhas: impacto do turno noturno',
+    hoursVsWeekendsAria: 'Grafico de dispersao: horas vs fins de semana (tamanho = equipas)',
   },
   scheduleOptimizer: {
     title: 'Otimizador de Escalas',

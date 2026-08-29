@@ -607,6 +607,11 @@ export const es: Translations = {
     axisWeekends: 'FDS',
     axisTeams: 'Equipos',
     teamsUnit: 'equipos',
+    metricsComparisonAria: 'Grafico de barras: comparacion de metricas entre escenarios',
+    qualityProfileAria: 'Grafico radar: perfil de calidad por escenario',
+    shiftDistributionAria: 'Grafico circular: distribucion de turnos',
+    nightShiftImpactAria: 'Grafico de lineas: impacto del turno nocturno',
+    hoursVsWeekendsAria: 'Diagrama de dispersion: horas vs fines de semana (tamano = equipos)',
   },
   scheduleOptimizer: {
     title: 'Optimizador de Turnos',

@@ -63,4 +63,14 @@ describe('AnalyticsDashboard', () => {
         expect(screen.getAllByText(/Selecionar Cenarios|Select Scenarios/i).length).toBeGreaterThanOrEqual(1);
         expect(screen.getAllByText(/Selecionar Todos|Select All/i).length).toBeGreaterThanOrEqual(1);
     });
+
+    it('should expose translated aria-labels for all charts', () => {
+        render(<AnalyticsDashboard />, { wrapper });
+        fireEvent.click(screen.getByText(/Selecionar Todos|Select All/i));
+        expect(screen.getByRole('img', { name: /Grafico de barras|Bar chart/i })).toBeInTheDocument();
+        expect(screen.getByRole('img', { name: /Grafico radar|Radar chart/i })).toBeInTheDocument();
+        expect(screen.getByRole('img', { name: /Grafico circular|Pie chart/i })).toBeInTheDocument();
+        expect(screen.getByRole('img', { name: /Grafico de linhas|Line chart/i })).toBeInTheDocument();
+        expect(screen.getByRole('img', { name: /Grafico de dispersao|Scatter plot/i })).toBeInTheDocument();
+    });
 });
