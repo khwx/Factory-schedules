@@ -139,12 +139,12 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     };
 
     return (
-        <div className="min-h-screen bg-gray-900 text-gray-100">
+        <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)]">
             <a href="#main-content" className="sr-only focus:not-sr-only absolute top-0 left-0 p-2 bg-white bg-opacity-90 text-black z-50">
                 {t.header.skipToMain}
             </a>
 
-            <header className="bg-gray-800 border-b border-gray-700">
+            <header className="bg-[var(--bg-secondary)] border-b border-[var(--border-color)]">
                 <div className="container mx-auto px-4 py-4">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
@@ -161,15 +161,15 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                                 )}
                                 <button
                                     onClick={handleBackup}
-                                    className="p-2 hover:bg-gray-700 rounded-lg transition-colors"
+                                    className="p-2 hover:bg-[var(--bg-hover)] rounded-lg transition-colors"
                                     title={t.header.backup}
                                     aria-label={t.header.backup}
                                 >
-                                    <Download className="w-5 h-5 text-gray-400" />
+                                    <Download className="w-5 h-5 text-[var(--text-tertiary)]" />
                                 </button>
 
-                                <label className="relative inline-flex items-center p-2 hover:bg-gray-700 rounded-lg transition-colors cursor-pointer" title={t.header.restore}>
-                                    <Upload className="w-5 h-5 text-gray-400" />
+                                <label className="relative inline-flex items-center p-2 hover:bg-[var(--bg-hover)] rounded-lg transition-colors cursor-pointer" title={t.header.restore}>
+                                    <Upload className="w-5 h-5 text-[var(--text-tertiary)]" />
                                     <input
                                         type="file"
                                         accept=".json"
@@ -182,18 +182,18 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
                                 <button
                                     onClick={() => setShowSettings(!showSettings)}
-                                    className="p-2 hover:bg-gray-700 rounded-lg transition-colors"
+                                    className="p-2 hover:bg-[var(--bg-hover)] rounded-lg transition-colors"
                                     title={t.header.settings}
                                     aria-label={t.header.settings}
                                 >
-                                    <Settings className="w-5 h-5 text-gray-400" />
+                                    <Settings className="w-5 h-5 text-[var(--text-tertiary)]" />
                                 </button>
 
                                 <HelpButton onClick={tutorial.start} />
 
                                 <button
                                     onClick={toggleTheme}
-                                    className="p-2 hover:bg-gray-700 rounded-lg transition-colors"
+                                    className="p-2 hover:bg-[var(--bg-hover)] rounded-lg transition-colors"
                                     title={theme === 'dark' ? t.header.lightTheme : t.header.darkTheme}
                                     aria-label={theme === 'dark' ? t.header.lightTheme : t.header.darkTheme}
                                 >
@@ -210,13 +210,13 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             </header>
 
             {showSettings && (
-                <div className="bg-gray-800 border-b border-gray-700 p-4">
+                <div className="bg-[var(--bg-secondary)] border-b border-[var(--border-color)] p-4">
                     <div className="container mx-auto">
-                        <h3 className="text-lg font-semibold mb-4">{t.header.settings}</h3>
+                        <h3 className="text-lg font-semibold mb-4 text-[var(--text-primary)]">{t.header.settings}</h3>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div className="bg-gray-700 p-4 rounded-lg">
-                                <h4 className="font-semibold mb-2 text-sm">Backup & Restore</h4>
-                                <p className="text-xs text-gray-400 mb-3">
+                            <div className="bg-[var(--bg-tertiary)] p-4 rounded-lg">
+                                <h4 className="font-semibold mb-2 text-sm text-[var(--text-primary)]">Backup & Restore</h4>
+                                <p className="text-xs text-[var(--text-tertiary)] mb-3">
                                     {t.header.backup} & {t.header.restore}
                                 </p>
                                 <div className="flex gap-2">
@@ -252,14 +252,14 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                                 </div>
                             </div>
 
-                            <div className="bg-gray-700 p-4 rounded-lg">
-                                <h4 className="font-semibold mb-2 text-sm">{t.header.theme}</h4>
-                                <p className="text-xs text-gray-400 mb-3">
+                            <div className="bg-[var(--bg-tertiary)] p-4 rounded-lg">
+                                <h4 className="font-semibold mb-2 text-sm text-[var(--text-primary)]">{t.header.theme}</h4>
+                                <p className="text-xs text-[var(--text-tertiary)] mb-3">
                                     {t.header.theme}
                                 </p>
                                 <button
                                     onClick={toggleTheme}
-                                    className="w-full bg-gray-600 hover:bg-gray-500 px-3 py-2 rounded text-sm transition-colors"
+                                    className="w-full bg-[var(--bg-hover)] hover:bg-[var(--bg-tertiary)] px-3 py-2 rounded text-sm transition-colors text-[var(--text-primary)]"
                                 >
                                     {theme === 'dark' ? (
                                         <>
@@ -275,43 +275,43 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                                 </button>
                             </div>
 
-                            <div className="bg-gray-700 p-4 rounded-lg">
-                                <h4 className="font-semibold mb-2 text-sm">{t.header.languageLabel}</h4>
-                                <p className="text-xs text-gray-400 mb-3">
+                            <div className="bg-[var(--bg-tertiary)] p-4 rounded-lg">
+                                <h4 className="font-semibold mb-2 text-sm text-[var(--text-primary)]">{t.header.languageLabel}</h4>
+                                <p className="text-xs text-[var(--text-tertiary)] mb-3">
                                     {t.header.languageHelp}
                                 </p>
                                     <div className="flex gap-2 flex-wrap">
                                         <button
                                             onClick={() => setLang('pt')}
-                                            className={`flex-1 px-3 py-2 rounded text-sm transition-colors flex items-center justify-center gap-2 ${lang === 'pt' ? 'bg-blue-600 text-white' : 'bg-gray-600 text-gray-300 hover:bg-gray-500'}`}
+                                            className={`flex-1 px-3 py-2 rounded text-sm transition-colors flex items-center justify-center gap-2 ${lang === 'pt' ? 'bg-blue-600 text-white' : 'bg-[var(--bg-hover)] text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]'}`}
                                         >
                                             <Globe className="w-4 h-4" />
                                             Portugues
                                         </button>
                                         <button
                                             onClick={() => setLang('en')}
-                                            className={`flex-1 px-3 py-2 rounded text-sm transition-colors flex items-center justify-center gap-2 ${lang === 'en' ? 'bg-blue-600 text-white' : 'bg-gray-600 text-gray-300 hover:bg-gray-500'}`}
+                                            className={`flex-1 px-3 py-2 rounded text-sm transition-colors flex items-center justify-center gap-2 ${lang === 'en' ? 'bg-blue-600 text-white' : 'bg-[var(--bg-hover)] text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]'}`}
                                         >
                                             <Globe className="w-4 h-4" />
                                             English
                                         </button>
                                         <button
                                             onClick={() => setLang('es')}
-                                            className={`flex-1 px-3 py-2 rounded text-sm transition-colors flex items-center justify-center gap-2 ${lang === 'es' ? 'bg-blue-600 text-white' : 'bg-gray-600 text-gray-300 hover:bg-gray-500'}`}
+                                            className={`flex-1 px-3 py-2 rounded text-sm transition-colors flex items-center justify-center gap-2 ${lang === 'es' ? 'bg-blue-600 text-white' : 'bg-[var(--bg-hover)] text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]'}`}
                                         >
                                             <Globe className="w-4 h-4" />
                                             Espanol
                                         </button>
                                         <button
                                             onClick={() => setLang('fr')}
-                                            className={`flex-1 px-3 py-2 rounded text-sm transition-colors flex items-center justify-center gap-2 ${lang === 'fr' ? 'bg-blue-600 text-white' : 'bg-gray-600 text-gray-300 hover:bg-gray-500'}`}
+                                            className={`flex-1 px-3 py-2 rounded text-sm transition-colors flex items-center justify-center gap-2 ${lang === 'fr' ? 'bg-blue-600 text-white' : 'bg-[var(--bg-hover)] text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]'}`}
                                         >
                                             <Globe className="w-4 h-4" />
                                             Français
                                         </button>
                                         <button
                                             onClick={() => setLang('de')}
-                                            className={`flex-1 px-3 py-2 rounded text-sm transition-colors flex items-center justify-center gap-2 ${lang === 'de' ? 'bg-blue-600 text-white' : 'bg-gray-600 text-gray-300 hover:bg-gray-500'}`}
+                                            className={`flex-1 px-3 py-2 rounded text-sm transition-colors flex items-center justify-center gap-2 ${lang === 'de' ? 'bg-blue-600 text-white' : 'bg-[var(--bg-hover)] text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]'}`}
                                         >
                                             <Globe className="w-4 h-4" />
                                             Deutsch
@@ -319,12 +319,12 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                                     </div>
                             </div>
 
-                            <div className="bg-gray-700 p-4 rounded-lg">
-                                <h4 className="font-semibold mb-2 text-sm flex items-center gap-2">
+                            <div className="bg-[var(--bg-tertiary)] p-4 rounded-lg">
+                                <h4 className="font-semibold mb-2 text-sm flex items-center gap-2 text-[var(--text-primary)]">
                                     <Calendar className="w-4 h-4 text-blue-400" />
                                     {t.header.customHolidaysLabel}
                                 </h4>
-                                <p className="text-xs text-gray-400 mb-3">
+                                <p className="text-xs text-[var(--text-tertiary)] mb-3">
                                     {t.header.customHolidaysHelp}
                                 </p>
                                 
@@ -334,12 +334,12 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                                         value={newHolidayName}
                                         onChange={e => setNewHolidayName(e.target.value)}
                                         placeholder={t.header.holidayNamePlaceholder}
-                                        className="flex-1 bg-gray-600 border border-gray-500 rounded px-3 py-2 text-white text-sm focus:outline-none focus:border-blue-500"
+                                        className="flex-1 bg-[var(--bg-hover)] border border-[var(--border-color)] rounded px-3 py-2 text-[var(--text-primary)] text-sm focus:outline-none focus:border-blue-500"
                                     />
                                     <select
                                         value={newHolidayMonth}
                                         onChange={e => setNewHolidayMonth(Number(e.target.value))}
-                                        className="w-28 bg-gray-600 border border-gray-500 rounded px-2 py-2 text-white text-sm focus:outline-none focus:border-blue-500"
+                                        className="w-28 bg-[var(--bg-hover)] border border-[var(--border-color)] rounded px-2 py-2 text-[var(--text-primary)] text-sm focus:outline-none focus:border-blue-500"
                                     >
                                         {t.calendar.months.map((m, i) => (
                                             <option key={i} value={i}>{m}</option>
@@ -348,7 +348,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                                     <select
                                         value={newHolidayDay}
                                         onChange={e => setNewHolidayDay(Number(e.target.value))}
-                                        className="w-20 bg-gray-600 border border-gray-500 rounded px-2 py-2 text-white text-sm focus:outline-none focus:border-blue-500"
+                                        className="w-20 bg-[var(--bg-hover)] border border-[var(--border-color)] rounded px-2 py-2 text-[var(--text-primary)] text-sm focus:outline-none focus:border-blue-500"
                                     >
                                         {Array.from({ length: 31 }, (_, i) => i + 1).map(d => (
                                             <option key={d} value={d}>{d}</option>
@@ -365,11 +365,11 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                                 {customHolidays.length > 0 && (
                                     <div className="space-y-1">
                                         {customHolidays.map(h => (
-                                            <div key={h.id} className="flex items-center justify-between bg-gray-600 p-2 rounded text-sm">
+                                            <div key={h.id} className="flex items-center justify-between bg-[var(--bg-hover)] p-2 rounded text-sm text-[var(--text-primary)]">
                                                 <span>{h.name} - {h.day}/{h.month + 1}</span>
                                                 <button
                                                     onClick={() => handleRemoveCustomHoliday(h.id)}
-                                                    className="text-gray-400 hover:text-red-400"
+                                                    className="text-[var(--text-tertiary)] hover:text-red-400"
                                                     aria-label={t.header.removeHoliday}
                                                 >
                                                     <Trash2 className="w-4 h-4" />
@@ -380,7 +380,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                                 )}
 
                                 {customHolidays.length === 0 && (
-                                    <p className="text-xs text-gray-500 text-center py-2">
+                                    <p className="text-xs text-[var(--text-tertiary)] text-center py-2">
                                         {t.header.noCustomHolidays}
                                     </p>
                                 )}

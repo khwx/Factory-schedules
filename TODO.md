@@ -53,4 +53,4 @@ Expansão de funcionalidades e melhorias contínuas, por ordem de prioridade sug
 - [x] **ICS — `PRODID` neutro:** atualizar `PRODID:-//ShiftSim Factory//PT` para identificador estável independente do idioma — concluído (Round 63).
 - [x] **Dashboard — atalho de teclado para exportação ICS:** estender atalhos existentes para disparar `downloadICS` — concluído (Round 65).
 - [x] **Acessibilidade:** auditoria de `aria-label` nos gráficos do `AnalyticsDashboard` (Recharts) e respetiva tradução — concluído (Round 66; 5 chaves `*Aria` em 5 línguas + `<div role="img" aria-label>` por gráfico + teste).
-- [ ] **Testes:** aumentar cobertura de `scheduleOptimizer.ts` (constraints/sugestões) com casos limite.
+- [x] **Testes:** aumentar cobertura de `scheduleOptimizer.ts` (constraints/sugestões) com casos limite — concluído (Round 67; 44 testes cobrindo boundaries good/warning/bad, sugestões, alternativas, score, edge cases).

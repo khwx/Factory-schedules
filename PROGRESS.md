@@ -2,31 +2,23 @@
 
 Log de execuções autónomas do Bot Orquestrador (modelos free: `opencode/hy3-free`).
 
-## Round 66 — 2026-08-29
-**Objetivo:** Auditoria de `aria-label` nos gráficos do `AnalyticsDashboard` (1ª tarefa pendente da secção 6 do TODO.md — acessibilidade dos gráficos Recharts).
+## Round 67 — 2026-09-01
+**Objetivo:** Aumentar cobertura de testes de `scheduleOptimizer.ts` (2ª tarefa pendente da secção 6 do TODO.md).
 
-**Contexto:** Os 5 gráficos do painel analítico (barras, radar, circular, linhas e dispersão) eram SVGs invisíveis para leitores de ecrã, sem rótulo descritivo. O `ResponsiveContainer` do Recharts não propaga `role`/`aria-label` para o DOM (destrutura props específicas), pelo que o wrapper `div` é a abordagem sólida.
-
-**O que foi feito:**
-- `src/i18n/locales/{pt,en,es,fr,de}.ts`: 5 chaves novas em `analyticsDashboard` — `metricsComparisonAria`, `qualityProfileAria`, `shiftDistributionAria`, `nightShiftImpactAria`, `hoursVsWeekendsAria` — com descrições acessíveis por gráfico (paridade de chaves mantida; `tsc` valida).
-- `src/pages/AnalyticsDashboard.tsx`: cada gráfico Recharts envolvido num `<div role="img" aria-label={t.analyticsDashboard.*Aria}>` — barras, radar, pie, linhas e dispersão agora expõem um rótulo traduzido aos leitores de ecrã.
-- `src/pages/__tests__/AnalyticsDashboard.test.tsx`: +1 teste que seleciona todos os cenários e verifica os 5 `role="img"` com `aria-label` traduzidos.
-
-**Verificação:** `tsc -b` → exit 0; `vitest` → **602 passam** (vs 601 anteriores, +1 teste novo), **0 falham**; `eslint` → 0 erros nos ficheiros alterados.
-
-**Decisão registada:** Gráficos do AnalyticsDashboard passam a ter `aria-label` traduzido em 5 línguas (`role="img"`). Próximo passo sugerido (secção 6 do TODO): aumentar cobertura de testes de `scheduleOptimizer.ts` (constraints/sugestões) com casos limite.
-**Objetivo:** Adicionar atalho de teclado para exportação ICS (4ª tarefa pendente da secção 6 do TODO.md).
-
-**Contexto:** A exportação ICS por cenário exigia clicar no botão do cartão. Adicionar o atalho `E` (sem modificadores) permite exportar rapidamente o ICS do cenário selecionado ou do primeiro visível.
+**Contexto:** O motor de otimização de escalas (`src/utils/scheduleOptimizer.ts`) tinha apenas 7 testes básicos. As constraints (horas, dias consecutivos, turnos noturnos, fins de semana, mini-férias, sextas-noite), sugestões, padrões alternativos e cálculo de score não tinham cobertura de casos limite (fronteiras good/warning/bad, lógica de sugestões, ordenação de alternativas, pesos).
 
 **O que foi feito:**
-- `src/hooks/useKeyboardShortcuts.ts`: nova opção `onExportICS` no interface `KeyboardShortcuts`; handler para tecla `E` (sem Ctrl/Meta/Alt) que dispara o callback.
-- `src/components/ShortcutsHelp.tsx`: nova entrada `E` → "Exportar ICS do cenario selecionado" na lista de atalhos.
-- `src/i18n/locales/{pt,en,es,fr,de}.ts`: nova string em `helpPage.shortcuts` para o atalho (9.º item) — paridade de chaves mantida.
-- `src/components/Dashboard.tsx`: novo `handleExportICSShortcut` que usa `selectedScenario ?? visibleScenarios[0]` e passa para `handleExportICS`; registado em `useKeyboardShortcuts`.
-- `src/pages/HelpPage.tsx`: atalho `E` adicionado à grelha de atalhos.
+- `src/utils/__tests__/scheduleOptimizer.test.ts`: expandido de 7 para **44 testes**, cobrindo:
+  - **Constraint boundaries** (12 testes): horas (good/warning/bad por distância a 40h), consecutive_work (good ≤5 / warning =6 / bad >6), night_shifts (good ≤90 / warning 91–130 / bad >130), mini_vacations (good ≥6 / bad <3).
+  - **Suggestion logic** (13 testes): `adjust_hours`, `reduce_consecutive`, `reduce_nights`, `add_mini_vacations`, `more_weekends` (só warning), `friday_nights_off` (só warning), `good_overall`, múltiplas sugestões simultâneas, validação de `impact`/`category`/`scoreImprovement`.
+  - **Alternative patterns** (5 testes): max 5, exclui padrão atual, ordenação decrescente por score, `descriptionKey` válido, scores 0–100.
+  - **Score calculation** (2 testes): comparação all-bad vs all-good, pesos somam 1.0.
+  - **Edge cases** (6 testes): pattern 1 char, all-off, pattern longo (40 chars), 3–6 equipas, durações 6/8/10/12h, pesos somam 1.0.
+- Paridade de chaves i18n inalterada.
 
-**Verificação:** `tsc -b` → exit 0; `vitest` → 601 passam, 0 falham.
+**Verificação:** `tsc -b` → exit 0; `vitest` → **640 passam** (vs 602 anteriores, +38 testes novos), **0 falham**; `eslint` → 0 erros (22 warnings pré-existentes de non-null assertion em testes).
+
+**Decisão registada:** `scheduleOptimizer.ts` tem agora cobertura abrangente de constraints, sugestões, alternativas, score e edge cases. Próximos passos sugeridos: explorar novas funcionalidades (ex: exportação ICS por equipa individual, ou presets de indústrias adicionais).
 
 **Decisão registada:** O atalho `E` exporta o ICS do cenário selecionado (para calendário) ou, se nenhum estiver selecionado, do primeiro cenário visível. Próximos passos sugeridos (secção 6 do TODO): auditoria de `aria-label` nos gráficos do AnalyticsDashboard, ou aumentar cobertura de testes de `scheduleOptimizer.ts`.
 
