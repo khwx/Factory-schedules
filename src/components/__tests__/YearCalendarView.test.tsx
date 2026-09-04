@@ -1,7 +1,23 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
+import { BrowserRouter } from 'react-router-dom';
+import { ThemeProvider } from '../../contexts/ThemeContext';
+import { ToastProvider } from '../../contexts/ToastContext';
+import { I18nProvider } from '../../i18n';
 import YearCalendarView from '../YearCalendarView';
 import { Scenario } from '../../types';
+
+const wrapper = ({ children }: { children: React.ReactNode }) => (
+    <BrowserRouter>
+        <ThemeProvider>
+            <ToastProvider>
+                <I18nProvider>
+                    {children}
+                </I18nProvider>
+            </ToastProvider>
+        </ThemeProvider>
+    </BrowserRouter>
+);
 
 const scenario: Scenario = {
     id: 'yc-1',
@@ -50,13 +66,13 @@ describe('YearCalendarView', () => {
     };
 
     it('renders the scenario name in the header', () => {
-        render(<YearCalendarView scenario={scenario} />);
+        render(<YearCalendarView scenario={scenario} />, { wrapper });
         const heading = screen.getByRole('heading', { level: 3 });
         expect(heading.textContent).toContain('Year View Scenario');
     });
 
     it('renders the shift legend', () => {
-        render(<YearCalendarView scenario={scenario} />);
+        render(<YearCalendarView scenario={scenario} />, { wrapper });
         expect(screen.getByText('Manhã')).toBeInTheDocument();
         expect(screen.getByText('Tarde')).toBeInTheDocument();
         expect(screen.getByText('Noite')).toBeInTheDocument();
@@ -64,13 +80,13 @@ describe('YearCalendarView', () => {
     });
 
     it('renders a team selector when there are multiple teams', () => {
-        render(<YearCalendarView scenario={scenario} />);
+        render(<YearCalendarView scenario={scenario} />, { wrapper });
         expect(screen.getByRole('option', { name: 'Turno A' })).toBeInTheDocument();
         expect(screen.getByRole('option', { name: 'Turno B' })).toBeInTheDocument();
     });
 
     it('navigates to the previous and next year', () => {
-        render(<YearCalendarView scenario={scenario} />);
+        render(<YearCalendarView scenario={scenario} />, { wrapper });
         const { yearSpan, buttons } = getYearControls();
         const initialYear = Number(yearSpan.textContent);
         expect(initialYear).toBeGreaterThan(1900);
@@ -84,14 +100,14 @@ describe('YearCalendarView', () => {
     });
 
     it('renders all months in desktop layout', () => {
-        render(<YearCalendarView scenario={scenario} />);
+        render(<YearCalendarView scenario={scenario} />, { wrapper });
         // Desktop layout renders a header per month via renderMonth (12 months)
         expect(document.querySelectorAll('h4').length).toBe(12);
     });
 
     it('collapses to a single month view on mobile', () => {
         mockMatchMedia(true);
-        render(<YearCalendarView scenario={scenario} />);
+        render(<YearCalendarView scenario={scenario} />, { wrapper });
         // Mobile shows a single month (1 month header + 1 rendered month header)
         expect(document.querySelectorAll('h4').length).toBe(2);
     });

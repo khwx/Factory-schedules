@@ -1,6 +1,7 @@
 import { useEffect, useRef, useCallback } from 'react';
 import { X } from 'lucide-react';
 import { clsx } from 'clsx';
+import { useI18n } from '../i18n';
 
 interface BottomSheetProps {
     isOpen: boolean;
@@ -11,6 +12,7 @@ interface BottomSheetProps {
 }
 
 export default function BottomSheet({ isOpen, onClose, title, children, className }: BottomSheetProps) {
+    const { t } = useI18n();
     const sheetRef = useRef<HTMLDivElement>(null);
     const startY = useRef(0);
     const currentY = useRef(0);
@@ -79,7 +81,7 @@ export default function BottomSheet({ isOpen, onClose, title, children, classNam
                     {title && (
                         <div className="flex items-center justify-between px-4 pb-3 border-b border-gray-100">
                             <h3 className="font-semibold text-gray-800">{title}</h3>
-                            <button onClick={onClose} className="p-1 hover:bg-gray-100 rounded-lg" aria-label="Fechar">
+                            <button onClick={onClose} className="p-1 hover:bg-gray-100 rounded-lg" aria-label={t.common.close}>
                                 <X className="h-5 w-5 text-gray-500" />
                             </button>
                         </div>

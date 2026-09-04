@@ -1,12 +1,14 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { BookOpen, ChevronDown, Plus } from 'lucide-react';
 import { PRESET_SCENARIOS, PresetScenario } from '../data/presetScenarios';
+import { useI18n } from '../i18n';
 
 interface PresetSelectorProps {
     onLoadPreset: (preset: PresetScenario) => void;
 }
 
 const PresetSelector: React.FC<PresetSelectorProps> = ({ onLoadPreset }) => {
+    const { t } = useI18n();
     const [isOpen, setIsOpen] = useState(false);
     const [activeIndex, setActiveIndex] = useState(-1);
     const containerRef = useRef<HTMLDivElement>(null);
@@ -111,7 +113,7 @@ const PresetSelector: React.FC<PresetSelectorProps> = ({ onLoadPreset }) => {
                     ref={listRef}
                     className="absolute top-full left-0 right-0 mt-2 bg-gray-800 border border-gray-700 rounded-lg shadow-xl z-10 overflow-hidden max-h-[400px] overflow-y-auto"
                     role="listbox"
-                    aria-label="Cenarios de exemplo"
+                    aria-label={t.a11y.exampleScenarios}
                 >
                     {PRESET_SCENARIOS.map((preset, index) => (
                         <button

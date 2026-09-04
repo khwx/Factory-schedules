@@ -3,6 +3,7 @@ import { ScheduleGenerator, GeneratedSchedule, GeneratorConstraints } from '../u
 import { PresetScenario } from '../data/presetScenarios';
 import { Settings, Zap, Target, Calendar, ChevronDown, ChevronUp } from 'lucide-react';
 import { clsx } from 'clsx';
+import { useI18n } from '../i18n';
 
 interface ScheduleGeneratorProps {
     isOpen: boolean;
@@ -41,6 +42,7 @@ const calculateWeeklyHours = (pattern: string, shiftDuration: number): { avgHour
 };
 
 const GeneratorUI: React.FC<ScheduleGeneratorProps> = ({ isOpen, onClose, onSelectScenario }) => {
+    const { t } = useI18n();
     const [constraints, setConstraints] = useState<GeneratorConstraints>({
         teams: 5,
         maxConsecutiveWork: 6,
@@ -141,7 +143,7 @@ const GeneratorUI: React.FC<ScheduleGeneratorProps> = ({ isOpen, onClose, onSele
                     <button
                         onClick={onClose}
                         className="p-2 hover:bg-gray-700 rounded-full text-gray-400 hover:text-white transition-colors"
-                        aria-label="Fechar gerador"
+                        aria-label={t.a11y.closeGenerator}
                     >
                         ✕
                     </button>

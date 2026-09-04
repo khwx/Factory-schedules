@@ -1,11 +1,28 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
-import QuickActions from '../../components/QuickActions';
+import { BrowserRouter } from 'react-router-dom';
+import { ThemeProvider } from '../../contexts/ThemeContext';
+import { ToastProvider } from '../../contexts/ToastContext';
+import { I18nProvider } from '../../i18n';
+import QuickActions from '../QuickActions';
+
+const wrapper = ({ children }: { children: React.ReactNode }) => (
+    <BrowserRouter>
+        <ThemeProvider>
+            <ToastProvider>
+                <I18nProvider>
+                    {children}
+                </I18nProvider>
+            </ToastProvider>
+        </ThemeProvider>
+    </BrowserRouter>
+);
 
 describe('QuickActions', () => {
     it('should not render on desktop (md:hidden)', () => {
         const { container } = render(
-            <QuickActions onNewScenario={vi.fn()} onOpenGenerator={vi.fn()} onExport={vi.fn()} onSearch={vi.fn()} />
+            <QuickActions onNewScenario={vi.fn()} onOpenGenerator={vi.fn()} onExport={vi.fn()} onSearch={vi.fn()} />,
+            { wrapper }
         );
         // The component renders but is hidden on desktop via md:hidden class
         expect(container.firstChild).toBeTruthy();
@@ -13,7 +30,8 @@ describe('QuickActions', () => {
 
     it('should open menu when FAB clicked', () => {
         render(
-            <QuickActions onNewScenario={vi.fn()} onOpenGenerator={vi.fn()} onExport={vi.fn()} onSearch={vi.fn()} />
+            <QuickActions onNewScenario={vi.fn()} onOpenGenerator={vi.fn()} onExport={vi.fn()} onSearch={vi.fn()} />,
+            { wrapper }
         );
         const fab = screen.getByLabelText('Acoes rapidas');
         fireEvent.click(fab);
@@ -26,7 +44,8 @@ describe('QuickActions', () => {
     it('should call onNewScenario when Novo Cenario clicked', () => {
         const onNewScenario = vi.fn();
         render(
-            <QuickActions onNewScenario={onNewScenario} onOpenGenerator={vi.fn()} onExport={vi.fn()} onSearch={vi.fn()} />
+            <QuickActions onNewScenario={onNewScenario} onOpenGenerator={vi.fn()} onExport={vi.fn()} onSearch={vi.fn()} />,
+            { wrapper }
         );
         fireEvent.click(screen.getByLabelText('Acoes rapidas'));
         fireEvent.click(screen.getByText('Novo Cenario'));
@@ -36,7 +55,8 @@ describe('QuickActions', () => {
     it('should call onOpenGenerator when Gerar Horario clicked', () => {
         const onOpenGenerator = vi.fn();
         render(
-            <QuickActions onNewScenario={vi.fn()} onOpenGenerator={onOpenGenerator} onExport={vi.fn()} onSearch={vi.fn()} />
+            <QuickActions onNewScenario={vi.fn()} onOpenGenerator={onOpenGenerator} onExport={vi.fn()} onSearch={vi.fn()} />,
+            { wrapper }
         );
         fireEvent.click(screen.getByLabelText('Acoes rapidas'));
         fireEvent.click(screen.getByText('Gerar Horario'));
@@ -45,7 +65,8 @@ describe('QuickActions', () => {
 
     it('should toggle close when clicked again', () => {
         render(
-            <QuickActions onNewScenario={vi.fn()} onOpenGenerator={vi.fn()} onExport={vi.fn()} onSearch={vi.fn()} />
+            <QuickActions onNewScenario={vi.fn()} onOpenGenerator={vi.fn()} onExport={vi.fn()} onSearch={vi.fn()} />,
+            { wrapper }
         );
         const fab = screen.getByLabelText('Acoes rapidas');
         fireEvent.click(fab);

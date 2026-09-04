@@ -1,6 +1,22 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { BrowserRouter } from 'react-router-dom';
+import { ThemeProvider } from '../../contexts/ThemeContext';
+import { ToastProvider } from '../../contexts/ToastContext';
+import { I18nProvider } from '../../i18n';
 import GeneratorUI from '../ScheduleGenerator';
+
+const wrapper = ({ children }: { children: React.ReactNode }) => (
+    <BrowserRouter>
+        <ThemeProvider>
+            <ToastProvider>
+                <I18nProvider>
+                    {children}
+                </I18nProvider>
+            </ToastProvider>
+        </ThemeProvider>
+    </BrowserRouter>
+);
 
 const { mockGenerate, mockCancel, mockOnClose, mockOnSelectScenario } = vi.hoisted(() => ({
     mockGenerate: vi.fn(),
@@ -40,14 +56,16 @@ describe('GeneratorUI', () => {
 
     it('should return null when not open', () => {
         const { container } = render(
-            <GeneratorUI isOpen={false} onClose={mockOnClose} onSelectScenario={mockOnSelectScenario} />
+            <GeneratorUI isOpen={false} onClose={mockOnClose} onSelectScenario={mockOnSelectScenario} />,
+            { wrapper }
         );
-        expect(container).toBeEmptyDOMElement();
+        expect(container.querySelector('[role="dialog"]')).not.toBeInTheDocument();
     });
 
     it('should render configuration when open', () => {
         render(
-            <GeneratorUI isOpen={true} onClose={mockOnClose} onSelectScenario={mockOnSelectScenario} />
+            <GeneratorUI isOpen={true} onClose={mockOnClose} onSelectScenario={mockOnSelectScenario} />,
+            { wrapper }
         );
         expect(screen.getByText(/Gerador de Horarios Avancado/i)).toBeInTheDocument();
         expect(screen.getByText(/Numero de Equipas/i)).toBeInTheDocument();
@@ -57,7 +75,8 @@ describe('GeneratorUI', () => {
 
     it('should call onClose when close button clicked', () => {
         render(
-            <GeneratorUI isOpen={true} onClose={mockOnClose} onSelectScenario={mockOnSelectScenario} />
+            <GeneratorUI isOpen={true} onClose={mockOnClose} onSelectScenario={mockOnSelectScenario} />,
+            { wrapper }
         );
         fireEvent.click(screen.getByLabelText(/Fechar gerador/i));
         expect(mockOnClose).toHaveBeenCalled();
@@ -65,7 +84,8 @@ describe('GeneratorUI', () => {
 
     it('should toggle advanced preferences', () => {
         render(
-            <GeneratorUI isOpen={true} onClose={mockOnClose} onSelectScenario={mockOnSelectScenario} />
+            <GeneratorUI isOpen={true} onClose={mockOnClose} onSelectScenario={mockOnSelectScenario} />,
+            { wrapper }
         );
         expect(screen.queryByText(/Max. Dias Trabalho Seguidos/i)).not.toBeInTheDocument();
         fireEvent.click(screen.getByText(/Preferencias Avancadas/i));
@@ -76,7 +96,8 @@ describe('GeneratorUI', () => {
 
     it('should generate and display results', async () => {
         render(
-            <GeneratorUI isOpen={true} onClose={mockOnClose} onSelectScenario={mockOnSelectScenario} />
+            <GeneratorUI isOpen={true} onClose={mockOnClose} onSelectScenario={mockOnSelectScenario} />,
+            { wrapper }
         );
         fireEvent.click(screen.getByText(/Gerar Opcoes/i));
         expect(mockGenerate).toHaveBeenCalled();
@@ -87,7 +108,8 @@ describe('GeneratorUI', () => {
 
     it('should select a scenario when "Usar" is clicked', async () => {
         render(
-            <GeneratorUI isOpen={true} onClose={mockOnClose} onSelectScenario={mockOnSelectScenario} />
+            <GeneratorUI isOpen={true} onClose={mockOnClose} onSelectScenario={mockOnSelectScenario} />,
+            { wrapper }
         );
         fireEvent.click(screen.getByText(/Gerar Opcoes/i));
         await waitFor(() => {

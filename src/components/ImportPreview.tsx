@@ -129,7 +129,7 @@ const ImportPreview: React.FC<ImportPreviewProps> = ({ scenarios, onConfirm, onC
                     <h3 className="text-lg font-semibold text-white">
                         {t.importPreview.title}
                     </h3>
-                    <button onClick={onCancel} className="text-gray-400 hover:text-white" aria-label="Fechar">
+                    <button onClick={onCancel} className="text-gray-400 hover:text-white" aria-label={t.common.close}>
                         <X className="w-5 h-5" />
                     </button>
                 </div>

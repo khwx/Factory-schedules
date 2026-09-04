@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { Scenario, DayInfo } from '../types';
 import { generateYearCalendar } from '../utils/calendar';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { useI18n } from '../i18n';
 
 interface YearCalendarViewProps {
     scenario: Scenario;
@@ -12,6 +13,7 @@ const MONTH_NAMES = ['Janeiro', 'Fevereiro', 'Mar\u00e7o', 'Abril', 'Maio', 'Jun
 const DAY_HEADERS = ['S', 'T', 'Q', 'Q', 'S', 'S', 'D'];
 
 const YearCalendarView: React.FC<YearCalendarViewProps> = ({ scenario }) => {
+    const { t } = useI18n();
     const currentYear = new Date().getFullYear();
     const [selectedYear, setSelectedYear] = useState(currentYear);
     const [selectedTeam, setSelectedTeam] = useState(0);
@@ -136,7 +138,7 @@ const YearCalendarView: React.FC<YearCalendarViewProps> = ({ scenario }) => {
                             <button
                                 onClick={() => setSelectedMonth(m => (m + 11) % 12)}
                                 className="p-2 hover:bg-gray-700 rounded transition-colors"
-                                aria-label="M\u00eas anterior"
+                                aria-label={t.a11y.previousMonth}
                             >
                                 <ChevronLeft className="w-5 h-5 text-gray-400" />
                             </button>
@@ -144,7 +146,7 @@ const YearCalendarView: React.FC<YearCalendarViewProps> = ({ scenario }) => {
                             <button
                                 onClick={() => setSelectedMonth(m => (m + 1) % 12)}
                                 className="p-2 hover:bg-gray-700 rounded transition-colors"
-                                aria-label="Pr\u00f3ximo m\u00eas"
+                                aria-label={t.a11y.nextMonth}
                             >
                                 <ChevronRight className="w-5 h-5 text-gray-400" />
                             </button>

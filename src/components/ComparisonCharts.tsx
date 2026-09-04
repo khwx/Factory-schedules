@@ -2,6 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line, AreaChart, Area } from 'recharts';
 import { Scenario, AnalysisResult } from '../types';
 import { BarChart3, TrendingUp } from 'lucide-react';
+import { useI18n } from '../i18n';
 
 interface ComparisonChartsProps {
     scenarios: Scenario[];
@@ -11,6 +12,7 @@ interface ComparisonChartsProps {
 type ChartType = 'bar' | 'line' | 'area';
 
 const ComparisonCharts: React.FC<ComparisonChartsProps> = ({ scenarios, analyses }) => {
+    const { t } = useI18n();
     const [chartType, setChartType] = useState<ChartType>('bar');
 
     const weekendData = useMemo(() => {
@@ -111,7 +113,7 @@ const ComparisonCharts: React.FC<ComparisonChartsProps> = ({ scenarios, analyses
                         <BarChart3 className="w-5 h-5 text-blue-400" />
                         <h3 className="text-lg font-semibold text-white">Comparacao de Fins de Semana e Horas</h3>
                     </div>
-                    <div className="flex gap-1 bg-gray-900 rounded-lg p-1" role="radiogroup" aria-label="Tipo de grafico">
+                    <div className="flex gap-1 bg-gray-900 rounded-lg p-1" role="radiogroup" aria-label={t.a11y.chartType}>
                         <ChartTypeButton type="bar" label="Barras" />
                         <ChartTypeButton type="line" label="Linhas" />
                         <ChartTypeButton type="area" label="Area" />

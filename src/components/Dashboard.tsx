@@ -481,7 +481,7 @@ const Dashboard: React.FC = () => {
                 <button
                     onClick={() => setShowDemoMode(!showDemoMode)}
                     className="flex items-center justify-center gap-2 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-500 text-white px-6 py-4 rounded-lg shadow-lg transition-all transform hover:scale-[1.02] font-semibold w-full md:w-auto"
-                    aria-label="Modo demonstracao"
+                    aria-label={t.dashboard.demoModeAria}
                     aria-expanded={showDemoMode}
                 >
                     <Play className="w-5 h-5" />
@@ -490,7 +490,7 @@ const Dashboard: React.FC = () => {
                 <button
                     onClick={handleOpenGenerator}
                     className="flex items-center justify-center gap-2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white px-6 py-4 rounded-lg shadow-lg transition-all transform hover:scale-[1.02] font-semibold w-full md:w-auto"
-                    aria-label="Abrir gerador de horarios"
+                    aria-label={t.dashboard.openGeneratorAria}
                 >
                     <Wand2 className="w-5 h-5" />
                     {t.dashboard.generate}
@@ -528,7 +528,7 @@ const Dashboard: React.FC = () => {
                                     : 'bg-gray-800 text-gray-500 cursor-not-allowed'
                             }`}
                             title="Desfazer (Ctrl+Z)"
-                            aria-label="Desfazer ultima acao"
+                            aria-label={t.dashboard.undoAria}
                         >
                             <Undo2 className="w-4 h-4" />
                             Desfazer
@@ -542,7 +542,7 @@ const Dashboard: React.FC = () => {
                                     : 'bg-gray-800 text-gray-500 cursor-not-allowed'
                             }`}
                             title="Refazer (Ctrl+Shift+Z)"
-                            aria-label="Refazer ultima acao"
+                            aria-label={t.dashboard.redoAria}
                         >
                             <Redo2 className="w-4 h-4" />
                             Refazer
@@ -566,7 +566,7 @@ const Dashboard: React.FC = () => {
                                         value={searchTerm}
                                         onChange={handleSearchChange}
                                         className="w-full pl-10 pr-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-blue-500"
-                                        aria-label="Pesquisar cenarios"
+                                        aria-label={t.dashboard.searchAria}
                                     />
                                 </div>
                             </div>
@@ -577,7 +577,7 @@ const Dashboard: React.FC = () => {
                                     value={filterTeams ?? ''}
                                     onChange={handleFilterTeamsChange}
                                     className="px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:outline-none focus:border-blue-500"
-                                    aria-label="Filtrar por numero de equipas"
+                                    aria-label={t.dashboard.filterTeamsAria}
                                 >
                                     <option value="">Todas as Equipas</option>
                                     {[...new Set(scenarios.map(s => s.teams))].sort((a, b) => a - b).map(num => (
@@ -590,7 +590,7 @@ const Dashboard: React.FC = () => {
                                     value={sortBy}
                                     onChange={handleSortChange}
                                     className="px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:outline-none focus:border-blue-500"
-                                    aria-label="Ordenar cenarios"
+                                    aria-label={t.dashboard.sortAria}
                                 >
                                     <option value="name">Ordenar: Nome</option>
                                     <option value="weekends">Ordenar: Fins de Semana</option>
@@ -611,7 +611,7 @@ const Dashboard: React.FC = () => {
                                 <Filter className="w-4 h-4" aria-hidden="true" />
                                 {showHidden ? 'Ocultar Escondidos' : 'Mostrar Escondidos'}
                                 {scenarios.filter(s => s.hidden).length > 0 && (
-                                    <span className="bg-gray-900 px-2 py-0.5 rounded-full text-xs" aria-label={`${scenarios.filter(s => s.hidden).length} cenarios escondidos`}>
+                                    <span className="bg-gray-900 px-2 py-0.5 rounded-full text-xs" aria-label={t.dashboard.hiddenCountAria.replace('{count}', String(scenarios.filter(s => s.hidden).length))}>
                                         {scenarios.filter(s => s.hidden).length}
                                     </span>
                                 )}
@@ -854,7 +854,7 @@ const Dashboard: React.FC = () => {
                         <button
                             onClick={handleExportAll}
                             className="bg-green-600 hover:bg-green-700 text-white font-medium py-3 px-5 rounded-lg transition-colors flex items-center gap-2"
-                            aria-label="Exportar todos os cenarios para Excel"
+                            aria-label={t.dashboard.exportExcelAria}
                         >
                             <Download className="w-5 h-5" aria-hidden="true" />
                             {t.dashboard.exportExcel}
@@ -862,7 +862,7 @@ const Dashboard: React.FC = () => {
                         <button
                             onClick={handleExportAllPDF}
                             className="bg-red-600 hover:bg-red-700 text-white font-medium py-3 px-5 rounded-lg transition-colors flex items-center gap-2"
-                            aria-label="Exportar todos os cenarios para PDF"
+                            aria-label={t.dashboard.exportPDFAria}
                         >
                             <FileText className="w-5 h-5" aria-hidden="true" />
                             {t.dashboard.exportPDF}
@@ -870,7 +870,7 @@ const Dashboard: React.FC = () => {
                         <button
                             onClick={handleExportAllCSV}
                             className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-5 rounded-lg transition-colors flex items-center gap-2"
-                            aria-label="Exportar todos os cenarios para CSV"
+                            aria-label={t.dashboard.exportCSVAria}
                         >
                             <Table2 className="w-5 h-5" aria-hidden="true" />
                             {t.dashboard.exportCSV}
@@ -878,7 +878,7 @@ const Dashboard: React.FC = () => {
                         <button
                             onClick={handleExportAllJSON}
                             className="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-3 px-5 rounded-lg transition-colors flex items-center gap-2"
-                            aria-label="Exportar todos os cenarios para JSON"
+                            aria-label={t.dashboard.exportJSONAria}
                         >
                             <Code2 className="w-5 h-5" aria-hidden="true" />
                             {t.dashboard.exportJSON}
@@ -894,7 +894,7 @@ const Dashboard: React.FC = () => {
                         <button
                             onClick={handleExportImage}
                             className="bg-purple-600 hover:bg-purple-700 text-white font-medium py-3 px-5 rounded-lg transition-colors flex items-center gap-2"
-                            aria-label="Exportar como imagem"
+                            aria-label={t.dashboard.exportImageAria}
                         >
                             <Image className="w-5 h-5" aria-hidden="true" />
                             {t.dashboard.exportImage || 'Imagem'}
@@ -914,7 +914,7 @@ const Dashboard: React.FC = () => {
                     className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4"
                     role="dialog"
                     aria-modal="true"
-                    aria-label="Calendario Anual"
+                    aria-label={t.dashboard.calendarViewAria}
                     tabIndex={-1}
                 >
                     <div className="bg-gray-900 rounded-lg max-w-6xl w-full max-h-[90vh] overflow-hidden flex flex-col">
@@ -923,7 +923,7 @@ const Dashboard: React.FC = () => {
                             <button
                                 onClick={handleCloseCalendar}
                                 className="text-gray-400 hover:text-white transition-colors"
-                                aria-label="Fechar calendario"
+                                aria-label={t.dashboard.closeCalendarAria}
                             >
                                 <X className="w-6 h-6" />
                             </button>

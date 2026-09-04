@@ -1,12 +1,28 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
+import { BrowserRouter } from 'react-router-dom';
+import { ThemeProvider } from '../../contexts/ThemeContext';
+import { ToastProvider } from '../../contexts/ToastContext';
+import { I18nProvider } from '../../i18n';
 import PresetSelector from '../PresetSelector';
 import { PRESET_SCENARIOS } from '../../data/presetScenarios';
+
+const wrapper = ({ children }: { children: React.ReactNode }) => (
+    <BrowserRouter>
+        <ThemeProvider>
+            <ToastProvider>
+                <I18nProvider>
+                    {children}
+                </I18nProvider>
+            </ToastProvider>
+        </ThemeProvider>
+    </BrowserRouter>
+);
 
 describe('PresetSelector', () => {
     const renderSelector = () => {
         const onLoadPreset = vi.fn();
-        const utils = render(<PresetSelector onLoadPreset={onLoadPreset} />);
+        const utils = render(<PresetSelector onLoadPreset={onLoadPreset} />, { wrapper });
         return { onLoadPreset, ...utils };
     };
 

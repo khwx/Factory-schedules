@@ -1,22 +1,23 @@
 import React, { useEffect, useCallback, useState } from 'react';
 import { X, Keyboard } from 'lucide-react';
+import { useI18n } from '../i18n';
 
 interface ShortcutItem {
     keys: string[];
-    label: string;
+    labelKey: string;
 }
 
 const SHORTCUTS: ShortcutItem[] = [
-    { keys: ['Ctrl', 'Z'], label: 'Desfazer' },
-    { keys: ['Ctrl', 'Shift', 'Z'], label: 'Refazer' },
-    { keys: ['Ctrl', 'F'], label: 'Pesquisar cenarios' },
-    { keys: ['Alt', '\u2191'], label: 'Mover cenario para cima' },
-    { keys: ['Alt', '\u2193'], label: 'Mover cenario para baixo' },
-    { keys: ['N'], label: 'Criar novo cenario (foco no formulario)' },
-    { keys: ['E'], label: 'Exportar ICS do cenario selecionado' },
-    { keys: ['Ctrl', '1-9'], label: 'Ver calendario do cenario 1-9' },
-    { keys: ['Esc'], label: 'Fechar modal/painel' },
-    { keys: ['?'], label: 'Abrir atalhos de teclado' },
+    { keys: ['Ctrl', 'Z'], labelKey: 'undo' },
+    { keys: ['Ctrl', 'Shift', 'Z'], labelKey: 'redo' },
+    { keys: ['Ctrl', 'F'], labelKey: 'search' },
+    { keys: ['Alt', '\u2191'], labelKey: 'moveUp' },
+    { keys: ['Alt', '\u2193'], labelKey: 'moveDown' },
+    { keys: ['N'], labelKey: 'newScenario' },
+    { keys: ['E'], labelKey: 'exportICS' },
+    { keys: ['Ctrl', '1-9'], labelKey: 'viewCalendar' },
+    { keys: ['Esc'], labelKey: 'close' },
+    { keys: ['?'], labelKey: 'shortcuts' },
 ];
 
 interface ShortcutsHelpProps {
@@ -25,6 +26,20 @@ interface ShortcutsHelpProps {
 }
 
 export const ShortcutsHelp: React.FC<ShortcutsHelpProps> = ({ isOpen, onClose }) => {
+    const { t } = useI18n();
+    const labelMap: Record<string, string> = {
+        undo: t.a11y.undo,
+        redo: t.a11y.redo,
+        search: t.a11y.search,
+        moveUp: t.a11y.moveUp,
+        moveDown: t.a11y.moveDown,
+        newScenario: t.a11y.newScenario,
+        exportICS: t.a11y.exportICS,
+        viewCalendar: t.a11y.viewCalendar,
+        close: t.a11y.closeModal,
+        shortcuts: t.a11y.shortcutsOpen,
+    };
+
     useEffect(() => {
         if (!isOpen) return;
         const handleKey = (e: KeyboardEvent) => {
@@ -43,21 +58,21 @@ export const ShortcutsHelp: React.FC<ShortcutsHelpProps> = ({ isOpen, onClose })
                 className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-gray-800 border border-gray-600 rounded-xl p-6 shadow-2xl z-50 w-[380px] animate-scaleIn"
                 role="dialog"
                 aria-modal="true"
-                aria-label="Atalhos de teclado"
+                aria-label={t.a11y.shortcutsTitle}
             >
                 <div className="flex items-center justify-between mb-4">
                     <h3 className="text-white font-semibold text-lg flex items-center gap-2">
                         <Keyboard className="w-5 h-5 text-blue-400" />
-                        Atalhos de Teclado
+                        {t.helpPage.keyboardShortcuts}
                     </h3>
-                    <button onClick={onClose} className="text-gray-400 hover:text-white" aria-label="Fechar">
+                    <button onClick={onClose} className="text-gray-400 hover:text-white" aria-label={t.common.close}>
                         <X className="w-5 h-5" />
                     </button>
                 </div>
                 <div className="space-y-3">
-                    {SHORTCUTS.map(({ keys, label }) => (
-                        <div key={label} className="flex items-center justify-between">
-                            <span className="text-sm text-gray-300">{label}</span>
+                    {SHORTCUTS.map(({ keys, labelKey }) => (
+                        <div key={labelKey} className="flex items-center justify-between">
+                            <span className="text-sm text-gray-300">{labelMap[labelKey]}</span>
                             <div className="flex gap-1">
                                 {keys.map((key) => (
                                     <kbd

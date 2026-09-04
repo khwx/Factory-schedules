@@ -1,7 +1,23 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
+import { BrowserRouter } from 'react-router-dom';
+import { ThemeProvider } from '../../contexts/ThemeContext';
+import { ToastProvider } from '../../contexts/ToastContext';
+import { I18nProvider } from '../../i18n';
 import ComparisonCharts from '../ComparisonCharts';
 import { Scenario, AnalysisResult } from '../../types';
+
+const wrapper = ({ children }: { children: React.ReactNode }) => (
+    <BrowserRouter>
+        <ThemeProvider>
+            <ToastProvider>
+                <I18nProvider>
+                    {children}
+                </I18nProvider>
+            </ToastProvider>
+        </ThemeProvider>
+    </BrowserRouter>
+);
 
 vi.mock('recharts', async () => {
     const actual = await vi.importActual<typeof import('recharts')>('recharts');
@@ -33,7 +49,7 @@ const analyses: AnalysisResult[] = [
     makeAnalysis({ weekendsOffPerYear: 45, avgWeeklyHours: 36 }),
 ];
 
-const renderCharts = () => render(<ComparisonCharts scenarios={scenarios} analyses={analyses} />);
+const renderCharts = () => render(<ComparisonCharts scenarios={scenarios} analyses={analyses} />, { wrapper });
 
 describe('ComparisonCharts', () => {
     beforeEach(() => {

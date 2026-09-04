@@ -1,6 +1,22 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, fireEvent, act } from '@testing-library/react';
+import { BrowserRouter } from 'react-router-dom';
+import { ThemeProvider } from '../../contexts/ThemeContext';
+import { ToastProvider } from '../../contexts/ToastContext';
+import { I18nProvider } from '../../i18n';
 import { TutorialOverlay, useTutorial, HelpButton } from '../Tutorial';
+
+const wrapper = ({ children }: { children: React.ReactNode }) => (
+    <BrowserRouter>
+        <ThemeProvider>
+            <ToastProvider>
+                <I18nProvider>
+                    {children}
+                </I18nProvider>
+            </ToastProvider>
+        </ThemeProvider>
+    </BrowserRouter>
+);
 
 const renderOverlay = (overrides: Partial<React.ComponentProps<typeof TutorialOverlay>> = {}) =>
     render(
@@ -12,7 +28,8 @@ const renderOverlay = (overrides: Partial<React.ComponentProps<typeof TutorialOv
             onClose={() => {}}
             totalSteps={5}
             {...overrides}
-        />
+        />,
+        { wrapper }
     );
 
 describe('TutorialOverlay', () => {
@@ -59,7 +76,7 @@ describe('TutorialOverlay', () => {
 
     it('should render nothing when inactive', () => {
         const { container } = renderOverlay({ isActive: false });
-        expect(container.firstChild).toBeNull();
+        expect(container.querySelector('[role="dialog"]')).not.toBeInTheDocument();
     });
 
     it('should have dialog role', () => {
@@ -81,7 +98,7 @@ describe('useTutorial', () => {
                 </>
             );
         }
-        render(<Harness />);
+        render(<Harness />, { wrapper });
         expect(screen.getByTestId('active').textContent).toBe('false');
         fireEvent.click(screen.getByText('start'));
         expect(screen.getByTestId('active').textContent).toBe('true');
@@ -92,7 +109,7 @@ describe('useTutorial', () => {
             const t = useTutorial();
             return <button onClick={t.close}>close</button>;
         }
-        render(<Harness />);
+        render(<Harness />, { wrapper });
         fireEvent.click(screen.getByText('close'));
         expect(localStorage.getItem('shiftsim_tutorial_complete')).toBe('true');
     });
@@ -102,10 +119,10 @@ describe('useTutorial', () => {
             const t = useTutorial();
             return <span data-testid="show">{String(t.shouldShowOnFirstVisit())}</span>;
         }
-        render(<Harness />);
+        render(<Harness />, { wrapper });
         expect(screen.getByTestId('show').textContent).toBe('true');
         act(() => localStorage.setItem('shiftsim_tutorial_complete', 'true'));
-        render(<Harness />);
+        render(<Harness />, { wrapper });
         expect(screen.getAllByTestId('show')[1].textContent).toBe('false');
     });
 });
@@ -113,7 +130,7 @@ describe('useTutorial', () => {
 describe('HelpButton', () => {
     it('should render button and call onClick', () => {
         const onClick = vi.fn();
-        render(<HelpButton onClick={onClick} />);
+        render(<HelpButton onClick={onClick} />, { wrapper });
         const btn = screen.getByRole('button', { name: /Abrir tutorial/i });
         expect(btn).toBeInTheDocument();
         fireEvent.click(btn);

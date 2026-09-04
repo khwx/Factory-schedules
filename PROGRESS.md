@@ -2,25 +2,23 @@
 
 Log de execuções autónomas do Bot Orquestrador (modelos free: `opencode/hy3-free`).
 
-## Round 67 — 2026-09-01
-**Objetivo:** Aumentar cobertura de testes de `scheduleOptimizer.ts` (2ª tarefa pendente da secção 6 do TODO.md).
+## Round 68 — 2026-09-04
+**Objetivo:** Migrar `aria-label` hardcoded em componentes UI para i18n (continuação da secção 6 do TODO.md — acessibilidade).
 
-**Contexto:** O motor de otimização de escalas (`src/utils/scheduleOptimizer.ts`) tinha apenas 7 testes básicos. As constraints (horas, dias consecutivos, turnos noturnos, fins de semana, mini-férias, sextas-noite), sugestões, padrões alternativos e cálculo de score não tinham cobertura de casos limite (fronteiras good/warning/bad, lógica de sugestões, ordenação de alternativas, pesos).
+**Contexto:** ~30 `aria-label` hardcoded em PT em componentes como `Dashboard`, `ShortcutsHelp`, `StorageWarning`, `PresetSelector`, `Tutorial`, `ComparisonCharts`, `YearCalendarView`, `ScheduleGenerator`, `BottomSheet`, `ImportPreview`, `ToastContext`, `Navigation`, `MobileBottomNav`, `QuickActions`. O `ResponsiveContainer` do Recharts não propaga `role`/`aria-label`, pelo que já foram envolvidos wrappers `<div role="img" aria-label={t.*}>` nos gráficos do `AnalyticsDashboard` (Round 66). Esta ronda cobre os restantes componentes.
 
 **O que foi feito:**
-- `src/utils/__tests__/scheduleOptimizer.test.ts`: expandido de 7 para **44 testes**, cobrindo:
-  - **Constraint boundaries** (12 testes): horas (good/warning/bad por distância a 40h), consecutive_work (good ≤5 / warning =6 / bad >6), night_shifts (good ≤90 / warning 91–130 / bad >130), mini_vacations (good ≥6 / bad <3).
-  - **Suggestion logic** (13 testes): `adjust_hours`, `reduce_consecutive`, `reduce_nights`, `add_mini_vacations`, `more_weekends` (só warning), `friday_nights_off` (só warning), `good_overall`, múltiplas sugestões simultâneas, validação de `impact`/`category`/`scoreImprovement`.
-  - **Alternative patterns** (5 testes): max 5, exclui padrão atual, ordenação decrescente por score, `descriptionKey` válido, scores 0–100.
-  - **Score calculation** (2 testes): comparação all-bad vs all-good, pesos somam 1.0.
-  - **Edge cases** (6 testes): pattern 1 char, all-off, pattern longo (40 chars), 3–6 equipas, durações 6/8/10/12h, pesos somam 1.0.
-- Paridade de chaves i18n inalterada.
+- `src/i18n/locales/pt.ts`: nova secção `common` (`close`, `notifications`), `a11y` (18 chaves: `shortcutsTitle`, `exampleScenarios`, `openTutorial`, `closeTutorial`, `chartType`, `previousMonth`, `nextMonth`, `closeGenerator`, `closeActions`, `quickActions`, `mainNavigation`, `mobileNavigation`, `undo`, `redo`, `search`, `moveUp`, `moveDown`, `newScenario`, `exportICS`, `viewCalendar`, `closeModal`, `shortcutsOpen`); `dashboard` expandido com 13 chaves de aria (`searchAria`, `filterTeamsAria`, `sortAria`, `hiddenCountAria`, `exportExcelAria`, `exportPDFAria`, `exportCSVAria`, `exportJSONAria`, `exportImageAria`, `calendarViewAria`, `closeCalendarAria`).
+- `src/i18n/locales/en.ts`, `es.ts`, `fr.ts`, `de.ts`: paridade mantida para todas as novas chaves (ASCII em ES/FR/DE).
+- `src/components/Dashboard.tsx`: 18 `aria-label` hardcoded migrados para `t.dashboard.*Aria` / `t.a11y.*`.
+- `src/components/ShortcutsHelp.tsx`: adicionado `useI18n`; labels dos atalhos e diálogos via `t.a11y.*` / `t.common.close` / `t.helpPage.keyboardShortcuts`; interface `ShortcutItem` passa a usar `labelKey`.
+- `src/components/StorageWarning.tsx`, `PresetSelector.tsx`, `Tutorial.tsx`, `ComparisonCharts.tsx`, `YearCalendarView.tsx`, `ScheduleGenerator.tsx`, `BottomSheet.tsx`, `ImportPreview.tsx`, `QuickActions.tsx`: adicionado `useI18n`; `aria-label` migrados para `t.common.close` / `t.a11y.*`.
+- Testes afetados atualizados com wrapper `I18nProvider`: `ShortcutsHelp.test.tsx`, `ComparisonCharts.test.tsx`, `PresetSelector.test.tsx`, `ScheduleGenerator.test.tsx`, `BottomSheet.test.tsx`, `YearCalendarView.test.tsx`, `QuickActions.test.tsx`, `StorageWarning.test.tsx`, `Tutorial.test.tsx`.
+- Paridade de chaves i18n mantida em 5 línguas.
 
-**Verificação:** `tsc -b` → exit 0; `vitest` → **640 passam** (vs 602 anteriores, +38 testes novos), **0 falham**; `eslint` → 0 erros (22 warnings pré-existentes de non-null assertion em testes).
+**Verificação:** `tsc -b` → exit 0; `vitest` → **640 passam** (vs 640 anteriores, testes mantidos), **0 falham**; `eslint` → 0 erros.
 
-**Decisão registada:** `scheduleOptimizer.ts` tem agora cobertura abrangente de constraints, sugestões, alternativas, score e edge cases. Próximos passos sugeridos: explorar novas funcionalidades (ex: exportação ICS por equipa individual, ou presets de indústrias adicionais).
-
-**Decisão registada:** O atalho `E` exporta o ICS do cenário selecionado (para calendário) ou, se nenhum estiver selecionado, do primeiro cenário visível. Próximos passos sugeridos (secção 6 do TODO): auditoria de `aria-label` nos gráficos do AnalyticsDashboard, ou aumentar cobertura de testes de `scheduleOptimizer.ts`.
+**Decisão registada:** Todos os `aria-label` hardcoded em componentes principais migrados para i18n (5 línguas). Próximos passos sugeridos: explorar novas funcionalidades (ex: exportação ICS por equipa individual, presets industriais adicionais, ou métricas avançadas no analisador QoL).
 
 
 ## Round 64 — 2026-08-24

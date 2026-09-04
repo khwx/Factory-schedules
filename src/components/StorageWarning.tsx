@@ -1,10 +1,12 @@
 import { useState, useEffect, useCallback } from 'react';
 import { getStorageInfo, formatStorageSize } from '../utils/storageQuota';
 import { AlertTriangle, X } from 'lucide-react';
+import { useI18n } from '../i18n';
 
 export default function StorageWarning() {
   const [dismissed, setDismissed] = useState(false);
   const [info, setInfo] = useState(() => getStorageInfo());
+  const { t } = useI18n();
 
   const check = useCallback(() => {
     setInfo(getStorageInfo());
@@ -32,7 +34,7 @@ export default function StorageWarning() {
       <button
         onClick={() => setDismissed(true)}
         className="text-amber-400 hover:text-amber-200 shrink-0"
-        aria-label="Fechar"
+        aria-label={t.common.close}
       >
         <X className="w-4 h-4" />
       </button>

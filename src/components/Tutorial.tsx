@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { HelpCircle, X, ArrowRight, ArrowLeft } from 'lucide-react';
+import { useI18n } from '../i18n';
 
 interface TutorialStep {
     selector: string;
@@ -90,6 +91,7 @@ export const TutorialOverlay: React.FC<{
     onClose: () => void;
     totalSteps: number;
 }> = ({ isActive, currentStep, onNext, onPrev, onClose, totalSteps }) => {
+    const { t } = useI18n();
     const [rect, setRect] = useState<DOMRect | null>(null);
 
     useEffect(() => {
@@ -159,7 +161,7 @@ export const TutorialOverlay: React.FC<{
             >
                 <div className="flex items-start justify-between mb-3">
                     <h3 className="text-white font-semibold text-lg">{step.title}</h3>
-                    <button onClick={onClose} className="text-gray-400 hover:text-white" aria-label="Fechar tutorial">
+                    <button onClick={onClose} className="text-gray-400 hover:text-white" aria-label={t.a11y.closeTutorial}>
                         <X className="w-5 h-5" />
                     </button>
                 </div>
@@ -192,13 +194,16 @@ export const TutorialOverlay: React.FC<{
     );
 };
 
-export const HelpButton: React.FC<{ onClick: () => void }> = ({ onClick }) => (
-    <button
-        onClick={onClick}
-        className="p-2 hover:bg-gray-700 rounded-lg transition-colors"
-        title="Ajuda"
-        aria-label="Abrir tutorial de ajuda"
-    >
-        <HelpCircle className="w-5 h-5 text-gray-400" />
-    </button>
-);
+export const HelpButton: React.FC<{ onClick: () => void }> = ({ onClick }) => {
+    const { t } = useI18n();
+    return (
+        <button
+            onClick={onClick}
+            className="p-2 hover:bg-gray-700 rounded-lg transition-colors"
+            title={t.header.help}
+            aria-label={t.a11y.openTutorial}
+        >
+            <HelpCircle className="w-5 h-5 text-gray-400" />
+        </button>
+    );
+};

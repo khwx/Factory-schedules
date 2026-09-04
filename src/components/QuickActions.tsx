@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Plus, Wand2, Download, Search, X } from 'lucide-react';
 import { clsx } from 'clsx';
+import { useI18n } from '../i18n';
 
 interface QuickActionsProps {
     onNewScenario: () => void;
@@ -10,6 +11,7 @@ interface QuickActionsProps {
 }
 
 export default function QuickActions({ onNewScenario, onOpenGenerator, onExport, onSearch }: QuickActionsProps) {
+    const { t } = useI18n();
     const [isOpen, setIsOpen] = useState(false);
 
     const actions = [
@@ -51,7 +53,7 @@ export default function QuickActions({ onNewScenario, onOpenGenerator, onExport,
                         ? 'bg-gray-600 rotate-45'
                         : 'bg-blue-600 hover:bg-blue-500 active:scale-95'
                 )}
-                aria-label={isOpen ? 'Fechar acoes' : 'Acoes rapidas'}
+                aria-label={isOpen ? t.a11y.closeActions : t.a11y.quickActions}
             >
                 {isOpen ? (
                     <X className="h-6 w-6 text-white" />
