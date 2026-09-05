@@ -16,6 +16,7 @@ interface ScenarioCardProps {
     onExportCSV?: (scenario: Scenario) => void;
     onExportJSON?: (scenario: Scenario) => void;
     onExportICS?: (scenario: Scenario) => void;
+    onExportICSTeam?: (scenario: Scenario, teamIndex: number) => void;
     onShare?: (scenario: Scenario) => void;
     onToggleHidden: (id: string) => void;
     onDuplicate: (scenario: Scenario) => void;
@@ -42,6 +43,7 @@ const ScenarioCard: React.FC<ScenarioCardProps> = React.memo(({
     onExportCSV,
     onExportJSON,
     onExportICS,
+    onExportICSTeam,
     onShare,
     onToggleHidden,
     onDuplicate,
@@ -340,6 +342,21 @@ const ScenarioCard: React.FC<ScenarioCardProps> = React.memo(({
                             <CalendarDays className="w-4 h-4" />
                             {t.card.exportICS}
                         </button>
+                    )}
+                    {scenario.teams > 1 && onExportICSTeam && (
+                        <div className="flex gap-2">
+                            {[...Array(scenario.teams)].map((_, i) => (
+                                <button
+                                    key={i}
+                                    onClick={() => onExportICSTeam(scenario, i)}
+                                    className="flex-1 bg-teal-500 hover:bg-teal-600 text-white text-sm font-medium py-2 px-3 rounded transition-colors flex items-center justify-center gap-2"
+                                    aria-label={`${t.card.exportICSTeam} ${String.fromCharCode(65 + i)}`}
+                                >
+                                    <CalendarDays className="w-4 h-4" />
+                                    {String.fromCharCode(65 + i)}
+                                </button>
+                            ))}
+                        </div>
                     )}
                 </div>
             </div>

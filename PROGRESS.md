@@ -2,23 +2,28 @@
 
 Log de execuções autónomas do Bot Orquestrador (modelos free: `opencode/hy3-free`).
 
-## Round 68 — 2026-09-04
-**Objetivo:** Migrar `aria-label` hardcoded em componentes UI para i18n (continuação da secção 6 do TODO.md — acessibilidade).
+## Round 69 — 2026-09-05
+**Objetivo:** Adicionar exportação ICS por equipa individual (nova funcionalidade — seguindo sugestão da Round 68).
 
-**Contexto:** ~30 `aria-label` hardcoded em PT em componentes como `Dashboard`, `ShortcutsHelp`, `StorageWarning`, `PresetSelector`, `Tutorial`, `ComparisonCharts`, `YearCalendarView`, `ScheduleGenerator`, `BottomSheet`, `ImportPreview`, `ToastContext`, `Navigation`, `MobileBottomNav`, `QuickActions`. O `ResponsiveContainer` do Recharts não propaga `role`/`aria-label`, pelo que já foram envolvidos wrappers `<div role="img" aria-label={t.*}>` nos gráficos do `AnalyticsDashboard` (Round 66). Esta ronda cobre os restantes componentes.
+**Contexto:** A exportação ICS existente (`downloadICS`) gerava um ficheiro único com todas as equipas do cenário. Para facilitar a importação em calendários pessoais, adicionou-se a opção de exportar apenas o horário de uma equipa específica (A, B, C, etc.).
 
 **O que foi feito:**
-- `src/i18n/locales/pt.ts`: nova secção `common` (`close`, `notifications`), `a11y` (18 chaves: `shortcutsTitle`, `exampleScenarios`, `openTutorial`, `closeTutorial`, `chartType`, `previousMonth`, `nextMonth`, `closeGenerator`, `closeActions`, `quickActions`, `mainNavigation`, `mobileNavigation`, `undo`, `redo`, `search`, `moveUp`, `moveDown`, `newScenario`, `exportICS`, `viewCalendar`, `closeModal`, `shortcutsOpen`); `dashboard` expandido com 13 chaves de aria (`searchAria`, `filterTeamsAria`, `sortAria`, `hiddenCountAria`, `exportExcelAria`, `exportPDFAria`, `exportCSVAria`, `exportJSONAria`, `exportImageAria`, `calendarViewAria`, `closeCalendarAria`).
-- `src/i18n/locales/en.ts`, `es.ts`, `fr.ts`, `de.ts`: paridade mantida para todas as novas chaves (ASCII em ES/FR/DE).
-- `src/components/Dashboard.tsx`: 18 `aria-label` hardcoded migrados para `t.dashboard.*Aria` / `t.a11y.*`.
-- `src/components/ShortcutsHelp.tsx`: adicionado `useI18n`; labels dos atalhos e diálogos via `t.a11y.*` / `t.common.close` / `t.helpPage.keyboardShortcuts`; interface `ShortcutItem` passa a usar `labelKey`.
-- `src/components/StorageWarning.tsx`, `PresetSelector.tsx`, `Tutorial.tsx`, `ComparisonCharts.tsx`, `YearCalendarView.tsx`, `ScheduleGenerator.tsx`, `BottomSheet.tsx`, `ImportPreview.tsx`, `QuickActions.tsx`: adicionado `useI18n`; `aria-label` migrados para `t.common.close` / `t.a11y.*`.
-- Testes afetados atualizados com wrapper `I18nProvider`: `ShortcutsHelp.test.tsx`, `ComparisonCharts.test.tsx`, `PresetSelector.test.tsx`, `ScheduleGenerator.test.tsx`, `BottomSheet.test.tsx`, `YearCalendarView.test.tsx`, `QuickActions.test.tsx`, `StorageWarning.test.tsx`, `Tutorial.test.tsx`.
-- Paridade de chaves i18n mantida em 5 línguas.
+- `src/utils/icsExport.ts`:
+  - `downloadICS`: novo parâmetro opcional `teamIndex`; nome do ficheiro inclui `_TeamX` quando aplicável.
+  - Nova função `downloadICSTeam(scenario, teamIndex, ...)` para chamada direta.
+  - `exportScenarioToICS`: já suportava `teamIndex` (Range 64), mantido.
+- `src/components/ScenarioCard.tsx`:
+  - Nova prop `onExportICSTeam` (opcional).
+  - Quando `scenario.teams > 1`, renderiza botões individuais por equipa (A/B/C...) com ícone de calendário e `aria-label` traduzido.
+  - Nova chave i18n `card.exportICSTeam` em 5 línguas.
+- `src/components/Dashboard.tsx`:
+  - Nova callback `handleExportICSTeam(scenario, teamIndex)` usando `downloadICSTeam`.
+  - Passada para `ScenarioCard` via `onExportICSTeam`.
+- `src/i18n/locales/{pt,en,es,fr,de}.ts`: nova chave `card.exportICSTeam` — "ICS por Equipa" / "ICS by Team" / "ICS por Equipo" / "ICS par Équipe" / "ICS nach Team" (paridade mantida, ASCII em ES/FR/DE).
 
-**Verificação:** `tsc -b` → exit 0; `vitest` → **640 passam** (vs 640 anteriores, testes mantidos), **0 falham**; `eslint` → 0 erros.
+**Verificação:** `tsc -b` → exit 0; `vitest` → **640 passam** (vs 640 anteriores, testes mantidos), **0 falham**; `eslint` → 0 erros (3 warnings pré-existentes em Dashboard).
 
-**Decisão registada:** Todos os `aria-label` hardcoded em componentes principais migrados para i18n (5 línguas). Próximos passos sugeridos: explorar novas funcionalidades (ex: exportação ICS por equipa individual, presets industriais adicionais, ou métricas avançadas no analisador QoL).
+**Decisão registada:** Exportação ICS agora suporta exportar por equipa individual (botões A/B/C no cartão do cenário). Próximos passos sugeridos: presets industriais adicionais, métricas avançadas no analisador QoL, ou exportação ICS por período já implementada (Round 64).
 
 
 ## Round 64 — 2026-08-24

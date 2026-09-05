@@ -7,7 +7,7 @@ import { calculateAnalysis } from '../utils/calculations';
 import { exportToExcel, exportComparison } from '../utils/export';
 import { exportScenarioToPDF, exportComparisonToPDF } from '../utils/pdfExport';
 import { exportScenarioToCSV, exportScenarioToJSON, exportComparisonToCSV, exportComparisonToJSON } from '../utils/csvJsonExport';
-import { downloadICS, icsPeriodForRange, ICSExportRange } from '../utils/icsExport';
+import { downloadICS, downloadICSTeam, icsPeriodForRange, ICSExportRange } from '../utils/icsExport';
 import { checkForSharedScenario, copyShareableLink } from '../utils/shareScenario';
 import { X, Download, Filter, Search, Wand2, Undo2, Redo2, FileText, Table2, Code2, Play, Image, SlidersHorizontal, Upload } from 'lucide-react';
 import DashboardStats from './DashboardStats';
@@ -350,6 +350,12 @@ const Dashboard: React.FC = () => {
         const year = new Date().getFullYear();
         const period = icsPeriodForRange(icsRange, year);
         downloadICS(scenario, year, t, period);
+    }, [t, icsRange]);
+
+    const handleExportICSTeam = useCallback((scenario: Scenario, teamIndex: number) => {
+        const year = new Date().getFullYear();
+        const period = icsPeriodForRange(icsRange, year);
+        downloadICSTeam(scenario, teamIndex, year, t, period);
     }, [t, icsRange]);
 
     const handleExportICSShortcut = useCallback(() => {
@@ -740,6 +746,7 @@ const Dashboard: React.FC = () => {
                                 onExportCSV={handleExportCSV}
                                 onExportJSON={handleExportJSON}
                                 onExportICS={handleExportICS}
+                                onExportICSTeam={handleExportICSTeam}
                                 onShare={handleShareScenario}
                                 isDragging={draggedItem?.id === scenario.id}
                                 isDragOver={dragOverItem?.id === scenario.id}

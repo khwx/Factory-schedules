@@ -171,6 +171,7 @@ export const en: Translations = {
     exportJSON: 'JSON',
     exportImage: 'Image',
     exportICS: 'ICS',
+    exportICSTeam: 'ICS by Team',
     delete: 'Delete',
     edit: 'Edit',
     duplicate: 'Duplicate',

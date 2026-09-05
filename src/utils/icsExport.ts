@@ -175,8 +175,8 @@ export function exportScenarioToICS(
     return lines.join('\r\n') + '\r\n';
 }
 
-export function downloadICS(scenario: Scenario, year?: number, t: Translations = pt, period?: ICSExportPeriod): void {
-    const icsContent = exportScenarioToICS(scenario, year, undefined, t, period);
+export function downloadICS(scenario: Scenario, year?: number, t: Translations = pt, period?: ICSExportPeriod, teamIndex?: number): void {
+    const icsContent = exportScenarioToICS(scenario, year, teamIndex, t, period);
     const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -186,11 +186,16 @@ export function downloadICS(scenario: Scenario, year?: number, t: Translations =
     const rangeSuffix = period
         ? `_${period.start.toISOString().split('T')[0]}_${period.end.toISOString().split('T')[0]}`
         : '';
-    a.download = `${scenario.name.replace(/[^a-z0-9]/gi, '_')}_${dateStr}${rangeSuffix}.ics`;
+    const teamSuffix = teamIndex !== undefined ? `_Team${String.fromCharCode(65 + teamIndex)}` : '';
+    a.download = `${scenario.name.replace(/[^a-z0-9]/gi, '_')}_${dateStr}${rangeSuffix}${teamSuffix}.ics`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
+}
+
+export function downloadICSTeam(scenario: Scenario, teamIndex: number, year?: number, t: Translations = pt, period?: ICSExportPeriod): void {
+    downloadICS(scenario, year, t, period, teamIndex);
 }
 
 export function getGoogleCalendarLink(scenario: Scenario, year?: number, t: Translations = pt, period?: ICSExportPeriod): string {

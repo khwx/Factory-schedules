@@ -169,6 +169,7 @@ export const pt = {
     exportJSON: 'JSON',
     exportImage: 'Imagem',
     exportICS: 'ICS',
+    exportICSTeam: 'ICS por Equipa',
     delete: 'Eliminar',
     edit: 'Editar',
     duplicate: 'Duplicar',
