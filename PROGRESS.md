@@ -2,28 +2,32 @@
 
 Log de execuções autónomas do Bot Orquestrador (modelos free: `opencode/hy3-free`).
 
-## Round 69 — 2026-09-05
-**Objetivo:** Adicionar exportação ICS por equipa individual (nova funcionalidade — seguindo sugestão da Round 68).
+## Round 70 — 2026-09-05
+**Objetivo:** Expandir presets de cenários industriais em `src/data/presetScenarios.ts` (nova funcionalidade — seguindo sugestão da Round 69).
 
-**Contexto:** A exportação ICS existente (`downloadICS`) gerava um ficheiro único com todas as equipas do cenário. Para facilitar a importação em calendários pessoais, adicionou-se a opção de exportar apenas o horário de uma equipa específica (A, B, C, etc.).
+**Contexto:** Os presets existentes cobriam principalmente horários genéricos de 4-5 equipas. Adicionou-se uma biblioteca abrangente de 16 novos presets específicos por indústria, cada um com `teamPatterns` individuais para rotação correta entre equipas, refletindo práticas reais de escalas em setores com operação 24/7.
 
 **O que foi feito:**
-- `src/utils/icsExport.ts`:
-  - `downloadICS`: novo parâmetro opcional `teamIndex`; nome do ficheiro inclui `_TeamX` quando aplicável.
-  - Nova função `downloadICSTeam(scenario, teamIndex, ...)` para chamada direta.
-  - `exportScenarioToICS`: já suportava `teamIndex` (Range 64), mantido.
-- `src/components/ScenarioCard.tsx`:
-  - Nova prop `onExportICSTeam` (opcional).
-  - Quando `scenario.teams > 1`, renderiza botões individuais por equipa (A/B/C...) com ícone de calendário e `aria-label` traduzido.
-  - Nova chave i18n `card.exportICSTeam` em 5 línguas.
-- `src/components/Dashboard.tsx`:
-  - Nova callback `handleExportICSTeam(scenario, teamIndex)` usando `downloadICSTeam`.
-  - Passada para `ScenarioCard` via `onExportICSTeam`.
-- `src/i18n/locales/{pt,en,es,fr,de}.ts`: nova chave `card.exportICSTeam` — "ICS por Equipa" / "ICS by Team" / "ICS por Equipo" / "ICS par Équipe" / "ICS nach Team" (paridade mantida, ASCII em ES/FR/DE).
+- `src/data/presetScenarios.ts`: expandido de 7 para **23 presets**, cobrindo:
+  - **Petróleo & Gás / Petroquímica**: Panama schedule 12h (4 equipas)
+  - **Segurança / Vigilância**: 8h rotativo 3 equipas
+  - **Bombeiros / Emergência**: 24h on/off 4 equipas
+  - **Contact Center / Call Center**: cobertura fuso horário 5 equipas
+  - **Mineração**: 12h FIFO 2/1 (2 equipas)
+  - **Marítimo / Navios**: sistema de quartos 4h (3 quartos)
+  - **Aviação / ATC / Solo aeroporto**: 8h contínua 4 equipas
+  - **Indústria Alimentar**: produção contínua 5 equipas
+  - **Farmacêutica / GMP**: sala limpa 3 equipas 8.5h
+  - **Siderurgia / Metalurgia**: alto forno 12h 4 equipas
+  - **Energia / Central Termoelétrica**: operação 24/7 Panama
+  - **Data Center / NOC / SOC**: monitoramento 24x7 Panama
+  - Presets existentes mantidos (Veralia, 25/30 dias, etc.)
+- Cada preset inclui `teamPatterns` individuais para rotação correta, `shiftDuration` realista por indústria, e `weeklyHoursContract` apropriado.
+- Padrões usam notação compacta (M/T/N/F) ou D/N/O para 12h; `startDate` em 2025-01-01.
 
-**Verificação:** `tsc -b` → exit 0; `vitest` → **640 passam** (vs 640 anteriores, testes mantidos), **0 falham**; `eslint` → 0 erros (3 warnings pré-existentes em Dashboard).
+**Verificação:** `tsc -b` → exit 0; `vitest` → **640 passam** (vs 640 anteriores, testes mantidos), **0 falham**; `eslint` → 0 erros.
 
-**Decisão registada:** Exportação ICS agora suporta exportar por equipa individual (botões A/B/C no cartão do cenário). Próximos passos sugeridos: presets industriais adicionais, métricas avançadas no analisador QoL, ou exportação ICS por período já implementada (Round 64).
+**Decisão registada:** Biblioteca de presets industriais expandida para 23 cenários cobrindo setores com operação 24/7. Próximos passos sugeridos: métricas avançadas no analisador QoL, ou exportação ICS por período (já implementada Round 64).
 
 
 ## Round 64 — 2026-08-24
