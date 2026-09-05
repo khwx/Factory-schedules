@@ -2,32 +2,29 @@
 
 Log de execuções autónomas do Bot Orquestrador (modelos free: `opencode/hy3-free`).
 
-## Round 70 — 2026-09-05
-**Objetivo:** Expandir presets de cenários industriais em `src/data/presetScenarios.ts` (nova funcionalidade — seguindo sugestão da Round 69).
+## Round 71 — 2026-09-06
+**Objetivo:** Adicionar métricas avançadas no analisador QoL (`qualityOfLife.ts`) — fadiga acumulada, disrupção social, disrupção circadiana, sustentabilidade a longo prazo (4 novas métricas).
 
-**Contexto:** Os presets existentes cobriam principalmente horários genéricos de 4-5 equipas. Adicionou-se uma biblioteca abrangente de 16 novos presets específicos por indústria, cada um com `teamPatterns` individuais para rotação correta entre equipas, refletindo práticas reais de escalas em setores com operação 24/7.
+**Contexto:** O analisador QoL tinha 6 sub-scores. Expandiu-se para **10 sub-scores** com métricas de fatiga, disrupção social/circadiana e sustentabilidade a longo prazo, alinhadas com literatura de saúde ocupacional e cronobiologia.
 
 **O que foi feito:**
-- `src/data/presetScenarios.ts`: expandido de 7 para **23 presets**, cobrindo:
-  - **Petróleo & Gás / Petroquímica**: Panama schedule 12h (4 equipas)
-  - **Segurança / Vigilância**: 8h rotativo 3 equipas
-  - **Bombeiros / Emergência**: 24h on/off 4 equipas
-  - **Contact Center / Call Center**: cobertura fuso horário 5 equipas
-  - **Mineração**: 12h FIFO 2/1 (2 equipas)
-  - **Marítimo / Navios**: sistema de quartos 4h (3 quartos)
-  - **Aviação / ATC / Solo aeroporto**: 8h contínua 4 equipas
-  - **Indústria Alimentar**: produção contínua 5 equipas
-  - **Farmacêutica / GMP**: sala limpa 3 equipas 8.5h
-  - **Siderurgia / Metalurgia**: alto forno 12h 4 equipas
-  - **Energia / Central Termoelétrica**: operação 24/7 Panama
-  - **Data Center / NOC / SOC**: monitoramento 24x7 Panama
-  - Presets existentes mantidos (Veralia, 25/30 dias, etc.)
-- Cada preset inclui `teamPatterns` individuais para rotação correta, `shiftDuration` realista por indústria, e `weeklyHoursContract` apropriado.
-- Padrões usam notação compacta (M/T/N/F) ou D/N/O para 12h; `startDate` em 2025-01-01.
+- `src/utils/qualityOfLife.ts`:
+  - Interface `QualityOfLifeScore.breakdown` expandida de 6 para **10 chaves**:
+    - `fatigueAccumulation`: acumulação de fatiga por blocos de trabalho longos (penaliza quadráticamente blocos >4 dias)
+    - `socialDisruption`: disrupção da vida social (fins-de-semana/noites trabalhados)
+    - `circadianDisruption`: disrupção do ritmo circadiano (noites, rotações rápidas dia/noite, blocos consecutivos de noite)
+    - `longTermSustainability`: sustentabilidade a longo prazo (tendência mensal de QoL ao longo do ano)
+  - Pesos do score global rebalanceados: 0.18/0.12/0.12/0.12/0.08/0.12/0.08/0.08/0.08/0.04 (soma = 1.0)
+  - Novas funções de cálculo usando notação compacta M/T/N/F
+- `src/utils/__tests__/qualityOfLife.test.ts`: expandido de 8 para **14 testes**, cobrindo:
+  - Verificação de existência das 10 métricas no breakdown
+  - Validação de range 0-100 para todas as novas métricas
+  - Testes de comportamento: fatiga menor em blocos curtos, disrupção social menor evitando fins-de-semana, disrupção circadiana menor sem noites
+- Paridade de chaves i18n inalterada (não foram adicionadas novas chaves de UI).
 
-**Verificação:** `tsc -b` → exit 0; `vitest` → **640 passam** (vs 640 anteriores, testes mantidos), **0 falham**; `eslint` → 0 erros.
+**Verificação:** `tsc -b` → exit 0; `vitest` → **644 passam** (vs 640 anteriores, +4 testes novos), **0 falham**; `eslint` → 0 erros.
 
-**Decisão registada:** Biblioteca de presets industriais expandida para 23 cenários cobrindo setores com operação 24/7. Próximos passos sugeridos: métricas avançadas no analisador QoL, ou exportação ICS por período (já implementada Round 64).
+**Decisão registada:** QoL passa a apresentar 10 sub-scores, alinhados com literatura de saúde ocupacional e cronobiologia. Próximos passos sugeridos: integrar novas métricas na UI do QualityOfLifeDisplay, ou adicionar presets industriais adicionais.
 
 
 ## Round 64 — 2026-08-24

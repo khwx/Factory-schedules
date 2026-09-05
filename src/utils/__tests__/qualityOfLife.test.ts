@@ -34,6 +34,11 @@ describe('calculateQualityOfLifeScore', () => {
         expect(score.breakdown).toHaveProperty('nightShiftImpact');
         expect(score.breakdown).toHaveProperty('holidaysCoverage');
         expect(score.breakdown).toHaveProperty('recoveryRegularity');
+        // New metrics
+        expect(score.breakdown).toHaveProperty('fatigueAccumulation');
+        expect(score.breakdown).toHaveProperty('socialDisruption');
+        expect(score.breakdown).toHaveProperty('circadianDisruption');
+        expect(score.breakdown).toHaveProperty('longTermSustainability');
     });
 
     it('should compute recoveryRegularity in 0-100 and reward rest after nights', () => {
@@ -90,6 +95,51 @@ describe('calculateQualityOfLifeScore', () => {
         };
         const score = calculateQualityOfLifeScore(createScenario(), analysis, 2026);
         expect(score.overall).toBeGreaterThan(0);
+    });
+
+    it('should compute new metrics in 0-100 range', () => {
+        const scenario = createScenario();
+        const analysis = calculateAnalysis(scenario);
+        const score = calculateQualityOfLifeScore(scenario, analysis, 2026);
+        expect(score.breakdown.fatigueAccumulation).toBeGreaterThanOrEqual(0);
+        expect(score.breakdown.fatigueAccumulation).toBeLessThanOrEqual(100);
+        expect(score.breakdown.socialDisruption).toBeGreaterThanOrEqual(0);
+        expect(score.breakdown.socialDisruption).toBeLessThanOrEqual(100);
+        expect(score.breakdown.circadianDisruption).toBeGreaterThanOrEqual(0);
+        expect(score.breakdown.circadianDisruption).toBeLessThanOrEqual(100);
+        expect(score.breakdown.longTermSustainability).toBeGreaterThanOrEqual(0);
+        expect(score.breakdown.longTermSustainability).toBeLessThanOrEqual(100);
+    });
+
+    it('should have lower fatigue for patterns with short work blocks', () => {
+        const scenarioShort = createScenario({ pattern: 'MMTTFF' }); // 2 work, 2 off
+        const scenarioLong = createScenario({ pattern: 'MMMMMMFFFF' }); // 6 work, 4 off
+        const analysisShort = calculateAnalysis(scenarioShort);
+        const analysisLong = calculateAnalysis(scenarioLong);
+        const scoreShort = calculateQualityOfLifeScore(scenarioShort, analysisShort, 2026);
+        const scoreLong = calculateQualityOfLifeScore(scenarioLong, analysisLong, 2026);
+        expect(scoreShort.breakdown.fatigueAccumulation).toBeGreaterThan(scoreLong.breakdown.fatigueAccumulation);
+    });
+
+    it('should have lower social disruption for patterns avoiding weekends', () => {
+        // Pattern that avoids weekends
+        const scenarioNoWeekend = createScenario({ pattern: 'MTWTFS' }); // Work weekdays only
+        const scenarioWithWeekend = createScenario({ pattern: 'MMTTNNFF' }); // May hit weekends
+        const analysisNoWeekend = calculateAnalysis(scenarioNoWeekend);
+        const analysisWithWeekend = calculateAnalysis(scenarioWithWeekend);
+        const scoreNoWeekend = calculateQualityOfLifeScore(scenarioNoWeekend, analysisNoWeekend, 2026);
+        const scoreWithWeekend = calculateQualityOfLifeScore(scenarioWithWeekend, analysisWithWeekend, 2026);
+        expect(scoreNoWeekend.breakdown.socialDisruption).toBeGreaterThanOrEqual(scoreWithWeekend.breakdown.socialDisruption);
+    });
+
+    it('should have lower circadian disruption for patterns without night shifts', () => {
+        const scenarioNoNight = createScenario({ pattern: 'MMTTFF' });
+        const scenarioWithNight = createScenario({ pattern: 'NNNNFF' });
+        const analysisNoNight = calculateAnalysis(scenarioNoNight);
+        const analysisWithNight = calculateAnalysis(scenarioWithNight);
+        const scoreNoNight = calculateQualityOfLifeScore(scenarioNoNight, analysisNoNight, 2026);
+        const scoreWithNight = calculateQualityOfLifeScore(scenarioWithNight, analysisWithNight, 2026);
+        expect(scoreNoNight.breakdown.circadianDisruption).toBeGreaterThan(scoreWithNight.breakdown.circadianDisruption);
     });
 });
 

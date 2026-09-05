@@ -11,6 +11,10 @@ export interface QualityOfLifeScore {
         nightShiftImpact: number; // 0-100
         holidaysCoverage: number; // 0-100
         recoveryRegularity: number; // 0-100
+        fatigueAccumulation: number; // 0-100 (new)
+        socialDisruption: number; // 0-100 (new)
+        circadianDisruption: number; // 0-100 (new)
+        longTermSustainability: number; // 0-100 (new)
     };
     grade: 'A+' | 'A' | 'B' | 'C' | 'D' | 'F';
     insights: string[];
@@ -132,14 +136,106 @@ export function calculateQualityOfLifeScore(
 
     const recoveryRegularity = Math.round((recoveryAfterNights + regularity) / 2);
 
-    // Calculate overall score (weighted average)
+    // 7. Fatigue Accumulation (cumulative fatigue from consecutive work blocks)
+    let fatigueSum = 0;
+    let workBlockCount = 0;
+    cursor = 0;
+    while (cursor < calendar.length) {
+        if (calendar[cursor].shift !== 'F') {
+            let end = cursor;
+            while (end < calendar.length && calendar[end].shift !== 'F') end++;
+            const blockLength = end - cursor;
+            // Fatigue grows quadratically with block length
+            fatigueSum += blockLength ** 2;
+            workBlockCount++;
+            cursor = end;
+        } else {
+            cursor++;
+        }
+    }
+    const avgFatigue = workBlockCount === 0 ? 0 : fatigueSum / workBlockCount;
+    // Normalize: 4-day blocks = baseline 100, 8-day blocks = ~400
+    const fatigueAccumulation = Math.max(0, 100 - avgFatigue * 2);
+
+    // 8. Social Disruption (weekends/evenings worked)
+    let socialDisruptionSum = 0;
+    calendar.forEach(day => {
+        const dayOfWeek = day.date.getDay();
+        if (day.shift !== 'F') {
+            if (dayOfWeek === 0 || dayOfWeek === 6) { // Weekend
+                socialDisruptionSum += 15; // High penalty for weekend work
+            } else if (day.shift === 'N') {
+                socialDisruptionSum += 5; // Night shifts affect evening social life
+            } else if (day.shift === 'T') {
+                socialDisruptionSum += 3; // Afternoon shifts affect evening plans
+            }
+        }
+    });
+    const maxPossibleSocialDisruption = calendar.length * 15;
+    const socialDisruption = maxPossibleSocialDisruption > 0
+        ? Math.max(0, 100 - (socialDisruptionSum / maxPossibleSocialDisruption) * 100)
+        : 100;
+
+    // 9. Circadian Disruption (night shifts + quick rotations)
+    let circadianPenalty = 0;
+    cursor = 0;
+    while (cursor < calendar.length) {
+        if (calendar[cursor].shift === 'N') {
+            circadianPenalty += 10; // Base penalty per night
+            let end = cursor;
+            while (end < calendar.length && calendar[end].shift === 'N') end++;
+            const blockLength = end - cursor;
+            if (blockLength > 2) {
+                circadianPenalty += (blockLength - 2) * 5; // Extra penalty for consecutive nights
+            }
+            cursor = end;
+        } else {
+            cursor++;
+        }
+    }
+    // Quick rotation penalty (day->night or night->day transitions)
+    for (let i = 1; i < calendar.length; i++) {
+        const prev = calendar[i - 1].shift;
+        const curr = calendar[i].shift;
+        if ((prev === 'M' && curr === 'N') || (prev === 'T' && curr === 'N') ||
+            (prev === 'N' && curr === 'M') || (prev === 'N' && curr === 'T')) {
+            circadianPenalty += 8; // Quick rotation penalty
+        }
+    }
+    const circadianDisruption = Math.max(0, 100 - circadianPenalty * 0.5);
+
+    // 10. Long-Term Sustainability (trend over the year)
+    // Monthly trend analysis - does QoL degrade over months?
+    const monthlyScores: number[] = [];
+    for (let month = 0; month < 12; month++) {
+        const monthDays = calendar.filter(d => d.date.getMonth() === month);
+        let monthWork = 0, monthNights = 0, monthOff = 0;
+        monthDays.forEach(d => {
+            if (d.shift === 'F') monthOff++;
+            else if (d.shift === 'N') monthNights++;
+            else monthWork++;
+        });
+        const monthTotal = monthDays.length || 1;
+        const monthScore = 100 - (monthNights / monthTotal) * 100 - (monthWork / monthTotal) * 20 + (monthOff / monthTotal) * 50;
+        monthlyScores.push(Math.max(0, Math.min(100, monthScore)));
+    }
+    const sustainabilityTrend = monthlyScores.length > 1
+        ? (monthlyScores[monthlyScores.length - 1] - monthlyScores[0]) / monthlyScores.length * 10
+        : 0;
+    const longTermSustainability = Math.max(0, Math.min(100, 70 - sustainabilityTrend * 5 + monthlyScores.reduce((a,b) => a+b, 0) / monthlyScores.length * 0.3));
+
+    // Calculate overall score (weighted average with new metrics)
     const overall = (
-        weekendsCoverage * 0.25 +
-        hoursScore * 0.15 +
-        consecutiveRest * 0.15 +
-        nightShiftImpact * 0.15 +
-        holidaysCoverage * 0.10 +
-        recoveryRegularity * 0.20
+        weekendsCoverage * 0.18 +
+        hoursScore * 0.12 +
+        consecutiveRest * 0.12 +
+        nightShiftImpact * 0.12 +
+        holidaysCoverage * 0.08 +
+        recoveryRegularity * 0.12 +
+        fatigueAccumulation * 0.08 +
+        socialDisruption * 0.08 +
+        circadianDisruption * 0.08 +
+        longTermSustainability * 0.04
     );
 
     // Determine grade
@@ -200,6 +296,10 @@ export function calculateQualityOfLifeScore(
             nightShiftImpact: Math.round(nightShiftImpact),
             holidaysCoverage: Math.round(holidaysCoverage),
             recoveryRegularity: recoveryRegularity,
+            fatigueAccumulation: Math.round(fatigueAccumulation),
+            socialDisruption: Math.round(socialDisruption),
+            circadianDisruption: Math.round(circadianDisruption),
+            longTermSustainability: Math.round(longTermSustainability),
         },
         grade,
         insights,
