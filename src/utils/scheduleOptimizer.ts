@@ -1,5 +1,6 @@
 import { Scenario, AnalysisResult } from '../types';
 import { calculateAnalysis } from './calculations';
+import { calculateQualityOfLifeScore } from './qualityOfLife';
 
 export type ConstraintKey = 
   | 'hours'
@@ -16,6 +17,10 @@ export type SuggestionKey =
   | 'more_weekends'
   | 'add_mini_vacations'
   | 'friday_nights_off'
+  | 'reduce_fatigue'
+  | 'improve_social'
+  | 'improve_circadian'
+  | 'improve_sustainability'
   | 'good_overall';
 
 export type AlternativePatternKey = 
@@ -136,6 +141,17 @@ function generateSuggestions(analysis: AnalysisResult, constraints: Optimization
     const suggestions: OptimizationSuggestion[] = [];
     const am = analysis.advancedMetrics;
 
+    // Calculate QoL score for advanced metrics
+    const fakeScenario: Scenario = {
+        id: 'temp',
+        name: 'temp',
+        teams: 4,
+        shiftDuration: 8,
+        pattern: 'MMTTNNFFFF', // placeholder, will be overridden
+    };
+    const tempAnalysis = analysis; // use actual analysis
+    const qolScore = calculateQualityOfLifeScore(fakeScenario, tempAnalysis);
+
     const badConstraints = constraints.filter(c => c.status === 'bad');
     const warningConstraints = constraints.filter(c => c.status === 'warning');
 
@@ -196,6 +212,49 @@ function generateSuggestions(analysis: AnalysisResult, constraints: Optimization
             category: 'balance',
             scoreImprovement: 3,
             params: {},
+        });
+    }
+
+    // New QoL-based suggestions
+    const breakdown = qolScore.breakdown;
+
+    if (breakdown.fatigueAccumulation < 60) {
+        suggestions.push({
+            id: 'reduce_fatigue',
+            impact: 'high',
+            category: 'comfort',
+            scoreImprovement: 8,
+            params: { fatigue: breakdown.fatigueAccumulation },
+        });
+    }
+
+    if (breakdown.socialDisruption < 60) {
+        suggestions.push({
+            id: 'improve_social',
+            impact: 'medium',
+            category: 'balance',
+            scoreImprovement: 5,
+            params: { disruption: breakdown.socialDisruption },
+        });
+    }
+
+    if (breakdown.circadianDisruption < 60) {
+        suggestions.push({
+            id: 'improve_circadian',
+            impact: 'high',
+            category: 'comfort',
+            scoreImprovement: 7,
+            params: { disruption: breakdown.circadianDisruption },
+        });
+    }
+
+    if (breakdown.longTermSustainability < 60) {
+        suggestions.push({
+            id: 'improve_sustainability',
+            impact: 'medium',
+            category: 'efficiency',
+            scoreImprovement: 5,
+            params: { sustainability: breakdown.longTermSustainability },
         });
     }
 

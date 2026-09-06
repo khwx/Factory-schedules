@@ -40,6 +40,10 @@ const SUGGESTION_TITLE_KEYS: Record<string, string> = {
     more_weekends: 'suggestionMoreWeekendsTitle',
     add_mini_vacations: 'suggestionAddMiniVacationsTitle',
     friday_nights_off: 'suggestionFridayNightsOffTitle',
+    reduce_fatigue: 'suggestionReduceFatigueTitle',
+    improve_social: 'suggestionImproveSocialTitle',
+    improve_circadian: 'suggestionImproveCircadianTitle',
+    improve_sustainability: 'suggestionImproveSustainabilityTitle',
     good_overall: 'suggestionGoodOverallTitle',
 };
 
@@ -50,6 +54,10 @@ const SUGGESTION_DESC_KEYS: Record<string, string> = {
     more_weekends: 'suggestionMoreWeekendsDesc',
     add_mini_vacations: 'suggestionAddMiniVacationsDesc',
     friday_nights_off: 'suggestionFridayNightsOffDesc',
+    reduce_fatigue: 'suggestionReduceFatigueDesc',
+    improve_social: 'suggestionImproveSocialDesc',
+    improve_circadian: 'suggestionImproveCircadianDesc',
+    improve_sustainability: 'suggestionImproveSustainabilityDesc',
     good_overall: 'suggestionGoodOverallDesc',
 };
 
