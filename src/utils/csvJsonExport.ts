@@ -1,5 +1,6 @@
 import { Scenario, AnalysisResult } from '../types';
 import { generateYearCalendar } from './calendar';
+import { calculateQualityOfLifeScore } from './qualityOfLife';
 
 export const exportScenarioToCSV = (scenario: Scenario, analysis: AnalysisResult) => {
     const rows: string[][] = [];
@@ -27,6 +28,29 @@ export const exportScenarioToCSV = (scenario: Scenario, analysis: AnalysisResult
         rows.push(['Feriados Trabalhados', analysis.advancedMetrics.holidaysWorked.toString()]);
         rows.push(['Feriados de Folga', analysis.advancedMetrics.holidaysOff.toString()]);
     }
+
+    // QoL Metrics
+    const qolScore = calculateQualityOfLifeScore(scenario, analysis, new Date().getFullYear());
+    rows.push(['']);
+    rows.push(['ANALISE DE QUALIDADE DE VIDA (QoL)', '']);
+    rows.push(['Pontuacao Global', `${qolScore.overall}%`]);
+    rows.push(['Classificacao', qolScore.grade]);
+    rows.push(['']);
+    rows.push(['Sub-Scores', 'Valor']);
+    rows.push(['Cobertura de FDS', `${qolScore.breakdown.weekendsCoverage}%`]);
+    rows.push(['Equilibrio Trab-Vida', `${qolScore.breakdown.workLifeBalance}%`]);
+    rows.push(['Qualidade Descanso', `${qolScore.breakdown.consecutiveRest}%`]);
+    rows.push(['Impacto Noturno', `${qolScore.breakdown.nightShiftImpact}%`]);
+    rows.push(['Cobertura Feriados', `${qolScore.breakdown.holidaysCoverage}%`]);
+    rows.push(['Recuperacao/Regularidade', `${qolScore.breakdown.recoveryRegularity}%`]);
+    rows.push(['Acumulo Fatiga', `${qolScore.breakdown.fatigueAccumulation}%`]);
+    rows.push(['Disrupcao Social', `${qolScore.breakdown.socialDisruption}%`]);
+    rows.push(['Disrupcao Circadiana', `${qolScore.breakdown.circadianDisruption}%`]);
+    rows.push(['Sustentabilidade LT', `${qolScore.breakdown.longTermSustainability}%`]);
+
+    rows.push(['']);
+    rows.push(['OBSERVACOES', '']);
+    qolScore.insights.forEach(insight => rows.push(['', insight]));
 
     rows.push(['']);
     rows.push(['ANALISE QUALITATIVA', '']);
@@ -98,6 +122,54 @@ export const exportComparisonToCSV = (scenarios: Scenario[], analyses: AnalysisR
         rows.push(['Mini-Ferias', ...analyses.map(a => a.advancedMetrics?.miniVacations?.toString() || '-')]);
         rows.push(['Turnos Nocturnos', ...analyses.map(a => a.advancedMetrics?.totalNightShifts?.toString() || '-')]);
     }
+
+    // QoL Comparison
+    rows.push(['']);
+    rows.push(['ANALISE QoL', '']);
+    rows.push(['Pontuacao Global', ...analyses.map((a, i) => {
+        const q = calculateQualityOfLifeScore(scenarios[i], a, new Date().getFullYear());
+        return `${q.overall}% (${q.grade})`;
+    })]);
+    rows.push(['Cobertura FDS', ...analyses.map((a, i) => {
+        const q = calculateQualityOfLifeScore(scenarios[i], a, new Date().getFullYear());
+        return `${q.breakdown.weekendsCoverage}%`;
+    })]);
+    rows.push(['Equilibrio Trab-Vida', ...analyses.map((a, i) => {
+        const q = calculateQualityOfLifeScore(scenarios[i], a, new Date().getFullYear());
+        return `${q.breakdown.workLifeBalance}%`;
+    })]);
+    rows.push(['Qualidade Descanso', ...analyses.map((a, i) => {
+        const q = calculateQualityOfLifeScore(scenarios[i], a, new Date().getFullYear());
+        return `${q.breakdown.consecutiveRest}%`;
+    })]);
+    rows.push(['Impacto Noturno', ...analyses.map((a, i) => {
+        const q = calculateQualityOfLifeScore(scenarios[i], a, new Date().getFullYear());
+        return `${q.breakdown.nightShiftImpact}%`;
+    })]);
+    rows.push(['Cobertura Feriados', ...analyses.map((a, i) => {
+        const q = calculateQualityOfLifeScore(scenarios[i], a, new Date().getFullYear());
+        return `${q.breakdown.holidaysCoverage}%`;
+    })]);
+    rows.push(['Recuperacao/Regularidade', ...analyses.map((a, i) => {
+        const q = calculateQualityOfLifeScore(scenarios[i], a, new Date().getFullYear());
+        return `${q.breakdown.recoveryRegularity}%`;
+    })]);
+    rows.push(['Acumulo Fatiga', ...analyses.map((a, i) => {
+        const q = calculateQualityOfLifeScore(scenarios[i], a, new Date().getFullYear());
+        return `${q.breakdown.fatigueAccumulation}%`;
+    })]);
+    rows.push(['Disrupcao Social', ...analyses.map((a, i) => {
+        const q = calculateQualityOfLifeScore(scenarios[i], a, new Date().getFullYear());
+        return `${q.breakdown.socialDisruption}%`;
+    })]);
+    rows.push(['Disrupcao Circadiana', ...analyses.map((a, i) => {
+        const q = calculateQualityOfLifeScore(scenarios[i], a, new Date().getFullYear());
+        return `${q.breakdown.circadianDisruption}%`;
+    })]);
+    rows.push(['Sustentabilidade LT', ...analyses.map((a, i) => {
+        const q = calculateQualityOfLifeScore(scenarios[i], a, new Date().getFullYear());
+        return `${q.breakdown.longTermSustainability}%`;
+    })]);
 
     const csvContent = rows.map(r => r.map(c => `"${c.replace(/"/g, '""')}"`).join(',')).join('\n');
     const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' });

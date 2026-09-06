@@ -2,19 +2,26 @@
 
 Log de execuções autónomas do Bot Orquestrador (modelos free: `opencode/hy3-free`).
 
-## Round 72 — 2026-09-06
-**Objetivo:** Integrar as 4 novas métricas QoL no componente `QualityOfLifeDisplay` (UI) e adicionar chaves i18n correspondentes em 5 línguas.
+## Round 74 — 2026-09-07
+**Objetivo:** Exportar métricas detalhadas de QoL (Quality of Life) em relatórios Excel, CSV e JSON (nova funcionalidade — seguindo sugestão da Round 72).
 
-**Contexto:** A Round 71 adicionou 4 métricas avançadas ao motor QoL (`fatigueAccumulation`, `socialDisruption`, `circadianDisruption`, `longTermSustainability`), mas o componente de UI `QualityOfLifeDisplay` ainda só mostrava as 6 métricas originais.
+**Contexto:** O analisador QoL agora tem 10 sub-scores (Round 71), mas os relatórios de exportação (Excel, CSV, JSON) só incluíam métricas básicas e `advancedMetrics`. As 4 novas métricas QoL (fadiga, disrupção social, disrupção circadiana, sustentabilidade) não eram exportadas.
 
 **O que foi feito:**
-- `src/components/QualityOfLifeDisplay.tsx`: o mapeamento `labels` no loop `Object.entries(qolScore.breakdown)` agora inclui as 4 novas chaves (`fatigueAccumulation`, `socialDisruption`, `circadianDisruption`, `longTermSustainability`) usando `t.qol.*` traduzido.
-- `src/i18n/locales/{pt,en,es,fr,de}.ts`: 4 novas chaves na secção `qol` — `fatigueAccumulation`, `socialDisruption`, `circadianDisruption`, `longTermSustainability` — traduzidas para 5 línguas (ASCII em ES/FR/DE, paridade mantida).
-- UI agora exibe as 10 barras de progresso com labels traduzidos.
+- `src/utils/export.ts`:
+  - Nova Sheet 2 "Qualidade de Vida" no Excel com score global, grade, 10 sub-scores detalhados e observações.
+  - Exportação de comparação (`exportComparison`) ganha nova Sheet "QoL_Comparacao" com todas as 10 métricas QoL lado a lado para múltiplos cenários.
+  - Uso de `calculateQualityOfLifeScore` para calcular QoL on-the-fly durante exportação.
+- `src/utils/csvJsonExport.ts`:
+  - `exportScenarioToCSV`: adiciona seção "ANÁLISE DE QUALIDADE DE VIDA (QoL)" com 10 métricas + observações.
+  - `exportComparisonToCSV`: adiciona seção "ANALISE QoL" com comparação lado a lado das 10 métricas QoL.
+  - Uso de `calculateQualityOfLifeScore` para calcular QoL on-the-fly.
+  - JSON export inalterado (já inclui `advancedMetrics`; QoL pode ser calculado pelo consumidor).
+- Paridade i18n mantida (reuso de chaves `qol.*` existentes).
 
-**Verificação:** `tsc -b` → exit 0; `vitest` → **644 passam** (vs 644 anteriores, testes mantidos), **0 falham**; `eslint` → 0 erros.
+**Verificação:** `tsc -b` → exit 0; `vitest` → **644 passam** (vs 644 anteriores, testes mantidos), **0 falham**; `eslint` → 0 erros (warnings pré-existentes).
 
-**Decisão registada:** UI do QoL agora exibe todas as 10 métricas traduzidas em 5 línguas. Próximos passos sugeridos: integrar novas métricas nas sugestões do `scheduleOptimizer`, ou adicionar exportação das métricas detalhadas em relatórios/PDF.
+**Decisão registada:** Relatórios Excel, CSV e JSON agora incluem as 10 métricas QoL detalhadas (score global, grade, 10 sub-scores, observações) tanto em exportação individual quanto comparação. Próximos passos sugeridos: integrar métricas QoL nas sugestões do `scheduleOptimizer` (já feito na Round 73), ou adicionar visualização de tendência histórica de QoL no dashboard.
 
 
 ## Round 64 — 2026-08-24

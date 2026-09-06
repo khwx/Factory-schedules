@@ -1,5 +1,6 @@
 import { Scenario, AnalysisResult, DayInfo } from '../types';
 import { generateYearCalendar } from './calendar';
+import { calculateQualityOfLifeScore } from './qualityOfLife';
 
 /**
  * Export scenario data to Excel
@@ -40,7 +41,34 @@ export const exportToExcel = async (scenario: Scenario, analysis: AnalysisResult
     const summarySheet = XLSX.utils.aoa_to_sheet(summaryData);
     XLSX.utils.book_append_sheet(workbook, summarySheet, 'Resumo');
 
-    // Sheet 2-6: Calendar for each year (5 years)
+    // Sheet 2: Quality of Life Analysis
+    const qolScore = calculateQualityOfLifeScore(scenario, analysis, currentYear);
+    const qolData = [
+        ['Análise de Qualidade de Vida (QoL)'],
+        [''],
+        ['Pontuação Global', `${qolScore.overall}%`],
+        ['Classificação', qolScore.grade],
+        [''],
+        ['Sub-Scores Detalhados', 'Valor'],
+        ['Cobertura de Fins de Semana', `${qolScore.breakdown.weekendsCoverage}%`],
+        ['Equilíbrio Trabalho-Vida', `${qolScore.breakdown.workLifeBalance}%`],
+        ['Qualidade do Descanso', `${qolScore.breakdown.consecutiveRest}%`],
+        ['Impacto de Turnos Noturnos', `${qolScore.breakdown.nightShiftImpact}%`],
+        ['Cobertura de Feriados', `${qolScore.breakdown.holidaysCoverage}%`],
+        ['Recuperação e Regularidade', `${qolScore.breakdown.recoveryRegularity}%`],
+        ['Acúmulo de Fadiga', `${qolScore.breakdown.fatigueAccumulation}%`],
+        ['Disrupção Social', `${qolScore.breakdown.socialDisruption}%`],
+        ['Disrupção Circadiana', `${qolScore.breakdown.circadianDisruption}%`],
+        ['Sustentabilidade a Longo Prazo', `${qolScore.breakdown.longTermSustainability}%`],
+        [''],
+        ['OBSERVAÇÕES'],
+    ];
+    qolScore.insights.forEach(insight => qolData.push([insight]));
+
+    const qolSheet = XLSX.utils.aoa_to_sheet(qolData);
+    XLSX.utils.book_append_sheet(workbook, qolSheet, 'Qualidade de Vida');
+
+    // Sheet 3-7: Calendar for each year (5 years)
     for (let i = 0; i < 5; i++) {
         const year = currentYear + i;
 
@@ -130,6 +158,65 @@ export const exportComparison = async (scenarios: Scenario[], analyses: Analysis
 
     const comparisonSheet = XLSX.utils.aoa_to_sheet(comparisonData);
     XLSX.utils.book_append_sheet(workbook, comparisonSheet, 'Comparacao');
+
+    // QoL Comparison Sheet
+    const qolComparisonData = [
+        ['Comparação de Qualidade de Vida (QoL)'],
+        [''],
+        ['Métrica', ...scenarios.map(s => s.name)],
+    ];
+
+    const qolMetrics = [
+        ['Pontuação Global', ...analyses.map(a => {
+            const q = calculateQualityOfLifeScore(scenarios[analyses.indexOf(a)], a, new Date().getFullYear());
+            return `${q.overall}% (${q.grade})`;
+        })],
+        ['Cobertura FDS', ...analyses.map(a => {
+            const q = calculateQualityOfLifeScore(scenarios[analyses.indexOf(a)], a, new Date().getFullYear());
+            return `${q.breakdown.weekendsCoverage}%`;
+        })],
+        ['Equilíbrio Trab-Vida', ...analyses.map(a => {
+            const q = calculateQualityOfLifeScore(scenarios[analyses.indexOf(a)], a, new Date().getFullYear());
+            return `${q.breakdown.workLifeBalance}%`;
+        })],
+        ['Qualidade Descanso', ...analyses.map(a => {
+            const q = calculateQualityOfLifeScore(scenarios[analyses.indexOf(a)], a, new Date().getFullYear());
+            return `${q.breakdown.consecutiveRest}%`;
+        })],
+        ['Impacto Noturno', ...analyses.map(a => {
+            const q = calculateQualityOfLifeScore(scenarios[analyses.indexOf(a)], a, new Date().getFullYear());
+            return `${q.breakdown.nightShiftImpact}%`;
+        })],
+        ['Cobertura Feriados', ...analyses.map(a => {
+            const q = calculateQualityOfLifeScore(scenarios[analyses.indexOf(a)], a, new Date().getFullYear());
+            return `${q.breakdown.holidaysCoverage}%`;
+        })],
+        ['Recuperação/Regularidade', ...analyses.map(a => {
+            const q = calculateQualityOfLifeScore(scenarios[analyses.indexOf(a)], a, new Date().getFullYear());
+            return `${q.breakdown.recoveryRegularity}%`;
+        })],
+        ['Acúmulo Fatiga', ...analyses.map(a => {
+            const q = calculateQualityOfLifeScore(scenarios[analyses.indexOf(a)], a, new Date().getFullYear());
+            return `${q.breakdown.fatigueAccumulation}%`;
+        })],
+        ['Disrupção Social', ...analyses.map(a => {
+            const q = calculateQualityOfLifeScore(scenarios[analyses.indexOf(a)], a, new Date().getFullYear());
+            return `${q.breakdown.socialDisruption}%`;
+        })],
+        ['Disrupção Circadiana', ...analyses.map(a => {
+            const q = calculateQualityOfLifeScore(scenarios[analyses.indexOf(a)], a, new Date().getFullYear());
+            return `${q.breakdown.circadianDisruption}%`;
+        })],
+        ['Sustentabilidade LT', ...analyses.map(a => {
+            const q = calculateQualityOfLifeScore(scenarios[analyses.indexOf(a)], a, new Date().getFullYear());
+            return `${q.breakdown.longTermSustainability}%`;
+        })],
+    ];
+
+    qolMetrics.forEach(row => qolComparisonData.push(row));
+
+    const qolComparisonSheet = XLSX.utils.aoa_to_sheet(qolComparisonData);
+    XLSX.utils.book_append_sheet(workbook, qolComparisonSheet, 'QoL_Comparacao');
 
     // Multi-year comparison for each scenario
     scenarios.forEach((scenario, idx) => {
