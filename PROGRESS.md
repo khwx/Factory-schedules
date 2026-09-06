@@ -2,29 +2,19 @@
 
 Log de execuções autónomas do Bot Orquestrador (modelos free: `opencode/hy3-free`).
 
-## Round 71 — 2026-09-06
-**Objetivo:** Adicionar métricas avançadas no analisador QoL (`qualityOfLife.ts`) — fadiga acumulada, disrupção social, disrupção circadiana, sustentabilidade a longo prazo (4 novas métricas).
+## Round 72 — 2026-09-06
+**Objetivo:** Integrar as 4 novas métricas QoL no componente `QualityOfLifeDisplay` (UI) e adicionar chaves i18n correspondentes em 5 línguas.
 
-**Contexto:** O analisador QoL tinha 6 sub-scores. Expandiu-se para **10 sub-scores** com métricas de fatiga, disrupção social/circadiana e sustentabilidade a longo prazo, alinhadas com literatura de saúde ocupacional e cronobiologia.
+**Contexto:** A Round 71 adicionou 4 métricas avançadas ao motor QoL (`fatigueAccumulation`, `socialDisruption`, `circadianDisruption`, `longTermSustainability`), mas o componente de UI `QualityOfLifeDisplay` ainda só mostrava as 6 métricas originais.
 
 **O que foi feito:**
-- `src/utils/qualityOfLife.ts`:
-  - Interface `QualityOfLifeScore.breakdown` expandida de 6 para **10 chaves**:
-    - `fatigueAccumulation`: acumulação de fatiga por blocos de trabalho longos (penaliza quadráticamente blocos >4 dias)
-    - `socialDisruption`: disrupção da vida social (fins-de-semana/noites trabalhados)
-    - `circadianDisruption`: disrupção do ritmo circadiano (noites, rotações rápidas dia/noite, blocos consecutivos de noite)
-    - `longTermSustainability`: sustentabilidade a longo prazo (tendência mensal de QoL ao longo do ano)
-  - Pesos do score global rebalanceados: 0.18/0.12/0.12/0.12/0.08/0.12/0.08/0.08/0.08/0.04 (soma = 1.0)
-  - Novas funções de cálculo usando notação compacta M/T/N/F
-- `src/utils/__tests__/qualityOfLife.test.ts`: expandido de 8 para **14 testes**, cobrindo:
-  - Verificação de existência das 10 métricas no breakdown
-  - Validação de range 0-100 para todas as novas métricas
-  - Testes de comportamento: fatiga menor em blocos curtos, disrupção social menor evitando fins-de-semana, disrupção circadiana menor sem noites
-- Paridade de chaves i18n inalterada (não foram adicionadas novas chaves de UI).
+- `src/components/QualityOfLifeDisplay.tsx`: o mapeamento `labels` no loop `Object.entries(qolScore.breakdown)` agora inclui as 4 novas chaves (`fatigueAccumulation`, `socialDisruption`, `circadianDisruption`, `longTermSustainability`) usando `t.qol.*` traduzido.
+- `src/i18n/locales/{pt,en,es,fr,de}.ts`: 4 novas chaves na secção `qol` — `fatigueAccumulation`, `socialDisruption`, `circadianDisruption`, `longTermSustainability` — traduzidas para 5 línguas (ASCII em ES/FR/DE, paridade mantida).
+- UI agora exibe as 10 barras de progresso com labels traduzidos.
 
-**Verificação:** `tsc -b` → exit 0; `vitest` → **644 passam** (vs 640 anteriores, +4 testes novos), **0 falham**; `eslint` → 0 erros.
+**Verificação:** `tsc -b` → exit 0; `vitest` → **644 passam** (vs 644 anteriores, testes mantidos), **0 falham**; `eslint` → 0 erros.
 
-**Decisão registada:** QoL passa a apresentar 10 sub-scores, alinhados com literatura de saúde ocupacional e cronobiologia. Próximos passos sugeridos: integrar novas métricas na UI do QualityOfLifeDisplay, ou adicionar presets industriais adicionais.
+**Decisão registada:** UI do QoL agora exibe todas as 10 métricas traduzidas em 5 línguas. Próximos passos sugeridos: integrar novas métricas nas sugestões do `scheduleOptimizer`, ou adicionar exportação das métricas detalhadas em relatórios/PDF.
 
 
 ## Round 64 — 2026-08-24

@@ -731,6 +731,10 @@ export const pt = {
     severityMedium: 'Media',
     severityLow: 'Baixa',
     days: 'dias',
+    fatigueAccumulation: 'Acumulo de Fatiga',
+    socialDisruption: 'Disrupcao Social',
+    circadianDisruption: 'Disrupcao Circadiana',
+    longTermSustainability: 'Sustentabilidade a Longo Prazo',
   },
   icsExport: {
     periodLabel: 'Periodo',

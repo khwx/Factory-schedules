@@ -733,6 +733,10 @@ export const en: Translations = {
     severityMedium: 'Medium',
     severityLow: 'Low',
     days: 'days',
+    fatigueAccumulation: 'Fatigue Accumulation',
+    socialDisruption: 'Social Disruption',
+    circadianDisruption: 'Circadian Disruption',
+    longTermSustainability: 'Long-Term Sustainability',
   },
   icsExport: {
     periodLabel: 'Period',

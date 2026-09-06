@@ -733,6 +733,10 @@ holidayCalendar: {
     severityMedium: 'Mittel',
     severityLow: 'Niedrig',
     days: 'Tage',
+    fatigueAccumulation: 'Ermuedungsakkumulation',
+    socialDisruption: 'Soziale Disruption',
+    circadianDisruption: 'Circadiane Disruption',
+    longTermSustainability: 'Langfristige Nachhaltigkeit',
   },
   icsExport: {
     periodLabel: 'Zeitraum',

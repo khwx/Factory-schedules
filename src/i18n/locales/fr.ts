@@ -733,6 +733,10 @@ holidayCalendar: {
     severityMedium: 'Moyenne',
     severityLow: 'Basse',
     days: 'jours',
+    fatigueAccumulation: 'Accumulation de Fatigue',
+    socialDisruption: 'Disruption Sociale',
+    circadianDisruption: 'Disruption Circadienne',
+    longTermSustainability: 'Durabilite a Long Terme',
   },
   icsExport: {
     periodLabel: 'Periode',

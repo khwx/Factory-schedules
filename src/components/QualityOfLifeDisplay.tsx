@@ -114,6 +114,10 @@ const QualityOfLifeDisplay: React.FC<QualityOfLifeDisplayProps> = ({ scenario, a
                                 nightShiftImpact: t.qol.nightShiftImpact,
                                 holidaysCoverage: t.qol.holidaysCoverage,
                                 recoveryRegularity: t.qol.recoveryRegularity,
+                                fatigueAccumulation: t.qol.fatigueAccumulation,
+                                socialDisruption: t.qol.socialDisruption,
+                                circadianDisruption: t.qol.circadianDisruption,
+                                longTermSustainability: t.qol.longTermSustainability,
                             };
 
                             return (
