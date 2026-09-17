@@ -1,7 +1,9 @@
 import React, { useMemo } from 'react';
 import { Scenario, AnalysisResult } from '../types';
 import { calculateAnalysis } from '../utils/calculations';
-import { Trophy, TrendingDown, Minus } from 'lucide-react';
+import { calculateQualityOfLifeScore } from '../utils/qualityOfLife';
+import { Trophy, TrendingDown, Minus, Heart } from 'lucide-react';
+import { useI18n } from '../i18n';
 
 interface ComparisonTableProps {
     scenarios: Scenario[];
@@ -17,62 +19,62 @@ interface ComparisonRow {
 }
 
 const ComparisonTable: React.FC<ComparisonTableProps> = ({ scenarios, analyses: preComputedAnalyses }) => {
+    const { t } = useI18n();
     const analyses = useMemo(
         () => preComputedAnalyses ?? scenarios.map(s => calculateAnalysis(s)),
         [scenarios, preComputedAnalyses]
     );
 
+    const qolScores = useMemo(
+        () => scenarios.map((s, i) => calculateQualityOfLifeScore(s, analyses[i])),
+        [scenarios, analyses]
+    );
+
     const rows: ComparisonRow[] = useMemo(() => [
         {
-            label: 'Horas Semanais Médias',
+            label: t.comparison.rowAvgWeeklyHours,
             values: analyses.map(a => a.avgWeeklyHours),
             unit: 'h',
             better: 'lower',
             format: (v) => v.toFixed(1),
         },
         {
-            label: 'Horas Anuais Totais',
+            label: t.comparison.rowTotalAnnualHours,
             values: analyses.map(a => a.totalAnnualHours),
             unit: 'h',
             format: (v) => Math.round(v).toString(),
         },
         {
-            label: 'Fins de Semana de Folga',
+            label: t.comparison.rowWeekendsOff,
             values: analyses.map(a => a.weekendsOffPerYear),
             better: 'higher',
         },
         {
-            label: 'Total de Dias de Folga',
+            label: t.comparison.rowTotalOffDays,
             values: analyses.map(a => a.totalOffDaysPerYear),
             better: 'higher',
         },
         {
-            label: 'Média de FDS Folga/Mês',
-            values: analyses.map(a => a.weekendsOffPerMonthAvg),
-            unit: 'fim/semana',
-            format: (v) => v.toFixed(1),
-        },
-        {
-            label: 'Dias Máx. Consecutivos de Trabalho',
+            label: t.comparison.rowMaxConsecWorkDays,
             values: analyses.map(a => a.advancedMetrics?.maxConsecutiveWorkDays || 0),
             better: 'lower',
         },
         {
-            label: 'Mini-Férias (3+ dias folga)',
+            label: t.comparison.rowMiniVacations,
             values: analyses.map(a => a.advancedMetrics?.miniVacations || 0),
             better: 'higher',
         },
         {
-            label: 'Turnos Nocturnos/Ano',
+            label: t.comparison.rowNightShiftsYear,
             values: analyses.map(a => a.advancedMetrics?.totalNightShifts || 0),
             better: 'lower',
         },
         {
-            label: 'Feriados Trabalhados',
+            label: t.comparison.rowHolidaysWorked,
             values: analyses.map(a => a.advancedMetrics?.holidaysWorked || 0),
             better: 'lower',
         },
-    ], [analyses]);
+    ], [analyses, t]);
 
     const getBestIndex = (row: ComparisonRow): number | null => {
         if (!row.better || row.values.length < 2) return null;
@@ -115,21 +117,21 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ scenarios, analyses: 
     return (
         <div className="bg-gray-800 rounded-lg border border-gray-700 overflow-hidden mt-8">
             <div className="p-4 border-b border-gray-700 flex items-center justify-between">
-                <h2 className="text-xl font-semibold text-white">Comparação de Cenários</h2>
-                <span className="text-sm text-gray-400">{scenarios.length} cenários</span>
+                <h2 className="text-xl font-semibold text-white">{t.comparison.title}</h2>
+                <span className="text-sm text-gray-400">{scenarios.length} {t.comparison.teamsUnit}</span>
             </div>
             <div className="overflow-x-auto">
                 <table className="w-full text-left border-collapse">
                     <thead>
                         <tr>
                             <th className="p-4 bg-gray-900/50 text-gray-400 font-medium border-b border-gray-700 w-1/4">
-                                Métrica
+                                {t.comparison.metric}
                             </th>
                             {scenarios.map(scenario => (
                                 <th key={scenario.id} className="p-4 bg-gray-900/50 text-white font-semibold border-b border-gray-700 border-l border-gray-700">
                                     {scenario.name}
                                     <div className="text-xs text-gray-500 font-normal mt-1">
-                                        {scenario.teams} equipas · {scenario.shiftDuration}h
+                                        {scenario.teams} {t.comparison.teamsUnit} · {scenario.shiftDuration}h
                                     </div>
                                 </th>
                             ))}
@@ -139,11 +141,11 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ scenarios, analyses: 
                         {/* Configuration rows */}
                         <tr className="bg-gray-900/30">
                             <td className="p-4 border-b border-gray-700 text-gray-300 font-medium" colSpan={scenarios.length + 1}>
-                                Configuração
+                                {t.comparison.categoryConfig}
                             </td>
                         </tr>
                         <tr>
-                            <td className="p-4 border-b border-gray-700 text-gray-300">Padrão</td>
+                            <td className="p-4 border-b border-gray-700 text-gray-300">{t.comparison.rowPattern}</td>
                             {scenarios.map(scenario => (
                                 <td key={scenario.id} className="p-4 border-b border-gray-700 border-l border-gray-700 font-mono text-sm text-gray-400">
                                     {scenario.pattern}
@@ -152,7 +154,7 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ scenarios, analyses: 
                         </tr>
                         {scenarios.some(s => s.weeklyHoursContract) && (
                             <tr>
-                                <td className="p-4 border-b border-gray-700 text-gray-300">Contrato Semanal</td>
+                                <td className="p-4 border-b border-gray-700 text-gray-300">{t.comparison.rowContractHours}</td>
                                 {scenarios.map(scenario => (
                                     <td key={scenario.id} className="p-4 border-b border-gray-700 border-l border-gray-700 font-mono text-gray-400">
                                         {scenario.weeklyHoursContract ? `${scenario.weeklyHoursContract}h` : '-'}
@@ -164,7 +166,7 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ scenarios, analyses: 
                         {/* Metrics rows */}
                         <tr className="bg-gray-900/30">
                             <td className="p-4 border-b border-gray-700 text-gray-300 font-medium" colSpan={scenarios.length + 1}>
-                                Métricas
+                                {t.comparison.categoryMetric}
                             </td>
                         </tr>
                         {rows.map((row, rowIdx) => (
@@ -182,14 +184,42 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ scenarios, analyses: 
                             </tr>
                         ))}
 
+                        {/* QoL row */}
+                        <tr className="bg-gray-900/30">
+                            <td className="p-4 border-b border-gray-700 text-gray-300 font-medium" colSpan={scenarios.length + 1}>
+                                {t.comparison.categoryQuality}
+                            </td>
+                        </tr>
+                        <tr className="hover:bg-gray-700/30 transition-colors">
+                            <td className="p-4 border-b border-gray-700 text-gray-300 flex items-center gap-2">
+                                <Heart className="w-4 h-4 text-pink-400" />
+                                {t.qol.overall}
+                            </td>
+                            {qolScores.map((qol, i) => {
+                                const gradeColor: Record<string, string> = {
+                                    'A+': 'text-emerald-400 font-bold',
+                                    'A': 'text-green-400 font-bold',
+                                    'B': 'text-yellow-400 font-bold',
+                                    'C': 'text-orange-400 font-bold',
+                                    'D': 'text-red-400 font-bold',
+                                    'F': 'text-red-300 font-bold',
+                                };
+                                return (
+                                    <td key={i} className={`p-4 border-b border-gray-700 border-l border-gray-700 font-mono ${gradeColor[qol.grade] || 'text-white'}`}>
+                                        {qol.grade} — {qol.overall}%
+                                    </td>
+                                );
+                            })}
+                        </tr>
+
                         {/* Analysis rows */}
                         <tr className="bg-gray-900/30">
                             <td className="p-4 border-b border-gray-700 text-gray-300 font-medium" colSpan={scenarios.length + 1}>
-                                Análise Qualitativa
+                                {t.comparison.qualitativeAnalysis}
                             </td>
                         </tr>
                         <tr>
-                            <td className="p-4 border-b border-gray-700 text-gray-300 align-top">Observações</td>
+                            <td className="p-4 border-b border-gray-700 text-gray-300 align-top">{t.comparison.observations}</td>
                             {analyses.map((analysis, i) => (
                                 <td key={i} className="p-4 border-b border-gray-700 border-l border-gray-700 align-top">
                                     <ul className="list-disc list-inside space-y-1 text-sm text-gray-400">

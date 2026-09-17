@@ -1,7 +1,8 @@
 import React, { useMemo, useCallback } from 'react';
-import { Trash2, Clock, Calendar, Download, Palmtree, Pencil, Eye, EyeOff, Users, Copy, GripVertical, FileText, Table2, Code2, ChevronUp, ChevronDown, CalendarDays, Link } from 'lucide-react';
+import { Trash2, Clock, Calendar, Download, Palmtree, Pencil, Eye, EyeOff, Users, Copy, GripVertical, FileText, Table2, Code2, ChevronUp, ChevronDown, CalendarDays, Link, Heart } from 'lucide-react';
 import { Scenario } from '../types';
 import { calculateAnalysis } from '../utils/calculations';
+import { calculateQualityOfLifeScore } from '../utils/qualityOfLife';
 import { useI18n } from '../i18n';
 
 interface ScenarioCardProps {
@@ -59,6 +60,16 @@ const ScenarioCard: React.FC<ScenarioCardProps> = React.memo(({
 }) => {
     const { t } = useI18n();
     const analysis = useMemo(() => calculateAnalysis(scenario), [scenario]);
+    const qol = useMemo(() => calculateQualityOfLifeScore(scenario, analysis), [scenario, analysis]);
+
+    const gradeColor: Record<string, string> = {
+        'A+': 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30',
+        'A': 'bg-green-500/20 text-green-400 border-green-500/30',
+        'B': 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30',
+        'C': 'bg-orange-500/20 text-orange-400 border-orange-500/30',
+        'D': 'bg-red-500/20 text-red-400 border-red-500/30',
+        'F': 'bg-red-700/20 text-red-300 border-red-600/30',
+    };
 
     const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
         if (!onKeyboardReorder) return;
@@ -152,7 +163,11 @@ const ScenarioCard: React.FC<ScenarioCardProps> = React.memo(({
                         )}
                     </div>
                 </div>
-                <div className="flex gap-2">
+                <div className="flex items-center gap-2">
+                    <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold border ${gradeColor[qol.grade] || 'bg-gray-600/20 text-gray-400 border-gray-500/30'}`}>
+                        <Heart className="w-3 h-3" />
+                        {qol.grade} {qol.overall}%
+                    </span>
                     <button
                         onClick={() => onToggleHidden(scenario.id)}
                         className="text-gray-500 hover:text-yellow-400 transition-colors"

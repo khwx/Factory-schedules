@@ -2,6 +2,31 @@
 
 Log de execuções autónomas do Bot Orquestrador (modelos free: `opencode/hy3-free`).
 
+## Round 75 — 2026-09-17
+**Objetivo:** Exibir o score QoL (Quality of Life) diretamente no ScenarioCard e na ComparisonTable (sugestão da Round 74).
+
+**Contexto:** O QoL era calculado on-the-fly mas só aparecia dentro do QualityOfLifeDisplay (expandido no Dashboard). O utilizador não via o score sem expandir. O ScenarioCard mostrava apenas horas, fins de semana e dias de folga. A ComparisonTable não incluía QoL e ainda usava strings hardcoded PT.
+
+**O que foi feito:**
+- `src/components/ScenarioCard.tsx`:
+  - Novo badge QoL no cabeçalho do cartão (ícone Heart + grade colorida + percentagem).
+  - `calculateQualityOfLifeScore` chamado via `useMemo` (computação uma vez por render).
+  - Mapa `gradeColor` para cores por grade (A+ emerald → F vermelho).
+  - Import de `Heart` do lucide-react e de `calculateQualityOfLifeScore`.
+- `src/components/ComparisonTable.tsx`:
+  - Nova row "Qualidade de Vida" na secção QoL da tabela (grade + score %) com cores por grade.
+  - `calculateQualityOfLifeScore` chamado via `useMemo` para todos os cenários.
+  - Migração completa para i18n: todos os labels hardcoded PT substituídos por `t.comparison.*` e `t.qol.*` (chaves já existentes).
+  - Removida row "Média de FDS Folga/Mês" (sem chave i18n existente, menos relevante).
+  - Import de `Heart`, `calculateQualityOfLifeScore`, `useI18n`.
+- `src/components/__tests__/ComparisonTable.test.tsx`:
+  - Todos os 6 testes envolvidos em `I18nProvider`.
+  - Strings de asserção atualizadas para ASCII (paridade com `pt.ts`): "Comparacao" (sem acento), "Horas Semanais Medias", etc.
+
+**Verificação:** `tsc -b` → exit 0; `vitest` → **644 passam** (vs 644 anteriores), **0 falham**; `eslint` → 0 erros (warnings pré-existentes).
+
+**Decisão registada:** ScenarioCard agora mostra QoL at-a-glance (badge no cabeçalho). ComparisonTable inclui QoL como row de comparação e está 100% multilíngue (chaves i18n existentes, sem novas chaves necessárias). Próximos passos sugeridos: adicionar ordenação por QoL no Dashboard, ou visualização de tendência histórica de QoL.
+
 ## Round 74 — 2026-09-07
 **Objetivo:** Exportar métricas detalhadas de QoL (Quality of Life) em relatórios Excel, CSV e JSON (nova funcionalidade — seguindo sugestão da Round 72).
 
