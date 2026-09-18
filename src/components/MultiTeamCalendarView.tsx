@@ -3,6 +3,7 @@ import { Scenario } from '../types';
 import { generateYearCalendar } from '../utils/calendar';
 import { getHolidayMonthDays, isHolidayByMonthDay } from '../utils/portugueseHolidays';
 import { ArrowLeft, ArrowRight, LayoutGrid, LayoutList } from 'lucide-react';
+import { useI18n, getBrowserLocale } from '../i18n';
 import './MultiTeamCalendarView.css';
 
 interface MultiTeamCalendarViewProps {
@@ -12,11 +13,6 @@ interface MultiTeamCalendarViewProps {
 
 type LayoutMode = 'horizontal' | 'vertical';
 
-const MONTH_NAMES = [
-    'Janeiro', 'Fevereiro', 'Marco', 'Abril', 'Maio', 'Junho',
-    'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
-];
-
 const DAY_NAMES_SHORT = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'];
 
 const isHoliday = (date: Date, holidayMonthDays: string[]): boolean => {
@@ -25,6 +21,9 @@ const isHoliday = (date: Date, holidayMonthDays: string[]): boolean => {
 };
 
 export const MultiTeamCalendarView: React.FC<MultiTeamCalendarViewProps> = ({ scenario, onClose }) => {
+    const { t, lang } = useI18n();
+    const locale = getBrowserLocale(lang);
+    const monthNames = t.calendar.months;
     const [year, setYear] = useState(new Date().getFullYear());
     const [layoutMode, setLayoutMode] = useState<LayoutMode>('horizontal');
 
@@ -84,7 +83,7 @@ export const MultiTeamCalendarView: React.FC<MultiTeamCalendarViewProps> = ({ sc
 
                             {calendar.map((day, dayIndex) => {
                                 const isFirstOfMonth = day.date.getDate() === 1;
-                                const monthLabel = isFirstOfMonth ? MONTH_NAMES[day.date.getMonth()].substring(0, 3) : '';
+                                const monthLabel = isFirstOfMonth ? monthNames[day.date.getMonth()].substring(0, 3) : '';
                                 const dayOfWeek = day.date.getDay();
                                 const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
                                 const isHol = isHoliday(day.date, holidayMonthDays);
@@ -94,7 +93,7 @@ export const MultiTeamCalendarView: React.FC<MultiTeamCalendarViewProps> = ({ sc
                                         key={dayIndex}
                                         className={`day-cell-compact ${isWeekend ? 'weekend-cell' : ''} ${isHol ? 'holiday-cell' : ''}`}
                                         style={{ backgroundColor: getShiftColor(day.shift, isWeekend) }}
-                                        title={`${day.date.toLocaleDateString('pt-PT')} - ${day.shift}`}
+                                        title={`${day.date.toLocaleDateString(locale)} - ${day.shift}`}
                                     >
                                         {monthLabel && <div className="month-label">{monthLabel}</div>}
                                         <div className="day-number" style={{ color: isWeekend || isHol ? '#dc2626' : '#1f2937' }}>
@@ -130,7 +129,7 @@ export const MultiTeamCalendarView: React.FC<MultiTeamCalendarViewProps> = ({ sc
                                 <div className="day-header-vertical">
                                     {teamCalendars[0][dayIndex].date.getDate() === 1 && (
                                         <div className="month-label-vertical">
-                                            {MONTH_NAMES[teamCalendars[0][dayIndex].date.getMonth()].substring(0, 3)}
+                                            {monthNames[teamCalendars[0][dayIndex].date.getMonth()].substring(0, 3)}
                                         </div>
                                     )}
                                     <div className="day-number-vertical"                                     style={{
@@ -153,7 +152,7 @@ export const MultiTeamCalendarView: React.FC<MultiTeamCalendarViewProps> = ({ sc
                                             key={teamIndex}
                                             className={`shift-cell-vertical ${isWeekend ? 'weekend-cell' : ''}`}
                                             style={{ backgroundColor: getShiftColor(day.shift, isWeekend) }}
-                                            title={`Turno ${String.fromCharCode(65 + teamIndex)} - ${day.date.toLocaleDateString('pt-PT')} - ${day.shift}`}
+                                            title={`Turno ${String.fromCharCode(65 + teamIndex)} - ${day.date.toLocaleDateString(locale)} - ${day.shift}`}
                                         >
                                             {getShiftLabel(day.shift)}
                                         </div>
@@ -209,23 +208,23 @@ export const MultiTeamCalendarView: React.FC<MultiTeamCalendarViewProps> = ({ sc
                 <div className="legend">
                     <div className="legend-item">
                         <div className="legend-color" style={{ backgroundColor: '#4ade80' }}></div>
-                        <span>Manhã (M)</span>
+                        <span>{t.calendar.morning} (M)</span>
                     </div>
                     <div className="legend-item">
                         <div className="legend-color" style={{ backgroundColor: '#fbbf24' }}></div>
-                        <span>Tarde (T)</span>
+                        <span>{t.calendar.afternoon} (T)</span>
                     </div>
                     <div className="legend-item">
                         <div className="legend-color" style={{ backgroundColor: '#60a5fa' }}></div>
-                        <span>Noite (N)</span>
+                        <span>{t.calendar.night} (N)</span>
                     </div>
                     <div className="legend-item">
                         <div className="legend-color" style={{ backgroundColor: '#d1d5db' }}></div>
-                        <span>Folga (F)</span>
+                        <span>{t.calendar.off} (F)</span>
                     </div>
                     <div className="legend-item">
                         <div className="day-number" style={{ color: '#dc2626', fontWeight: 600 }}>25</div>
-                        <span>Fim de Semana / Feriado</span>
+                        <span>{t.calendar.weekendOff}</span>
                     </div>
                 </div>
             </div>

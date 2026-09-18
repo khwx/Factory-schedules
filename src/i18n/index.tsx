@@ -7,6 +7,18 @@ import { de } from './locales/de';
 
 export type Language = 'pt' | 'en' | 'es' | 'fr' | 'de';
 
+const LOCALE_MAP: Record<Language, string> = {
+    pt: 'pt-PT',
+    en: 'en-US',
+    es: 'es-ES',
+    fr: 'fr-FR',
+    de: 'de-DE',
+};
+
+export function getBrowserLocale(lang: Language): string {
+    return LOCALE_MAP[lang];
+}
+
 const SUPPORTED_LANGUAGES: Language[] = ['pt', 'en', 'es', 'fr', 'de'];
 
 export function detectBrowserLanguage(): Language {

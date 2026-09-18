@@ -2,18 +2,18 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { Scenario, DayInfo } from '../types';
 import { generateYearCalendar } from '../utils/calendar';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { useI18n } from '../i18n';
+import { useI18n, getBrowserLocale } from '../i18n';
 
 interface YearCalendarViewProps {
     scenario: Scenario;
 }
 
-const MONTH_NAMES = ['Janeiro', 'Fevereiro', 'Mar\u00e7o', 'Abril', 'Maio', 'Junho',
-    'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
 const DAY_HEADERS = ['S', 'T', 'Q', 'Q', 'S', 'S', 'D'];
 
 const YearCalendarView: React.FC<YearCalendarViewProps> = ({ scenario }) => {
-    const { t } = useI18n();
+    const { t, lang } = useI18n();
+    const locale = getBrowserLocale(lang);
+    const monthNames = t.calendar.months;
     const currentYear = new Date().getFullYear();
     const [selectedYear, setSelectedYear] = useState(currentYear);
     const [selectedTeam, setSelectedTeam] = useState(0);
@@ -43,11 +43,11 @@ const YearCalendarView: React.FC<YearCalendarViewProps> = ({ scenario }) => {
 
     const getShiftLabel = (shift: string) => {
         switch (shift) {
-            case 'M': return 'Manh\u00e3';
-            case 'T': return 'Tarde';
-            case 'N': return 'Noite';
-            case 'F': return 'Folga';
-            default: return 'Desconhecido';
+            case 'M': return t.calendar.morning;
+            case 'T': return t.calendar.afternoon;
+            case 'N': return t.calendar.night;
+            case 'F': return t.calendar.off;
+            default: return '';
         }
     };
 
@@ -59,18 +59,18 @@ const YearCalendarView: React.FC<YearCalendarViewProps> = ({ scenario }) => {
     });
 
     const handleDayInteraction = useCallback((day: DayInfo, rect: DOMRect) => {
-        const dayName = day.date.toLocaleDateString('pt-PT', { weekday: 'long' });
-        const monthName = day.date.toLocaleDateString('pt-PT', { month: 'long' });
+        const dayName = day.date.toLocaleDateString(locale, { weekday: 'long' });
+        const monthName = day.date.toLocaleDateString(locale, { month: 'long' });
         setTooltip({
             x: rect.left + rect.width / 2,
             y: rect.top - 8,
-            content: `${day.date.getDate()} de ${monthName} (${dayName}) - ${getShiftLabel(day.shift)}${day.isWeekendOff ? ' - FDS Folga' : ''}`,
+            content: `${day.date.getDate()} de ${monthName} (${dayName}) - ${getShiftLabel(day.shift)}${day.isWeekendOff ? ` - ${t.calendar.weekendOff}` : ''}`,
         });
-    }, []);
+    }, [locale]);
 
     const renderMonth = (monthIdx: number, days: DayInfo[]) => (
         <div key={monthIdx} className="bg-gray-900/30 rounded p-3">
-            <h4 className="text-sm font-semibold text-gray-300 mb-2">{MONTH_NAMES[monthIdx]}</h4>
+            <h4 className="text-sm font-semibold text-gray-300 mb-2">{monthNames[monthIdx]}</h4>
             <div className="grid grid-cols-7 gap-1">
                 {DAY_HEADERS.map((d, i) => (
                     <div key={i} className="text-xs text-gray-500 text-center font-medium">{d}</div>
@@ -84,7 +84,7 @@ const YearCalendarView: React.FC<YearCalendarViewProps> = ({ scenario }) => {
                         className={`aspect-square flex items-center justify-center text-xs rounded cursor-default ${getShiftColor(day.shift)} ${day.isWeekendOff ? 'ring-2 ring-green-400' : ''} ${day.isWeekend && !day.isWeekendOff ? 'opacity-75' : ''}`}
                         role="gridcell"
                         tabIndex={0}
-                        aria-label={`${day.date.toLocaleDateString('pt-PT')}, ${getShiftLabel(day.shift)}${day.isWeekendOff ? ', fim de semana de folga' : ''}`}
+                        aria-label={`${day.date.toLocaleDateString(locale)}, ${getShiftLabel(day.shift)}${day.isWeekendOff ? `, ${t.calendar.weekendOff}` : ''}`}
                         onMouseEnter={(e) => handleDayInteraction(day, e.currentTarget.getBoundingClientRect())}
                         onMouseLeave={() => setTooltip(null)}
                         onFocus={(e) => handleDayInteraction(day, e.currentTarget.getBoundingClientRect())}
@@ -142,7 +142,7 @@ const YearCalendarView: React.FC<YearCalendarViewProps> = ({ scenario }) => {
                             >
                                 <ChevronLeft className="w-5 h-5 text-gray-400" />
                             </button>
-                            <h4 className="text-base font-semibold text-white">{MONTH_NAMES[selectedMonth]}</h4>
+                            <h4 className="text-base font-semibold text-white">{monthNames[selectedMonth]}</h4>
                             <button
                                 onClick={() => setSelectedMonth(m => (m + 1) % 12)}
                                 className="p-2 hover:bg-gray-700 rounded transition-colors"
@@ -160,11 +160,11 @@ const YearCalendarView: React.FC<YearCalendarViewProps> = ({ scenario }) => {
 
             <div className="p-3 bg-gray-900/30 border-t border-gray-700 flex flex-wrap gap-4 text-xs">
                 {[
-                    { color: 'bg-yellow-500', label: 'Manh\u00e3' },
-                    { color: 'bg-orange-500', label: 'Tarde' },
-                    { color: 'bg-blue-600', label: 'Noite' },
-                    { color: 'bg-gray-600', label: 'Folga' },
-                    { color: 'bg-gray-600 ring-2 ring-green-400', label: 'FDS Folga' },
+                    { color: 'bg-yellow-500', label: t.calendar.morning },
+                    { color: 'bg-orange-500', label: t.calendar.afternoon },
+                    { color: 'bg-blue-600', label: t.calendar.night },
+                    { color: 'bg-gray-600', label: t.calendar.off },
+                    { color: 'bg-gray-600 ring-2 ring-green-400', label: t.calendar.weekendOff },
                 ].map(({ color, label }) => (
                     <div key={label} className="flex items-center gap-2">
                         <div className={`w-4 h-4 rounded ${color}`} />

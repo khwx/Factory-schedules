@@ -73,7 +73,7 @@ describe('YearCalendarView', () => {
 
     it('renders the shift legend', () => {
         render(<YearCalendarView scenario={scenario} />, { wrapper });
-        expect(screen.getByText('Manhã')).toBeInTheDocument();
+        expect(screen.getByText('Manha')).toBeInTheDocument();
         expect(screen.getByText('Tarde')).toBeInTheDocument();
         expect(screen.getByText('Noite')).toBeInTheDocument();
         expect(screen.getByText('Folga')).toBeInTheDocument();

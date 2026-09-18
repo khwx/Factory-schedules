@@ -2,6 +2,7 @@ import { describe, it, expect, vi } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { MultiTeamCalendarView } from '../MultiTeamCalendarView';
 import { Scenario } from '../../types';
+import { I18nProvider } from '../../i18n';
 
 const scenario: Scenario = {
     id: 'mtc-1',
@@ -13,41 +14,45 @@ const scenario: Scenario = {
     teamPatterns: ['MMTTNNFF', 'NNFFMMTT'],
 };
 
+const wrapper = ({ children }: { children: React.ReactNode }) => (
+    <I18nProvider>{children}</I18nProvider>
+);
+
 describe('MultiTeamCalendarView', () => {
     it('renders the scenario name in the header', () => {
-        render(<MultiTeamCalendarView scenario={scenario} onClose={() => {}} />);
+        render(<MultiTeamCalendarView scenario={scenario} onClose={() => {}} />, { wrapper });
         expect(screen.getByText(/Vista Multi-Equipa - Multi Team Scenario/)).toBeInTheDocument();
     });
 
     it('renders a column/row per team', () => {
-        render(<MultiTeamCalendarView scenario={scenario} onClose={() => {}} />);
+        render(<MultiTeamCalendarView scenario={scenario} onClose={() => {}} />, { wrapper });
         expect(screen.getAllByText('Turno A').length).toBeGreaterThan(0);
         expect(screen.getAllByText('Turno B').length).toBeGreaterThan(0);
     });
 
     it('renders layout toggle and legend', () => {
-        render(<MultiTeamCalendarView scenario={scenario} onClose={() => {}} />);
+        render(<MultiTeamCalendarView scenario={scenario} onClose={() => {}} />, { wrapper });
         expect(screen.getByTitle(/Vista Horizontal/)).toBeInTheDocument();
         expect(screen.getByTitle(/Vista Vertical/)).toBeInTheDocument();
-        expect(screen.getByText('Manhã (M)')).toBeInTheDocument();
+        expect(screen.getByText('Manha (M)')).toBeInTheDocument();
     });
 
     it('switches to vertical layout when toggled', () => {
-        render(<MultiTeamCalendarView scenario={scenario} onClose={() => {}} />);
+        render(<MultiTeamCalendarView scenario={scenario} onClose={() => {}} />, { wrapper });
         fireEvent.click(screen.getByTitle(/Vista Vertical/));
         expect(screen.getByTitle(/Vista Vertical/).className).toContain('active');
     });
 
     it('calls onClose when the close button is clicked', () => {
         const onClose = vi.fn();
-        render(<MultiTeamCalendarView scenario={scenario} onClose={onClose} />);
+        render(<MultiTeamCalendarView scenario={scenario} onClose={onClose} />, { wrapper });
         fireEvent.click(screen.getByText('✕'));
         expect(onClose).toHaveBeenCalledTimes(1);
     });
 
     it('navigates between years', () => {
         const currentYear = new Date().getFullYear();
-        render(<MultiTeamCalendarView scenario={scenario} onClose={() => {}} />);
+        render(<MultiTeamCalendarView scenario={scenario} onClose={() => {}} />, { wrapper });
         const yearSelector = screen.getByText(currentYear.toString()).closest('.year-selector') as HTMLElement;
         const buttons = yearSelector.querySelectorAll('button');
         fireEvent.click(buttons[buttons.length - 1]);

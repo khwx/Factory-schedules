@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { Scenario, AnalysisResult } from '../types';
 import { calculateQualityOfLifeScore, detectCriticalPeriods } from '../utils/qualityOfLife';
 import { Heart, TrendingUp, AlertTriangle, Award } from 'lucide-react';
-import { useI18n } from '../i18n';
+import { useI18n, getBrowserLocale } from '../i18n';
 
 interface QualityOfLifeDisplayProps {
     scenario: Scenario;
@@ -11,7 +11,8 @@ interface QualityOfLifeDisplayProps {
 }
 
 const QualityOfLifeDisplay: React.FC<QualityOfLifeDisplayProps> = ({ scenario, analysis, year = new Date().getFullYear() }) => {
-    const { t } = useI18n();
+    const { t, lang } = useI18n();
+    const locale = getBrowserLocale(lang);
     const qolScore = useMemo(() => {
         return calculateQualityOfLifeScore(scenario, analysis, year);
     }, [scenario, analysis, year]);
@@ -191,8 +192,8 @@ const QualityOfLifeDisplay: React.FC<QualityOfLifeDisplayProps> = ({ scenario, a
                                             <span className="text-sm font-semibold text-white leading-tight">{period.description}</span>
                                         </div>
                                         <div className="text-xs text-gray-400 mt-1">
-                                            {period.startDate.toLocaleDateString('pt-PT', { day: 'numeric', month: 'numeric' })} a{' '}
-                                            {period.endDate.toLocaleDateString('pt-PT', { day: 'numeric', month: 'numeric', year: 'numeric' })}
+                                            {period.startDate.toLocaleDateString(locale, { day: 'numeric', month: 'numeric' })} a{' '}
+                                            {period.endDate.toLocaleDateString(locale, { day: 'numeric', month: 'numeric', year: 'numeric' })}
                                         </div>
                                     </div>
                                     <div className="text-right pl-2">
