@@ -2,6 +2,26 @@
 
 Log de execuções autónomas do Bot Orquestrador (modelos free: `opencode/hy3-free`).
 
+## Round 77 — 2026-09-18
+**Objetivo:** Migrar strings hardcoded PT do ComparisonCharts para i18n (5 línguas).
+
+**Contexto:** O componente `ComparisonCharts.tsx` tinha 10+ strings hardcoded em PT (títulos de gráficos, labels de barras/linhas/área, abreviaturas de meses). Estas quebravam a experiência para utilizadores em `es`/`fr`/`de`.
+
+**O que foi feito:**
+- `src/components/ComparisonCharts.tsx`:
+  - Todas as strings hardcoded PT substituídas por `t.comparisonCharts.*`.
+  - Labels de gráfico: `weekendsAndHours`, `weekends`, `weeklyHours`, `avgWeekends`, `monthlyWeekendDist`.
+  - Botões de tipo de gráfico: `bar`, `line`, `area`.
+  - Abreviaturas de meses via `t.comparisonCharts.monthsShort`.
+  - Dependências de `useMemo` atualizadas para incluir `t`.
+- `src/i18n/locales/{pt,en,es,fr,de}.ts`:
+  - Nova secção `comparisonCharts` em 5 línguas (9 chaves por língua = 45 chaves total).
+  - Inclui `monthsShort` com abreviaturas localizadas (PT: Jan/Fev/Mar..., EN: Jan/Feb/Mar..., etc.).
+
+**Verificação:** `vitest` → **644 passam**, 0 falham; `eslint` → 0 erros (64 warnings pré-existentes); build → OK.
+
+**Decisão registada:** ComparisonCharts agora é 100% i18n. Próximos passos sugeridos: migrar strings hardcoded PT em `qualityOfLife.ts` (insights), `advancedMetrics.ts` (insights), ou `teamAnalysis.ts` (insights) — todas ainda com PT hardcoded.
+
 ## Round 76 — 2026-09-18
 **Objetivo:** Adicionar ordenação por Qualidade de Vida (QoL) no Dashboard (sugestão da Round 75).
 

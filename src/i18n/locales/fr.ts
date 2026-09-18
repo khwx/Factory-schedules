@@ -753,6 +753,17 @@ holidayCalendar: {
     circadianDisruption: 'Disruption Circadienne',
     longTermSustainability: 'Durabilite a Long Terme',
   },
+  comparisonCharts: {
+    weekendsAndHours: 'Comparaison Week-ends et Heures',
+    weekends: 'Week-ends',
+    weeklyHours: 'Heures Hebdomadaires',
+    avgWeekends: 'Moy. Week-ends',
+    monthlyWeekendDist: 'Distribution Mensuelle des Week-ends (Moyenne)',
+    bar: 'Barres',
+    line: 'Lignes',
+    area: 'Aire',
+    monthsShort: ['Jan', 'Fev', 'Mar', 'Avr', 'Mai', 'Jun', 'Jul', 'Aou', 'Sep', 'Oct', 'Nov', 'Dec'],
+  },
   icsExport: {
     periodLabel: 'Periode',
     rangeFull: 'Annee Complete',

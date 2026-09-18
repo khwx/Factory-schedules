@@ -751,6 +751,17 @@ export const pt = {
     circadianDisruption: 'Disrupcao Circadiana',
     longTermSustainability: 'Sustentabilidade a Longo Prazo',
   },
+  comparisonCharts: {
+    weekendsAndHours: 'Comparacao de Fins de Semana e Horas',
+    weekends: 'Fins de Semana',
+    weeklyHours: 'Horas Semanais',
+    avgWeekends: 'Media Fins de Semana',
+    monthlyWeekendDist: 'Distribuicao Mensal de Fins de Semana (Media)',
+    bar: 'Barras',
+    line: 'Linhas',
+    area: 'Area',
+    monthsShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+  },
   icsExport: {
     periodLabel: 'Periodo',
     rangeFull: 'Ano Completo',

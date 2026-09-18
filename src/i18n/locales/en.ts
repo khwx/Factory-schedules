@@ -753,6 +753,17 @@ export const en: Translations = {
     circadianDisruption: 'Circadian Disruption',
     longTermSustainability: 'Long-Term Sustainability',
   },
+  comparisonCharts: {
+    weekendsAndHours: 'Weekends & Hours Comparison',
+    weekends: 'Weekends',
+    weeklyHours: 'Weekly Hours',
+    avgWeekends: 'Avg Weekends',
+    monthlyWeekendDist: 'Monthly Weekend Distribution (Average)',
+    bar: 'Bar',
+    line: 'Line',
+    area: 'Area',
+    monthsShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+  },
   icsExport: {
     periodLabel: 'Period',
     rangeFull: 'Full Year',

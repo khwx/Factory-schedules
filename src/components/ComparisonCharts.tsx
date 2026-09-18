@@ -18,17 +18,15 @@ const ComparisonCharts: React.FC<ComparisonChartsProps> = ({ scenarios, analyses
     const weekendData = useMemo(() => {
         return scenarios.map((scenario, idx) => ({
             name: scenario.name.length > 15 ? scenario.name.substring(0, 15) + '...' : scenario.name,
-            'Fins de Semana': analyses[idx].weekendsOffPerYear,
-            'Horas Semanais': analyses[idx].avgWeeklyHours,
+            [t.comparisonCharts.weekends]: analyses[idx].weekendsOffPerYear,
+            [t.comparisonCharts.weeklyHours]: analyses[idx].avgWeeklyHours,
         }));
-    }, [scenarios, analyses]);
+    }, [scenarios, analyses, t]);
 
     const monthlyData = useMemo(() => {
         if (analyses.length === 0) return [];
 
-        const months = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
-
-        return months.map((month, idx) => {
+        return t.comparisonCharts.monthsShort.map((month, idx) => {
             const avgWeekends = analyses.reduce((sum, analysis) => {
                 const monthData = analysis.multiYearAnalysis[0]?.monthlyBreakdown[idx];
                 return sum + (monthData?.weekendsOff || 0);
@@ -36,10 +34,10 @@ const ComparisonCharts: React.FC<ComparisonChartsProps> = ({ scenarios, analyses
 
             return {
                 month,
-                'Media Fins de Semana': Math.round(avgWeekends * 10) / 10,
+                [t.comparisonCharts.avgWeekends]: Math.round(avgWeekends * 10) / 10,
             };
         });
-    }, [analyses]);
+    }, [analyses, t]);
 
     if (scenarios.length === 0) return null;
 
@@ -74,8 +72,8 @@ const ComparisonCharts: React.FC<ComparisonChartsProps> = ({ scenarios, analyses
                         <YAxis stroke="#9CA3AF" tick={{ fill: '#9CA3AF' }} />
                         <Tooltip contentStyle={tooltipStyle} />
                         <Legend wrapperStyle={{ color: '#9CA3AF' }} />
-                        <Line type="monotone" dataKey="Fins de Semana" stroke="#4ADE80" strokeWidth={2} dot={{ fill: '#4ADE80', r: 4 }} />
-                        <Line type="monotone" dataKey="Horas Semanais" stroke="#60A5FA" strokeWidth={2} dot={{ fill: '#60A5FA', r: 4 }} />
+                        <Line type="monotone" dataKey={t.comparisonCharts.weekends} stroke="#4ADE80" strokeWidth={2} dot={{ fill: '#4ADE80', r: 4 }} />
+                        <Line type="monotone" dataKey={t.comparisonCharts.weeklyHours} stroke="#60A5FA" strokeWidth={2} dot={{ fill: '#60A5FA', r: 4 }} />
                     </LineChart>
                 );
             case 'area':
@@ -86,8 +84,8 @@ const ComparisonCharts: React.FC<ComparisonChartsProps> = ({ scenarios, analyses
                         <YAxis stroke="#9CA3AF" tick={{ fill: '#9CA3AF' }} />
                         <Tooltip contentStyle={tooltipStyle} />
                         <Legend wrapperStyle={{ color: '#9CA3AF' }} />
-                        <Area type="monotone" dataKey="Fins de Semana" stroke="#4ADE80" fill="#4ADE80" fillOpacity={0.3} />
-                        <Area type="monotone" dataKey="Horas Semanais" stroke="#60A5FA" fill="#60A5FA" fillOpacity={0.3} />
+                        <Area type="monotone" dataKey={t.comparisonCharts.weekends} stroke="#4ADE80" fill="#4ADE80" fillOpacity={0.3} />
+                        <Area type="monotone" dataKey={t.comparisonCharts.weeklyHours} stroke="#60A5FA" fill="#60A5FA" fillOpacity={0.3} />
                     </AreaChart>
                 );
             default:
@@ -98,8 +96,8 @@ const ComparisonCharts: React.FC<ComparisonChartsProps> = ({ scenarios, analyses
                         <YAxis stroke="#9CA3AF" tick={{ fill: '#9CA3AF' }} />
                         <Tooltip contentStyle={tooltipStyle} />
                         <Legend wrapperStyle={{ color: '#9CA3AF' }} />
-                        <Bar dataKey="Fins de Semana" fill="#4ADE80" />
-                        <Bar dataKey="Horas Semanais" fill="#60A5FA" />
+                        <Bar dataKey={t.comparisonCharts.weekends} fill="#4ADE80" />
+                        <Bar dataKey={t.comparisonCharts.weeklyHours} fill="#60A5FA" />
                     </BarChart>
                 );
         }
@@ -111,12 +109,12 @@ const ComparisonCharts: React.FC<ComparisonChartsProps> = ({ scenarios, analyses
                 <div className="p-4 border-b border-gray-700 flex items-center justify-between">
                     <div className="flex items-center gap-2">
                         <BarChart3 className="w-5 h-5 text-blue-400" />
-                        <h3 className="text-lg font-semibold text-white">Comparacao de Fins de Semana e Horas</h3>
+                        <h3 className="text-lg font-semibold text-white">{t.comparisonCharts.weekendsAndHours}</h3>
                     </div>
                     <div className="flex gap-1 bg-gray-900 rounded-lg p-1" role="radiogroup" aria-label={t.a11y.chartType}>
-                        <ChartTypeButton type="bar" label="Barras" />
-                        <ChartTypeButton type="line" label="Linhas" />
-                        <ChartTypeButton type="area" label="Area" />
+                        <ChartTypeButton type="bar" label={t.comparisonCharts.bar} />
+                        <ChartTypeButton type="line" label={t.comparisonCharts.line} />
+                        <ChartTypeButton type="area" label={t.comparisonCharts.area} />
                     </div>
                 </div>
                 <div className="p-6">
@@ -129,7 +127,7 @@ const ComparisonCharts: React.FC<ComparisonChartsProps> = ({ scenarios, analyses
             <div className="bg-gray-800 rounded-lg border border-gray-700 overflow-hidden">
                 <div className="p-4 border-b border-gray-700 flex items-center gap-2">
                     <TrendingUp className="w-5 h-5 text-green-400" />
-                    <h3 className="text-lg font-semibold text-white">Distribuicao Mensal de Fins de Semana (Media)</h3>
+                    <h3 className="text-lg font-semibold text-white">{t.comparisonCharts.monthlyWeekendDist}</h3>
                 </div>
                 <div className="p-6">
                     <ResponsiveContainer width="100%" height={300}>
@@ -139,7 +137,7 @@ const ComparisonCharts: React.FC<ComparisonChartsProps> = ({ scenarios, analyses
                             <YAxis stroke="#9CA3AF" tick={{ fill: '#9CA3AF' }} />
                             <Tooltip contentStyle={tooltipStyle} />
                             <Legend wrapperStyle={{ color: '#9CA3AF' }} />
-                            <Area type="monotone" dataKey="Media Fins de Semana" stroke="#4ADE80" fill="#4ADE80" fillOpacity={0.3} strokeWidth={2} />
+                            <Area type="monotone" dataKey={t.comparisonCharts.avgWeekends} stroke="#4ADE80" fill="#4ADE80" fillOpacity={0.3} strokeWidth={2} />
                         </AreaChart>
                     </ResponsiveContainer>
                 </div>
