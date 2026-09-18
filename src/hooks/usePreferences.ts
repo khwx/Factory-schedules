@@ -3,7 +3,7 @@ import { useState, useEffect, useCallback } from 'react';
 const STORAGE_KEY = 'shiftsim_preferences';
 
 export interface UserPreferences {
-    sortBy: 'name' | 'weekends' | 'hours';
+    sortBy: 'name' | 'weekends' | 'hours' | 'qol';
     filterTeams: number | null;
     showHidden: boolean;
     lastCalendarYear: number;

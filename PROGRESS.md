@@ -2,6 +2,30 @@
 
 Log de execuções autónomas do Bot Orquestrador (modelos free: `opencode/hy3-free`).
 
+## Round 76 — 2026-09-18
+**Objetivo:** Adicionar ordenação por Qualidade de Vida (QoL) no Dashboard (sugestão da Round 75).
+
+**Contexto:** O score QoL era exibido no ScenarioCard e ComparisonTable (Round 75), mas o Dashboard não permitia ordenar os cenários por esta métrica. Os dropdowns de ordenação (desktop e mobile) tinham apenas Nome/Fins de Semana/Horas. As labels do desktop dropdown estavam hardcoded em PT.
+
+**O que foi feito:**
+- `src/hooks/usePreferences.ts`:
+  - Tipo `sortBy` expandido de `'name' | 'weekends' | 'hours'` para `'name' | 'weekends' | 'hours' | 'qol'`.
+- `src/components/Dashboard.tsx`:
+  - Import de `calculateQualityOfLifeScore` de `../utils/qualityOfLife`.
+  - Novo branch `sortBy === 'qol'` no sort que calcula QoL via `calculateQualityOfLifeScore` e ordena por `overall` score (decrescente).
+  - `handleSortChange` type cast atualizado para incluir `'qol'`.
+  - Desktop dropdown: labels hardcoded PT substituídas por `t.dashboard.sortName/sortWeekends/sortHours` + novo `<option value="qol">` com `t.dashboard.sortQol`.
+  - Mobile dropdown: labels hardcoded PT substituídas por `t.dashboard.sortNameOption/sortWeekendsOption/sortHoursOption` + novo `<option value="qol">` com `t.dashboard.sortQolOption`.
+  - Mobile label "Ordenar por" substituído por `t.dashboard.mobileSort`.
+  - Mobile "Numero de Equipas"/"Todas" substituídos por `t.dashboard.mobileTeams`/`t.dashboard.mobileAllTeams`.
+- `src/i18n/locales/{pt,en,es,fr,de}.ts`:
+  - 2 chaves novas por língua: `sortQol` (desktop) e `sortQolOption` (mobile) — total 10 chaves.
+  - Traduções: PT "Qualidade de Vida", EN "Quality of Life", ES "Calidad de Vida", FR "Qualité de Vie", DE "Lebensqualität".
+
+**Verificação:** `vitest` → **644 passam**, 0 falham; `eslint` → 0 erros (62 warnings pré-existentes); `tsc -b` → exit 0; i18n parity tests → 22 passam.
+
+**Decisão registada:** Dashboard agora permite ordenar cenários por QoL (maior score primeiro). Labels dos dropdowns de ordenação migradas para i18n (desktop e mobile). Próximos passos sugeridos: visualização de tendência histórica de QoL, ou dashboard de comparação QoL entre cenários.
+
 ## Round 75 — 2026-09-17
 **Objetivo:** Exibir o score QoL (Quality of Life) diretamente no ScenarioCard e na ComparisonTable (sugestão da Round 74).
 

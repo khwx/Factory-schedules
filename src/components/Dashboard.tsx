@@ -4,6 +4,7 @@ import ScenarioCard from './ScenarioCard';
 import ComparisonTable from './ComparisonTable';
 import { Scenario } from '../types';
 import { calculateAnalysis } from '../utils/calculations';
+import { calculateQualityOfLifeScore } from '../utils/qualityOfLife';
 import { exportToExcel, exportComparison } from '../utils/export';
 import { exportScenarioToPDF, exportComparisonToPDF } from '../utils/pdfExport';
 import { exportScenarioToCSV, exportScenarioToJSON, exportComparisonToCSV, exportComparisonToJSON } from '../utils/csvJsonExport';
@@ -226,6 +227,12 @@ const Dashboard: React.FC = () => {
                 const idxA = scenarios.findIndex(s => s.id === a.id);
                 const idxB = scenarios.findIndex(s => s.id === b.id);
                 return (analyses[idxA]?.avgWeeklyHours ?? 0) - (analyses[idxB]?.avgWeeklyHours ?? 0);
+            } else if (sortBy === 'qol') {
+                const idxA = scenarios.findIndex(s => s.id === a.id);
+                const idxB = scenarios.findIndex(s => s.id === b.id);
+                const qolA = calculateQualityOfLifeScore(a, analyses[idxA]);
+                const qolB = calculateQualityOfLifeScore(b, analyses[idxB]);
+                return qolB.overall - qolA.overall;
             }
             return 0;
         });
@@ -442,7 +449,7 @@ const Dashboard: React.FC = () => {
     }, []);
 
     const handleSortChange = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
-        setSortBy(e.target.value as 'name' | 'weekends' | 'hours');
+        setSortBy(e.target.value as 'name' | 'weekends' | 'hours' | 'qol');
     }, []);
 
     const toggleShowHidden = useCallback(() => {
@@ -598,9 +605,10 @@ const Dashboard: React.FC = () => {
                                     className="px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:outline-none focus:border-blue-500"
                                     aria-label={t.dashboard.sortAria}
                                 >
-                                    <option value="name">Ordenar: Nome</option>
-                                    <option value="weekends">Ordenar: Fins de Semana</option>
-                                    <option value="hours">Ordenar: Horas Semanais</option>
+                                    <option value="name">{t.dashboard.sortName}</option>
+                                    <option value="weekends">{t.dashboard.sortWeekends}</option>
+                                    <option value="hours">{t.dashboard.sortHours}</option>
+                                    <option value="qol">{t.dashboard.sortQol}</option>
                                 </select>
                             </div>
 
@@ -681,26 +689,27 @@ const Dashboard: React.FC = () => {
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">Ordenar por</label>
+                                <label className="block text-sm font-medium text-gray-700 mb-2">{t.dashboard.mobileSort}</label>
                                 <select
                                     value={sortBy}
                                     onChange={handleSortChange}
                                     className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                                 >
-                                    <option value="name">Nome</option>
-                                    <option value="weekends">Fins de Semana</option>
-                                    <option value="hours">Horas Semanais</option>
+                                    <option value="name">{t.dashboard.sortNameOption}</option>
+                                    <option value="weekends">{t.dashboard.sortWeekendsOption}</option>
+                                    <option value="hours">{t.dashboard.sortHoursOption}</option>
+                                    <option value="qol">{t.dashboard.sortQolOption}</option>
                                 </select>
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">Numero de Equipas</label>
+                                <label className="block text-sm font-medium text-gray-700 mb-2">{t.dashboard.mobileTeams}</label>
                                 <select
                                     value={filterTeams ?? ''}
                                     onChange={handleFilterTeamsChange}
                                     className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                                 >
-                                    <option value="">Todas</option>
+                                    <option value="">{t.dashboard.mobileAllTeams}</option>
                                     {[...new Set(scenarios.map(s => s.teams))].sort((a, b) => a - b).map(num => (
                                         <option key={num} value={num}>{num} Equipas</option>
                                     ))}
