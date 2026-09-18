@@ -56,6 +56,11 @@ export const en: Translations = {
     holidayNamePlaceholder: 'Holiday name (e.g. Company Anniversary)',
     removeHoliday: 'Remove holiday',
     noCustomHolidays: 'No custom holidays added.',
+    langPt: 'Portuguese',
+    langEn: 'English',
+    langEs: 'Spanish',
+    langFr: 'French',
+    langDe: 'German',
   },
   dashboard: {
     presetTitle: 'Load Example Scenario',

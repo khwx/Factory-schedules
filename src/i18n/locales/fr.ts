@@ -56,6 +56,11 @@ export const fr: Translations = {
     holidayNamePlaceholder: 'Nom du jour férié (ex. Anniversaire entreprise)',
     removeHoliday: 'Supprimer le jour férié',
     noCustomHolidays: 'Aucun jour férié personnalisé ajouté.',
+    langPt: 'Portugais',
+    langEn: 'Anglais',
+    langEs: 'Espagnol',
+    langFr: 'Francais',
+    langDe: 'Allemand',
   },
   dashboard: {
     presetTitle: 'Charger un scénario prédéfini',

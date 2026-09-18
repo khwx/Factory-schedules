@@ -286,35 +286,35 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                                             className={`flex-1 px-3 py-2 rounded text-sm transition-colors flex items-center justify-center gap-2 ${lang === 'pt' ? 'bg-blue-600 text-white' : 'bg-[var(--bg-hover)] text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]'}`}
                                         >
                                             <Globe className="w-4 h-4" />
-                                            Portugues
+                                            {t.header.langPt}
                                         </button>
                                         <button
                                             onClick={() => setLang('en')}
                                             className={`flex-1 px-3 py-2 rounded text-sm transition-colors flex items-center justify-center gap-2 ${lang === 'en' ? 'bg-blue-600 text-white' : 'bg-[var(--bg-hover)] text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]'}`}
                                         >
                                             <Globe className="w-4 h-4" />
-                                            English
+                                            {t.header.langEn}
                                         </button>
                                         <button
                                             onClick={() => setLang('es')}
                                             className={`flex-1 px-3 py-2 rounded text-sm transition-colors flex items-center justify-center gap-2 ${lang === 'es' ? 'bg-blue-600 text-white' : 'bg-[var(--bg-hover)] text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]'}`}
                                         >
                                             <Globe className="w-4 h-4" />
-                                            Espanol
+                                            {t.header.langEs}
                                         </button>
                                         <button
                                             onClick={() => setLang('fr')}
                                             className={`flex-1 px-3 py-2 rounded text-sm transition-colors flex items-center justify-center gap-2 ${lang === 'fr' ? 'bg-blue-600 text-white' : 'bg-[var(--bg-hover)] text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]'}`}
                                         >
                                             <Globe className="w-4 h-4" />
-                                            Français
+                                            {t.header.langFr}
                                         </button>
                                         <button
                                             onClick={() => setLang('de')}
                                             className={`flex-1 px-3 py-2 rounded text-sm transition-colors flex items-center justify-center gap-2 ${lang === 'de' ? 'bg-blue-600 text-white' : 'bg-[var(--bg-hover)] text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]'}`}
                                         >
                                             <Globe className="w-4 h-4" />
-                                            Deutsch
+                                            {t.header.langDe}
                                         </button>
                                     </div>
                             </div>

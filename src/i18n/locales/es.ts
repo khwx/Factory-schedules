@@ -56,6 +56,11 @@ export const es: Translations = {
     holidayNamePlaceholder: 'Nombre del festivo (ej. Aniversario de Empresa)',
     removeHoliday: 'Eliminar festivo',
     noCustomHolidays: 'No se han añadido festivos personalizados.',
+    langPt: 'Portugues',
+    langEn: 'Ingles',
+    langEs: 'Espanol',
+    langFr: 'Frances',
+    langDe: 'Aleman',
   },
   dashboard: {
     presetTitle: 'Cargar escenario de ejemplo',

@@ -54,6 +54,11 @@ export const pt = {
     holidayNamePlaceholder: 'Nome do feriado (ex: Aniversario Empresa)',
     removeHoliday: 'Remover feriado',
     noCustomHolidays: 'Nenhum feriado personalizado adicionado.',
+    langPt: 'Portugues',
+    langEn: 'English',
+    langEs: 'Espanol',
+    langFr: 'Francais',
+    langDe: 'Deutsch',
   },
   dashboard: {
     presetTitle: 'Carregar Cenario de Exemplo',
