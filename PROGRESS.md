@@ -2,6 +2,30 @@
 
 Log de execuções autónomas do Bot Orquestrador (modelos free: `opencode/hy3-free`).
 
+## Round 78 — 2026-09-18
+**Objetivo:** Migrar strings hardcoded PT em `qualityOfLife.ts` (insights + descrições de períodos críticos) para i18n (5 línguas).
+
+**Contexto:** O `qualityOfLife.ts` gerava 8 insights e 3 descrições de períodos críticos hardcoded em PT. O `QualityOfLifeDisplay.tsx` renderizava-os diretamente, quebrando a experiência em `es`/`fr`/`de`. A Round 77 identificou esta como próxima tarefa.
+
+**O que foi feito:**
+- `src/utils/qualityOfLife.ts`:
+  - Novo tipo `InsightKey` (`{ key: string; params?: Record<string, string | number> }`).
+  - `QualityOfLifeScore` ganha campo `insightKeys: InsightKey[]` (retrocompatível — `insights: string[]` mantido).
+  - `CriticalPeriod` ganha `descriptionKey: string` e `descriptionParams: Record<string, number>` (retrocompatível — `description` mantido).
+  - 8 insights agora retornam `insightKeys` com chaves `qol.insight*` + parâmetros opcionais (`count` para mini-vacations).
+  - 3 períodos críticos agora retornam `descriptionKey` (`qol.critical*`) + `descriptionParams` (`days`, `nights`, `weeks`).
+- `src/components/QualityOfLifeDisplay.tsx`:
+  - Insights renderizados via `insightKeys` com tradução dinâmica (`t.qol[key]` + `.replace('{param}', value)`).
+  - Descrições de períodos críticos traduzidas via `descriptionKey` + `descriptionParams`.
+  - Fallback para `description` original se a chave não for encontrada.
+- `src/i18n/locales/{pt,en,es,fr,de}.ts`:
+  - 11 chaves novas na secção `qol`: 8 `insight*` (com placeholders `{count}`) + 3 `critical*` (com placeholders `{days}`/`{nights}`/`{weeks}`).
+  - Total: 55 chaves novas (11 × 5 línguas). Paridade mantida.
+
+**Verificação:** `tsc -b` → exit 0; `vitest` → **644 passam**, 0 falham; `eslint` → 0 erros (64 warnings pré-existentes).
+
+**Decisão registada:** Insights QoL e descrições de períodos críticos são agora 100% multilíngues. Retrocompatibilidade mantida (campos `insights` e `description` preservados). Próximos passos sugeridos: migrar insights hardcoded em `advancedMetrics.ts` (`generateAdvancedInsights`) e `teamAnalysis.ts` para i18n.
+
 ## Round 77 — 2026-09-18
 **Objetivo:** Migrar strings hardcoded PT do ComparisonCharts para i18n (5 línguas).
 
