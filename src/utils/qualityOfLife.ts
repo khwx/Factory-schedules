@@ -2,6 +2,11 @@ import { Scenario, AnalysisResult } from '../types';
 import { generateYearCalendar } from './calendar';
 import { getHolidayMonthDays, isHolidayByMonthDay } from './portugueseHolidays';
 
+export interface InsightKey {
+    key: string;
+    params?: Record<string, string | number>;
+}
+
 export interface QualityOfLifeScore {
     overall: number; // 0-100
     breakdown: {
@@ -18,6 +23,7 @@ export interface QualityOfLifeScore {
     };
     grade: 'A+' | 'A' | 'B' | 'C' | 'D' | 'F';
     insights: string[];
+    insightKeys: InsightKey[];
 }
 
 export interface CriticalPeriod {
@@ -26,6 +32,8 @@ export interface CriticalPeriod {
     type: 'low-rest' | 'high-intensity' | 'consecutive-nights' | 'no-weekends';
     severity: 'low' | 'medium' | 'high';
     description: string;
+    descriptionKey: string;
+    descriptionParams: Record<string, number>;
     daysAffected: number;
 }
 
@@ -249,41 +257,53 @@ export function calculateQualityOfLifeScore(
 
     // Generate insights
     const insights: string[] = [];
+    const insightKeys: InsightKey[] = [];
 
     if (weekendsCoverage >= 80) {
         insights.push('Excelente cobertura de fins de semana para vida social e familiar.');
+        insightKeys.push({ key: 'qol.insightExcellentWeekends' });
     } else if (weekendsCoverage < 50) {
         insights.push('Poucos fins de semana livres podem afetar a qualidade de vida.');
+        insightKeys.push({ key: 'qol.insightFewWeekends' });
     }
 
     if (Math.abs(analysis.weeklyHoursDifference ?? 0) <= 1) {
         insights.push('Horas semanais equilibradas com o contrato.');
+        insightKeys.push({ key: 'qol.insightBalancedHours' });
     }
 
     if (totalMiniVacations >= 4) {
         insights.push(`${totalMiniVacations} periodos de descanso prolongado (3+ dias) por ano.`);
+        insightKeys.push({ key: 'qol.insightMiniVacations', params: { count: totalMiniVacations } });
     } else if (totalMiniVacations === 0) {
         insights.push('Sem periodos de descanso prolongado. Considere ajustar o padrao.');
+        insightKeys.push({ key: 'qol.insightNoMiniVacations' });
     }
 
     if (nightRatio > 0.25) {
         insights.push('Alto numero de turnos noturnos pode afetar a saude e ritmo circadiano.');
+        insightKeys.push({ key: 'qol.insightHighNightShifts' });
     }
 
     if (holidaysCoverage >= 70) {
         insights.push('Boa cobertura de feriados nacionais.');
+        insightKeys.push({ key: 'qol.insightGoodHolidays' });
     } else if (holidaysCoverage < 30) {
         insights.push('Baixa cobertura de feriados pode reduzir tempo com familia.');
+        insightKeys.push({ key: 'qol.insightLowHolidays' });
     }
 
     if (recoveryAfterNights >= 80 && regularity >= 80) {
         insights.push('Bom indice de recuperacao e regularidade: descanso apos noites e padrao previsivel.');
+        insightKeys.push({ key: 'qol.insightGoodRecovery' });
     } else {
         if (recoveryAfterNights < 60) {
             insights.push('Poucos dias de folga apos blocos de noite podem prejudicar a recuperacao.');
+            insightKeys.push({ key: 'qol.insightPoorRecovery' });
         }
         if (regularity < 60) {
             insights.push('Padrao irregular (blocos de trabalho com tamanhos variados) dificulta o planeamento.');
+            insightKeys.push({ key: 'qol.insightIrregularPattern' });
         }
     }
 
@@ -303,6 +323,7 @@ export function calculateQualityOfLifeScore(
         },
         grade,
         insights,
+        insightKeys,
     };
 }
 
@@ -331,6 +352,8 @@ export function detectCriticalPeriods(
                     type: 'low-rest',
                     severity: consecutiveWork >= 14 ? 'high' : consecutiveWork >= 12 ? 'medium' : 'low',
                     description: `${consecutiveWork} dias consecutivos de trabalho sem folga`,
+                    descriptionKey: 'qol.criticalConsecutiveWork',
+                    descriptionParams: { days: consecutiveWork },
                     daysAffected: consecutiveWork,
                 });
             }
@@ -357,6 +380,8 @@ export function detectCriticalPeriods(
                     type: 'consecutive-nights',
                     severity: consecutiveNights >= 7 ? 'high' : 'medium',
                     description: `${consecutiveNights} noites consecutivas de trabalho`,
+                    descriptionKey: 'qol.criticalConsecutiveNights',
+                    descriptionParams: { nights: consecutiveNights },
                     daysAffected: consecutiveNights,
                 });
             }
@@ -380,6 +405,8 @@ export function detectCriticalPeriods(
                     type: 'no-weekends',
                     severity: weeksSinceWeekend >= 6 ? 'high' : 'medium',
                     description: `${weeksSinceWeekend} semanas sem fim de semana completo de folga`,
+                    descriptionKey: 'qol.criticalNoWeekends',
+                    descriptionParams: { weeks: weeksSinceWeekend },
                     daysAffected: weeksSinceWeekend * 7,
                 });
             }

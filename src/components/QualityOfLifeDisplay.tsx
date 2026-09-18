@@ -144,17 +144,26 @@ const QualityOfLifeDisplay: React.FC<QualityOfLifeDisplayProps> = ({ scenario, a
                     {/* Insights */}
                     <div className="mt-6 space-y-2">
                         <h4 className="text-sm font-semibold text-gray-300">{t.qol.observations}</h4>
-                        {qolScore.insights.map((insight, idx) => (
-                            <div
-                                key={idx}
-                                className={`p-3 rounded text-sm ${insight.startsWith('✅')
-                                    ? 'bg-green-900/30 text-green-300'
-                                    : 'bg-yellow-900/30 text-yellow-300'
-                                    }`}
-                            >
-                                {insight}
-                            </div>
-                        ))}
+                        {qolScore.insightKeys.map((insight, idx) => {
+                            const shortKey = insight.key.replace('qol.', '') as keyof typeof t.qol;
+                            let text = (t.qol[shortKey] as string) || '';
+                            if (insight.params) {
+                                Object.entries(insight.params).forEach(([k, v]) => {
+                                    text = text.replace(`{${k}}`, String(v));
+                                });
+                            }
+                            return (
+                                <div
+                                    key={idx}
+                                    className={`p-3 rounded text-sm ${text.startsWith('✅')
+                                        ? 'bg-green-900/30 text-green-300'
+                                        : 'bg-yellow-900/30 text-yellow-300'
+                                        }`}
+                                >
+                                    {text}
+                                </div>
+                            );
+                        })}
                     </div>
                 </div>
             </div>
@@ -189,7 +198,18 @@ const QualityOfLifeDisplay: React.FC<QualityOfLifeDisplayProps> = ({ scenario, a
                                             >
                                                 {period.severity === 'high' ? t.qol.severityHigh : period.severity === 'medium' ? t.qol.severityMedium : t.qol.severityLow}
                                             </span>
-                                            <span className="text-sm font-semibold text-white leading-tight">{period.description}</span>
+                                            <span className="text-sm font-semibold text-white leading-tight">
+                                                {(() => {
+                                                    const shortKey = period.descriptionKey.replace('qol.', '') as keyof typeof t.qol;
+                                                    let desc = (t.qol[shortKey] as string) || period.description;
+                                                    if (period.descriptionParams) {
+                                                        Object.entries(period.descriptionParams).forEach(([k, v]) => {
+                                                            desc = desc.replace(`{${k}}`, String(v));
+                                                        });
+                                                    }
+                                                    return desc;
+                                                })()}
+                                            </span>
                                         </div>
                                         <div className="text-xs text-gray-400 mt-1">
                                             {period.startDate.toLocaleDateString(locale, { day: 'numeric', month: 'numeric' })} a{' '}
