@@ -185,7 +185,7 @@ const SettingsPage: React.FC = () => {
                             }`}
                         >
                             <Globe className="w-5 h-5" />
-                            Portugues
+                            {t.header.langPt}
                         </button>
                         <button
                             onClick={() => setLang('en')}
@@ -194,7 +194,7 @@ const SettingsPage: React.FC = () => {
                             }`}
                         >
                             <Globe className="w-5 h-5" />
-                            English
+                            {t.header.langEn}
                         </button>
                         <button
                             onClick={() => setLang('es')}
@@ -203,7 +203,7 @@ const SettingsPage: React.FC = () => {
                             }`}
                         >
                             <Globe className="w-5 h-5" />
-                            Espanol
+                            {t.header.langEs}
                         </button>
                         <button
                             onClick={() => setLang('fr')}
@@ -212,7 +212,7 @@ const SettingsPage: React.FC = () => {
                             }`}
                         >
                             <Globe className="w-5 h-5" />
-                            Français
+                            {t.header.langFr}
                         </button>
                         <button
                             onClick={() => setLang('de')}
@@ -221,7 +221,7 @@ const SettingsPage: React.FC = () => {
                             }`}
                         >
                             <Globe className="w-5 h-5" />
-                            Deutsch
+                            {t.header.langDe}
                         </button>
                     </div>
                 </div>
