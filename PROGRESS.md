@@ -2,6 +2,29 @@
 
 Log de execuções autónomas do Bot Orquestrador (modelos free: `opencode/hy3-free`).
 
+## Round 79 — 2026-09-19
+**Objetivo:** Migrar insights hardcoded PT em `advancedMetrics.ts` (15 insights) e `calculations.ts` (8 insights) para chaves i18n (5 línguas).
+
+**Contexto:** O `generateAdvancedInsights()` em `advancedMetrics.ts` retornava 15 strings hardcoded em PT (feriados, descanso, mini-férias, trabalho consecutivo, turnos noturnos, vida social). O `calculateAnalysis()` em `calculations.ts` adicionava mais 8 strings PT (horas semanais, fins de semana, dias de folga, contrato). Estes insights eram renderizados diretamente em `ComparisonTable`, `Comparison` e `Reports`. A Round 78 identificou esta como próxima tarefa no TODO.md.
+
+**O que foi feito:**
+- `src/utils/advancedMetrics.ts`:
+  - Nova função `generateAdvancedInsightKeys()` retornando `InsightKey[]` (16 chaves com params: `advancedInsights.*`).
+  - Função original `generateAdvancedInsights()` mantida para retrocompatibilidade.
+  - Import de `InsightKey` de `qualityOfLife.ts`.
+- `src/utils/calculations.ts`:
+  - Novo campo `qualitativeKeys: InsightKey[]` no retorno de `calculateAnalysis()`.
+  - 8 chaves novas (`calcInsights.*`) com params para horas contratuais.
+  - Import de `generateAdvancedInsightKeys` e `InsightKey`.
+- `src/types/index.ts`:
+  - `AnalysisResult` ganha campo `qualitativeKeys?` (retrocompatível).
+- `src/i18n/locales/{pt,en,es,fr,de}.ts`:
+  - Nova secção `advancedInsights` (16 chaves com placeholders `{count}`, `{days}`, `{perMonth}`).
+  - Nova secção `calcInsights` (8 chaves com placeholder `{hours}`).
+  - Total: 120 chaves novas (24 × 5 línguas). Paridade mantida.
+
+**Verificação:** `tsc -b` → exit 0; `vitest` → **644 passam**, 0 falham; `eslint` → 0 erros (64 warnings pré-existentes).
+
 ## Round 78 — 2026-09-18
 **Objetivo:** Migrar strings hardcoded PT em `qualityOfLife.ts` (insights + descrições de períodos críticos) para i18n (5 línguas).
 
