@@ -1,6 +1,7 @@
 import { Scenario, AnalysisResult } from '../types';
 import { generateMultiYearAnalysis, generateYearCalendar, analyzeYearCalendar } from './calendar';
-import { calculateAdvancedMetrics, generateAdvancedInsights } from './advancedMetrics';
+import { calculateAdvancedMetrics, generateAdvancedInsights, generateAdvancedInsightKeys } from './advancedMetrics';
+import { InsightKey } from './qualityOfLife';
 
 /**
  * Calculate comprehensive analysis for a shift schedule scenario.
@@ -63,26 +64,35 @@ export const calculateAnalysis = (scenario: Scenario): AnalysisResult => {
     // 5. Advanced Metrics
     const advancedMetrics = calculateAdvancedMetrics(currentYearCalendar);
     const advancedInsights = generateAdvancedInsights(advancedMetrics);
+    const advancedInsightKeys = generateAdvancedInsightKeys(advancedMetrics);
 
     // 6. Qualitative Analysis
     const qualitative: string[] = [
         ...advancedInsights, // Add advanced insights first
     ];
+    const qualitativeKeys: InsightKey[] = [
+        ...advancedInsightKeys,
+    ];
 
     if (avgWeeklyHours > 42) {
         qualitative.push('Media de horas semanais elevada. Considere reduzir a carga horaria.');
+        qualitativeKeys.push({ key: 'calcInsights.weeklyHoursHigh' });
     } else if (avgWeeklyHours < 35) {
         qualitative.push('Media de horas semanais baixa. Pode necessitar de cobertura adicional.');
+        qualitativeKeys.push({ key: 'calcInsights.weeklyHoursLow' });
     }
 
     if (weekendsOff < 20) {
         qualitative.push('Poucos fins de semana de folga. Pode afetar o equilibrio vida-trabalho.');
+        qualitativeKeys.push({ key: 'calcInsights.weekendsFew' });
     } else if (weekendsOff >= 26) {
         qualitative.push('Boa cobertura de fins de semana para descanso e familia.');
+        qualitativeKeys.push({ key: 'calcInsights.weekendsGood' });
     }
 
     if (totalOffDaysPerYear < 150) {
         qualitative.push('Poucos dias de folga totais. Assegure periodos de descanso adequados.');
+        qualitativeKeys.push({ key: 'calcInsights.offDaysFew' });
     }
 
     let weeklyHoursDifference: number | undefined;
@@ -91,10 +101,13 @@ export const calculateAnalysis = (scenario: Scenario): AnalysisResult => {
 
         if (weeklyHoursDifference > 0.5) {
             qualitative.push(`Excede o contrato em ${weeklyHoursDifference.toFixed(1)} horas semanais.`);
+            qualitativeKeys.push({ key: 'calcInsights.contractExceeds', params: { hours: weeklyHoursDifference.toFixed(1) } });
         } else if (weeklyHoursDifference < -0.5) {
             qualitative.push(`Abaixo do contrato em ${Math.abs(weeklyHoursDifference).toFixed(1)} horas semanais.`);
+            qualitativeKeys.push({ key: 'calcInsights.contractBelow', params: { hours: Math.abs(weeklyHoursDifference).toFixed(1) } });
         } else {
             qualitative.push('Cumpre o horario contratual.');
+            qualitativeKeys.push({ key: 'calcInsights.contractMeets' });
         }
     }
 
@@ -106,6 +119,7 @@ export const calculateAnalysis = (scenario: Scenario): AnalysisResult => {
         weekendsOffPerMonthAvg,
         totalOffDaysPerYear,
         qualitative,
+        qualitativeKeys,
         multiYearAnalysis,
         advancedMetrics, // Include advanced metrics
     };

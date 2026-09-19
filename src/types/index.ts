@@ -65,6 +65,7 @@ export interface AnalysisResult {
   weekendsOffPerMonthAvg: number;
   totalOffDaysPerYear: number;
   qualitative: string[];
+  qualitativeKeys?: { key: string; params?: Record<string, string | number> }[];
   multiYearAnalysis: YearlyAnalysis[]; // 5 years
   advancedMetrics?: AdvancedMetrics; // New advanced metrics
 }

@@ -1,5 +1,6 @@
 import { DayInfo, AdvancedMetrics } from '../types';
 import { getAllHolidays, countHolidaysOff, getHolidaysOffList, getHolidaysWorked } from './holidays';
+import { InsightKey } from './qualityOfLife';
 
 /**
  * Calculate advanced metrics from a year calendar
@@ -122,12 +123,72 @@ export const calculateAdvancedMetrics = (calendar: DayInfo[]): AdvancedMetrics =
 };
 
 /**
+ * Generate i18n insight keys from advanced metrics
+ */
+export const generateAdvancedInsightKeys = (metrics: AdvancedMetrics): InsightKey[] => {
+    const keys: InsightKey[] = [];
+
+    if (metrics.holidaysWorked >= 10) {
+        keys.push({ key: 'advancedInsights.holidaysExcellent', params: { count: metrics.holidaysWorked } });
+    } else if (metrics.holidaysWorked >= 6) {
+        keys.push({ key: 'advancedInsights.holidaysGood', params: { count: metrics.holidaysWorked } });
+    } else if (metrics.holidaysWorked < 3) {
+        keys.push({ key: 'advancedInsights.holidaysFew', params: { count: metrics.holidaysWorked } });
+    }
+
+    if (metrics.holidaysOff > 10) {
+        keys.push({ key: 'advancedInsights.holidaysOffMany', params: { count: metrics.holidaysOff } });
+    }
+
+    if (metrics.maxConsecutiveOffDays >= 5) {
+        keys.push({ key: 'advancedInsights.restExcellent', params: { days: metrics.maxConsecutiveOffDays } });
+    } else if (metrics.maxConsecutiveOffDays <= 2) {
+        keys.push({ key: 'advancedInsights.restShort', params: { days: metrics.maxConsecutiveOffDays } });
+    }
+
+    if (metrics.miniVacations >= 4) {
+        keys.push({ key: 'advancedInsights.miniVacationsGood', params: { count: metrics.miniVacations } });
+    } else if (metrics.miniVacations === 0) {
+        keys.push({ key: 'advancedInsights.miniVacationsNone' });
+    }
+
+    if (metrics.isolatedOffDays > 20) {
+        keys.push({ key: 'advancedInsights.isolatedOffDays', params: { count: metrics.isolatedOffDays } });
+    }
+
+    if (metrics.maxConsecutiveWorkDays > 7) {
+        keys.push({ key: 'advancedInsights.workLong', params: { days: metrics.maxConsecutiveWorkDays } });
+    } else if (metrics.maxConsecutiveWorkDays <= 5) {
+        keys.push({ key: 'advancedInsights.workReasonable', params: { days: metrics.maxConsecutiveWorkDays } });
+    }
+
+    if (metrics.nightShiftsPerMonth > 10) {
+        keys.push({ key: 'advancedInsights.nightsHigh', params: { perMonth: metrics.nightShiftsPerMonth.toFixed(1) } });
+    } else if (metrics.nightShiftsPerMonth < 5) {
+        keys.push({ key: 'advancedInsights.nightsModerate', params: { perMonth: metrics.nightShiftsPerMonth.toFixed(1) } });
+    }
+
+    if (metrics.maxConsecutiveNightShifts > 5) {
+        keys.push({ key: 'advancedInsights.nightsLongSeq', params: { count: metrics.maxConsecutiveNightShifts } });
+    }
+
+    if (metrics.fridayNightsOff >= 40) {
+        keys.push({ key: 'advancedInsights.socialGood', params: { count: metrics.fridayNightsOff } });
+    }
+
+    if (metrics.sundayMorningsOff >= 45) {
+        keys.push({ key: 'advancedInsights.familyFriendly', params: { count: metrics.sundayMorningsOff } });
+    }
+
+    return keys;
+};
+
+/**
  * Generate qualitative insights from advanced metrics
  */
 export const generateAdvancedInsights = (metrics: AdvancedMetrics): string[] => {
     const insights: string[] = [];
 
-    // Holidays - Working holidays is good (better pay)
     if (metrics.holidaysWorked >= 10) {
         insights.push(`💰 Potencial de ganhos excelente: ${metrics.holidaysWorked} feriados trabalhados (pagamento majorado).`);
     } else if (metrics.holidaysWorked >= 6) {
@@ -140,33 +201,28 @@ export const generateAdvancedInsights = (metrics: AdvancedMetrics): string[] => 
         insights.push(`ℹ️ Muitos feriados de folga: ${metrics.holidaysOff} feriados de folga (menos rendimento extra).`);
     }
 
-    // Consecutive off days
     if (metrics.maxConsecutiveOffDays >= 5) {
         insights.push(`✅ Excelentes períodos de descanso: até ${metrics.maxConsecutiveOffDays} dias de folga consecutivos.`);
     } else if (metrics.maxConsecutiveOffDays <= 2) {
         insights.push(`⚠️ Períodos de descanso curtos: máximo de ${metrics.maxConsecutiveOffDays} dias de folga consecutivos.`);
     }
 
-    // Mini-vacations
     if (metrics.miniVacations >= 4) {
         insights.push(`✅ ${metrics.miniVacations} mini-férias (3+ dias de folga) por ano.`);
     } else if (metrics.miniVacations === 0) {
         insights.push(`⚠️ Sem oportunidades de mini-férias (3+ dias de folga consecutivos).`);
     }
 
-    // Isolated off days
     if (metrics.isolatedOffDays > 20) {
         insights.push(`⚠️ Muitos dias de folga isolados (${metrics.isolatedOffDays}). Menos eficaz para recuperação.`);
     }
 
-    // Consecutive work days
     if (metrics.maxConsecutiveWorkDays > 7) {
         insights.push(`⚠️ Longos períodos de trabalho: até ${metrics.maxConsecutiveWorkDays} dias consecutivos. Risco de burnout.`);
     } else if (metrics.maxConsecutiveWorkDays <= 5) {
         insights.push(`✅ Períodos de trabalho razoáveis: máximo de ${metrics.maxConsecutiveWorkDays} dias consecutivos.`);
     }
 
-    // Night shifts
     if (metrics.nightShiftsPerMonth > 10) {
         insights.push(`⚠️ Carga elevada de turnos noturnos: ${metrics.nightShiftsPerMonth.toFixed(1)} por mês. Monitorizar impacto na saúde.`);
     } else if (metrics.nightShiftsPerMonth < 5) {
@@ -177,7 +233,6 @@ export const generateAdvancedInsights = (metrics: AdvancedMetrics): string[] => 
         insights.push(`⚠️ Sequências longas de turnos noturnos: até ${metrics.maxConsecutiveNightShifts} noites consecutivas. Impacta o ritmo circadiano.`);
     }
 
-    // Social life
     if (metrics.fridayNightsOff >= 40) {
         insights.push(`✅ Bom potencial de vida social: ${metrics.fridayNightsOff} noites de sexta-feira livres.`);
     }
