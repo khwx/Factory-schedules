@@ -25,6 +25,29 @@ Log de execuções autónomas do Bot Orquestrador (modelos free: `opencode/hy3-f
 
 **Verificação:** `tsc -b` → exit 0; `vitest` → **644 passam**, 0 falham; `eslint` → 0 erros (64 warnings pré-existentes).
 
+## Round 80 — 2026-09-24
+**Objetivo:** Migrar insights hardcoded PT em `teamAnalysis.ts` (análise de equipas + cobertura) para chaves i18n (5 línguas).
+
+**Contexto:** O `analyzeTeamFairness()` e `analyzeCoverage()` em `teamAnalysis.ts` retornavam arrays `insights: string[]` hardcoded em PT (11 strings: equilíbrio, desequilíbrio de fins de semana/dias de folga/feriados, padrão não divisível, cobertura zero/baixa/mínima). O componente `TeamFairness.tsx` renderizava-os diretamente, quebrando a experiência para `es`/`fr`/`de`. A Round 79 identificou esta como próxima tarefa no TODO.md.
+
+**O que foi feito:**
+- `src/utils/teamAnalysis.ts`:
+  - Interfaces `FairnessAnalysis` e `CoverageAnalysis` ganham campo `insightKeys: InsightKey[]` (retrocompatível — `insights: string[]` mantido).
+  - `analyzeTeamFairness()`: 5 chaves novas (`teamAnalysis.fairness.balanced`, `weekendImbalance`, `offDayImbalance`, `holidayImbalance`, `patternNotDivisible`) com params (`bestTeam`, `worstTeam`, `diff`).
+  - `analyzeCoverage()`: 3 chaves novas (`teamAnalysis.coverage.zeroCoverage`, `lowCoverage`, `minGuaranteed`) com params (`count`, `requiredOff`).
+  - Import de `InsightKey` de `qualityOfLife.ts`.
+- `src/components/TeamFairness.tsx`:
+  - Insights renderizados via `insightKeys` com tradução dinâmica (`t.teamAnalysis.fairness[key]` / `t.teamAnalysis.coverage[key]` + substituição de parâmetros).
+  - Cores por tipo de insight mantidas (verde/amarelo/azul/vermelho).
+  - Dependências de `useMemo` atualizadas.
+- `src/components/__tests__/TeamFairness.test.tsx`:
+  - Envolvido em `I18nProvider`; asserções atualizadas para ASCII (paridade com `pt.ts`).
+- `src/i18n/locales/{pt,en,es,fr,de}.ts`:
+  - Nova secção `teamAnalysis` com subsecções `fairness` (5 chaves) e `coverage` (3 chaves) em 5 línguas.
+  - Total: 40 chaves novas (8 × 5 línguas). Paridade mantida.
+
+**Verificação:** `tsc -b` → exit 0; `vitest` → **644 passam**, 0 falham; `eslint` → 0 erros (64 warnings pré-existentes).
+
 ## Round 78 — 2026-09-18
 **Objetivo:** Migrar strings hardcoded PT em `qualityOfLife.ts` (insights + descrições de períodos críticos) para i18n (5 línguas).
 
