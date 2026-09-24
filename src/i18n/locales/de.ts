@@ -818,4 +818,21 @@ holidayCalendar: {
     rangeQ3: '3. Quartal',
     rangeQ4: '4. Quartal',
   },
+  teamAnalysis: {
+    title: 'Team-Analyse',
+    fairness: {
+      title: 'Team-Gerechtigkeit',
+      balanced: '✅ Ausgezeichnete Balance: Alle Teams haben ahnliche Plane.',
+      weekendImbalance: '⚠️ Wochenend-Ungleichgewicht: Schicht {bestTeam} hat {diff} mehr freie Wochenenden als Schicht {worstTeam}.',
+      offDayImbalance: '⚠️ Frei-Tage-Ungleichgewicht: Differenz von {diff} Tagen zwischen Schichten.',
+      holidayImbalance: '💰 Feiertags-Ungleichgewicht: Schicht {bestTeam} arbeitet {diff} mehr Feiertage als Schicht {worstTeam}.',
+      patternNotDivisible: 'ℹ️ Die Muslange ist nicht durch die Teamanzahl teilbar. Kann langfristige Ungleichgewichte verursachen.',
+    },
+    coverage: {
+      title: 'Tagliche Abdeckung',
+      zeroCoverage: '⛔ KRITISCH: Es gibt {count} Tage ohne ein einziges Team im Dienst!',
+      lowCoverage: '⚠️ Abdeckungs-Warnung: Es gibt {count} Tage mit weniger als {requiredOff} freien Teams.',
+      minGuaranteed: '✅ Mindestabdeckung garantiert: {count} Team(s) immer im Dienst.',
+    },
+  },
 };

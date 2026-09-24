@@ -818,4 +818,21 @@ closeCalendar: 'Cerrar calendario',
     rangeQ3: '3er Trimestre',
     rangeQ4: '4to Trimestre',
   },
+  teamAnalysis: {
+    title: 'Análisis de Equipo',
+    fairness: {
+      title: 'Equidad entre Equipos',
+      balanced: '✅ Equilibrio excelente: Todos los equipos tienen horarios similares.',
+      weekendImbalance: '⚠️ Desequilibrio de fines de semana: Turno {bestTeam} tiene {diff} fines de semana libres más que el Turno {worstTeam}.',
+      offDayImbalance: '⚠️ Desequilibrio de días libres: diferencia de {diff} días entre turnos.',
+      holidayImbalance: '💰 Desequilibrio de festivos: Turno {bestTeam} trabaja {diff} festivos más que el Turno {worstTeam}.',
+      patternNotDivisible: 'ℹ️ La longitud del patrón no es divisible por el número de equipos. Puede causar desequilibrios a largo plazo.',
+    },
+    coverage: {
+      title: 'Cobertura Diaria',
+      zeroCoverage: '⛔ CRÍTICO: ¡Existen {count} días sin ningún equipo trabajando!',
+      lowCoverage: '⚠️ Aviso de Cobertura: Existen {count} días con menos de {requiredOff} equipos de libre.',
+      minGuaranteed: '✅ Cobertura mínima garantizada: {count} equipo(s) siempre trabajando.',
+    },
+  },
 };

@@ -2,6 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import TeamFairness from '../TeamFairness';
 import { Scenario } from '../../types';
+import { I18nProvider } from '../../i18n';
 
 const scenario: Scenario = {
     id: 'fair-1',
@@ -13,25 +14,29 @@ const scenario: Scenario = {
     teamPatterns: ['MMTTNNFF', 'NNFFMMTT', 'TTNNFFMM', 'FFMMTTNN'],
 };
 
+const renderWithI18n = (component: React.ReactElement) => {
+    return render(<I18nProvider>{component}</I18nProvider>);
+};
+
 describe('TeamFairness', () => {
     it('should render fairness analysis header', () => {
-        render(<TeamFairness scenario={scenario} />);
+        renderWithI18n(<TeamFairness scenario={scenario} />);
         expect(screen.getByText(/Análise de Equidade da Equipa|Team Fairness/i)).toBeInTheDocument();
     });
 
     it('should show year navigation', () => {
-        render(<TeamFairness scenario={scenario} />);
+        renderWithI18n(<TeamFairness scenario={scenario} />);
         const year = new Date().getFullYear();
         expect(screen.getByText(year.toString())).toBeInTheDocument();
     });
 
     it('should show coverage analysis section', () => {
-        render(<TeamFairness scenario={scenario} />);
-        expect(screen.getByText(/Análise de Cobertura Diária/i)).toBeInTheDocument();
+        renderWithI18n(<TeamFairness scenario={scenario} />);
+        expect(screen.getByText(/Cobertura Diária|Daily Coverage/i)).toBeInTheDocument();
     });
 
     it('should show fairness insights', () => {
-        render(<TeamFairness scenario={scenario} />);
+        renderWithI18n(<TeamFairness scenario={scenario} />);
         expect(screen.getAllByText(/✅|⚠️|💰/).length).toBeGreaterThanOrEqual(1);
     });
 });

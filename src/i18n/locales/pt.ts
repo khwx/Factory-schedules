@@ -816,6 +816,23 @@ export const pt = {
     rangeQ3: '3º Trimestre',
     rangeQ4: '4º Trimestre',
   },
+  teamAnalysis: {
+    title: 'Análise de Equipa',
+    fairness: {
+      title: 'Equidade entre Equipas',
+      balanced: '✅ Equilíbrio excelente: Todas as equipas têm horários semelhantes.',
+      weekendImbalance: '⚠️ Desequilíbrio de fins de semana: Turno {bestTeam} tem mais {diff} fins de semana de folga que o Turno {worstTeam}.',
+      offDayImbalance: '⚠️ Desequilíbrio de dias de folga: diferença de {diff} dias entre turnos.',
+      holidayImbalance: '💰 Desequilíbrio de feriados: Turno {bestTeam} trabalha mais {diff} feriados que o Turno {worstTeam}.',
+      patternNotDivisible: 'ℹ️ O tamanho do padrão não é divisível pelo número de equipas. Pode causar desequilíbrios a longo prazo.',
+    },
+    coverage: {
+      title: 'Cobertura Diária',
+      zeroCoverage: '⛔ CRÍTICO: Existem {count} dias sem qualquer equipa a trabalhar!',
+      lowCoverage: '⚠️ Aviso de Cobertura: Existem {count} dias com menos de {requiredOff} equipas de folga.',
+      minGuaranteed: '✅ Cobertura mínima garantida: {count} equipa(s) sempre a trabalhar.',
+    },
+  },
 };
 
 export type Translations = typeof pt;

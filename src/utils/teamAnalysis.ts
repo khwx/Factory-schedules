@@ -1,6 +1,7 @@
 import { Scenario, YearlyAnalysis } from '../types';
 import { generateYearCalendar, analyzeYearCalendar } from './calendar';
 import { getAllHolidays, countHolidaysOff, getHolidaysWorked } from './holidays';
+import { InsightKey } from './qualityOfLife';
 
 export interface TeamAnalysis {
     teamNumber: number;
@@ -14,6 +15,7 @@ export interface FairnessAnalysis {
     maxDifference: number;
     teamAnalyses: TeamAnalysis[];
     insights: string[];
+    insightKeys: InsightKey[];
 }
 
 export interface CoverageAnalysis {
@@ -22,6 +24,7 @@ export interface CoverageAnalysis {
     daysWithZeroCoverage: number;
     daysWithLowCoverage: number;
     insights: string[];
+    insightKeys: InsightKey[];
 }
 
 /**
@@ -67,32 +70,51 @@ export const analyzeTeamFairness = (scenario: Scenario, year: number): FairnessA
     const maxDifference = Math.max(weekendDiff, offDayDiff, holidayDiff);
     const isBalanced = weekendDiff <= 1 && offDayDiff <= 1 && holidayDiff <= 1;
 
-    // Generate insights
+    // Generate insights with i18n keys
     const insights: string[] = [];
+    const insightKeys: InsightKey[] = [];
 
     if (isBalanced) {
         insights.push('✅ Equilíbrio excelente: Todas as equipas têm horários semelhantes.');
+        insightKeys.push({ key: 'teamAnalysis.fairness.balanced' });
     } else {
         if (weekendDiff > 1) {
             const bestTeam = teamAnalyses.find(t => t.yearlyAnalysis.totalWeekends === maxWeekends);
             const worstTeam = teamAnalyses.find(t => t.yearlyAnalysis.totalWeekends === minWeekends);
-            insights.push(`⚠️ Desequilíbrio de fins de semana: Turno ${String.fromCharCode(64 + (bestTeam?.teamNumber || 0))} tem mais ${weekendDiff} fins de semana de folga que o Turno ${String.fromCharCode(64 + (worstTeam?.teamNumber || 0))}.`);
+            const bestTeamLetter = String.fromCharCode(64 + (bestTeam?.teamNumber || 0));
+            const worstTeamLetter = String.fromCharCode(64 + (worstTeam?.teamNumber || 0));
+            insights.push(`⚠️ Desequilíbrio de fins de semana: Turno ${bestTeamLetter} tem mais ${weekendDiff} fins de semana de folga que o Turno ${worstTeamLetter}.`);
+            insightKeys.push({
+                key: 'teamAnalysis.fairness.weekendImbalance',
+                params: { bestTeam: bestTeamLetter, worstTeam: worstTeamLetter, diff: weekendDiff }
+            });
         }
 
         if (offDayDiff > 1) {
             insights.push(`⚠️ Desequilíbrio de dias de folga: diferença de ${offDayDiff} dias entre turnos.`);
+            insightKeys.push({
+                key: 'teamAnalysis.fairness.offDayImbalance',
+                params: { diff: offDayDiff }
+            });
         }
 
         if (holidayDiff > 1) {
             const bestTeam = teamAnalyses.find(t => t.holidaysWorked === maxHolidays);
             const worstTeam = teamAnalyses.find(t => t.holidaysWorked === minHolidays);
-            insights.push(`💰 Desequilíbrio de feriados: Turno ${String.fromCharCode(64 + (bestTeam?.teamNumber || 0))} trabalha mais ${holidayDiff} feriados que o Turno ${String.fromCharCode(64 + (worstTeam?.teamNumber || 0))}.`);
+            const bestTeamLetter = String.fromCharCode(64 + (bestTeam?.teamNumber || 0));
+            const worstTeamLetter = String.fromCharCode(64 + (worstTeam?.teamNumber || 0));
+            insights.push(`💰 Desequilíbrio de feriados: Turno ${bestTeamLetter} trabalha mais ${holidayDiff} feriados que o Turno ${worstTeamLetter}.`);
+            insightKeys.push({
+                key: 'teamAnalysis.fairness.holidayImbalance',
+                params: { bestTeam: bestTeamLetter, worstTeam: worstTeamLetter, diff: holidayDiff }
+            });
         }
     }
 
     // Check for pattern length vs team count
     if (pattern.length % teams !== 0) {
         insights.push('ℹ️ O tamanho do padrão não é divisível pelo número de equipas. Pode causar desequilíbrios a longo prazo.');
+        insightKeys.push({ key: 'teamAnalysis.fairness.patternNotDivisible' });
     }
 
     return {
@@ -100,6 +122,7 @@ export const analyzeTeamFairness = (scenario: Scenario, year: number): FairnessA
         maxDifference,
         teamAnalyses,
         insights,
+        insightKeys,
     };
 };
 
@@ -140,17 +163,33 @@ export const analyzeCoverage = (scenario: Scenario, year: number): CoverageAnaly
         if ((teams - workingCount) < requiredOff) daysWithLowCoverage++;
     }
 
+    // Generate insights with i18n keys
     const insights: string[] = [];
+    const insightKeys: InsightKey[] = [];
+
     if (daysWithZeroCoverage > 0) {
         insights.push(`⛔ CRÍTICO: Existem ${daysWithZeroCoverage} dias sem qualquer equipa a trabalhar!`);
+        insightKeys.push({
+            key: 'teamAnalysis.coverage.zeroCoverage',
+            params: { count: daysWithZeroCoverage }
+        });
     }
 
     if (daysWithLowCoverage > 0) {
-        insights.push(`⚠️ Aviso de Cobertura: Existem ${daysWithLowCoverage} dias com menos de ${teams >= 4 ? 2 : 1} equipas de folga.`);
+        const requiredOff = teams >= 4 ? 2 : 1;
+        insights.push(`⚠️ Aviso de Cobertura: Existem ${daysWithLowCoverage} dias com menos de ${requiredOff} equipas de folga.`);
+        insightKeys.push({
+            key: 'teamAnalysis.coverage.lowCoverage',
+            params: { count: daysWithLowCoverage, requiredOff }
+        });
     }
 
     if (minCoverage > 0) {
         insights.push(`✅ Cobertura mínima garantida: ${minCoverage} equipa(s) sempre a trabalhar.`);
+        insightKeys.push({
+            key: 'teamAnalysis.coverage.minGuaranteed',
+            params: { count: minCoverage }
+        });
     }
 
     return {
@@ -158,6 +197,7 @@ export const analyzeCoverage = (scenario: Scenario, year: number): CoverageAnaly
         maxCoverage,
         daysWithZeroCoverage,
         daysWithLowCoverage,
-        insights
+        insights,
+        insightKeys,
     };
 };

@@ -818,4 +818,21 @@ holidayCalendar: {
     rangeQ3: '3e Trimestre',
     rangeQ4: '4e Trimestre',
   },
+  teamAnalysis: {
+    title: 'Analyse d\'Equipe',
+    fairness: {
+      title: 'Equite entre Equipes',
+      balanced: '✅ Excellent equilibre : Toutes les equipes ont des horaires similaires.',
+      weekendImbalance: '⚠️ Deséquilibre des week-ends : L\'équipe {bestTeam} a {diff} week-ends de repos de plus que l\'équipe {worstTeam}.',
+      offDayImbalance: '⚠️ Deséquilibre des jours de repos : différence de {diff} jours entre les équipes.',
+      holidayImbalance: '💰 Déséquilibre des jours fériés : L\'équipe {bestTeam} travaille {diff} jours fériés de plus que l\'équipe {worstTeam}.',
+      patternNotDivisible: 'ℹ️ La longueur du motif n\'est pas divisible par le nombre d\'équipes. Peut causer des déséquilibres à long terme.',
+    },
+    coverage: {
+      title: 'Couverture Quotidienne',
+      zeroCoverage: '⛔ CRITIQUE : Il y a {count} jours sans aucune equipe qui travaille !',
+      lowCoverage: '⚠️ Avertissement de Couverture : Il y a {count} jours avec moins de {requiredOff} equipes en repos.',
+      minGuaranteed: '✅ Couverture minimale garantie : {count} equipe(s) toujours au travail.',
+    },
+  },
 };

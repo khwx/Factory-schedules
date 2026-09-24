@@ -818,4 +818,21 @@ export const en: Translations = {
     rangeQ3: 'Q3',
     rangeQ4: 'Q4',
   },
+  teamAnalysis: {
+    title: 'Team Analysis',
+    fairness: {
+      title: 'Team Fairness',
+      balanced: '✅ Excellent balance: All teams have similar schedules.',
+      weekendImbalance: '⚠️ Weekend imbalance: Shift {bestTeam} has {diff} more weekends off than Shift {worstTeam}.',
+      offDayImbalance: '⚠️ Off-day imbalance: difference of {diff} days between shifts.',
+      holidayImbalance: '💰 Holiday imbalance: Shift {bestTeam} works {diff} more holidays than Shift {worstTeam}.',
+      patternNotDivisible: 'ℹ️ Pattern length is not divisible by team count. May cause long-term imbalances.',
+    },
+    coverage: {
+      title: 'Daily Coverage',
+      zeroCoverage: '⛔ CRITICAL: There are {count} days with no team working!',
+      lowCoverage: '⚠️ Coverage Warning: There are {count} days with fewer than {requiredOff} teams off.',
+      minGuaranteed: '✅ Minimum coverage guaranteed: {count} team(s) always working.',
+    },
+  },
 };
