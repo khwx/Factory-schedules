@@ -283,7 +283,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                                     <div className="flex gap-2 flex-wrap">
                                         <button
                                             onClick={() => setLang('pt')}
-                                            className={`flex-1 px-3 py-2 rounded text-sm transition-colors flex items-center justify-center gap-2 ${lang === 'pt' ? 'bg-blue-600 text-white' : 'bg-[var(--bg-hover)] text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]'}`}
+                                            className={`flex-1 px-3 py-2 rounded text-sm transition-colors flex items-center justify-center gap-2 ${t.header.langPtClass}`}
                                         >
                                             <Globe className="w-4 h-4" />
                                             {t.header.langPt}

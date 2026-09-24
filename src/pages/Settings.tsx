@@ -181,7 +181,7 @@ const SettingsPage: React.FC = () => {
                         <button
                             onClick={() => setLang('pt')}
                             className={`flex-1 px-4 py-3 rounded-lg transition-colors flex items-center justify-center gap-2 ${
-                                lang === 'pt' ? 'bg-blue-600 text-white' : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                                t.settings.langPtClass
                             }`}
                         >
                             <Globe className="w-5 h-5" />
