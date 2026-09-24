@@ -304,7 +304,7 @@ export default function WorkforcePlanning() {
                                     <span className="font-medium">{t.calendar.months[r.month]}</span>
                                     <span className="text-gray-500">{r.minStaff}-{r.maxStaff} {t.workforcePlanning.people}</span>
                                     <span className="text-gray-400">-</span>
-                                     <span className="text-gray-600">{lang === 'en' ? r.descriptionEn : r.description}</span>
+                                    <span className="text-gray-600">{lang === 'pt' ? r.description : r.descriptionEn}</span>
                                     <button onClick={() => handleRemoveRule(r.id)} className="text-red-500 hover:text-red-700 ml-1">
                                         <Minus className="h-3 w-3" />
                                     </button>
