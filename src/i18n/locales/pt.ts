@@ -60,6 +60,10 @@ export const pt = {
     langFr: 'Francais',
     langDe: 'Deutsch',
     langPtClass: 'bg-blue-600 text-white',
+    langEnClass: 'bg-[var(--bg-hover)] text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]',
+    langEsClass: 'bg-[var(--bg-hover)] text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]',
+    langFrClass: 'bg-[var(--bg-hover)] text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]',
+    langDeClass: 'bg-[var(--bg-hover)] text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]',
   },
   dashboard: {
     presetTitle: 'Carregar Cenario de Exemplo',
@@ -270,6 +274,10 @@ export const pt = {
     dataCleared: 'Dados apagados! A pagina vai recarregar.',
     license: 'Licenca: MIT',
     langPtClass: 'bg-blue-600 text-white',
+    langEnClass: 'bg-[var(--bg-hover)] text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]',
+    langEsClass: 'bg-[var(--bg-hover)] text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]',
+    langFrClass: 'bg-[var(--bg-hover)] text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]',
+    langDeClass: 'bg-[var(--bg-hover)] text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]',
   },
   icsImporter: {
     title: 'Importar Horario (.ics)',

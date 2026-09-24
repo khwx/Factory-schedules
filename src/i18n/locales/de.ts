@@ -62,6 +62,10 @@ export const de: Translations = {
     langFr: 'Französisch',
     langDe: 'Deutsch',
     langPtClass: 'bg-[var(--bg-hover)] text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]',
+    langEnClass: 'bg-[var(--bg-hover)] text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]',
+    langEsClass: 'bg-[var(--bg-hover)] text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]',
+    langFrClass: 'bg-[var(--bg-hover)] text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]',
+    langDeClass: 'bg-blue-600 text-white',
   },
   dashboard: {
     presetTitle: 'Beispielszenario laden',
@@ -272,6 +276,10 @@ holidayCalendar: {
     dataCleared: 'Daten geloescht! Die Seite wird neu geladen.',
     license: 'Lizenz: MIT',
     langPtClass: 'bg-gray-700 text-gray-300 hover:bg-gray-600',
+    langEnClass: 'bg-gray-700 text-gray-300 hover:bg-gray-600',
+    langEsClass: 'bg-gray-700 text-gray-300 hover:bg-gray-600',
+    langFrClass: 'bg-gray-700 text-gray-300 hover:bg-gray-600',
+    langDeClass: 'bg-blue-600 text-white',
   },
   icsImporter: {
     title: 'Zeitplan importieren (.ics)',

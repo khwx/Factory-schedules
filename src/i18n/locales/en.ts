@@ -62,6 +62,10 @@ export const en: Translations = {
     langFr: 'French',
     langDe: 'German',
     langPtClass: 'bg-[var(--bg-hover)] text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]',
+    langEnClass: 'bg-blue-600 text-white',
+    langEsClass: 'bg-[var(--bg-hover)] text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]',
+    langFrClass: 'bg-[var(--bg-hover)] text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]',
+    langDeClass: 'bg-[var(--bg-hover)] text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]',
   },
   dashboard: {
     presetTitle: 'Load Example Scenario',
@@ -272,6 +276,10 @@ export const en: Translations = {
     dataCleared: 'Data cleared! Page will reload.',
     license: 'License: MIT',
     langPtClass: 'bg-gray-700 text-gray-300 hover:bg-gray-600',
+    langEnClass: 'bg-blue-600 text-white',
+    langEsClass: 'bg-gray-700 text-gray-300 hover:bg-gray-600',
+    langFrClass: 'bg-gray-700 text-gray-300 hover:bg-gray-600',
+    langDeClass: 'bg-gray-700 text-gray-300 hover:bg-gray-600',
   },
   icsImporter: {
     title: 'Import Schedule (.ics)',

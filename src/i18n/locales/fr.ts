@@ -62,6 +62,10 @@ export const fr: Translations = {
     langFr: 'Francais',
     langDe: 'Allemand',
     langPtClass: 'bg-[var(--bg-hover)] text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]',
+    langEnClass: 'bg-[var(--bg-hover)] text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]',
+    langEsClass: 'bg-[var(--bg-hover)] text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]',
+    langFrClass: 'bg-blue-600 text-white',
+    langDeClass: 'bg-[var(--bg-hover)] text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]',
   },
   dashboard: {
     presetTitle: 'Charger un scénario prédéfini',
@@ -272,6 +276,10 @@ holidayCalendar: {
     dataCleared: 'Donnees effacees ! La page va recharger.',
     license: 'Licence : MIT',
     langPtClass: 'bg-gray-700 text-gray-300 hover:bg-gray-600',
+    langEnClass: 'bg-gray-700 text-gray-300 hover:bg-gray-600',
+    langEsClass: 'bg-gray-700 text-gray-300 hover:bg-gray-600',
+    langFrClass: 'bg-blue-600 text-white',
+    langDeClass: 'bg-gray-700 text-gray-300 hover:bg-gray-600',
   },
   icsImporter: {
     title: 'Importer un horaire (.ics)',

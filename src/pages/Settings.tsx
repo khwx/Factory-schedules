@@ -9,7 +9,7 @@ import { getAutoBackup, formatBackupAge } from '../utils/backup';
 const SettingsPage: React.FC = () => {
     const { theme, toggleTheme } = useTheme();
     const { showToast } = useToast();
-    const { lang, setLang, t } = useI18n();
+    const { setLang, t } = useI18n();
 
     const [customHolidays, setCustomHolidays] = useState<Array<{ id: string; name: string; month: number; day: number }>>(() => {
         try { return getCustomHolidays(); }
@@ -190,7 +190,7 @@ const SettingsPage: React.FC = () => {
                         <button
                             onClick={() => setLang('en')}
                             className={`flex-1 px-4 py-3 rounded-lg transition-colors flex items-center justify-center gap-2 ${
-                                lang === 'en' ? 'bg-blue-600 text-white' : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                                t.settings.langEnClass
                             }`}
                         >
                             <Globe className="w-5 h-5" />
@@ -199,7 +199,7 @@ const SettingsPage: React.FC = () => {
                         <button
                             onClick={() => setLang('es')}
                             className={`flex-1 px-4 py-3 rounded-lg transition-colors flex items-center justify-center gap-2 ${
-                                lang === 'es' ? 'bg-blue-600 text-white' : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                                t.settings.langEsClass
                             }`}
                         >
                             <Globe className="w-5 h-5" />
@@ -208,7 +208,7 @@ const SettingsPage: React.FC = () => {
                         <button
                             onClick={() => setLang('fr')}
                             className={`flex-1 px-4 py-3 rounded-lg transition-colors flex items-center justify-center gap-2 ${
-                                lang === 'fr' ? 'bg-blue-600 text-white' : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                                t.settings.langFrClass
                             }`}
                         >
                             <Globe className="w-5 h-5" />
@@ -217,7 +217,7 @@ const SettingsPage: React.FC = () => {
                         <button
                             onClick={() => setLang('de')}
                             className={`flex-1 px-4 py-3 rounded-lg transition-colors flex items-center justify-center gap-2 ${
-                                lang === 'de' ? 'bg-blue-600 text-white' : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                                t.settings.langDeClass
                             }`}
                         >
                             <Globe className="w-5 h-5" />

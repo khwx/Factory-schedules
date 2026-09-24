@@ -16,7 +16,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     const [isOnline, setIsOnline] = useState(navigator.onLine);
     const { theme, toggleTheme } = useTheme();
     const { showToast } = useToast();
-    const { t, lang, setLang } = useI18n();
+    const { t, setLang } = useI18n();
     const tutorial = useTutorial();
     const [customHolidays, setCustomHolidays] = useState<Array<{id: string, name: string, month: number, day: number}>>(() => {
         try {
@@ -290,28 +290,28 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                                         </button>
                                         <button
                                             onClick={() => setLang('en')}
-                                            className={`flex-1 px-3 py-2 rounded text-sm transition-colors flex items-center justify-center gap-2 ${lang === 'en' ? 'bg-blue-600 text-white' : 'bg-[var(--bg-hover)] text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]'}`}
+                                            className={`flex-1 px-3 py-2 rounded text-sm transition-colors flex items-center justify-center gap-2 ${t.header.langEnClass}`}
                                         >
                                             <Globe className="w-4 h-4" />
                                             {t.header.langEn}
                                         </button>
                                         <button
                                             onClick={() => setLang('es')}
-                                            className={`flex-1 px-3 py-2 rounded text-sm transition-colors flex items-center justify-center gap-2 ${lang === 'es' ? 'bg-blue-600 text-white' : 'bg-[var(--bg-hover)] text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]'}`}
+                                            className={`flex-1 px-3 py-2 rounded text-sm transition-colors flex items-center justify-center gap-2 ${t.header.langEsClass}`}
                                         >
                                             <Globe className="w-4 h-4" />
                                             {t.header.langEs}
                                         </button>
                                         <button
                                             onClick={() => setLang('fr')}
-                                            className={`flex-1 px-3 py-2 rounded text-sm transition-colors flex items-center justify-center gap-2 ${lang === 'fr' ? 'bg-blue-600 text-white' : 'bg-[var(--bg-hover)] text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]'}`}
+                                            className={`flex-1 px-3 py-2 rounded text-sm transition-colors flex items-center justify-center gap-2 ${t.header.langFrClass}`}
                                         >
                                             <Globe className="w-4 h-4" />
                                             {t.header.langFr}
                                         </button>
                                         <button
                                             onClick={() => setLang('de')}
-                                            className={`flex-1 px-3 py-2 rounded text-sm transition-colors flex items-center justify-center gap-2 ${lang === 'de' ? 'bg-blue-600 text-white' : 'bg-[var(--bg-hover)] text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]'}`}
+                                            className={`flex-1 px-3 py-2 rounded text-sm transition-colors flex items-center justify-center gap-2 ${t.header.langDeClass}`}
                                         >
                                             <Globe className="w-4 h-4" />
                                             {t.header.langDe}
