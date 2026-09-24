@@ -213,6 +213,26 @@ const Comparison: React.FC = () => {
         { key: 'quality', label: t.comparison.categoryQuality },
     ] as const;
 
+    const formatQualitativeInsight = (
+        insightKey: { key: string; params?: Record<string, string | number> },
+        fallback: string
+    ): string => {
+        let text = '';
+        if (insightKey.key.startsWith('advancedInsights.')) {
+            const shortKey = insightKey.key.replace('advancedInsights.', '') as keyof typeof t.advancedInsights;
+            text = (t.advancedInsights[shortKey] as string) || '';
+        } else if (insightKey.key.startsWith('calcInsights.')) {
+            const shortKey = insightKey.key.replace('calcInsights.', '') as keyof typeof t.calcInsights;
+            text = (t.calcInsights[shortKey] as string) || '';
+        }
+        if (text && insightKey.params) {
+            Object.entries(insightKey.params).forEach(([k, v]) => {
+                text = text.replace(`{${k}}`, String(v));
+            });
+        }
+        return text || fallback;
+    };
+
     return (
         <div className="max-w-7xl mx-auto px-4">
             <div className="mb-8">
@@ -345,9 +365,15 @@ const Comparison: React.FC = () => {
                                     {selectedAnalyses.map((analysis, i) => (
                                         <td key={i} className="p-3 border-b border-gray-700 border-l border-gray-700 align-top">
                                             <ul className="list-disc list-inside space-y-1 text-xs text-gray-400">
-                                                {analysis?.qualitative.map((q, idx) => (
-                                                    <li key={idx}>{q}</li>
-                                                ))}
+                                                {analysis?.qualitativeKeys && analysis.qualitativeKeys.length > 0
+                                                    ? analysis.qualitativeKeys.map((k, idx) => (
+                                                        <li key={idx}>
+                                                            {formatQualitativeInsight(k, analysis.qualitative[idx] || k.key)}
+                                                        </li>
+                                                    ))
+                                                    : analysis?.qualitative.map((q, idx) => (
+                                                        <li key={idx}>{q}</li>
+                                                    ))}
                                             </ul>
                                         </td>
                                     ))}

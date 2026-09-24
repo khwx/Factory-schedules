@@ -66,4 +66,22 @@ describe('ComparisonTable', () => {
     
     expect(screen.getByText(/2 equipas/)).toBeInTheDocument();
   });
+
+  it('renders qualitative insights section and observations', () => {
+    renderWithI18n(<ComparisonTable scenarios={mockScenarios} />);
+    expect(screen.getByText('Analise Qualitativa')).toBeInTheDocument();
+    expect(screen.getByText('Observacoes')).toBeInTheDocument();
+  });
+
+  it('renders translated qualitative insights in english when lang is en', () => {
+    localStorage.setItem('shiftsim_lang', 'en');
+    try {
+      renderWithI18n(<ComparisonTable scenarios={mockScenarios} />);
+      expect(screen.getByText('Qualitative Analysis')).toBeInTheDocument();
+      expect(screen.getByText('Observations')).toBeInTheDocument();
+      expect(screen.getByText(/Low average weekly hours/i)).toBeInTheDocument();
+    } finally {
+      localStorage.removeItem('shiftsim_lang');
+    }
+  });
 });
