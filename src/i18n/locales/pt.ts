@@ -59,6 +59,7 @@ export const pt = {
     langEs: 'Espanol',
     langFr: 'Francais',
     langDe: 'Deutsch',
+    langPtClass: 'bg-blue-600 text-white',
   },
   dashboard: {
     presetTitle: 'Carregar Cenario de Exemplo',
@@ -268,6 +269,7 @@ export const pt = {
     confirmClearData: 'Tem certeza? Isto ira apagar TODOS os dados.',
     dataCleared: 'Dados apagados! A pagina vai recarregar.',
     license: 'Licenca: MIT',
+    langPtClass: 'bg-blue-600 text-white',
   },
   icsImporter: {
     title: 'Importar Horario (.ics)',

@@ -61,6 +61,7 @@ export const fr: Translations = {
     langEs: 'Espagnol',
     langFr: 'Francais',
     langDe: 'Allemand',
+    langPtClass: 'bg-[var(--bg-hover)] text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]',
   },
   dashboard: {
     presetTitle: 'Charger un scénario prédéfini',
@@ -270,6 +271,7 @@ holidayCalendar: {
     confirmClearData: 'Etes-vous sur ? Cela supprimera TOUTES les donnees.',
     dataCleared: 'Donnees effacees ! La page va recharger.',
     license: 'Licence : MIT',
+    langPtClass: 'bg-gray-700 text-gray-300 hover:bg-gray-600',
   },
   icsImporter: {
     title: 'Importer un horaire (.ics)',

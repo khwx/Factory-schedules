@@ -61,6 +61,7 @@ export const de: Translations = {
     langEs: 'Spanisch',
     langFr: 'Französisch',
     langDe: 'Deutsch',
+    langPtClass: 'bg-[var(--bg-hover)] text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]',
   },
   dashboard: {
     presetTitle: 'Beispielszenario laden',
@@ -270,6 +271,7 @@ holidayCalendar: {
     confirmClearData: 'Sind Sie sicher? Dies loescht ALLE Daten.',
     dataCleared: 'Daten geloescht! Die Seite wird neu geladen.',
     license: 'Lizenz: MIT',
+    langPtClass: 'bg-gray-700 text-gray-300 hover:bg-gray-600',
   },
   icsImporter: {
     title: 'Zeitplan importieren (.ics)',
