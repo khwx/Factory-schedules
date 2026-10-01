@@ -72,7 +72,7 @@ export default function SystemHealth({ scenarios: propScenarios }: Props) {
         } finally {
             setLoading(false);
         }
-    }, []);
+    }, [propScenarios]);
 
     if (loading) {
         return (

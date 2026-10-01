@@ -127,7 +127,7 @@ export default function WorkforcePlanning() {
         }
 
         return results;
-    }, [scenario, staffPerTeam, teamCount, staffingRules, customRules, holidays, year]);
+    }, [scenario, staffPerTeam, teamCount, staffingRules, customRules, holidays, year, t.calendar.months]);
 
     const totalDeficit = monthlyAnalysis.reduce((sum, m) => sum + m.deficit, 0);
     const totalSurplus = monthlyAnalysis.reduce((sum, m) => sum + m.surplus, 0);
