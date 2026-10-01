@@ -12,8 +12,7 @@ interface StaffingRule {
     minStaff: number;
     maxStaff: number;
     descriptionKey?: string; // For default rules: i18n key
-    description?: string; // For custom rules: user-provided text
-    descriptionEn?: string; // For custom rules: English fallback
+    description?: string; // For custom rules: user-provided text (any language)
 }
 
 const DEFAULT_STAFFING_RULES: StaffingRule[] = [
@@ -25,7 +24,7 @@ const DEFAULT_STAFFING_RULES: StaffingRule[] = [
 ];
 
 export default function WorkforcePlanning() {
-    const { t, lang } = useI18n();
+    const { t } = useI18n();
     const [selectedId, setSelectedId] = useState('');
     const [staffPerTeam, setStaffPerTeam] = useState(5);
     const [teamCount, setTeamCount] = useState(4);
@@ -142,7 +141,6 @@ export default function WorkforcePlanning() {
                 minStaff: newRuleMin,
                 maxStaff: newRuleMax,
                 description: newRuleDesc,
-                descriptionEn: newRuleDesc,
             };
             setCustomRules([...customRules, rule]);
             setShowAddRule(false);
@@ -306,7 +304,7 @@ export default function WorkforcePlanning() {
                                     <span className="text-gray-500">{r.minStaff}-{r.maxStaff} {t.workforcePlanning.people}</span>
                                     <span className="text-gray-400">-</span>
                                     <span className="text-gray-600">
-                                        {r.descriptionKey ? t.workforcePlanning[r.descriptionKey as keyof typeof t.workforcePlanning] : (lang === 'pt' ? (r.description || '') : (r.descriptionEn || r.description || ''))}
+                                        {r.descriptionKey ? t.workforcePlanning[r.descriptionKey as keyof typeof t.workforcePlanning] : (r.description || '')}
                                     </span>
                                     <button onClick={() => handleRemoveRule(r.id)} className="text-red-500 hover:text-red-700 ml-1">
                                         <Minus className="h-3 w-3" />
