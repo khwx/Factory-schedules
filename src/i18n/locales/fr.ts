@@ -460,6 +460,11 @@ holidayCalendar: {
     surplusStaff: 'Excedent de personnel',
     people: 'personnes',
     allMet: 'Tous les besoins sont couverts !',
+    defaultRuleDec: 'Noel/Nouvel An - pic de production',
+    defaultRuleJan: 'Janvier - retour post-conges',
+    defaultRuleJun: 'Juin - pic d\'ete',
+    defaultRuleAug: 'Aout - pic d\'ete/conges',
+    defaultRuleNov: 'Novembre - preparation Black Friday',
   },
   comparison: {
     title: 'Comparaison de Scenarios',

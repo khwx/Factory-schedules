@@ -11,16 +11,17 @@ interface StaffingRule {
     month: number; // 0-11
     minStaff: number;
     maxStaff: number;
-    description: string;
-    descriptionEn: string;
+    descriptionKey?: string; // For default rules: i18n key
+    description?: string; // For custom rules: user-provided text
+    descriptionEn?: string; // For custom rules: English fallback
 }
 
 const DEFAULT_STAFFING_RULES: StaffingRule[] = [
-    { id: '1', month: 11, minStaff: 3, maxStaff: 5, description: 'Natal/Ano Novo - pico de producao', descriptionEn: 'Christmas/New Year - production peak' },
-    { id: '2', month: 0, minStaff: 2, maxStaff: 4, description: 'Janeiro - retorno das ferias', descriptionEn: 'January - post-holiday return' },
-    { id: '3', month: 5, minStaff: 3, maxStaff: 5, description: 'Junho - pico de verao', descriptionEn: 'June - summer peak' },
-    { id: '4', month: 7, minStaff: 3, maxStaff: 5, description: 'Agosto - pico de verao/ferias', descriptionEn: 'August - summer/holiday peak' },
-    { id: '5', month: 10, minStaff: 2, maxStaff: 4, description: 'Novembro - preparacao Black Friday', descriptionEn: 'November - Black Friday prep' },
+    { id: '1', month: 11, minStaff: 3, maxStaff: 5, descriptionKey: 'defaultRuleDec' },
+    { id: '2', month: 0, minStaff: 2, maxStaff: 4, descriptionKey: 'defaultRuleJan' },
+    { id: '3', month: 5, minStaff: 3, maxStaff: 5, descriptionKey: 'defaultRuleJun' },
+    { id: '4', month: 7, minStaff: 3, maxStaff: 5, descriptionKey: 'defaultRuleAug' },
+    { id: '5', month: 10, minStaff: 2, maxStaff: 4, descriptionKey: 'defaultRuleNov' },
 ];
 
 export default function WorkforcePlanning() {
@@ -304,7 +305,9 @@ export default function WorkforcePlanning() {
                                     <span className="font-medium">{t.calendar.months[r.month]}</span>
                                     <span className="text-gray-500">{r.minStaff}-{r.maxStaff} {t.workforcePlanning.people}</span>
                                     <span className="text-gray-400">-</span>
-                                    <span className="text-gray-600">{lang === 'pt' ? r.description : r.descriptionEn}</span>
+                                    <span className="text-gray-600">
+                                        {r.descriptionKey ? t.workforcePlanning[r.descriptionKey as keyof typeof t.workforcePlanning] : (lang === 'pt' ? (r.description || '') : (r.descriptionEn || r.description || ''))}
+                                    </span>
                                     <button onClick={() => handleRemoveRule(r.id)} className="text-red-500 hover:text-red-700 ml-1">
                                         <Minus className="h-3 w-3" />
                                     </button>

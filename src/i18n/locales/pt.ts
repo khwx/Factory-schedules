@@ -458,6 +458,11 @@ export const pt = {
     surplusStaff: 'Excedente de pessoal',
     people: 'pessoas',
     allMet: 'Todas as necessidades estao atendidas!',
+    defaultRuleDec: 'Natal/Ano Novo - pico de producao',
+    defaultRuleJan: 'Janeiro - retorno das ferias',
+    defaultRuleJun: 'Junho - pico de verao',
+    defaultRuleAug: 'Agosto - pico de verao/ferias',
+    defaultRuleNov: 'Novembro - preparacao Black Friday',
   },
   comparison: {
     title: 'Comparacao de Cenarios',

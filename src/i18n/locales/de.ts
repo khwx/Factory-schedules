@@ -460,6 +460,11 @@ holidayCalendar: {
     surplusStaff: 'Personalueberschuss',
     people: 'Personen',
     allMet: 'Alle Bedarfe sind gedeckt!',
+    defaultRuleDec: 'Weihnachten/Neujahr - Produktionshoch',
+    defaultRuleJan: 'Januar - Ruckkehr nach Feiertagen',
+    defaultRuleJun: 'Juni - Sommerhoch',
+    defaultRuleAug: 'August - Sommerhoch/Urlaub',
+    defaultRuleNov: 'November - Black Friday Vorbereitung',
   },
   comparison: {
     title: 'Szenario-Vergleich',

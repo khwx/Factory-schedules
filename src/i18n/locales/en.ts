@@ -460,6 +460,11 @@ export const en: Translations = {
     surplusStaff: 'Staff surplus',
     people: 'people',
     allMet: 'All staffing needs are met!',
+    defaultRuleDec: 'Christmas/New Year - production peak',
+    defaultRuleJan: 'January - post-holiday return',
+    defaultRuleJun: 'June - summer peak',
+    defaultRuleAug: 'August - summer/holiday peak',
+    defaultRuleNov: 'November - Black Friday prep',
   },
   comparison: {
     title: 'Scenario Comparison',
