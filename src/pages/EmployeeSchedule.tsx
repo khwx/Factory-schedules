@@ -5,9 +5,7 @@ import { getAllHolidays } from '../utils/portugueseHolidays';
 import { calculateEstimatedPay, PayConfig, DEFAULT_PAY_CONFIG, formatCurrency } from '../utils/payCalculator';
 import { ChevronLeft, ChevronRight, User, Clock, Calendar, Palmtree, Moon, Printer } from 'lucide-react';
 import { clsx } from 'clsx';
-
-const MONTH_NAMES_PT = ['Janeiro', 'Fevereiro', 'Marco', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
-const DAY_NAMES_PT = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom'];
+import { useI18n } from '../i18n';
 const SHIFT_COLORS: Record<ShiftType, string> = {
     M: 'bg-blue-100 text-blue-800 border-blue-300',
     T: 'bg-amber-100 text-amber-800 border-amber-300',
@@ -26,6 +24,7 @@ function useScenarios(): Scenario[] {
 }
 
 export default function EmployeeSchedule() {
+    const { t } = useI18n();
     const scenarios = useScenarios();
     const [selectedScenarioId, setSelectedScenarioId] = useState('');
     const [employeeName, setEmployeeName] = useState('');
@@ -245,7 +244,7 @@ export default function EmployeeSchedule() {
                     </button>
                     <div className="text-center">
                         <h2 className="text-xl font-bold text-gray-800">
-                            {employeeName ? `${employeeName} — ` : ''}{MONTH_NAMES_PT[currentMonth]} {currentYear}
+                            {employeeName ? `${employeeName} — ` : ''}{t.calendar.months[currentMonth]} {currentYear}
                         </h2>
                         <p className="text-sm text-gray-500">{teamNames[employeeTeam]}</p>
                     </div>
@@ -329,7 +328,7 @@ export default function EmployeeSchedule() {
                 </div>
 
                 <div className="grid grid-cols-7 gap-1 md:gap-2">
-                    {DAY_NAMES_PT.map(day => (
+                    {t.calendar.dayNames.map(day => (
                         <div key={day} className="text-center text-xs font-semibold text-gray-500 py-2">
                             {day}
                         </div>
@@ -393,7 +392,7 @@ export default function EmployeeSchedule() {
             <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 md:p-6">
                 <h3 className="font-semibold text-gray-800 mb-3">Proximo Mes</h3>
                 <div className="grid grid-cols-7 gap-1 md:gap-2">
-                    {DAY_NAMES_PT.map(day => (
+                    {t.calendar.dayNames.map(day => (
                         <div key={day} className="text-center text-[10px] font-semibold text-gray-400 py-1">
                             {day}
                         </div>

@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import { Scenario } from '../types';
 import { generateYearCalendar } from '../utils/calendar';
 import { Flame } from 'lucide-react';
+import { useI18n } from '../i18n';
 
 interface WorkloadHeatmapProps {
     scenario: Scenario;
@@ -9,7 +10,7 @@ interface WorkloadHeatmapProps {
 }
 
 const WorkloadHeatmap: React.FC<WorkloadHeatmapProps> = ({ scenario, year = new Date().getFullYear() }) => {
-    const MONTH_NAMES = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
+    const { t } = useI18n();
 
     // Generate heatmap data
     const heatmapData = useMemo(() => {
@@ -72,11 +73,11 @@ const WorkloadHeatmap: React.FC<WorkloadHeatmapProps> = ({ scenario, year = new 
                             <div key={monthIdx} className="flex flex-col items-center">
                                 <div
                                     className={`w-full aspect-square ${color} rounded-lg flex items-center justify-center text-white font-bold text-sm cursor-pointer hover:opacity-80 transition-opacity`}
-                                    title={`${MONTH_NAMES[parseInt(monthIdx)]}: ${data.work} dias de trabalho, ${data.nights} noites, ${data.off} folgas - Intensidade: ${intensity.toFixed(0)}%`}
+                                    title={`${t.comparisonCharts.monthsShort[parseInt(monthIdx)]}: ${data.work} dias de trabalho, ${data.nights} noites, ${data.off} folgas - Intensidade: ${intensity.toFixed(0)}%`}
                                 >
                                     {intensity.toFixed(0)}%
                                 </div>
-                                <span className="text-xs text-gray-400 mt-1">{MONTH_NAMES[parseInt(monthIdx)]}</span>
+                                <span className="text-xs text-gray-400 mt-1">{t.comparisonCharts.monthsShort[parseInt(monthIdx)]}</span>
                             </div>
                         );
                     })}
