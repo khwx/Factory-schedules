@@ -94,12 +94,21 @@ const ICSImporter: React.FC<ICSImporterProps> = ({ onImport }) => {
         reader.readAsText(file);
     }, [analyzeFile, shiftDuration, weeklyHoursContract, t]);
 
+    const handleReset = useCallback(() => {
+        setFileContent(null);
+        setFileName('');
+        setPreviewData(null);
+        setConflictReport(null);
+        setImportStatus('idle');
+        setErrorMessage(null);
+    }, []);
+
     const handleImport = useCallback(() => {
         if (!previewData) return;
 
         onImport(previewData);
         handleReset();
-    }, [previewData, onImport]);
+    }, [previewData, onImport, handleReset]);
 
     const handleDragOver = useCallback((e: React.DragEvent) => {
         e.preventDefault();
@@ -122,15 +131,6 @@ const ICSImporter: React.FC<ICSImporterProps> = ({ onImport }) => {
         const file = e.target.files?.[0];
         if (file) handleFileSelect(file);
     }, [handleFileSelect]);
-
-    const handleReset = useCallback(() => {
-        setFileContent(null);
-        setFileName('');
-        setPreviewData(null);
-        setConflictReport(null);
-        setImportStatus('idle');
-        setErrorMessage(null);
-    }, []);
 
     const toggleExpanded = useCallback(() => {
         setIsExpanded(prev => !prev);

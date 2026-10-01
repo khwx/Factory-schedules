@@ -446,11 +446,11 @@ const Dashboard: React.FC = () => {
 
     const handleFilterTeamsChange = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
         setFilterTeams(e.target.value ? Number(e.target.value) : null);
-    }, []);
+    }, [setFilterTeams]);
 
     const handleSortChange = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
         setSortBy(e.target.value as 'name' | 'weekends' | 'hours' | 'qol');
-    }, []);
+    }, [setSortBy]);
 
     const toggleShowHidden = useCallback(() => {
         setShowHidden(!showHidden);

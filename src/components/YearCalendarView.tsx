@@ -41,7 +41,7 @@ const YearCalendarView: React.FC<YearCalendarViewProps> = ({ scenario }) => {
         }
     };
 
-    const getShiftLabel = (shift: string) => {
+    const getShiftLabel = useCallback((shift: string) => {
         switch (shift) {
             case 'M': return t.calendar.morning;
             case 'T': return t.calendar.afternoon;
@@ -49,7 +49,7 @@ const YearCalendarView: React.FC<YearCalendarViewProps> = ({ scenario }) => {
             case 'F': return t.calendar.off;
             default: return '';
         }
-    };
+    }, [t]);
 
     const monthGroups: { [key: number]: DayInfo[] } = {};
     calendar.forEach(day => {
@@ -66,7 +66,7 @@ const YearCalendarView: React.FC<YearCalendarViewProps> = ({ scenario }) => {
             y: rect.top - 8,
             content: `${day.date.getDate()} de ${monthName} (${dayName}) - ${getShiftLabel(day.shift)}${day.isWeekendOff ? ` - ${t.calendar.weekendOff}` : ''}`,
         });
-    }, [locale]);
+    }, [locale, getShiftLabel, t]);
 
     const renderMonth = (monthIdx: number, days: DayInfo[]) => (
         <div key={monthIdx} className="bg-gray-900/30 rounded p-3">

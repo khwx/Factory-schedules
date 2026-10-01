@@ -66,3 +66,11 @@ Expansão de funcionalidades e melhorias contínuas, por ordem de prioridade sug
 - [x] **QoL — insights + períodos críticos i18n:** migrar 8 insights e 3 descrições de períodos críticos hardcoded PT em `qualityOfLife.ts` para chaves i18n — concluído (Round 78; novos tipos `InsightKey`, `descriptionKey`/`descriptionParams` em `CriticalPeriod`, 11 chaves novas em 5 línguas, QualityOfLifeDisplay traduz via `t.qol.*`, retrocompatibilidade mantida).
 - [x] **advancedMetrics — insights i18n:** migrar `generateAdvancedInsights()` em `advancedMetrics.ts` (15 insights hardcoded PT) + `calculations.ts` (8 insights hardcoded PT) para chaves i18n — concluido (Round 79; `generateAdvancedInsightKeys()` com 16 chaves `advancedInsights.*`, `qualitativeKeys` com 8 chaves `calcInsights.*`, 120 chaves novas em 5 linguas, retrocompat mantida).
 - [x] **teamAnalysis — insights i18n:** migrar insights hardcoded PT em `teamAnalysis.ts` (análise de equipas + cobertura) para chaves i18n — concluído (Round 80; `insightKeys` com chaves `teamAnalysis.fairness.*` e `teamAnalysis.coverage.*` em `FairnessAnalysis`/`CoverageAnalysis`, secção `teamAnalysis` em 5 línguas, `TeamFairness` usa `t.teamAnalysis.*` + testes actualizados).
+
+## 7. Qualidade de código — React hooks dependencies
+Corrigir avisos de `react-hooks/exhaustive-deps` em componentes principais (potenciais bugs de stale closures):
+- [x] `src/components/Dashboard.tsx` — `handleFilterTeamsChange`, `handleSortChange` faltam `setFilterTeams`, `setSortBy` — concluído (Round 81)
+- [x] `src/components/ICSImporter.tsx` — `handleImport` faltam `handleReset` — concluído (Round 81)
+- [x] `src/components/YearCalendarView.tsx` — `handleDayInteraction` faltam `getShiftLabel`, `t.calendar.weekendOff` — concluído (Round 81)
+- [ ] `src/pages/WorkforcePlanning.tsx` — `monthlyAnalysis` useMemo faltam `t.calendar.months`
+- [ ] `src/components/SystemHealth.tsx` — useEffect faltam `propScenarios`
