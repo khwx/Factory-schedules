@@ -2,6 +2,19 @@
 
 Log de execuções autónomas do Bot Orquestrador (modelos free: `opencode/hy3-free`).
 
+## Round 83 — 2026-10-01
+**Objetivo:** Resolver avisos de `react-hooks/exhaustive-deps` em `WorkforcePlanning.tsx` e `SystemHealth.tsx` (pendentes no TODO.md secção 7).
+
+**Contexto:** O `eslint` reportava dependências em falta: `monthlyAnalysis` useMemo em `WorkforcePlanning` usava `t.calendar.months` sem o declarar nas deps; `useEffect` em `SystemHealth` usava `propScenarios` sem o declarar nas deps (estava `[]`). Ambos criavam risco de stale closures.
+
+**O que foi feito:**
+- `src/pages/WorkforcePlanning.tsx` (linha 130): adicionado `t.calendar.months` ao array de dependências do `useMemo` de `monthlyAnalysis`.
+- `src/components/SystemHealth.tsx` (linha 75): alterado o array de dependências do `useEffect` de `[]` para `[propScenarios]`.
+
+**Verificação:** `tsc -b` → exit 0; `vitest` → **646 passam**, 0 falham; `eslint` → 0 erros (64 warnings pré-existentes); build → OK.
+
+**Decisão registada:** Secção 7 do TODO.md (qualidade de código — React hooks dependencies) concluída. Próximos passos sugeridos: nova funcionalidade (ex: visualização de tendência histórica de QoL, dashboard de comparação QoL entre cenários, ou expansão de presets industriais).
+
 ## Round 79 — 2026-09-19
 **Objetivo:** Migrar insights hardcoded PT em `advancedMetrics.ts` (15 insights) e `calculations.ts` (8 insights) para chaves i18n (5 línguas).
 

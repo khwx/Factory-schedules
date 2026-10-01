@@ -72,5 +72,5 @@ Corrigir avisos de `react-hooks/exhaustive-deps` em componentes principais (pote
 - [x] `src/components/Dashboard.tsx` — `handleFilterTeamsChange`, `handleSortChange` faltam `setFilterTeams`, `setSortBy` — concluído (Round 81)
 - [x] `src/components/ICSImporter.tsx` — `handleImport` faltam `handleReset` — concluído (Round 81)
 - [x] `src/components/YearCalendarView.tsx` — `handleDayInteraction` faltam `getShiftLabel`, `t.calendar.weekendOff` — concluído (Round 81)
-- [ ] `src/pages/WorkforcePlanning.tsx` — `monthlyAnalysis` useMemo faltam `t.calendar.months`
-- [ ] `src/components/SystemHealth.tsx` — useEffect faltam `propScenarios`
+- [x] `src/pages/WorkforcePlanning.tsx` — `monthlyAnalysis` useMemo faltam `t.calendar.months` — concluído (Round 83)
+- [x] `src/components/SystemHealth.tsx` — useEffect faltam `propScenarios` — concluído (Round 83)
