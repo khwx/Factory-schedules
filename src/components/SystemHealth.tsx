@@ -5,6 +5,7 @@ import { Building2, Users, Calendar } from 'lucide-react';
 import { clsx } from 'clsx';
 import type { Scenario, DayInfo } from '../types';
 import { loadValidatedScenarios } from '../utils/scenarioValidation';
+import { useI18n } from '../i18n';
 
 interface UsageStats {
     teamSize: number;
@@ -20,6 +21,7 @@ interface Props {
 }
 
 export default function SystemHealth({ scenarios: propScenarios }: Props) {
+    const { t } = useI18n();
     const [stats, setStats] = useState<UsageStats | null>(null);
     const [loading, setLoading] = useState(true);
 
@@ -89,26 +91,26 @@ export default function SystemHealth({ scenarios: propScenarios }: Props) {
             <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
                 <div className="flex items-center gap-3 text-gray-500">
                     <Building2 className="h-5 w-5" />
-                    <span>Nenhum cenario encontrado</span>
+                    <span>{t.systemHealth.noScenarios}</span>
                 </div>
             </div>
         );
     }
 
     const statsCards = [
-        { label: 'Equipas', value: stats.teamCount, icon: Building2, color: 'bg-indigo-50 text-indigo-600' },
-        { label: 'Tamanho Medio', value: stats.teamSize, icon: Users, color: 'bg-blue-50 text-blue-600' },
-        { label: 'Dias Trabalhados', value: stats.workDays, icon: Calendar, color: 'bg-green-50 text-green-600' },
-        { label: 'Fins de Semana', value: stats.weekends, icon: Calendar, color: 'bg-amber-50 text-amber-600' },
-        { label: 'Feriados/Anual', value: stats.holidays, icon: Calendar, color: 'bg-red-50 text-red-600' },
-        { label: 'Media Horas/Cenario', value: stats.avgHours.toFixed(1), icon: Calendar, color: 'bg-purple-50 text-purple-600' },
+        { label: t.systemHealth.teams, value: stats.teamCount, icon: Building2, color: 'bg-indigo-50 text-indigo-600' },
+        { label: t.systemHealth.avgTeamSize, value: stats.teamSize, icon: Users, color: 'bg-blue-50 text-blue-600' },
+        { label: t.systemHealth.workDays, value: stats.workDays, icon: Calendar, color: 'bg-green-50 text-green-600' },
+        { label: t.systemHealth.weekends, value: stats.weekends, icon: Calendar, color: 'bg-amber-50 text-amber-600' },
+        { label: t.systemHealth.holidays, value: stats.holidays, icon: Calendar, color: 'bg-red-50 text-red-600' },
+        { label: t.systemHealth.avgHours, value: stats.avgHours.toFixed(1), icon: Calendar, color: 'bg-purple-50 text-purple-600' },
     ];
 
     return (
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
             <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
                 <Building2 className="h-5 w-5 text-indigo-600" />
-                Saude do Sistema
+                {t.systemHealth.title}
             </h3>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                 {statsCards.map((card, idx) => (
@@ -126,7 +128,7 @@ export default function SystemHealth({ scenarios: propScenarios }: Props) {
             <div className="mt-4 p-3 bg-gray-50 rounded-lg text-xs text-gray-500 border border-gray-100">
                 <div className="flex items-center gap-2">
                     <div className="w-2 h-2 rounded-full bg-green-500"></div>
-                    <span>Sistema operacional — {stats.teamCount} cenarios carregados</span>
+                    <span>{t.systemHealth.operational.replace('{count}', String(stats.teamCount))}</span>
                 </div>
             </div>
         </div>

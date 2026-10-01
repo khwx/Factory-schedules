@@ -1,16 +1,18 @@
 import { NavLink, useLocation } from 'react-router-dom';
 import { LayoutDashboard, BarChart3, GitCompareArrows, Euro, BookOpen } from 'lucide-react';
-
-const mobileItems = [
-    { to: '/', icon: LayoutDashboard, label: 'Home' },
-    { to: '/analytics', icon: BarChart3, label: 'Analitica' },
-    { to: '/compare', icon: GitCompareArrows, label: 'Comparar' },
-    { to: '/costs', icon: Euro, label: 'Custos' },
-    { to: '/templates', icon: BookOpen, label: 'Modelos' },
-];
+import { useI18n } from '../i18n';
 
 export default function MobileBottomNav() {
     const location = useLocation();
+    const { t } = useI18n();
+
+    const mobileItems = [
+        { to: '/', icon: LayoutDashboard, label: t.mobileNav.home },
+        { to: '/analytics', icon: BarChart3, label: t.mobileNav.analytics },
+        { to: '/compare', icon: GitCompareArrows, label: t.mobileNav.compare },
+        { to: '/costs', icon: Euro, label: t.mobileNav.costs },
+        { to: '/templates', icon: BookOpen, label: t.mobileNav.templates },
+    ];
 
     return (
         <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-gray-800 border-t border-gray-700 z-40 safe-area-bottom" role="navigation" aria-label="Mobile navigation">

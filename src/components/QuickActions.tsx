@@ -15,10 +15,10 @@ export default function QuickActions({ onNewScenario, onOpenGenerator, onExport,
     const [isOpen, setIsOpen] = useState(false);
 
     const actions = [
-        { icon: Plus, label: 'Novo Cenario', color: 'bg-blue-600 hover:bg-blue-500', onClick: onNewScenario },
-        { icon: Wand2, label: 'Gerar Horario', color: 'bg-purple-600 hover:bg-purple-500', onClick: onOpenGenerator },
-        { icon: Download, label: 'Exportar', color: 'bg-emerald-600 hover:bg-emerald-500', onClick: onExport },
-        { icon: Search, label: 'Pesquisar', color: 'bg-amber-600 hover:bg-amber-500', onClick: onSearch },
+        { icon: Plus, label: t.quickActions.newScenario, color: 'bg-blue-600 hover:bg-blue-500', onClick: onNewScenario },
+        { icon: Wand2, label: t.quickActions.generateSchedule, color: 'bg-purple-600 hover:bg-purple-500', onClick: onOpenGenerator },
+        { icon: Download, label: t.quickActions.export, color: 'bg-emerald-600 hover:bg-emerald-500', onClick: onExport },
+        { icon: Search, label: t.quickActions.search, color: 'bg-amber-600 hover:bg-amber-500', onClick: onSearch },
     ];
 
     return (

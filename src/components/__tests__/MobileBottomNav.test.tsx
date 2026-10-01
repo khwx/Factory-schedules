@@ -2,15 +2,23 @@ import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import MobileBottomNav from '../MobileBottomNav';
+import { I18nProvider } from '../../i18n';
+
+const wrapper = ({ children }: { children: React.ReactNode }) => (
+    <I18nProvider>
+        {children}
+    </I18nProvider>
+);
+
+const renderNav = (initialPath = '/') =>
+    render(
+        <MemoryRouter initialEntries={[initialPath]}>
+            <MobileBottomNav />
+        </MemoryRouter>,
+        { wrapper }
+    );
 
 describe('MobileBottomNav', () => {
-    const renderNav = (initialPath = '/') =>
-        render(
-            <MemoryRouter initialEntries={[initialPath]}>
-                <MobileBottomNav />
-            </MemoryRouter>
-        );
-
     it('should render with mobile navigation role', () => {
         renderNav();
         expect(screen.getByRole('navigation', { name: /Mobile navigation/i })).toBeInTheDocument();
