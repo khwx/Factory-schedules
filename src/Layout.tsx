@@ -73,7 +73,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
                 showToast('success', t.header.backupSuccess);
                 setTimeout(() => window.location.reload(), 1500);
-            } catch (_error) {
+            } catch {
                 showToast('error', t.header.backupError);
             }
         };
@@ -94,7 +94,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                     return;
                 }
                 setImportPreview(parsed);
-            } catch (_error) {
+            } catch {
                 showToast('error', t.header.bulkImportError);
             }
         };

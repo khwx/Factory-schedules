@@ -190,7 +190,7 @@ const Dashboard: React.FC = () => {
     useEffect(() => {
         try {
             localStorage.setItem('shiftsim_scenarios', JSON.stringify(scenarios));
-        } catch (_e) {
+        } catch {
             console.error('Failed to save scenarios to localStorage (quota exceeded?)');
         }
     }, [scenarios]);
