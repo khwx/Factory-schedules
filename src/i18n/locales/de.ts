@@ -501,6 +501,7 @@ holidayCalendar: {
     rowFridaysOff: 'Freie Freitage',
     rowHolidaysWorked: 'Gearbeitete Feiertage',
     dayLabel: 'Tag {n}',
+    best: 'Bester',
   },
   reports: {
     title: 'Berichte',
@@ -791,6 +792,10 @@ holidayCalendar: {
     trendImproving: 'Verbesserungstrend',
     trendDeclining: 'Verschlechterungstrend',
     trendStable: 'Stabiler Trend',
+    comparisonRadarTitle: 'Lebensqualitaets-Vergleich - Radar',
+    comparisonRadarSubtitle: 'Vergleich von 10 Lebensqualitaets-Teilpunkten ueber Szenarien',
+    comparisonTrendTitle: 'Monatlicher Lebensqualitaets-Trend Vergleich',
+    comparisonTrendSubtitle: 'Monatliche Lebensqualitaets-Punktzahl nebeneinander',
   },
   advancedInsights: {
     holidaysExcellent: '💰 Ausgezeichnetes Verdienstpotenzial: {count} Feiertage gearbeitet (Zuschlagszahlung).',

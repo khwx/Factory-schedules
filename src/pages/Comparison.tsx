@@ -8,6 +8,7 @@ import { exportComparisonToPDF } from '../utils/pdfExport';
 import { exportComparison } from '../utils/export';
 import { exportComparisonToCSV, exportComparisonToJSON } from '../utils/csvJsonExport';
 import ComplianceComparison from '../components/ComplianceComparison';
+import QualityOfLifeComparison from '../components/QualityOfLifeComparison';
 
 interface ComparisonRow {
     label: string;
@@ -412,6 +413,13 @@ const Comparison: React.FC = () => {
                             </tbody>
                         </table>
                     </div>
+                </div>
+            )}
+
+            {/* Quality of Life Comparison */}
+            {selectedScenarios.length >= 2 && (
+                <div className="mt-6">
+                    <QualityOfLifeComparison scenarios={selectedScenarios} analyses={selectedAnalyses} />
                 </div>
             )}
 

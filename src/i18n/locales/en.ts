@@ -501,6 +501,7 @@ export const en: Translations = {
     rowFridaysOff: 'Fridays Off',
     rowHolidaysWorked: 'Holidays Worked',
     dayLabel: 'Day {n}',
+    best: 'Best',
   },
   reports: {
     title: 'Reports',
@@ -791,6 +792,10 @@ export const en: Translations = {
     trendImproving: 'Improving trend',
     trendDeclining: 'Declining trend',
     trendStable: 'Stable trend',
+    comparisonRadarTitle: 'QoL Comparison - Radar',
+    comparisonRadarSubtitle: 'Comparison of 10 quality of life sub-scores across scenarios',
+    comparisonTrendTitle: 'Monthly QoL Trend Comparison',
+    comparisonTrendSubtitle: 'Side-by-side monthly QoL score evolution',
   },
   advancedInsights: {
     holidaysExcellent: '💰 Excellent earning potential: {count} holidays worked (premium pay).',

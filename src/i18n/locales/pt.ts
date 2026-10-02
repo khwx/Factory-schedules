@@ -499,6 +499,7 @@ export const pt = {
     rowFridaysOff: 'Sextas Livres',
     rowHolidaysWorked: 'Feriados Trabalhados',
     dayLabel: 'Dia {n}',
+    best: 'Melhor',
   },
   reports: {
     title: 'Relatorios',
@@ -789,6 +790,10 @@ export const pt = {
     trendImproving: 'Tendencia de melhoria',
     trendDeclining: 'Tendencia de degradacao',
     trendStable: 'Tendencia estavel',
+    comparisonRadarTitle: 'Comparacao de QoL - Radar',
+    comparisonRadarSubtitle: 'Comparacao dos 10 sub-scores de qualidade de vida entre cenarios',
+    comparisonTrendTitle: 'Comparacao de Tendencia Mensal de QoL',
+    comparisonTrendSubtitle: 'Evolucao mensal da pontuacao QoL lado a lado',
   },
   advancedInsights: {
     holidaysExcellent: '💰 Potencial de ganhos excelente: {count} feriados trabalhados (pagamento majorado).',

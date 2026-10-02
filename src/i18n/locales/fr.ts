@@ -501,6 +501,7 @@ holidayCalendar: {
     rowFridaysOff: 'Vendredis Libres',
     rowHolidaysWorked: 'Jours Feries Travailles',
     dayLabel: 'Jour {n}',
+    best: 'Meilleur',
   },
   reports: {
     title: 'Rapports',
@@ -791,6 +792,10 @@ holidayCalendar: {
     trendImproving: 'Tendance a l\'amelioration',
     trendDeclining: 'Tendance a la degradation',
     trendStable: 'Tendance stable',
+    comparisonRadarTitle: 'Comparaison VQ - Radar',
+    comparisonRadarSubtitle: 'Comparaison des 10 sous-scores de qualite de vie entre scenarios',
+    comparisonTrendTitle: 'Comparaison de Tendance Mensuelle VQ',
+    comparisonTrendSubtitle: 'Evolution mensuelle du score VQ cote a cote',
   },
   advancedInsights: {
     holidaysExcellent: '💰 Excellent potentiel de gains: {count} jours feries travailles (majoration de salaire).',
