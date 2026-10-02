@@ -44,6 +44,7 @@ const ComparisonCharts = lazy(() => import('./ComparisonCharts'));
 const WorkloadHeatmap = lazy(() => import('./WorkloadHeatmap'));
 const QualityOfLifeDisplay = lazy(() => import('./QualityOfLifeDisplay'));
 const QualityOfLifeTrend = lazy(() => import('./QualityOfLifeTrend'));
+const QualityOfLifeComparison = lazy(() => import('./QualityOfLifeComparison'));
 const TeamAnalysis = lazy(() => import('./TeamAnalysis'));
 const DemoMode = lazy(() => import('./DemoMode'));
 const LegalComplianceBanner = lazy(() => import('./LegalComplianceBanner'));
@@ -779,6 +780,13 @@ const Dashboard: React.FC = () => {
                     {visibleScenarios.length > 1 && (
                         <LazyLoad className="h-64">
                             <ComparisonCharts scenarios={visibleScenarios} analyses={analyses} />
+                        </LazyLoad>
+                    )}
+
+                    {/* QoL Comparison */}
+                    {visibleScenarios.length > 1 && (
+                        <LazyLoad className="h-96">
+                            <QualityOfLifeComparison scenarios={visibleScenarios} analyses={analyses} />
                         </LazyLoad>
                     )}
 
