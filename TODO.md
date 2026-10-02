@@ -74,3 +74,6 @@ Corrigir avisos de `react-hooks/exhaustive-deps` em componentes principais (pote
 - [x] `src/components/YearCalendarView.tsx` — `handleDayInteraction` faltam `getShiftLabel`, `t.calendar.weekendOff` — concluído (Round 81)
 - [x] `src/pages/WorkforcePlanning.tsx` — `monthlyAnalysis` useMemo faltam `t.calendar.months` — concluído (Round 83)
 - [x] `src/components/SystemHealth.tsx` — useEffect faltam `propScenarios` — concluído (Round 83)
+
+## 8. Novas funcionalidades — QoL Trend
+- [x] **QoL — visualização de tendência histórica:** novo componente `QualityOfLifeTrend` exibindo evolução mensal da pontuação QoL (gráfico de barras por mês, média anual, melhor/pior mês, direção da tendência) — concluído (Round 84; componente integrado no Dashboard, i18n em 5 línguas, expõe `monthlyScores` no `QualityOfLifeScore`).

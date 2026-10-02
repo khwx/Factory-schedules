@@ -2,6 +2,32 @@
 
 Log de execuções autónomas do Bot Orquestrador (modelos free: `opencode/hy3-free`).
 
+## Round 84 — 2026-10-02
+**Objetivo:** Implementar visualização de tendência histórica de QoL (Quality of Life) — sugestão da Round 83.
+
+**Contexto:** O analisador QoL já calculava scores mensais internamente (`monthlyScores` array) para a métrica de sustentabilidade, mas não os expunha nem visualizava. O componente `QualityOfLifeDisplay` mostrava apenas o score atual e breakdown estático.
+
+**O que foi feito:**
+- `src/utils/qualityOfLife.ts`:
+  - Interface `QualityOfLifeScore` ganha campo `monthlyScores: number[]` (12 meses, 0-100).
+  - `calculateQualityOfLifeScore` retorna agora `monthlyScores` calculados mês a mês (lógica já existente reutilizada).
+- `src/components/QualityOfLifeTrend.tsx` (novo):
+  - Componente lazy-loaded que renderiza gráfico de barras mensal da evolução QoL.
+  - Estatísticas: média anual, melhor mês, pior mês, direção da tendência (melhoria/degradação/estável) com ícones.
+  - Barras coloridas por score (verde/azul/amarelo/laranja/vermelho).
+  - Totalmente responsivo (scroll horizontal em mobile).
+  - Usa `t.qol.trend*` keys para i18n.
+- `src/components/Dashboard.tsx`:
+  - Adicionado import lazy de `QualityOfLifeTrend`.
+  - Componente inserido logo após `QualityOfLifeDisplay` na lista de análises por cenário.
+- `src/i18n/locales/{pt,en,es,fr,de}.ts`:
+  - 10 chaves novas na secção `qol`: `trendTitle`, `trendSubtitle`, `trendMonth`, `trendScore`, `trendAverage`, `trendBestMonth`, `trendWorstMonth`, `trendImproving`, `trendDeclining`, `trendStable`.
+  - Total: 50 chaves novas (10 × 5 línguas). Paridade mantida.
+
+**Verificação:** `tsc -b` → exit 0; `vitest` → **646 passam**, 0 falham; `eslint` → 0 erros (58 warnings pré-existentes); build → OK.
+
+**Decisão registada:** QoL agora tem visualização de tendência histórica mensal integrada no Dashboard. Próximos passos sugeridos: dashboard de comparação QoL entre cenários (radar/linha lado a lado), ou expansão de presets industriais.
+
 ## Round 83 — 2026-10-01
 **Objetivo:** Resolver avisos de `react-hooks/exhaustive-deps` em `WorkforcePlanning.tsx` e `SystemHealth.tsx` (pendentes no TODO.md secção 7).
 
