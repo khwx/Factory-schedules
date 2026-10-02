@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { HelpCircle, X, ArrowRight, ArrowLeft } from 'lucide-react';
 import { useI18n } from '../i18n';
+import { Translations } from '../i18n/locales/pt';
 
 interface TutorialStep {
     selector: string;
@@ -8,36 +9,36 @@ interface TutorialStep {
     text: string;
 }
 
-const STEPS: TutorialStep[] = [
+const getSteps = (t: Translations): TutorialStep[] => [
     {
         selector: '[data-tutorial="form"]',
-        title: 'Criar Cenario',
-        text: 'Use este formulario para definir o nome, numero de equipas, duracao do turno e padrao de rotacao (ex: MMTTNNFFFF).',
+        title: t.tutorial.stepCreateTitle,
+        text: t.tutorial.stepCreateText,
     },
     {
         selector: '[data-tutorial="presets"]',
-        title: 'Cenarios de Exemplo',
-        text: 'Carregue cenarios pre-definidos para explorar as funcionalidades rapidamente.',
+        title: t.tutorial.stepPresetsTitle,
+        text: t.tutorial.stepPresetsText,
     },
     {
         selector: '[data-tutorial="generator"]',
-        title: 'Gerador de Horarios',
-        text: 'O gerador cria automaticamente padroes validos com base nas restricoes que definir.',
+        title: t.tutorial.stepGeneratorTitle,
+        text: t.tutorial.stepGeneratorText,
     },
     {
         selector: '[data-tutorial="cards"]',
-        title: 'Cenarios Criados',
-        text: 'Cada cenario mostra metricas chave: horas semanais, fins de semana de folga e dias de folga. Use os botoes para ver o calendario, exportar ou partilhar.',
+        title: t.tutorial.stepCardsTitle,
+        text: t.tutorial.stepCardsText,
     },
     {
         selector: '[data-tutorial="comparison"]',
-        title: 'Comparacao de Cenarios',
-        text: 'A tabela compara todos os cenarios lado a lado. Valores verdes sao os melhores, vermelhos os piores.',
+        title: t.tutorial.stepComparisonTitle,
+        text: t.tutorial.stepComparisonText,
     },
     {
         selector: '[data-tutorial="compliance"]',
-        title: 'Conformidade Legal',
-        text: 'Verifica automaticamente a conformidade com o Codigo do Trabalho Portugues (11h descanso, max 5 noites, etc.).',
+        title: t.tutorial.stepComplianceTitle,
+        text: t.tutorial.stepComplianceText,
     },
 ];
 
@@ -46,6 +47,8 @@ const STORAGE_KEY = 'shiftsim_tutorial_complete';
 export function useTutorial() {
     const [isActive, setIsActive] = useState(false);
     const [currentStep, setCurrentStep] = useState(0);
+    const { t } = useI18n();
+    const steps = getSteps(t);
 
     const start = useCallback(() => {
         setCurrentStep(0);
@@ -54,14 +57,14 @@ export function useTutorial() {
 
     const next = useCallback(() => {
         setCurrentStep(prev => {
-            if (prev >= STEPS.length - 1) {
+            if (prev >= steps.length - 1) {
                 setIsActive(false);
                 try { localStorage.setItem(STORAGE_KEY, 'true'); } catch { /* ignore */ }
                 return prev;
             }
             return prev + 1;
         });
-    }, []);
+    }, [steps.length]);
 
     const prev = useCallback(() => {
         setCurrentStep(p => Math.max(0, p - 1));
@@ -80,7 +83,7 @@ export function useTutorial() {
         }
     }, []);
 
-    return { isActive, currentStep, start, next, prev, close, shouldShowOnFirstVisit, totalSteps: STEPS.length };
+    return { isActive, currentStep, start, next, prev, close, shouldShowOnFirstVisit, totalSteps: steps.length };
 }
 
 export const TutorialOverlay: React.FC<{
@@ -92,11 +95,12 @@ export const TutorialOverlay: React.FC<{
     totalSteps: number;
 }> = ({ isActive, currentStep, onNext, onPrev, onClose, totalSteps }) => {
     const { t } = useI18n();
+    const steps = getSteps(t);
     const [rect, setRect] = useState<DOMRect | null>(null);
 
     useEffect(() => {
         if (!isActive) return;
-        const step = STEPS[currentStep];
+        const step = steps[currentStep];
         if (!step) return;
 
         const updateRect = () => {
@@ -115,11 +119,11 @@ export const TutorialOverlay: React.FC<{
             window.removeEventListener('resize', updateRect);
             window.removeEventListener('scroll', updateRect, true);
         };
-    }, [isActive, currentStep]);
+    }, [isActive, currentStep, steps]);
 
     if (!isActive) return null;
 
-    const step = STEPS[currentStep];
+    const step = steps[currentStep];
     if (!step) return null;
 
     const tooltipStyle: React.CSSProperties = rect
@@ -168,7 +172,7 @@ export const TutorialOverlay: React.FC<{
                 <p className="text-sm text-gray-300 mb-4">{step.text}</p>
                 <div className="flex items-center justify-between">
                     <span className="text-xs text-gray-500">
-                        {currentStep + 1} de {totalSteps}
+                        {currentStep + 1} {t.tutorial.stepOf} {totalSteps}
                     </span>
                     <div className="flex gap-2">
                         {currentStep > 0 && (
@@ -177,14 +181,14 @@ export const TutorialOverlay: React.FC<{
                                 className="flex items-center gap-1 bg-gray-700 hover:bg-gray-600 text-white px-3 py-1.5 rounded text-sm transition-colors"
                             >
                                 <ArrowLeft className="w-4 h-4" />
-                                Anterior
+                                {t.tutorial.prevBtn}
                             </button>
                         )}
                         <button
                             onClick={onNext}
                             className="flex items-center gap-1 bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded text-sm transition-colors"
                         >
-                            {currentStep === totalSteps - 1 ? 'Concluir' : 'Proximo'}
+                            {currentStep === totalSteps - 1 ? t.tutorial.finishBtn : t.tutorial.nextBtn}
                             {currentStep < totalSteps - 1 && <ArrowRight className="w-4 h-4" />}
                         </button>
                     </div>
