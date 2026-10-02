@@ -43,6 +43,7 @@ const AdvancedMetricsDisplay = lazy(() => import('./AdvancedMetricsDisplay'));
 const ComparisonCharts = lazy(() => import('./ComparisonCharts'));
 const WorkloadHeatmap = lazy(() => import('./WorkloadHeatmap'));
 const QualityOfLifeDisplay = lazy(() => import('./QualityOfLifeDisplay'));
+const QualityOfLifeTrend = lazy(() => import('./QualityOfLifeTrend'));
 const TeamAnalysis = lazy(() => import('./TeamAnalysis'));
 const DemoMode = lazy(() => import('./DemoMode'));
 const LegalComplianceBanner = lazy(() => import('./LegalComplianceBanner'));
@@ -807,6 +808,12 @@ const Dashboard: React.FC = () => {
                                     </LazyLoad>
                                     <LazyLoad className="h-48">
                                         <QualityOfLifeDisplay
+                                            scenario={scenario}
+                                            analysis={analysis}
+                                        />
+                                    </LazyLoad>
+                                    <LazyLoad className="h-48">
+                                        <QualityOfLifeTrend
                                             scenario={scenario}
                                             analysis={analysis}
                                         />

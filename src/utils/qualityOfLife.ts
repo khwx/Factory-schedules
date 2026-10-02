@@ -24,6 +24,7 @@ export interface QualityOfLifeScore {
     grade: 'A+' | 'A' | 'B' | 'C' | 'D' | 'F';
     insights: string[];
     insightKeys: InsightKey[];
+    monthlyScores: number[]; // 12 months, 0-100
 }
 
 export interface CriticalPeriod {
@@ -324,6 +325,7 @@ export function calculateQualityOfLifeScore(
         grade,
         insights,
         insightKeys,
+        monthlyScores,
     };
 }
 
