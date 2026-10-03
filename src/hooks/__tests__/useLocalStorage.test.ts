@@ -26,14 +26,18 @@ describe('useLocalStorage', () => {
     it('should write value to localStorage on set', () => {
         const { result } = renderHook(() => useLocalStorage('test-key', ''));
         act(() => result.current[1]('new value'));
-        expect(JSON.parse(localStorage.getItem('test-key')!)).toBe('new value');
+        const stored = localStorage.getItem('test-key');
+        expect(stored).not.toBeNull();
+        expect(JSON.parse(stored!)).toBe('new value');
     });
 
     it('should support functional updates', () => {
         const { result } = renderHook(() => useLocalStorage<number>('counter', 0));
         act(() => result.current[1](prev => prev + 5));
         expect(result.current[0]).toBe(5);
-        expect(JSON.parse(localStorage.getItem('counter')!)).toBe(5);
+        const stored = localStorage.getItem('counter');
+        expect(stored).not.toBeNull();
+        expect(JSON.parse(stored!)).toBe(5);
     });
 
     it('should fall back to initialValue when JSON is corrupted', () => {

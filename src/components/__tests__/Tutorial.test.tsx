@@ -70,7 +70,9 @@ describe('TutorialOverlay', () => {
     it('should call onClose when clicking backdrop', () => {
         const onClose = vi.fn();
         renderOverlay({ onClose });
-        fireEvent.click(screen.getByText('Criar Cenario').closest('div')!.querySelector('button[aria-label="Fechar tutorial"]')!);
+        const container = screen.getByText('Criar Cenario').closest('div');
+        const closeBtn = container?.querySelector('button[aria-label="Fechar tutorial"]');
+        if (closeBtn) fireEvent.click(closeBtn);
         expect(onClose).toHaveBeenCalled();
     });
 
@@ -123,7 +125,8 @@ describe('useTutorial', () => {
         expect(screen.getByTestId('show').textContent).toBe('true');
         act(() => localStorage.setItem('shiftsim_tutorial_complete', 'true'));
         render(<Harness />, { wrapper });
-        expect(screen.getAllByTestId('show')[1].textContent).toBe('false');
+        const showElements = screen.getAllByTestId('show');
+        expect(showElements[1]?.textContent).toBe('false');
     });
 });
 

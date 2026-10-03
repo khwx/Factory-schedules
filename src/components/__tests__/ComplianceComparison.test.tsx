@@ -67,6 +67,7 @@ describe('ComplianceComparison', () => {
 
     it('should render trophy for best scenario', () => {
         render(<ComplianceComparison scenarios={[compliant, violating]} />);
-        expect(screen.getByText('Compliant').closest('tr')!.querySelector('svg')).toBeInTheDocument();
+        const row = screen.getByText('Compliant').closest('tr');
+        expect(row?.querySelector('svg')).toBeInTheDocument();
     });
 });
