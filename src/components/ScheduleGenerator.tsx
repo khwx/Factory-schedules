@@ -119,10 +119,10 @@ const GeneratorUI: React.FC<ScheduleGeneratorProps> = ({ isOpen, onClose, onSele
     };
 
     const getScoreLabel = (score: number) => {
-        if (score < 10) return 'Excelente';
-        if (score < 20) return 'Muito Bom';
-        if (score < 30) return 'Bom';
-        return 'Razoavel';
+        if (score < 10) return t.scheduleGenerator.scoreExcellent;
+        if (score < 20) return t.scheduleGenerator.scoreVeryGood;
+        if (score < 30) return t.scheduleGenerator.scoreGood;
+        return t.scheduleGenerator.scoreFair;
     };
 
     if (!isOpen) return null;
@@ -364,20 +364,20 @@ const GeneratorUI: React.FC<ScheduleGeneratorProps> = ({ isOpen, onClose, onSele
                                                     </span>
                                                 </div>
 
-                                                <div className="flex flex-wrap gap-0.5 mt-2">
-                                                    {res.pattern.split('').map((char, i) => (
-                                                        <div
-                                                            key={i}
-                                                            className={clsx(
-                                                                'w-5 h-5 rounded text-[9px] flex items-center justify-center font-bold',
-                                                                SHIFT_COLORS[char] || 'bg-gray-700'
-                                                            )}
-                                                            title={`Dia ${i + 1}: ${char === 'M' ? 'Manha' : char === 'T' ? 'Tarde' : char === 'N' ? 'Noite' : 'Folga'}`}
-                                                        >
-                                                            {char}
-                                                        </div>
-                                                    ))}
-                                                </div>
+<div className="flex flex-wrap gap-0.5 mt-2">
+                                                      {res.pattern.split('').map((char, i) => (
+                                                          <div
+                                                              key={i}
+                                                              className={clsx(
+                                                                  'w-5 h-5 rounded text-[9px] flex items-center justify-center font-bold',
+                                                                  SHIFT_COLORS[char] || 'bg-gray-700'
+                                                              )}
+                                                              title={`Dia ${i + 1}: ${char === 'M' ? t.calendar.shiftMorning : char === 'T' ? t.calendar.shiftAfternoon : char === 'N' ? t.calendar.shiftNight : t.calendar.shiftOff}`}
+                                                          >
+                                                              {char}
+                                                          </div>
+                                                      ))}
+                                                  </div>
                                             </div>
 
                                             <button

@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import { Scenario } from '../types';
 import { generateYearCalendar } from '../utils/calendar';
 import { Users, AlertTriangle, CheckCircle } from 'lucide-react';
+import { useI18n } from '../i18n';
 
 interface TeamAnalysisProps {
     scenario: Scenario;
@@ -19,6 +20,7 @@ interface TeamData {
 }
 
 const TeamAnalysis: React.FC<TeamAnalysisProps> = ({ scenario }) => {
+    const { t } = useI18n();
     const teamData = useMemo<TeamData[]>(() => {
         const currentYear = new Date().getFullYear();
         const teams: TeamData[] = [];
@@ -90,7 +92,7 @@ const TeamAnalysis: React.FC<TeamAnalysisProps> = ({ scenario }) => {
                 </div>
                 {fairness && (
                     <span className={`text-xs px-2 py-1 rounded ${fairness.isBalanced ? 'bg-green-900 text-green-300' : 'bg-yellow-900 text-yellow-300'}`}>
-                        {fairness.isBalanced ? 'Equilibrado' : 'Desiquilibrado'}
+                        {fairness.isBalanced ? t.teamAnalysis.balanced : t.teamAnalysis.unbalanced}
                     </span>
                 )}
             </div>
@@ -138,7 +140,7 @@ const TeamAnalysis: React.FC<TeamAnalysisProps> = ({ scenario }) => {
                     <div className="flex items-start gap-2">
                         <AlertTriangle className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
                         <div className="text-sm text-yellow-200">
-                            <p className="font-medium mb-1">Desiquilibrado!</p>
+                            <p className="font-medium mb-1">{t.teamAnalysis.unbalanced}!</p>
                             <ul className="list-disc list-inside text-yellow-300/80 space-y-0.5">
                                 {fairness.offDaysDiff > 2 && (
                                     <li>Diferenca de {fairness.offDaysDiff} dias de folga entre equipas</li>

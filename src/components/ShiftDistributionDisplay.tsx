@@ -2,25 +2,27 @@ import React, { useMemo } from 'react';
 import { PieChart, Gauge } from 'lucide-react';
 import { Scenario } from '../types';
 import { computeShiftDistribution, assessErgonomics } from '../utils/shiftDistribution';
+import { useI18n } from '../i18n';
 
 interface ShiftDistributionDisplayProps {
     scenario: Scenario;
     year?: number;
 }
 
-const TYPE_CONFIG: Record<string, { label: string; color: string }> = {
-    M: { label: 'Manhã', color: 'bg-yellow-500' },
-    T: { label: 'Tarde', color: 'bg-orange-500' },
-    N: { label: 'Noite', color: 'bg-blue-600' },
-    F: { label: 'Folga', color: 'bg-gray-600' },
-};
-
 const ShiftDistributionDisplay: React.FC<ShiftDistributionDisplayProps> = ({
     scenario,
     year = new Date().getFullYear(),
 }) => {
+    const { t } = useI18n();
     const distribution = useMemo(() => computeShiftDistribution(scenario, year), [scenario, year]);
     const assessment = useMemo(() => assessErgonomics(distribution), [distribution]);
+
+    const TYPE_CONFIG: Record<string, { label: string; color: string }> = {
+        M: { label: t.calendar.shiftMorning, color: 'bg-yellow-500' },
+        T: { label: t.calendar.shiftAfternoon, color: 'bg-orange-500' },
+        N: { label: t.calendar.shiftNight, color: 'bg-blue-600' },
+        F: { label: t.calendar.shiftOff, color: 'bg-gray-600' },
+    };
 
     const items = [
         { key: 'morning', label: TYPE_CONFIG.M.label, count: distribution.morning, pct: distribution.morningPct, color: TYPE_CONFIG.M.color },

@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
+import { I18nProvider } from '../../i18n';
 import TeamAnalysis from '../TeamAnalysis';
 import { Scenario } from '../../types';
 
@@ -13,9 +14,11 @@ const multiTeamScenario: Scenario = {
     teamPatterns: ['MMTTNNFF', 'NNFFMMTT', 'TTNNFFMM'],
 };
 
+const renderWithI18n = (ui: React.ReactElement) => render(<I18nProvider>{ui}</I18nProvider>);
+
 describe('TeamAnalysis', () => {
     it('renders a table with one row per team', () => {
-        render(<TeamAnalysis scenario={multiTeamScenario} />);
+        renderWithI18n(<TeamAnalysis scenario={multiTeamScenario} />);
         expect(screen.getByText('Analise por Equipa')).toBeInTheDocument();
         expect(screen.getByText('Equipa A')).toBeInTheDocument();
         expect(screen.getByText('Equipa B')).toBeInTheDocument();
@@ -23,7 +26,7 @@ describe('TeamAnalysis', () => {
     });
 
     it('shows the column headers', () => {
-        render(<TeamAnalysis scenario={multiTeamScenario} />);
+        renderWithI18n(<TeamAnalysis scenario={multiTeamScenario} />);
         expect(screen.getByText('Turnos/Ano')).toBeInTheDocument();
         expect(screen.getByText('Dias Folga')).toBeInTheDocument();
         expect(screen.getByText('FDS Folga')).toBeInTheDocument();
@@ -32,13 +35,13 @@ describe('TeamAnalysis', () => {
     });
 
     it('displays a fairness badge', () => {
-        render(<TeamAnalysis scenario={multiTeamScenario} />);
+        renderWithI18n(<TeamAnalysis scenario={multiTeamScenario} />);
         expect(screen.getAllByText(/Equilibrado|Desiquilibrado/).length).toBeGreaterThanOrEqual(1);
     });
 
     it('renders nothing when there is a single team', () => {
         const singleTeam = { ...multiTeamScenario, teams: 1 };
-        const { container } = render(<TeamAnalysis scenario={singleTeam} />);
+        const { container } = renderWithI18n(<TeamAnalysis scenario={singleTeam} />);
         expect(container).toBeEmptyDOMElement();
     });
 });
