@@ -965,6 +965,21 @@ export const pt = {
     pattern: 'Padrao',
     loadPreset: 'Carregar',
   },
+  navigation: {
+    dashboard: 'Dashboard',
+    analytics: 'Analitica',
+    compare: 'Comparar',
+    costs: 'Custos',
+    optimizer: 'Otimizar',
+    workforce: 'Efetivo',
+    templates: 'Modelos',
+    calendar: 'Feriados',
+    roster: 'Equipas',
+    employee: 'Colaborador',
+    reports: 'Relatorios',
+    settings: 'Config',
+    help: 'Ajuda',
+  },
 };
 
 export type Translations = typeof pt;

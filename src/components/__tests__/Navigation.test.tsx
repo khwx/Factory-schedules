@@ -1,13 +1,16 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
+import { I18nProvider } from '../../i18n';
 import Navigation from '../Navigation';
 
 describe('Navigation', () => {
     const renderNav = (initialPath = '/') =>
         render(
             <MemoryRouter initialEntries={[initialPath]}>
-                <Navigation />
+                <I18nProvider>
+                    <Navigation />
+                </I18nProvider>
             </MemoryRouter>
         );
 
