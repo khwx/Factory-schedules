@@ -81,3 +81,6 @@ Corrigir avisos de `react-hooks/exhaustive-deps` em componentes principais (pote
 
 ## 9. Melhorias de UX — Preset Selector
 - [x] **PresetSelector — categorias por indústria + filtro + i18n:** adicionar campo `industry` aos 33 presets, filtro por indústria no seletor, migrar strings hardcoded PT para `t.presetSelector.*` (5 línguas) — concluído (Round 86; 7 chaves novas em 5 línguas, PresetSelector com dropdown de filtro e badge de indústria).
+
+## 10. Presets industriais — expansão nicho (Round 87)
+- [x] **+8 novos presets nicho:** Educação/Escolas, Administração Pública, Telecomunicações/NOC, SAMU/Emergência Médica, Segurança Pública/Polícia, Gestão Resíduos, Energia Renovável, Casino/Entretenimento — total 41 presets, 26 indústrias cobertas (concluído Round 87).

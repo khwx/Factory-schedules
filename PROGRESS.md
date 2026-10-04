@@ -2,6 +2,28 @@
 
 Log de execuções autónomas do Bot Orquestrador (modelos free: `opencode/hy3-free`).
 
+## Round 87 — 2026-10-04
+**Objetivo:** Expandir presets industriais com +8 novos nichos (Educação, Administração Pública, Telecomunicações, SAMU, Segurança Pública, Resíduos, Energia Renovável, Casino).
+
+**Contexto:** A Round 86 organizou os 33 presets por indústria com filtro no PresetSelector. Havia oportunidade de cobrir mais setores 24/7 e de serviços essenciais: educação/escolas (staff administrativo), administração pública (balcão atendimento), telecomunicações/NOC (monitoramento rede 24/7), serviços de emergência médica/SAMU (ambulâncias), segurança pública/polícia (patrulha), gestão de resíduos (coleta/tratamento), energia renovável (solar/eólica monitoramento), casino/entretenimento (operação 24h).
+
+**O que foi feito:**
+- `src/data/presetScenarios.ts`:
+  - Adicionados 8 novos presets com `teamPatterns` individuais:
+    1. **Educação / Escolas - Professores e Staff (2 Equipas)** — turno único manhã, cobertura férias escalonada
+    2. **Administração Pública - Balcão Atendimento (3 Equipas)** — turno 7h, rotação balcão/backoffice
+    3. **Telecomunicações - NOC 24x7 (4 Equipas)** — turnos 12h Panama, monitoramento rede contínuo
+    4. **SAMU / Emergência Médica - Ambulâncias (4 Equipas)** — turnos 12h/24h mistos, cobertura geográfica
+    5. **Segurança Pública / Polícia - Patrulha 8h (5 Equipas)** — 3 turnos 8h, reforço fins-semana/noite
+    6. **Gestão Resíduos - Coleta/Tratamento (3 Equipas)** — turno manhã cedo 6h, fim-semana rotativo
+    7. **Energia Renovável - Solar/Eólica 24h (3 Equipas)** — turnos 8h, monitoramento SCADA contínuo
+    8. **Casino / Entretenimento - Operação 24h (4 Equipas)** — turnos 12h Panama, cobertura mesa/jogos contínua
+  - Total: 41 presets (era 33). Cobertura alargada a 8 novos setores (total 26 indústrias distintas).
+
+**Verificação:** `tsc -b` → exit 0; `vitest` → **646 passam**, 0 falham; `eslint` → 0 erros (52 warnings pré-existentes); build → OK.
+
+**Decisão registada:** Presets industriais expandidos de 33 para 41, cobrindo agora 26 setores distintos. Próximos passos sugeridos: tradução dos nomes das indústrias no badge do PresetSelector para i18n, ou expansão de funcionalidades de comparação de cenários (ex: exportar relatório comparativo PDF).
+
 ## Round 86 — 2026-10-04
 **Objetivo:** Adicionar categorias por indústria e filtro no PresetSelector, migrar strings hardcoded PT para i18n (5 línguas).
 

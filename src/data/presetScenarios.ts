@@ -497,4 +497,136 @@ export const PRESET_SCENARIOS: PresetScenario[] = [
         ],
         industry: 'Energia / Elétrica'
     },
+    // Education / Schools - Teachers and admin staff
+    {
+        name: 'Educação / Escolas - Professores e Staff (2 Equipas)',
+        description: 'Escola pública - 2 equipas administrativas, turno único manhã, cobertura férias escalonada',
+        teams: 2,
+        shiftDuration: 7,
+        weeklyHoursContract: 35,
+        pattern: 'MMMMMFF',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMMFF', // Team A: seg-sex, admin manhã
+            'MMMMMFF', // Team B: seg-sex, admin tarde (sobreposição almoço)
+        ],
+        industry: 'Educação / Escolas'
+    },
+    // Public Administration - Citizen services
+    {
+        name: 'Administração Pública - Balcão Atendimento (3 Equipas)',
+        description: 'Serviços públicos - 3 equipas, turno único 7h, rotação balcão/backoffice',
+        teams: 3,
+        shiftDuration: 7,
+        weeklyHoursContract: 35,
+        pattern: 'MMMMMFF',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMMFF', // Team A: balcão manhã
+            'MMMMMFF', // Team B: backoffice + balcão tarde
+            'MMMMMFF', // Team C: suporte + pico almoço
+        ],
+        industry: 'Administração Pública'
+    },
+    // Telecommunications - NOC
+    {
+        name: 'Telecomunicações - NOC 24x7 (4 Equipas)',
+        description: 'Network Operations Center - 4 equipas, turnos 12h (Panama), monitoramento rede contínuo',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 42,
+        pattern: 'DDNNOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'DDNNOO', // Team A
+            'OODDNN', // Team B
+            'NNOODD', // Team C
+            'DDOONN', // Team D
+        ],
+        industry: 'Telecomunicações / NOC'
+    },
+    // Emergency Medical Services - SAMU
+    {
+        name: 'SAMU / Emergência Médica - Ambulâncias (4 Equipas)',
+        description: 'Serviço móvel urgência - 4 equipas, turnos 12h/24h mistos, cobertura geográfica',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 48,
+        pattern: 'DDNNOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'DDNNOO', // Team A: área norte
+            'OODDNN', // Team B: área sul
+            'NNOODD', // Team C: área centro
+            'DDOONN', // Team D: reserva/apoio
+        ],
+        industry: 'Serviços Emergência Médica'
+    },
+    // Public Safety - Police
+    {
+        name: 'Segurança Pública / Polícia - Patrulha 8h (5 Equipas)',
+        description: 'Polícia preventiva - 5 equipas, 3 turnos 8h, reforço fins-semana/noite',
+        teams: 5,
+        shiftDuration: 8,
+        weeklyHoursContract: 40,
+        pattern: 'MMMTTTNNNFF',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMTTTNNNFF', // Team A: patrulha dia
+            'FFMMMTTTNNN', // Team B: patrulha tarde
+            'NFFMMMTTTNN', // Team C: patrulha noite
+            'NNFMMMTTTNN', // Team D: investigação + apoio
+            'NNNFFMMMTTT', // Team E: operações especiais
+        ],
+        industry: 'Segurança Pública'
+    },
+    // Waste Management
+    {
+        name: 'Gestão Resíduos - Coleta/Tratamento (3 Equipas)',
+        description: 'Coleta lixo/reciclagem - 3 equipas, turno manhã cedo 6h, fim-semana rotativo',
+        teams: 3,
+        shiftDuration: 6,
+        weeklyHoursContract: 36,
+        pattern: 'MMMMMMF',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMMMF', // Team A: rota segunda-sábado
+            'FMMMMMM', // Team B: rota terça-domingo
+            'MFMMMMM', // Team C: rota quarta-segunda
+        ],
+        industry: 'Gestão de Resíduos'
+    },
+    // Renewable Energy - Solar/Wind monitoring
+    {
+        name: 'Energia Renovável - Solar/Eólica 24h (3 Equipas)',
+        description: 'Parques eólico/solar - 3 equipas, turnos 8h, monitoramento SCADA contínuo',
+        teams: 3,
+        shiftDuration: 8,
+        weeklyHoursContract: 40,
+        pattern: 'MMMTTTNNNFFF',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMTTTNNNFFF', // Team A
+            'NNNFFFMMMTTT', // Team B
+            'TTTNNNFFFMMM', // Team C
+        ],
+        industry: 'Energia Renovável'
+    },
+    // Casino / Entertainment 24/7
+    {
+        name: 'Casino / Entretenimento - Operação 24h (4 Equipas)',
+        description: 'Casino resort - 4 equipas, turnos 12h (Panama), cobertura mesa/jogos contínua',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 42,
+        pattern: 'DDNNOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'DDNNOO', // Team A: piso jogos
+            'OODDNN', // Team B: vigilância
+            'NNOODD', // Team C: atendimento clientes
+            'DDOONN', // Team D: operações/caixa
+        ],
+        industry: 'Casino / Entretenimento'
+    },
 ];
