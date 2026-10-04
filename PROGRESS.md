@@ -2,6 +2,47 @@
 
 Log de execuções autónomas do Bot Orquestrador (modelos free: `opencode/hy3-free`).
 
+## Round 86 — 2026-10-04
+**Objetivo:** Adicionar categorias por indústria e filtro no PresetSelector, migrar strings hardcoded PT para i18n (5 línguas).
+
+**Contexto:** A Round 85 expandiu os presets para 33, cobrindo 18 setores, mas o PresetSelector mostrava todos numa lista plana sem organização. As strings do componente estavam hardcoded em PT (ex: "Carregar Cenario de Exemplo", "equipas", "Turno:", "Contrato:"). Sugestão da Round 85: "melhorias de UX no seletor de presets (categorias/filtros por indústria)".
+
+**O que foi feito:**
+- `src/data/presetScenarios.ts`:
+  - Interface `PresetScenario` ganha campo opcional `industry: string`.
+  - Todos os 33 presets recebem categoria de indústria:
+    - Indústria / Fabrico (7 presets)
+    - Petróleo / Gás (2 presets)
+    - Segurança Privada (1 preset)
+    - Bombeiros (1 preset)
+    - Call Center (1 preset)
+    - Mineração (1 preset)
+    - Marítimo / Portuário (1 preset)
+    - Aviação / Aeroportos (1 preset)
+    - Indústria Alimentar (1 preset)
+    - Farmacêutica (1 preset)
+    - Siderurgia / Metalurgia (1 preset)
+    - Energia / Elétrica (2 presets)
+    - Data Center / TI (1 preset)
+    - Saúde / Hospitalar (2 presets)
+    - Hotelaria / Restauração (2 presets)
+    - Retalho / Comércio (1 preset)
+    - Logística / Transportes (2 presets)
+- `src/components/PresetSelector.tsx`:
+  - Novo dropdown de filtro por indústria (`t.presetSelector.industryLabel`).
+  - Opção "Todas as Industrias" (`t.presetSelector.allIndustries`).
+  - Badge de indústria em cada preset.
+  - Strings hardcoded PT migradas para `t.presetSelector.*` (7 chaves).
+  - Uso de `useMemo` para indústrias únicas e presets filtrados.
+  - Reset de `activeIndex` ao mudar filtro.
+- `src/i18n/locales/{pt,en,es,fr,de}.ts`:
+  - Nova secção `presetSelector` com 7 chaves: `title`, `allIndustries`, `industryLabel`, `teams`, `shiftDuration`, `contract`, `pattern`, `loadPreset`.
+  - Total: 35 chaves novas (7 × 5 línguas). Paridade mantida.
+
+**Verificação:** `tsc -b` → exit 0; `vitest` → **646 passam**, 0 falham; `eslint` → 0 erros (52 warnings pré-existentes); build → OK.
+
+**Decisão registada:** PresetSelector agora tem filtro por indústria, badges visuais e está 100% multilíngue. Próximos passos sugeridos: dashboard de comparação QoL entre cenários (radar/linha lado a lado), ou expansão adicional de presets para nichos específicos.
+
 ## Round 85 — 2026-10-04
 **Objetivo:** Expandir presets industriais com +10 novos setores (saúde, hotelaria, retalho, logística, transportes, automóvel, química, tratamento de água).
 

@@ -78,3 +78,6 @@ Corrigir avisos de `react-hooks/exhaustive-deps` em componentes principais (pote
 
 ## 8. Novas funcionalidades — QoL Trend
 - [x] **QoL — visualização de tendência histórica:** novo componente `QualityOfLifeTrend` exibindo evolução mensal da pontuação QoL (gráfico de barras por mês, média anual, melhor/pior mês, direção da tendência) — concluído (Round 84; componente integrado no Dashboard, i18n em 5 línguas, expõe `monthlyScores` no `QualityOfLifeScore`).
+
+## 9. Melhorias de UX — Preset Selector
+- [x] **PresetSelector — categorias por indústria + filtro + i18n:** adicionar campo `industry` aos 33 presets, filtro por indústria no seletor, migrar strings hardcoded PT para `t.presetSelector.*` (5 línguas) — concluído (Round 86; 7 chaves novas em 5 línguas, PresetSelector com dropdown de filtro e badge de indústria).
