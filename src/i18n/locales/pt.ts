@@ -955,6 +955,16 @@ export const pt = {
       minGuaranteed: '✅ Cobertura mínima garantida: {count} equipa(s) sempre a trabalhar.',
     },
   },
+  presetSelector: {
+    title: 'Carregar Cenario de Exemplo',
+    allIndustries: 'Todas as Industrias',
+    industryLabel: 'Industria',
+    teams: 'equipas',
+    shiftDuration: 'Turno',
+    contract: 'Contrato',
+    pattern: 'Padrao',
+    loadPreset: 'Carregar',
+  },
 };
 
 export type Translations = typeof pt;

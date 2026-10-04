@@ -957,4 +957,14 @@ holidayCalendar: {
       minGuaranteed: '✅ Couverture minimale garantie : {count} equipe(s) toujours au travail.',
     },
   },
+  presetSelector: {
+    title: 'Charger un Scénario d\'Exemple',
+    allIndustries: 'Toutes les Industries',
+    industryLabel: 'Industrie',
+    teams: 'équipes',
+    shiftDuration: 'Quart',
+    contract: 'Contrat',
+    pattern: 'Modèle',
+    loadPreset: 'Charger',
+  },
 };

@@ -7,6 +7,7 @@ export interface PresetScenario {
     pattern: string;
     teamPatterns?: string[]; // Optional: individual patterns for each team
     startDate?: string; // ISO date string (YYYY-MM-DD)
+    industry?: string; // Industry category for filtering
 }
 
 export const PRESET_SCENARIOS: PresetScenario[] = [
@@ -24,7 +25,8 @@ export const PRESET_SCENARIOS: PresetScenario[] = [
             'FFNNNNNFFFMMMMMFFFTTTTTFF', // Team C (Offset 15)
             'TTTFFFFNNNNNFFFMMMMMFFFTT', // Team D (Offset 10)
             'FFFTTTTTFFFFNNNNNFFFMMMMM', // Team E (Offset 5)
-        ]
+        ],
+        industry: 'Indústria / Fabrico'
     },
     {
         name: 'Horário 4.2.4.2.4.4',
@@ -40,7 +42,8 @@ export const PRESET_SCENARIOS: PresetScenario[] = [
             'TTFFNNNNFFFFMMMMFFTT', // Team C (Offset 8)
             'NNFFFFMMMMFFTTTTFFNN', // Team D (Offset 12)
             'FFFFMMMMFFTTTTFFNNNN', // Team E (Offset 16)
-        ]
+        ],
+        industry: 'Indústria / Fabrico'
     },
     {
         name: 'Horário 3.2',
@@ -56,9 +59,10 @@ export const PRESET_SCENARIOS: PresetScenario[] = [
             'TTFFMMMFFNNNFFT', // Team C (Offset 6)
             'FMMMFFNNNFFTTTF', // Team D (Offset 9)
             'MFFNNNFFTTTFFMM', // Team E (Offset 12)
-        ]
+        ],
+        industry: 'Indústria / Fabrico'
     },
-    {
+{
         name: 'Horário Veralia',
         description: '5 equipas - Ciclo de 210 dias (Extraído de ICS)',
         teams: 5,
@@ -72,7 +76,8 @@ export const PRESET_SCENARIOS: PresetScenario[] = [
             'FFFFFMMMMFFFNNNNFTTTTFFMMMFNNNNFFTTTTFMMMFFNNNNFTTTTFFMMMFNNNNFTTTTTFFFFFFFMMMFFFFTTTTFMMFFFFNNNFTTTTFFFFFFFNNNFFTTTTFFFMMFFNNNFTTTTFFFMMMFFFFFFFMMMMFFFMMMMFNNNNFFTTTFMMMMFFNNNNFTTTFFMMMMFNNNNFFTTTFMMMFFNNNNNFF', // Team C
             'NFTTTTFFFMMMFFFFFFFMMMMFFFMMMMFNNNNFFTTTFMMMMFFNNNNFTTTFFMMMMFNNNNFFTTTFMMMFFNNNNNFFFFFFFMMMMFFFNNNNFTTTTFFTTTFNNNNFFTTTTFMMMFFNNNNFTTTTFFFFFFNNNNFTTTTTFFFFFFFMMMFFFFTTTTFMMFFFFNNNFTTTTFFFFFFFNNNFFTTTTFFFMMFFNN', // Team D
             'FNNNNFTTTTFFMMMFNNNNFTTTTTFFFFFFFMMMFFFFTTTTFMMFFFFNNNFTTTTFFFFFFFNNNFFTTTTFFFMMFFNNNFTTTTFFFMMMFFFFFFFMMMMFFFMMMMFNNNNFFTTTFMMMMFFNNNNFTTTFFMMMMFNNNNFFTTTFMMMFFNNNNNFFFFFFFMMMFFFFNNNNFTTTTFFMMMFNNNNFFTTTTFMMMF'  // Team E
-        ]
+        ],
+        industry: 'Indústria / Fabrico'
     },
     {
         name: 'Current',
@@ -88,6 +93,7 @@ export const PRESET_SCENARIOS: PresetScenario[] = [
             'MTTTTFNNNFFFTTTFNNNNMFMMMMMF', // Team C
             'FMMMMMFMTTTTFNNNFFFTTTFNNNNM', // Team D
         ],
+        industry: 'Indústria / Fabrico'
     },
     {
         name: 'Horário 25 Dias (Equilibrado)',
@@ -103,7 +109,8 @@ export const PRESET_SCENARIOS: PresetScenario[] = [
             'TTTTTFFFFNNNNNFFFFMMMMMFF', // Team C (Offset 10)
             'FFFFNNNNNFFFFMMMMMFFTTTTT', // Team D (Offset 15)
             'NNNNNFFFFMMMMMFFTTTTTFFFF', // Team E (Offset 20)
-        ]
+        ],
+        industry: 'Indústria / Fabrico'
     },
     {
         name: 'Horário 30 Dias (Blocos Longos)',
@@ -119,7 +126,8 @@ export const PRESET_SCENARIOS: PresetScenario[] = [
             'TTTTTTFFFFFNNNNNNFFMMMMMMFFFFF', // Team C (Offset 12)
             'FFFFFNNNNNNFFMMMMMMFFFFFTTTTTT', // Team D (Offset 18)
             'NNNNNNFFMMMMMMFFFFFTTTTTTFFFFF', // Team E (Offset 24)
-        ]
+        ],
+        industry: 'Indústria / Fabrico'
     },
     // Oil & Gas / Petrochemical - 24/7 continuous operations
     {
@@ -135,7 +143,8 @@ export const PRESET_SCENARIOS: PresetScenario[] = [
             'OODDNNOODDNN', // Team B (offset 2)
             'NNOODDNNOODD', // Team C (offset 4)
             'DDOODDNNOODD', // Team D (offset 6)
-        ]
+        ],
+        industry: 'Petróleo / Gás'
     },
     // Security / Surveillance - 24/7 coverage
     {
@@ -150,7 +159,8 @@ export const PRESET_SCENARIOS: PresetScenario[] = [
             'MMMFFF', // Team A: 3 manhãs, 3 folgas
             'TTTFFF', // Team B: 3 tardes, 3 folgas
             'NNNFFF', // Team C: 3 noites, 3 folgas
-        ]
+        ],
+        industry: 'Segurança Privada'
     },
     // Emergency Services - Fire/Police
     {
@@ -166,7 +176,8 @@ export const PRESET_SCENARIOS: PresetScenario[] = [
             'FMFF', // Team B
             'FFMF', // Team C
             'FFF', // Team D (will be 'FFFM')
-        ]
+        ],
+        industry: 'Bombeiros'
     },
     // Call Centers - Multi-timezone coverage
     {
@@ -183,7 +194,8 @@ export const PRESET_SCENARIOS: PresetScenario[] = [
             'NNNNOOOOMMMMTTTT', // Team C (offset 8)
             'TTTNNNNOOOOMMMM', // Team D (offset 12)
             'MMMTTTTNNNNOOOO', // Team E (offset 16)
-        ]
+        ],
+        industry: 'Call Center'
     },
     // Mining - 12-hour rotating shifts
     {
@@ -197,7 +209,8 @@ export const PRESET_SCENARIOS: PresetScenario[] = [
         teamPatterns: [
             'DDNN', // Team A: 2 dias, 2 noites
             'NNDD', // Team B: 2 noites, 2 dias
-        ]
+        ],
+        industry: 'Mineração'
     },
     // Maritime / Shipping - Watch system
     {
@@ -212,7 +225,8 @@ export const PRESET_SCENARIOS: PresetScenario[] = [
             'MFFF', // Watch 1
             'FMFF', // Watch 2
             'FFMF', // Watch 3
-        ]
+        ],
+        industry: 'Marítimo / Portuário'
     },
     // Aviation - Ground crew / ATC
     {
@@ -228,7 +242,8 @@ export const PRESET_SCENARIOS: PresetScenario[] = [
             'NNNFFFMMMTTT', // Team B
             'TTTNNNFFFMMM', // Team C
             'FFFMMMTTTNNN', // Team D
-        ]
+        ],
+        industry: 'Aviação / Aeroportos'
     },
     // Food Processing - Continuous production
     {
@@ -245,7 +260,8 @@ export const PRESET_SCENARIOS: PresetScenario[] = [
             'NNNFFFMMMTTT', // Team C
             'TTTNNNFFFMMM', // Team D
             'MMMTTTNNNFFF', // Team E (repetido para 5ª equipa)
-        ]
+        ],
+        industry: 'Indústria Alimentar'
     },
     // Pharmaceutical - GMP cleanroom shifts
     {
@@ -260,7 +276,8 @@ export const PRESET_SCENARIOS: PresetScenario[] = [
             'MMMTTTNNNFFF', // Team A
             'NNNFFFMMMTTT', // Team B
             'TTTNNNFFFMMM', // Team C
-        ]
+        ],
+        industry: 'Farmacêutica'
     },
     // Steel / Metalworking
     {
@@ -276,7 +293,8 @@ export const PRESET_SCENARIOS: PresetScenario[] = [
             'NNDD', // Team B
             'DDNN', // Team C (mesmo A para cobertura)
             'NNDD', // Team D
-        ]
+        ],
+        industry: 'Siderurgia / Metalurgia'
     },
     // Utilities / Power Plant
     {
@@ -292,7 +310,8 @@ export const PRESET_SCENARIOS: PresetScenario[] = [
             'OODDNN', // Team B
             'NNOODD', // Team C
             'DDOONN', // Team D
-        ]
+        ],
+        industry: 'Energia / Elétrica'
     },
     // Data Center Operations
     {
@@ -308,7 +327,8 @@ export const PRESET_SCENARIOS: PresetScenario[] = [
             'OODDNN', // Team B
             'NNOODD', // Team C
             'DDOONN', // Team D
-        ]
+        ],
+        industry: 'Data Center / TI'
     },
     // Healthcare / Hospital - Nursing shifts
     {
@@ -324,7 +344,8 @@ export const PRESET_SCENARIOS: PresetScenario[] = [
             'OODDNN', // Team B
             'NNOODD', // Team C
             'DDOONN', // Team D
-        ]
+        ],
+        industry: 'Saúde / Hospitalar'
     },
     // Healthcare / Hospital - Medical residents
     {
@@ -341,7 +362,8 @@ export const PRESET_SCENARIOS: PresetScenario[] = [
             'FFMFF', // Team C
             'FFF MF', // Team D (FFFMF)
             'FFFFM', // Team E
-        ]
+        ],
+        industry: 'Saúde / Hospitalar'
     },
     // Hospitality / Hotel - Front desk
     {
@@ -356,7 +378,8 @@ export const PRESET_SCENARIOS: PresetScenario[] = [
             'MMMTTTNNNFFF', // Team A
             'NNNFFFMMMTTT', // Team B
             'TTTNNNFFFMMM', // Team C
-        ]
+        ],
+        industry: 'Hotelaria / Restauração'
     },
     // Hospitality / Hotel - Housekeeping
     {
@@ -370,7 +393,8 @@ export const PRESET_SCENARIOS: PresetScenario[] = [
         teamPatterns: [
             'MMMMMFF', // Team A: seg-sex, folgas fim-semana alternados
             'FFMMMMM', // Team B: fim-semana, folgas seg-sex alternados
-        ]
+        ],
+        industry: 'Hotelaria / Restauração'
     },
     // Retail / Supermarket
     {
@@ -386,7 +410,8 @@ export const PRESET_SCENARIOS: PresetScenario[] = [
             'FFFMMMTTTNNN', // Team B: tarde + noite
             'NNNFFFMMMTTT', // Team C: noite + manhã
             'TTTNNNFFFMMM', // Team D: swing shift
-        ]
+        ],
+        industry: 'Retalho / Comércio'
     },
     // Logistics / Warehouse
     {
@@ -401,7 +426,8 @@ export const PRESET_SCENARIOS: PresetScenario[] = [
             'MMMTTTNNNFFF', // Team A
             'NNNFFFMMMTTT', // Team B
             'TTTNNNFFFMMM', // Team C
-        ]
+        ],
+        industry: 'Logística / Transportes'
     },
     // Transportation / Public Transit - Bus drivers
     {
@@ -418,7 +444,8 @@ export const PRESET_SCENARIOS: PresetScenario[] = [
             'NFFMMMTTTNN', // Team C: noite
             'NNFMMMTTTNN', // Team D: swing
             'NNNFFMMMTTT', // Team E: reserva/extra
-        ]
+        ],
+        industry: 'Logística / Transportes'
     },
     // Manufacturing / Automotive - Assembly line
     {
@@ -434,7 +461,8 @@ export const PRESET_SCENARIOS: PresetScenario[] = [
             'FFFMMMTTTNNN', // Team B
             'NNNFFFMMMTTT', // Team C
             'TTTNNNFFFMMM', // Team D
-        ]
+        ],
+        industry: 'Indústria / Fabrico'
     },
     // Chemical Plant - Continuous process
     {
@@ -450,7 +478,8 @@ export const PRESET_SCENARIOS: PresetScenario[] = [
             'OODDNN', // Team B
             'NNOODD', // Team C
             'DDOONN', // Team D
-        ]
+        ],
+        industry: 'Petróleo / Gás'
     },
     // Water Treatment - 24/7 monitoring
     {
@@ -465,6 +494,7 @@ export const PRESET_SCENARIOS: PresetScenario[] = [
             'MMMTTTNNNFFF', // Team A
             'NNNFFFMMMTTT', // Team B
             'TTTNNNFFFMMM', // Team C
-        ]
+        ],
+        industry: 'Energia / Elétrica'
     },
 ];

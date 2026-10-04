@@ -957,4 +957,14 @@ holidayCalendar: {
       minGuaranteed: '✅ Mindestabdeckung garantiert: {count} Team(s) immer im Dienst.',
     },
   },
+  presetSelector: {
+    title: 'Beispielszenario Laden',
+    allIndustries: 'Alle Branchen',
+    industryLabel: 'Branche',
+    teams: 'Teams',
+    shiftDuration: 'Schicht',
+    contract: 'Vertrag',
+    pattern: 'Muster',
+    loadPreset: 'Laden',
+  },
 };

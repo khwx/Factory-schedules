@@ -957,4 +957,14 @@ export const en: Translations = {
       minGuaranteed: '✅ Minimum coverage guaranteed: {count} team(s) always working.',
     },
   },
+  presetSelector: {
+    title: 'Load Example Scenario',
+    allIndustries: 'All Industries',
+    industryLabel: 'Industry',
+    teams: 'teams',
+    shiftDuration: 'Shift',
+    contract: 'Contract',
+    pattern: 'Pattern',
+    loadPreset: 'Load',
+  },
 };
