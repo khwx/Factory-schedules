@@ -900,6 +900,12 @@ holidayCalendar: {
     area: 'Flaeche',
     monthsShort: ['Jan', 'Feb', 'Mar', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'],
   },
+  multiTeamCalendar: {
+    title: 'Multi-Team-Ansicht',
+    teamLabel: 'Schicht',
+    horizontalTitle: 'Horizontale Ansicht (Teams in Spalten)',
+    verticalTitle: 'Vertikale Ansicht (Teams in Zeilen)',
+  },
   quickActions: {
     newScenario: 'Neues Szenario',
     generateSchedule: 'Zeitplan Generieren',

@@ -900,6 +900,12 @@ holidayCalendar: {
     area: 'Aire',
     monthsShort: ['Jan', 'Fev', 'Mar', 'Avr', 'Mai', 'Jun', 'Jul', 'Aou', 'Sep', 'Oct', 'Nov', 'Dec'],
   },
+  multiTeamCalendar: {
+    title: 'Vue Multi-Équipe',
+    teamLabel: 'Équipe',
+    horizontalTitle: 'Vue Horizontale (Équipes en Colonnes)',
+    verticalTitle: 'Vue Verticale (Équipes en Lignes)',
+  },
   quickActions: {
     newScenario: 'Nouveau Scenario',
     generateSchedule: 'Generer Horaire',

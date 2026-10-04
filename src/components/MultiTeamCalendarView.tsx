@@ -13,8 +13,6 @@ interface MultiTeamCalendarViewProps {
 
 type LayoutMode = 'horizontal' | 'vertical';
 
-const DAY_NAMES_SHORT = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'];
-
 const isHoliday = (date: Date, holidayMonthDays: string[]): boolean => {
     const monthDay = `${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
     return isHolidayByMonthDay(monthDay, holidayMonthDays);
@@ -24,6 +22,8 @@ export const MultiTeamCalendarView: React.FC<MultiTeamCalendarViewProps> = ({ sc
     const { t, lang } = useI18n();
     const locale = getBrowserLocale(lang);
     const monthNames = t.calendar.months;
+    const dayNamesShort = t.calendar.dayNames;
+    const multiTeamT = t.multiTeamCalendar;
     const [year, setYear] = useState(new Date().getFullYear());
     const [layoutMode, setLayoutMode] = useState<LayoutMode>('horizontal');
 
@@ -66,7 +66,7 @@ export const MultiTeamCalendarView: React.FC<MultiTeamCalendarViewProps> = ({ sc
                 {teamCalendars.map((calendar, teamIndex) => (
                     <div key={teamIndex} className="team-column">
                         <div className="team-header">
-                            <h3>Turno {String.fromCharCode(65 + teamIndex)}</h3>
+                            <h3>{multiTeamT.teamLabel} {String.fromCharCode(65 + teamIndex)}</h3>
                         </div>
                         <div className="calendar-grid-compact">
                             {/* Add empty cells to align January 1st to correct day of week */}
@@ -118,7 +118,7 @@ export const MultiTeamCalendarView: React.FC<MultiTeamCalendarViewProps> = ({ sc
                 <div className="team-labels">
                     {teamCalendars.map((_, teamIndex) => (
                         <div key={teamIndex} className="team-label-vertical">
-                            Turno {String.fromCharCode(65 + teamIndex)}
+                            {multiTeamT.teamLabel} {String.fromCharCode(65 + teamIndex)}
                         </div>
                     ))}
                 </div>
@@ -139,7 +139,7 @@ export const MultiTeamCalendarView: React.FC<MultiTeamCalendarViewProps> = ({ sc
                                     </div>
                                     {(teamCalendars[0][dayIndex].date.getDay() === 0 || teamCalendars[0][dayIndex].date.getDay() === 6) && (
                                         <div className="day-name-vertical">
-                                            {DAY_NAMES_SHORT[teamCalendars[0][dayIndex].date.getDay()]}
+                                            {dayNamesShort[teamCalendars[0][dayIndex].date.getDay()]}
                                         </div>
                                     )}
                                 </div>
@@ -152,7 +152,7 @@ export const MultiTeamCalendarView: React.FC<MultiTeamCalendarViewProps> = ({ sc
                                             key={teamIndex}
                                             className={`shift-cell-vertical ${isWeekend ? 'weekend-cell' : ''}`}
                                             style={{ backgroundColor: getShiftColor(day.shift, isWeekend) }}
-                                            title={`Turno ${String.fromCharCode(65 + teamIndex)} - ${day.date.toLocaleDateString(locale)} - ${day.shift}`}
+                                            title={`${multiTeamT.teamLabel} ${String.fromCharCode(65 + teamIndex)} - ${day.date.toLocaleDateString(locale)} - ${day.shift}`}
                                         >
                                             {getShiftLabel(day.shift)}
                                         </div>
@@ -170,20 +170,20 @@ export const MultiTeamCalendarView: React.FC<MultiTeamCalendarViewProps> = ({ sc
         <div className="year-calendar-overlay">
             <div className="year-calendar-modal multi-team-modal">
                 <div className="year-calendar-header">
-                    <h2>Vista Multi-Equipa - {scenario.name}</h2>
+                    <h2>{multiTeamT.title} - {scenario.name}</h2>
                     <div className="header-controls">
                         <div className="layout-toggle">
                             <button
                                 className={`layout-btn ${layoutMode === 'horizontal' ? 'active' : ''}`}
                                 onClick={() => setLayoutMode('horizontal')}
-                                title="Vista Horizontal (Equipas em Colunas)"
+                                title={multiTeamT.horizontalTitle}
                             >
                                 <LayoutGrid size={20} />
                             </button>
                             <button
                                 className={`layout-btn ${layoutMode === 'vertical' ? 'active' : ''}`}
                                 onClick={() => setLayoutMode('vertical')}
-                                title="Vista Vertical (Equipas em Linhas)"
+                                title={multiTeamT.verticalTitle}
                             >
                                 <LayoutList size={20} />
                             </button>

@@ -900,6 +900,12 @@ closeCalendar: 'Cerrar calendario',
     area: 'Area',
     monthsShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
   },
+  multiTeamCalendar: {
+    title: 'Vista Multi-Equipo',
+    teamLabel: 'Turno',
+    horizontalTitle: 'Vista Horizontal (Equipos en Columnas)',
+    verticalTitle: 'Vista Vertical (Equipos en Filas)',
+  },
   quickActions: {
     newScenario: 'Nuevo Escenario',
     generateSchedule: 'Generar Horario',

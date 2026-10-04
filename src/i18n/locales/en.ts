@@ -900,6 +900,12 @@ export const en: Translations = {
     area: 'Area',
     monthsShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
   },
+  multiTeamCalendar: {
+    title: 'Multi-Team View',
+    teamLabel: 'Shift',
+    horizontalTitle: 'Horizontal View (Teams in Columns)',
+    verticalTitle: 'Vertical View (Teams in Rows)',
+  },
   quickActions: {
     newScenario: 'New Scenario',
     generateSchedule: 'Generate Schedule',

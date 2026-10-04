@@ -898,6 +898,12 @@ export const pt = {
     area: 'Area',
     monthsShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
   },
+  multiTeamCalendar: {
+    title: 'Vista Multi-Equipa',
+    teamLabel: 'Turno',
+    horizontalTitle: 'Vista Horizontal (Equipas em Colunas)',
+    verticalTitle: 'Vista Vertical (Equipas em Linhas)',
+  },
   quickActions: {
     newScenario: 'Novo Cenario',
     generateSchedule: 'Gerar Horario',
