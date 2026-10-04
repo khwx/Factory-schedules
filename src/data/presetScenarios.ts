@@ -310,4 +310,161 @@ export const PRESET_SCENARIOS: PresetScenario[] = [
             'DDOONN', // Team D
         ]
     },
+    // Healthcare / Hospital - Nursing shifts
+    {
+        name: 'Saúde / Hospital - Enfermagem 12h (4 Equipas)',
+        description: 'Hospital - 4 equipas enfermagem, turnos 12h, rotação dia/noite (2-2-3)',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 36,
+        pattern: 'DDNNOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'DDNNOO', // Team A: 2 dia, 2 noite, 2 off
+            'OODDNN', // Team B
+            'NNOODD', // Team C
+            'DDOONN', // Team D
+        ]
+    },
+    // Healthcare / Hospital - Medical residents
+    {
+        name: 'Saúde / Hospital - Médicos Residentes (5 Equipas)',
+        description: 'Internato médico - 5 equipas, turnos 24h plantão, escala 1x4',
+        teams: 5,
+        shiftDuration: 24,
+        weeklyHoursContract: 60,
+        pattern: 'MFFFF',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MFFFF', // Team A
+            'FMFFF', // Team B
+            'FFMFF', // Team C
+            'FFF MF', // Team D (FFFMF)
+            'FFFFM', // Team E
+        ]
+    },
+    // Hospitality / Hotel - Front desk
+    {
+        name: 'Hotelaria / Hotel - Recepção 8h (3 Equipas)',
+        description: 'Hotel 24h - 3 equipas recepção, turnos 8h (manhã/tarde/noite) rotativo',
+        teams: 3,
+        shiftDuration: 8,
+        weeklyHoursContract: 40,
+        pattern: 'MMMTTTNNNFFF',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMTTTNNNFFF', // Team A
+            'NNNFFFMMMTTT', // Team B
+            'TTTNNNFFFMMM', // Team C
+        ]
+    },
+    // Hospitality / Hotel - Housekeeping
+    {
+        name: 'Hotelaria / Hotel - Governantas (2 Equipas)',
+        description: 'Limpeza quartos - 2 equipas, turno único manhã, fim-de-semana rotativo',
+        teams: 2,
+        shiftDuration: 8,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMMFF',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMMFF', // Team A: seg-sex, folgas fim-semana alternados
+            'FFMMMMM', // Team B: fim-semana, folgas seg-sex alternados
+        ]
+    },
+    // Retail / Supermarket
+    {
+        name: 'Retalho / Supermercado - Horário Alargado (4 Equipas)',
+        description: 'Supermercado 12h/dia - 4 equipas, turnos 6h/8h mistos, cobertura picos',
+        teams: 4,
+        shiftDuration: 7,
+        weeklyHoursContract: 35,
+        pattern: 'MMMTTTNNNFFF',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMTTTNNNFFF', // Team A: manhã + tarde
+            'FFFMMMTTTNNN', // Team B: tarde + noite
+            'NNNFFFMMMTTT', // Team C: noite + manhã
+            'TTTNNNFFFMMM', // Team D: swing shift
+        ]
+    },
+    // Logistics / Warehouse
+    {
+        name: 'Logística / Armazém - 3 Turnos 8h (3 Equipas)',
+        description: 'Centro distribuição - 3 equipas, 3 turnos 8h contínuos, sem paragem',
+        teams: 3,
+        shiftDuration: 8,
+        weeklyHoursContract: 40,
+        pattern: 'MMMTTTNNNFFF',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMTTTNNNFFF', // Team A
+            'NNNFFFMMMTTT', // Team B
+            'TTTNNNFFFMMM', // Team C
+        ]
+    },
+    // Transportation / Public Transit - Bus drivers
+    {
+        name: 'Transportes / Autocarros - Motoristas (5 Equipas)',
+        description: 'Rede urbana - 5 equipas motoristas, turnos 8h/10h mistos, picos manhã/tarde',
+        teams: 5,
+        shiftDuration: 8.5,
+        weeklyHoursContract: 39,
+        pattern: 'MMMTTTNNNFF',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMTTTNNNFF', // Team A: pico manhã
+            'FFMMMTTTNNN', // Team B: pico tarde
+            'NFFMMMTTTNN', // Team C: noite
+            'NNFMMMTTTNN', // Team D: swing
+            'NNNFFMMMTTT', // Team E: reserva/extra
+        ]
+    },
+    // Manufacturing / Automotive - Assembly line
+    {
+        name: 'Indústria Automóvel - Linha Montagem (4 Equipas)',
+        description: 'Fábrica automóvel - 4 equipas, 3 turnos 8h, pausa manutenção fim-semana',
+        teams: 4,
+        shiftDuration: 8,
+        weeklyHoursContract: 40,
+        pattern: 'MMMTTTNNNFFF',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMTTTNNNFFF', // Team A
+            'FFFMMMTTTNNN', // Team B
+            'NNNFFFMMMTTT', // Team C
+            'TTTNNNFFFMMM', // Team D
+        ]
+    },
+    // Chemical Plant - Continuous process
+    {
+        name: 'Química / Petroquímica - Processo Contínuo (4 Equipas)',
+        description: 'Planta química - 4 equipas, turnos 12h contínuos (Panama 2-2-3)',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 42,
+        pattern: 'DDNNOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'DDNNOO', // Team A
+            'OODDNN', // Team B
+            'NNOODD', // Team C
+            'DDOONN', // Team D
+        ]
+    },
+    // Water Treatment - 24/7 monitoring
+    {
+        name: 'Tratamento Água / ETAR - Monitoramento 24h (3 Equipas)',
+        description: 'Estação tratamento - 3 equipas, turnos 8h, monitoramento contínuo parâmetros',
+        teams: 3,
+        shiftDuration: 8,
+        weeklyHoursContract: 40,
+        pattern: 'MMMTTTNNNFFF',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMTTTNNNFFF', // Team A
+            'NNNFFFMMMTTT', // Team B
+            'TTTNNNFFFMMM', // Team C
+        ]
+    },
 ];

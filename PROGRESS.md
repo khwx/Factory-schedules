@@ -2,6 +2,30 @@
 
 Log de execuções autónomas do Bot Orquestrador (modelos free: `opencode/hy3-free`).
 
+## Round 85 — 2026-10-04
+**Objetivo:** Expandir presets industriais com +10 novos setores (saúde, hotelaria, retalho, logística, transportes, automóvel, química, tratamento de água).
+
+**Contexto:** A Round 70 adicionou 16 presets industriais (total 23). Havia oportunidade de cobrir mais setores 24/7 comuns: saúde/hospital (enfermagem e médicos), hotelaria (recepção e governantas), retalho/supermercado, logística/armazém, transportes públicos (autocarros), indústria automóvel (linha montagem), química/petroquímica (processo contínuo), tratamento de água/ETAR.
+
+**O que foi feito:**
+- `src/data/presetScenarios.ts`:
+  - Adicionados 10 novos presets com `teamPatterns` individuais:
+    1. **Saúde / Hospital - Enfermagem 12h (4 Equipas)** — rotação Panama 2-2-3
+    2. **Saúde / Hospital - Médicos Residentes (5 Equipas)** — plantão 24h escala 1x4
+    3. **Hotelaria / Hotel - Recepção 8h (3 Equipas)** — rotação 3 turnos semanal
+    4. **Hotelaria / Hotel - Governantas (2 Equipas)** — turno manhã, fim-semana rotativo
+    5. **Retalho / Supermercado - Horário Alargado (4 Equipas)** — turnos mistos 6h/8h picos
+    6. **Logística / Armazém - 3 Turnos 8h (3 Equipas)** — operação contínua 24/7
+    7. **Transportes / Autocarros - Motoristas (5 Equipas)** — picos manhã/tarde, turnos 8.5h
+    8. **Indústria Automóvel - Linha Montagem (4 Equipas)** — 3 turnos, pausa manutenção fim-semana
+    9. **Química / Petroquímica - Processo Contínuo (4 Equipas)** — turnos 12h Panama
+    10. **Tratamento Água / ETAR - Monitoramento 24h (3 Equipas)** — monitoramento contínuo parâmetros
+  - Total: 33 presets (era 23). Cobertura alargada a 8 novos setores.
+
+**Verificação:** `tsc -b` → exit 0; `vitest` → **646 passam**, 0 falham; `eslint` → 0 erros (52 warnings pré-existentes); build → OK.
+
+**Decisão registada:** Presets industriais expandidos de 23 para 33, cobrindo agora 18 setores distintos. Próximos passos sugeridos: dashboard de comparação QoL entre cenários (radar/linha lado a lado) — já existe como `QualityOfLifeComparison` —, ou melhorias de UX no seletor de presets (categorias/filtros por indústria).
+
 ## Round 84 — 2026-10-02
 **Objetivo:** Implementar visualização de tendência histórica de QoL (Quality of Life) — sugestão da Round 83.
 
