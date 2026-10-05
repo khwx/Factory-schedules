@@ -2,6 +2,35 @@ import React, { useState, useRef, useEffect, useCallback, useMemo } from 'react'
 import { BookOpen, ChevronDown, Plus, Filter, X } from 'lucide-react';
 import { PRESET_SCENARIOS, PresetScenario } from '../data/presetScenarios';
 import { useI18n } from '../i18n';
+import { Translations } from '../i18n/locales/pt';
+
+const INDUSTRY_KEY_MAP: Record<string, keyof Translations['presetSelector']['industries']> = {
+    'Indústria / Fabrico': 'manufacturing',
+    'Petróleo / Gás': 'oilGas',
+    'Segurança Privada': 'privateSecurity',
+    'Bombeiros': 'firefighters',
+    'Call Center': 'callCenter',
+    'Mineração': 'mining',
+    'Marítimo / Portuário': 'maritime',
+    'Aviação / Aeroportos': 'aviation',
+    'Indústria Alimentar': 'foodIndustry',
+    'Farmacêutica': 'pharma',
+    'Siderurgia / Metalurgia': 'steel',
+    'Energia / Elétrica': 'energy',
+    'Data Center / TI': 'dataCenter',
+    'Saúde / Hospitalar': 'healthcare',
+    'Hotelaria / Restauração': 'hospitality',
+    'Retalho / Comércio': 'retail',
+    'Logística / Transportes': 'logistics',
+    'Educação / Escolas': 'education',
+    'Administração Pública': 'publicAdmin',
+    'Telecomunicações / NOC': 'telecom',
+    'Serviços Emergência Médica': 'ems',
+    'Segurança Pública': 'publicSafety',
+    'Gestão de Resíduos': 'wasteManagement',
+    'Energia Renovável': 'renewableEnergy',
+    'Casino / Entretenimento': 'casino',
+};
 
 interface PresetSelectorProps {
     onLoadPreset: (preset: PresetScenario) => void;
@@ -26,6 +55,14 @@ const PresetSelector: React.FC<PresetSelectorProps> = ({ onLoadPreset }) => {
         if (selectedIndustry === 'all') return PRESET_SCENARIOS;
         return PRESET_SCENARIOS.filter(p => p.industry === selectedIndustry);
     }, [selectedIndustry]);
+
+    const getIndustryLabel = (industry: string): string => {
+        const key = INDUSTRY_KEY_MAP[industry];
+        if (key && t.presetSelector.industries[key]) {
+            return t.presetSelector.industries[key];
+        }
+        return industry;
+    };
 
     const close = useCallback(() => {
         setIsOpen(false);
@@ -142,7 +179,7 @@ const PresetSelector: React.FC<PresetSelectorProps> = ({ onLoadPreset }) => {
                         >
                             <option value="all">{t.presetSelector.allIndustries}</option>
                             {industries.filter(i => i !== 'all').map(industry => (
-                                <option key={industry} value={industry}>{industry}</option>
+                                <option key={industry} value={industry}>{getIndustryLabel(industry)}</option>
                             ))}
                         </select>
                         {selectedIndustry !== 'all' && (
@@ -183,7 +220,7 @@ const PresetSelector: React.FC<PresetSelectorProps> = ({ onLoadPreset }) => {
                                             <p className="text-sm text-gray-400 mb-2">{preset.description}</p>
                                             {preset.industry && (
                                                 <span className="inline-block px-2 py-0.5 text-xs bg-blue-900/50 text-blue-300 rounded mb-2">
-                                                    {preset.industry}
+                                                    {getIndustryLabel(preset.industry)}
                                                 </span>
                                             )}
                                             <div className="flex gap-4 text-xs text-gray-500 flex-wrap">
