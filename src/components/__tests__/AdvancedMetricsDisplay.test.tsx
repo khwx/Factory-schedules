@@ -2,6 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import AdvancedMetricsDisplay from '../AdvancedMetricsDisplay';
 import { AdvancedMetrics } from '../../types';
+import { I18nProvider } from '../../i18n';
 
 const metrics: AdvancedMetrics = {
     maxConsecutiveOffDays: 4,
@@ -21,30 +22,50 @@ const metrics: AdvancedMetrics = {
 
 describe('AdvancedMetricsDisplay', () => {
     it('should render work load section', () => {
-        render(<AdvancedMetricsDisplay metrics={metrics} scenarioName="Test Scenario" />);
+        render(
+            <I18nProvider>
+                <AdvancedMetricsDisplay metrics={metrics} scenarioName="Test Scenario" />
+            </I18nProvider>
+        );
         expect(screen.getByText(/Carga de Trabalho/i)).toBeInTheDocument();
     });
 
     it('should show consecutive work days', () => {
-        render(<AdvancedMetricsDisplay metrics={metrics} scenarioName="Test Scenario" />);
-        expect(screen.getByText('Máx. Dias de Trabalho Consecutivos')).toBeInTheDocument();
+        render(
+            <I18nProvider>
+                <AdvancedMetricsDisplay metrics={metrics} scenarioName="Test Scenario" />
+            </I18nProvider>
+        );
+        expect(screen.getByText('Max. Dias de Trabalho Consecutivos')).toBeInTheDocument();
         expect(screen.getAllByText('6').length).toBeGreaterThanOrEqual(1);
     });
 
     it('should show mini vacations count', () => {
-        render(<AdvancedMetricsDisplay metrics={metrics} scenarioName="Test Scenario" />);
-        expect(screen.getByText('Mini-Férias (3+ dias)')).toBeInTheDocument();
+        render(
+            <I18nProvider>
+                <AdvancedMetricsDisplay metrics={metrics} scenarioName="Test Scenario" />
+            </I18nProvider>
+        );
+        expect(screen.getByText('Mini-Ferias (3+ dias)')).toBeInTheDocument();
         expect(screen.getByText('3')).toBeInTheDocument();
     });
 
     it('should show total night shifts', () => {
-        render(<AdvancedMetricsDisplay metrics={metrics} scenarioName="Test Scenario" />);
+        render(
+            <I18nProvider>
+                <AdvancedMetricsDisplay metrics={metrics} scenarioName="Test Scenario" />
+            </I18nProvider>
+        );
         expect(screen.getByText('Total de Turnos Noturnos')).toBeInTheDocument();
         expect(screen.getByText('80')).toBeInTheDocument();
     });
 
     it('should show holiday list', () => {
-        render(<AdvancedMetricsDisplay metrics={metrics} scenarioName="Test Scenario" />);
+        render(
+            <I18nProvider>
+                <AdvancedMetricsDisplay metrics={metrics} scenarioName="Test Scenario" />
+            </I18nProvider>
+        );
         expect(screen.getByText(/Dia de Ano Novo/i)).toBeInTheDocument();
         expect(screen.getByText(/Natal/i)).toBeInTheDocument();
     });

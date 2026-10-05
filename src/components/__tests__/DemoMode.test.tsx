@@ -3,12 +3,17 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import DemoMode from '../DemoMode';
 import { PRESET_SCENARIOS } from '../../data/presetScenarios';
 import { Scenario } from '../../types';
+import { I18nProvider } from '../../i18n';
 
 describe('DemoMode', () => {
     const renderDemo = () => {
         const onSelectScenario = vi.fn();
         const onClose = vi.fn();
-        const utils = render(<DemoMode onSelectScenario={onSelectScenario} onClose={onClose} />);
+        const utils = render(
+            <I18nProvider>
+                <DemoMode onSelectScenario={onSelectScenario} onClose={onClose} />
+            </I18nProvider>
+        );
         return { onSelectScenario, onClose, ...utils };
     };
 

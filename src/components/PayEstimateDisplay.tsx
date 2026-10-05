@@ -2,6 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { Scenario } from '../types';
 import { calculateEstimatedPay, formatCurrency, PayConfig, DEFAULT_PAY_CONFIG } from '../utils/payCalculator';
 import { DollarSign, Moon, CalendarDays, TrendingUp } from 'lucide-react';
+import { useI18n } from '../i18n';
 
 interface PayEstimateDisplayProps {
     scenario: Scenario;
@@ -9,6 +10,8 @@ interface PayEstimateDisplayProps {
 }
 
 const PayEstimateDisplay: React.FC<PayEstimateDisplayProps> = ({ scenario, teamIndex = 0 }) => {
+    const { t } = useI18n();
+    
     const [hourlyRate, setHourlyRate] = useState(DEFAULT_PAY_CONFIG.hourlyRate);
     const [nightPremium, setNightPremium] = useState(DEFAULT_PAY_CONFIG.nightPremium);
     const [holidayPremium, setHolidayPremium] = useState(DEFAULT_PAY_CONFIG.holidayPremium);
@@ -20,7 +23,7 @@ const PayEstimateDisplay: React.FC<PayEstimateDisplayProps> = ({ scenario, teamI
         weekendPremium: 0,
     }), [hourlyRate, nightPremium, holidayPremium]);
 
-    const teamName = `Equipa ${String.fromCharCode(65 + teamIndex)}`;
+    const teamName = t.payEstimate.teamName.replace('{letter}', String.fromCharCode(65 + teamIndex));
     const pay = useMemo(
         () => calculateEstimatedPay(scenario, teamIndex, config),
         [scenario, teamIndex, config]
@@ -31,7 +34,7 @@ const PayEstimateDisplay: React.FC<PayEstimateDisplayProps> = ({ scenario, teamI
             <div className="p-4 border-b border-gray-700 flex items-center gap-2">
                 <DollarSign className="w-5 h-5 text-green-400" />
                 <h3 className="text-lg font-semibold text-white">
-                    Estimativa de Remuneracao — {teamName}
+                    {t.payEstimate.title.replace('{teamName}', teamName)}
                 </h3>
             </div>
 
@@ -40,7 +43,7 @@ const PayEstimateDisplay: React.FC<PayEstimateDisplayProps> = ({ scenario, teamI
                 <div className="grid grid-cols-3 gap-3 mb-4">
                     <div>
                         <label className="block text-xs text-gray-400 mb-1" htmlFor="hourly-rate">
-                            Valor/Hora (EUR)
+                            {t.payEstimate.hourlyRate}
                         </label>
                         <input
                             id="hourly-rate"
@@ -54,7 +57,7 @@ const PayEstimateDisplay: React.FC<PayEstimateDisplayProps> = ({ scenario, teamI
                     </div>
                     <div>
                         <label className="block text-xs text-gray-400 mb-1" htmlFor="night-premium">
-                            Premio Noturno (%)
+                            {t.payEstimate.nightPremium}
                         </label>
                         <input
                             id="night-premium"
@@ -69,7 +72,7 @@ const PayEstimateDisplay: React.FC<PayEstimateDisplayProps> = ({ scenario, teamI
                     </div>
                     <div>
                         <label className="block text-xs text-gray-400 mb-1" htmlFor="holiday-premium">
-                            Premio Feriado (%)
+                            {t.payEstimate.holidayPremium}
                         </label>
                         <input
                             id="holiday-premium"
@@ -89,7 +92,7 @@ const PayEstimateDisplay: React.FC<PayEstimateDisplayProps> = ({ scenario, teamI
                     <div className="bg-gray-700/50 p-3 rounded">
                         <div className="flex items-center gap-2 text-gray-400 mb-1">
                             <DollarSign className="w-4 h-4" />
-                            <span className="text-xs">Base</span>
+                            <span className="text-xs">{t.payEstimate.basePay}</span>
                         </div>
                         <div className="text-lg font-bold text-white">{formatCurrency(pay.regularPay)}</div>
                         <div className="text-xs text-gray-500">{pay.regularHours}h</div>
@@ -97,7 +100,7 @@ const PayEstimateDisplay: React.FC<PayEstimateDisplayProps> = ({ scenario, teamI
                     <div className="bg-gray-700/50 p-3 rounded">
                         <div className="flex items-center gap-2 text-gray-400 mb-1">
                             <Moon className="w-4 h-4" />
-                            <span className="text-xs">Noturno (+{Math.round(nightPremium * 100)}%)</span>
+                            <span className="text-xs">{t.payEstimate.nightPay.replace('{percent}', String(Math.round(nightPremium * 100)))}</span>
                         </div>
                         <div className="text-lg font-bold text-blue-400">{formatCurrency(pay.nightPay)}</div>
                         <div className="text-xs text-gray-500">{pay.nightHours}h</div>
@@ -105,7 +108,7 @@ const PayEstimateDisplay: React.FC<PayEstimateDisplayProps> = ({ scenario, teamI
                     <div className="bg-gray-700/50 p-3 rounded">
                         <div className="flex items-center gap-2 text-gray-400 mb-1">
                             <CalendarDays className="w-4 h-4" />
-                            <span className="text-xs">Feriados (+{Math.round(holidayPremium * 100)}%)</span>
+                            <span className="text-xs">{t.payEstimate.holidayPay.replace('{percent}', String(Math.round(holidayPremium * 100)))}</span>
                         </div>
                         <div className="text-lg font-bold text-yellow-400">{formatCurrency(pay.holidayPay)}</div>
                         <div className="text-xs text-gray-500">{pay.holidayHours}h</div>
@@ -113,15 +116,15 @@ const PayEstimateDisplay: React.FC<PayEstimateDisplayProps> = ({ scenario, teamI
                     <div className="bg-green-900/30 p-3 rounded border border-green-700/50">
                         <div className="flex items-center gap-2 text-gray-400 mb-1">
                             <TrendingUp className="w-4 h-4 text-green-400" />
-                            <span className="text-xs">Total Anual</span>
+                            <span className="text-xs">{t.payEstimate.totalAnnual}</span>
                         </div>
                         <div className="text-lg font-bold text-green-400">{formatCurrency(pay.totalPay)}</div>
-                        <div className="text-xs text-gray-500">{pay.totalHours}h / {formatCurrency(pay.monthlyAvg)}/mes</div>
+                        <div className="text-xs text-gray-500">{t.payEstimate.monthlyAvg.replace('{hours}', String(pay.totalHours)).replace('{amount}', formatCurrency(pay.monthlyAvg))}</div>
                     </div>
                 </div>
 
                 <p className="text-xs text-gray-500 mt-3">
-                    * Valores estimados. Consulte o CCT aplicavel para percentuais exatas (Art. 226 CT: 25% noturno, Art. 269 CT: feriado a dobrar).
+                    {t.payEstimate.disclaimer}
                 </p>
             </div>
         </div>

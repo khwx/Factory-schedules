@@ -2,6 +2,7 @@ import React from 'react';
 import { PRESET_SCENARIOS } from '../data/presetScenarios';
 import { Scenario } from '../types';
 import { PlayCircle, ArrowRight } from 'lucide-react';
+import { useI18n } from '../i18n';
 
 interface DemoModeProps {
     onSelectScenario: (scenario: Scenario) => void;
@@ -9,6 +10,8 @@ interface DemoModeProps {
 }
 
 const DemoMode: React.FC<DemoModeProps> = ({ onSelectScenario, onClose }) => {
+    const { t } = useI18n();
+    
     const handleLoadPreset = (preset: typeof PRESET_SCENARIOS[0]) => {
         const scenario: Scenario = {
             id: crypto.randomUUID(),
@@ -45,10 +48,10 @@ const DemoMode: React.FC<DemoModeProps> = ({ onSelectScenario, onClose }) => {
         <div className="bg-gray-800 rounded-lg border border-gray-700 p-6 mb-6">
             <div className="flex items-center gap-2 mb-4">
                 <PlayCircle className="w-5 h-5 text-green-400" />
-                <h3 className="text-lg font-semibold text-white">Modo Demonstracao</h3>
+                <h3 className="text-lg font-semibold text-white">{t.demo.title}</h3>
             </div>
             <p className="text-sm text-gray-400 mb-4">
-                Carregue cenarios de exemplo para explorar as funcionalidades do ShiftSim Factory.
+                {t.demo.loadExampleScenarios}
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mb-4">
@@ -60,7 +63,7 @@ const DemoMode: React.FC<DemoModeProps> = ({ onSelectScenario, onClose }) => {
                     >
                         <div className="font-medium text-white text-sm">{preset.name}</div>
                         <div className="text-xs text-gray-400 mt-1">
-                            {preset.teams} equipas | {preset.shiftDuration}h | {preset.pattern.length} dias
+                            {t.demo.scenariosCount.replace('{count}', String(preset.teams)).replace('{hours}', String(preset.shiftDuration)).replace('{days}', String(preset.pattern.length))}
                         </div>
                     </button>
                 ))}
@@ -71,14 +74,14 @@ const DemoMode: React.FC<DemoModeProps> = ({ onSelectScenario, onClose }) => {
                     onClick={handleLoadAll}
                     className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm transition-colors"
                 >
-                    Carregar Todos os Cenarios
+                    {t.demo.loadAllScenarios}
                     <ArrowRight className="w-4 h-4" />
                 </button>
                 <button
                     onClick={onClose}
                     className="bg-gray-700 hover:bg-gray-600 text-gray-300 px-4 py-2 rounded-lg text-sm transition-colors"
                 >
-                    Fechar
+                    {t.demo.close}
                 </button>
             </div>
         </div>
