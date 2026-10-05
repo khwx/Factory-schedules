@@ -991,6 +991,7 @@ holidayCalendar: {
     contract: 'Vertrag',
     pattern: 'Muster',
     loadPreset: 'Laden',
+    noScenariosFound: 'Keine Szenarien für diese Branche gefunden.',
     industries: {
       manufacturing: 'Fertigung',
       oilGas: 'Öl & Gas',

@@ -196,7 +196,7 @@ const PresetSelector: React.FC<PresetSelectorProps> = ({ onLoadPreset }) => {
                     <div className="max-h-[400px] overflow-y-auto">
                         {filteredPresets.length === 0 ? (
                             <div className="p-4 text-center text-gray-500">
-                                Nenhum cenario encontrado para esta industria.
+                                {t.presetSelector.noScenariosFound}
                             </div>
                         ) : (
                             filteredPresets.map((preset, index) => (

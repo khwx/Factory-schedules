@@ -989,6 +989,7 @@ export const pt = {
     contract: 'Contrato',
     pattern: 'Padrao',
     loadPreset: 'Carregar',
+    noScenariosFound: 'Nenhum cenario encontrado para esta industria.',
     industries: {
       manufacturing: 'Industria / Fabrico',
       oilGas: 'Petroleo / Gas',

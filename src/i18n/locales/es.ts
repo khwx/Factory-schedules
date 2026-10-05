@@ -991,6 +991,7 @@ closeCalendar: 'Cerrar calendario',
     contract: 'Contrato',
     pattern: 'Patrón',
     loadPreset: 'Cargar',
+    noScenariosFound: 'No se encontraron escenarios para esta industria.',
     industries: {
       manufacturing: 'Fabricacion',
       oilGas: 'Petroleo / Gas',

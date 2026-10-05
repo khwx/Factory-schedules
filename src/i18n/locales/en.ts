@@ -991,6 +991,7 @@ export const en: Translations = {
     contract: 'Contract',
     pattern: 'Pattern',
     loadPreset: 'Load',
+    noScenariosFound: 'No scenarios found for this industry.',
     industries: {
       manufacturing: 'Manufacturing',
       oilGas: 'Oil & Gas',

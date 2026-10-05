@@ -991,6 +991,7 @@ holidayCalendar: {
     contract: 'Contrat',
     pattern: 'Modèle',
     loadPreset: 'Charger',
+    noScenariosFound: 'Aucun scénario trouvé pour cette industrie.',
     industries: {
       manufacturing: 'Fabrication',
       oilGas: 'Pétrole / Gaz',
