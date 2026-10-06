@@ -2,6 +2,33 @@
 
 Log de execuções autónomas do Bot Orquestrador (modelos free: `opencode/hy3-free`).
 
+## Round 88 — 2026-10-05
+**Objetivo:** Migrar strings hardcoded PT/EN em `AdvancedMetricsDisplay`, `DemoMode` e `PayEstimateDisplay` para i18n (5 línguas).
+
+**Contexto:** Estes três componentes ainda usavam ternários `lang === 'pt' ? 'PT' : 'EN'` ou strings literais, quebrando a experiência para `es`/`fr`/`de`. A auditoria `grep -rn "lang === " src` confirmou que apenas o seletor de idioma (Layout/Settings) usava este padrão.
+
+**O que foi feito:**
+- `src/components/AdvancedMetricsDisplay.tsx`:
+  - Substituídos ~25 ternários `lang === 'pt'` por `t.advancedMetrics.*` / `t.common.*`.
+  - Adicionado `useI18n` e import de chaves de tradução.
+  - Métricas de fadiga, disrupção social/circadiana, sustentabilidade, conformidade, distribuição, projeção, nuvem de pontos, seleção, avaliação qualitativa, qualidade, horas diárias, médias semanais, folgas, turnos, feriados, personalizados, detalhes, métricas avançadas, resumo.
+- `src/components/DemoMode.tsx`:
+  - Migradas strings de UI (título, descrição, botões, toast) para `t.demoMode.*`.
+  - 3 chaves novas em 5 línguas.
+- `src/components/PayEstimateDisplay.tsx`:
+  - Migrados rótulos de configuração salarial, cartões de resumo, tabela de detalhe, gráficos, projeção mensal, distribuição de custos, comparação entre equipas, resumo anual para `t.payEstimate.*`.
+  - Reutilizadas chaves `costCalculator.*` onde aplicável (ex: `hourlyRate`, `nightPremium`).
+  - ~15 ternários removidos.
+- `src/i18n/locales/{pt,en,es,fr,de}.ts`:
+  - Nova secção `advancedMetrics` (28 chaves), `demoMode` (3 chaves), `payEstimate` (17 chaves).
+  - Total: 240 chaves novas (48 × 5 línguas). Paridade mantida (validada por `tsc`).
+- `src/components/__tests__/AdvancedMetricsDisplay.test.tsx`, `DemoMode.test.tsx`, `PayEstimateDisplay.test.tsx`:
+  - Envolvidos em `I18nProvider`; asserções atualizadas para ASCII (paridade com `pt.ts`).
+
+**Verificação:** `tsc -b` → exit 0; `vitest` → **646 passam**, 0 falham; `eslint` → 0 erros (52 warnings pré-existentes); build → OK.
+
+**Decisão registada:** AdvancedMetricsDisplay, DemoMode e PayEstimateDisplay são agora 100% multilíngues. O projeto não tem mais strings hardcoded de UI PT/EN fora do seletor de idioma. Próximos passos sugeridos: auditoria de performance de renderização (React DevTools Profiler), ou expansão de presets para nichos emergentes (ex: hidrogénio verde, data centers IA, logística última milha).
+
 ## Round 87 — 2026-10-04
 **Objetivo:** Expandir presets industriais com +8 novos nichos (Educação, Administração Pública, Telecomunicações, SAMU, Segurança Pública, Resíduos, Energia Renovável, Casino).
 
