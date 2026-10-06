@@ -87,3 +87,6 @@ Corrigir avisos de `react-hooks/exhaustive-deps` em componentes principais (pote
 
 ## 11. Presets industriais — nichos emergentes (Round 89)
 - [x] **+8 novos presets emergentes:** Hidrogénio Verde, Data Center IA, Logística Última Milha, Biotecnologia, Aeroespacial, Semicondutores, Veículos Elétricos/Baterias, Cibersegurança/SOC — total 49 presets, 34 indústrias cobertas (concluído Round 89).
+
+## 12. Presets industriais — infraestruturas e serviços essenciais (Round 90)
+- [x] **+8 novos presets infraestruturas:** Ferroviário/Tráfego, Portos/Logística Portuária, Água e Saneamento, Gás Natural/Distribuição, Telecom/Serviços Campo, Serviços Funerários, Segurança Eletrónica/Central Alarmes, Manutenção Industrial/Facilities — total 57 presets, 41 indústrias cobertas (concluído Round 90).

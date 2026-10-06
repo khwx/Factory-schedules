@@ -767,4 +767,139 @@ export const PRESET_SCENARIOS: PresetScenario[] = [
         ],
         industry: 'Cibersegurança'
     },
+    // Ferroviário / Transportes Ferroviários - Centro Controle Tráfego
+    {
+        name: 'Ferroviário - Centro Controle Tráfego (4 Equipas)',
+        description: 'Centro de controle tráfego ferroviário - 4 equipas, turnos 12h (Panama), sinalização/controle contínuo',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 42,
+        pattern: 'DDNNOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'DDNNOO', // Team A: controle tráfego principal
+            'OODDNN', // Team B: sinalização/desvio
+            'NNOODD', // Team C: monitoramento linha/estações
+            'DDOONN', // Team D: emergência/incidentes via
+        ],
+        industry: 'Ferroviário'
+    },
+    // Portos / Logística Portuária - Operação 24/7
+    {
+        name: 'Portos - Operação 24/7 (4 Equipas)',
+        description: 'Terminal portuário contentores - 4 equipas, turnos 12h (Panama), guindastes/logística contínua',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 42,
+        pattern: 'DDNNOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'DDNNOO', // Team A: operação guindastes cais
+            'OODDNN', // Team B: pátio/contentores (stacking)
+            'NNOODD', // Team C: gate/entrada-saída caminhões
+            'DDOONN', // Team D: manutenção equipamentos/turno noite
+        ],
+        industry: 'Portos / Logística Portuária'
+    },
+    // Água e Saneamento - Tratamento 24h
+    {
+        name: 'Água e Saneamento - Tratamento 24h (3 Equipas)',
+        description: 'ETA/ETE tratamento água/esgoto - 3 equipas, turnos 8h, monitoramento parâmetros contínuo',
+        teams: 3,
+        shiftDuration: 8,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMTTTTNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMTTTTNNNNOOOO', // Team A: operação ETA (tratamento água)
+            'NNNNOOOOMMMMTTTT', // Team B: operação ETE (tratamento esgoto)
+            'TTTTNNNNOOOOMMMM', // Team C: laboratório/controle qualidade + SCADA
+        ],
+        industry: 'Água e Saneamento'
+    },
+    // Gás Natural - Distribuição Emergência
+    {
+        name: 'Gás Natural - Distribuição Emergência (4 Equipas)',
+        description: 'Distribuição gás natural - 4 equipas, turnos 12h (Panama), resposta emergência + monitoramento rede',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 42,
+        pattern: 'DDNNOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'DDNNOO', // Team A: centro controle distribuição (SCADA)
+            'OODDNN', // Team B: equipes campo - resposta vazamentos
+            'NNOODD', // Team C: manutenção preventiva/corretiva rede
+            'DDOONN', // Team D: emergência 24h / plantão regulação pressão
+        ],
+        industry: 'Gás Natural'
+    },
+    // Telecomunicações - Serviços de Campo
+    {
+        name: 'Telecom - Serviços Campo (5 Equipas)',
+        description: 'Instalação/manutenção fibra/5G - 5 equipas, turnos 8h/10h mistos, picos demanda, agendamento dinâmico',
+        teams: 5,
+        shiftDuration: 9,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMFFFFTTTTNNNN',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMFFFFTTTTNNNN', // Team A: instalação fibra residencial (manhã)
+            'TTTTNNNNMMMMFFFF', // Team B: manutenção rede backbone (tarde/noite)
+            'NNNNMMMMFFFFTTTT', // Team C: ativação 5K/small cells (noturno)
+            'FFFFTTTTNNNNMMMM', // Team D: reparo emergencial (plantão rotativo)
+            'MMMMMMMMFFFFFFFF', // Team E: comissionamento/TESTES (turno estendido 10h)
+        ],
+        industry: 'Telecom / Serviços Campo'
+    },
+    // Serviços Funerários - Plantão 24h
+    {
+        name: 'Serviços Funerários - Plantão 24h (3 Equipas)',
+        description: 'Funerária/crematório - 3 equipas, turnos 12h/24h mistos, plantão remoção/atendimento contínuo',
+        teams: 3,
+        shiftDuration: 16,
+        weeklyHoursContract: 40,
+        pattern: 'DDNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'DDNNOOOO', // Team A: remoção/translado (diurno 12h)
+            'OODDNNNN', // Team B: preparação/velório + plantão noturno 24h
+            'NNNNOODD', // Team C: cremação/operação forno + atendimento famílias
+        ],
+        industry: 'Serviços Funerários'
+    },
+    // Segurança Eletrónica - Central Alarmes
+    {
+        name: 'Segurança Eletrónica - Central Alarmes (4 Equipas)',
+        description: 'Central monitoramento alarmes/CCTV - 4 equipas, turnos 12h (Panama), triagem eventos 24/7',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 42,
+        pattern: 'DDNNOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'DDNNOO', // Team A: triagem alarmes Tier 1 (falso/verdadeiro)
+            'OODDNN', // Team B: despacho viaturas/acordo contratual
+            'NNOODD', // Team C: monitoramento vídeo/CCTV ativo
+            'DDOONN', // Team D: escalação polícia/bombeiros + relatórios
+        ],
+        industry: 'Segurança Eletrónica'
+    },
+    // Manutenção Industrial - Facilities 24/7
+    {
+        name: 'Manutenção Industrial - Facilities 24/7 (4 Equipas)',
+        description: 'Facilities/manutenção fábrica - 4 equipas, turnos 12h (Panama), preventiva/preditiva/corretiva contínua',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 42,
+        pattern: 'DDNNOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'DDNNOO', // Team A: manutenção preventiva programada (CMMS)
+            'OODDNN', // Team B: preditiva (vibração/termografia/óleo)
+            'NNOODD', // Team C: corretiva emergencial / quebra-parada
+            'DDOONN', // Team D: utilidades (vapor/ar comprimido/água gelada) + facilities
+        ],
+        industry: 'Manutenção Industrial'
+    },
 ];

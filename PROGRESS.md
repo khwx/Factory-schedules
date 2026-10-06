@@ -2,6 +2,30 @@
 
 Log de execuções autónomas do Bot Orquestrador (modelos free: `opencode/hy3-free`).
 
+## Round 90 — 2026-10-06
+**Objetivo:** Expandir presets industriais com +8 novos nichos de infraestruturas e serviços essenciais (Ferroviário, Portos, Água e Saneamento, Gás Natural, Telecom Campo, Serviços Funerários, Segurança Eletrónica, Manutenção Industrial).
+
+**Contexto:** A Round 89 completou a expansão para 49 presets cobrindo 34 indústrias com foco em tecnologia avançada e transição energética. Havia oportunidade de cobrir setores de infraestrutura crítica e serviços essenciais 24/7: ferroviário (centro controle tráfego), portos/logística portuária (terminais contentores), água e saneamento (ETA/ETE), gás natural (distribuição/emergência), telecom serviços campo (instalação fibra/5G), serviços funerários (plantão 24h), segurança eletrónica (central alarmes/CCTV), manutenção industrial/facilities (preventiva/preditiva/corretiva).
+
+**O que foi feito:**
+- `src/data/presetScenarios.ts`:
+  - Adicionados 8 novos presets com `teamPatterns` individuais:
+    1. **Ferroviário - Centro Controle Tráfego (4 Equipas)** — turnos 12h Panama, sinalização/controle contínuo
+    2. **Portos - Operação 24/7 (4 Equipas)** — turnos 12h Panama, guindastes/logística contínua
+    3. **Água e Saneamento - Tratamento 24h (3 Equipas)** — turnos 8h, monitoramento parâmetros contínuo
+    4. **Gás Natural - Distribuição Emergência (4 Equipas)** — turnos 12h Panama, resposta emergência + monitoramento rede
+    5. **Telecom - Serviços Campo (5 Equipas)** — turnos 8h/10h mistos, picos demanda, agendamento dinâmico
+    6. **Serviços Funerários - Plantão 24h (3 Equipas)** — turnos 12h/24h mistos, plantão remoção/atendimento contínuo
+    7. **Segurança Eletrónica - Central Alarmes (4 Equipas)** — turnos 12h Panama, triagem eventos 24/7
+    8. **Manutenção Industrial - Facilities 24/7 (4 Equipas)** — turnos 12h Panama, preventiva/preditiva/corretiva contínua
+  - Total: 57 presets (era 49). Cobertura alargada a 8 novos setores (total 41 indústrias distintas).
+- `src/i18n/locales/{pt,en,es,fr,de}.ts`:
+  - Novas chaves `presetSelector.industries.*` para as 8 novas indústrias em 5 línguas (40 chaves novas).
+
+**Verificação:** `npm run build` → OK; `vitest` → **646 passam**, 0 falham; `eslint` → 0 erros (52 warnings pré-existentes); typecheck → OK.
+
+**Decisão registada:** Presets industriais expandidos de 49 para 57, cobrindo agora 41 setores distintos incluindo infraestruturas críticas e serviços essenciais 24/7. Próximos passos sugeridos: auditoria de performance de renderização (React DevTools Profiler), ou dashboard de comparação QoL entre cenários (radar/linha lado a lado já existe como `QualityOfLifeComparison`).
+
 ## Round 89 — 2026-10-06
 **Objetivo:** Expandir presets industriais com +8 novos nichos emergentes (Hidrogénio Verde, Data Center IA, Logística Última Milha, Biotecnologia, Aeroespacial, Semicondutores, Veículos Elétricos/Baterias, Cibersegurança/SOC).
 
