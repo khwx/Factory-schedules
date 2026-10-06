@@ -90,3 +90,6 @@ Corrigir avisos de `react-hooks/exhaustive-deps` em componentes principais (pote
 
 ## 12. Presets industriais — infraestruturas e serviços essenciais (Round 90)
 - [x] **+8 novos presets infraestruturas:** Ferroviário/Tráfego, Portos/Logística Portuária, Água e Saneamento, Gás Natural/Distribuição, Telecom/Serviços Campo, Serviços Funerários, Segurança Eletrónica/Central Alarmes, Manutenção Industrial/Facilities — total 57 presets, 41 indústrias cobertas (concluído Round 90).
+
+## 13. Presets industriais — serviços de emergência e segurança crítica (Round 91)
+- [x] **+8 novos presets críticos:** Atendimento Emergência 112, Controle Tráfego Aéreo, Metropolitano/Metro, Oleodutos/Gasodutos, Central Nuclear, Banco de Sangue/Transfusão, Procura Órgãos/Transplante, Estabelecimento Prisional — total 65 presets, 49 indústrias cobertas (concluído Round 91).

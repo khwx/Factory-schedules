@@ -902,4 +902,139 @@ export const PRESET_SCENARIOS: PresetScenario[] = [
         ],
         industry: 'Manutenção Industrial'
     },
+    // Emergency Dispatch / 911 - Central de Atendimento
+    {
+        name: 'Emergency Dispatch - Central 911 (4 Equipas)',
+        description: 'Central atendimento emergência 911/112 - 4 equipas, turnos 12h (Panama), triagem chamadas despacho polícia/bombeiros/EMS',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 42,
+        pattern: 'DDNNOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'DDNNOO', // Team A: atendimento chamadas 911/112 (call taker)
+            'OODDNN', // Team B: despacho recursos polícia/bombeiros/EMS (dispatcher)
+            'NNOODD', // Team C: supervisão qualidade + backup rádio/telefone
+            'DDOONN', // Team D: formação contínua + gestão incidentes críticos
+        ],
+        industry: 'Emergency Dispatch'
+    },
+    // Air Traffic Control - Controle Tráfego Aéreo
+    {
+        name: 'Controle Tráfego Aéreo - ATC (4 Equipas)',
+        description: 'Torre/APP/ACC controlo tráfego aéreo - 4 equipas, turnos 12h (Panama), separação aeronaves + coordenação espaço aéreo',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'DDNNOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'DDNNOO', // Team A: torre aeródromo (local/aproximação)
+            'OODDNN', // Team B: controlo aproximação (APP) radar
+            'NNOODD', // Team C: controlo área (ACC) rota/overflight
+            'DDOONN', // Team D: coordenação FIR/UIR + gestão fluxo (ATFM)
+        ],
+        industry: 'Controle Tráfego Aéreo'
+    },
+    // Subway/Metro Operations - Metropolitano
+    {
+        name: 'Metropolitano - Operação 24h (4 Equipas)',
+        description: 'Metro/Subway operação contínua - 4 equipas, turnos 12h (Panama), condução trens + sinalização + estações',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'DDNNOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'DDNNOO', // Team A: operadores trens (condutores/ATO)
+            'OODDNN', // Team B: controlo centro operações (OCC/SCADA)
+            'NNOODD', // Team C: estações/acesso passageiros + bilhética
+            'DDOONN', // Team D: manutenção via/energia/sinalização (janela noturna)
+        ],
+        industry: 'Metropolitano'
+    },
+    // Pipeline Operations - Oleodutos/Gasodutos
+    {
+        name: 'Oleodutos/Gasodutos - Monitoramento 24h (4 Equipas)',
+        description: 'Centros controle oleodutos/gasodutos - 4 equipas, turnos 12h (Panama), SCADA detecção vazamentos + bombas/compressores',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 42,
+        pattern: 'DDNNOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'DDNNOO', // Team A: monitoramento SCADA pressão/vazão/temperatura
+            'OODDNN', // Team B: operação bombas/compressores + válvulas bloqueio
+            'NNOODD', // Team C: detecção vazamentos (fibra óptica/pressão) + resposta
+            'DDOONN', // Team D: manutenção preventiva catódica/pigging + facilities
+        ],
+        industry: 'Oleodutos / Gasodutos'
+    },
+    // Nuclear Power Plant Operations - Central Nuclear
+    {
+        name: 'Central Nuclear - Operação 24/7 (5 Equipas)',
+        description: 'Central nuclear energia - 5 equipas, turnos 8h/12h mistos, operação reator + segurança radiológica + regulatório',
+        teams: 5,
+        shiftDuration: 8,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMTTTTNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMTTTTNNNNOOOO', // Team A: operadores sala controle (SRO/RO) - licença NRC
+            'NNNNOOOOMMMMTTTT', // Team B: engenharia reator + proteção radiológica (RP)
+            'TTTTNNNNOOOOMMMM', // Team C: sistemas segurança (ECCS/RHR/EDG) + testes vigilância
+            'OOOOMMMMTTTTNNNN', // Team D: química/química radiológica + tratamento resíduos
+            'MMMMMMMMMMMMMMMM', // Team E: turno longo (12h) fim semana/feriado - supervisor plantão
+        ],
+        industry: 'Central Nuclear'
+    },
+    // Blood Bank / Transfusion Services - Banco de Sangue
+    {
+        name: 'Banco de Sangue - Serviços Transfusão 24h (3 Equipas)',
+        description: 'Banco sangue/hemoterapia - 3 equipas, turnos 8h/12h mistos, colheita/processamento/distribuição + imunohematologia',
+        teams: 3,
+        shiftDuration: 8,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMTTTTNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMTTTTNNNNOOOO', // Team A: colheita doadores (móvel/fixo) + triagem clínica
+            'NNNNOOOOMMMMTTTT', // Team B: processamento componentes (hemácias/plasma/plaquetas) + QC
+            'TTTTNNNNOOOOMMMM', // Team C: imunohematologia (tipagem/triagem anticorpos) + emissão hemoderivados
+        ],
+        industry: 'Banco de Sangue'
+    },
+    // Organ Procurement / Transplant Coordination - Procura Órgãos
+    {
+        name: 'Procura Órgãos - Coordenação Transplante 24h (3 Equipas)',
+        description: 'OPO/organ procurement - 3 equipas, turnos 12h/24h mistos, avaliação doadores + cirurgia recuperação + logística órgãos',
+        teams: 3,
+        shiftDuration: 16,
+        weeklyHoursContract: 40,
+        pattern: 'DDNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'DDNNOOOO', // Team A: coordenação hospitalar (identificação/avaliação doadores)
+            'OODDNNNN', // Team B: recuperação cirúrgica órgãos (equipa móvel) + preservação
+            'NNNNOODD', // Team C: alocação/match (lista espera) + transporte/logística fria
+        ],
+        industry: 'Procura Órgãos'
+    },
+    // Correctional Facility / Prison Operations - Estabelecimento Prisional
+    {
+        name: 'Estabelecimento Prisional - Segurança 24/7 (4 Equipas)',
+        description: 'Prisão/estabelecimento prisional - 4 equipas, turnos 12h (Panama), vigilância perímetro + celas + escoltas + reinserção',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 42,
+        pattern: 'DDNNOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'DDNNOO', // Team A: vigilância muralhas/perímetro + torres + CCTV
+            'OODDNN', // Team B: gestão celas/pavilhões (contagens/revistas/reações)
+            'NNOODD', // Team C: escoltas externas (hospital/tribunal/transferências) + admissões
+            'DDOONN', // Team D: programas reinserção (educação/trabalho/terapia) + administração
+        ],
+        industry: 'Estabelecimento Prisional'
+    },
 ];

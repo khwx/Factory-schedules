@@ -2,6 +2,30 @@
 
 Log de execuções autónomas do Bot Orquestrador (modelos free: `opencode/hy3-free`).
 
+## Round 91 — 2026-10-06
+**Objetivo:** Expandir presets industriais com +8 novos nichos de serviços de emergência e segurança crítica (Atendimento Emergência 112, Controle Tráfego Aéreo, Metropolitano/Metro, Oleodutos/Gasodutos, Central Nuclear, Banco de Sangue/Transfusão, Procura Órgãos/Transplante, Estabelecimento Prisional).
+
+**Contexto:** A Round 90 completou a expansão para 57 presets cobrindo 41 indústrias com foco em infraestruturas críticas e serviços essenciais. Havia oportunidade de cobrir setores de resposta a emergências, segurança nacional e saúde crítica 24/7: central de atendimento 112 (triagem/despacho polícia/bombeiros/EMS), controle tráfego aéreo (torre/APP/ACC separação aeronaves), metropolitano/metro (operação trens/sinalização/estações 24h), oleodutos/gasodutos (SCADA detecção vazamentos/bombas), central nuclear (operação reator/segurança radiológica/regulatório), banco de sangue (colheita/processamento/imunohematologia), procura órgãos (avaliação doadores/recuperação cirúrgica/logística fria), estabelecimento prisional (vigilância/escoltas/reinserção).
+
+**O que foi feito:**
+- `src/data/presetScenarios.ts`:
+  - Adicionados 8 novos presets com `teamPatterns` individuais:
+    1. **Emergency Dispatch - Central 911 (4 Equipas)** — turnos 12h Panama, triagem chamadas + despacho recursos
+    2. **Controle Tráfego Aéreo - ATC (4 Equipas)** — turnos 12h Panama, torre/APC/ACC + ATFM
+    3. **Metropolitano - Operação 24h (4 Equipas)** — turnos 12h Panama, condução/OCC/estações/manutenção via
+    4. **Oleodutos/Gasodutos - Monitoramento 24h (4 Equipas)** — turnos 12h Panama, SCADA/bombas/vazamentos/catódica
+    5. **Central Nuclear - Operação 24/7 (5 Equipas)** — turnos 8h/12h mistos, sala controle/RP/sistemas segurança/química/supervisor
+    6. **Banco de Sangue - Serviços Transfusão 24h (3 Equipas)** — turnos 8h, colheita/processamento/imunohematologia
+    7. **Procura Órgãos - Coordenação Transplante 24h (3 Equipas)** — turnos 12h/24h mistos, coordenação hospitalar/recuperação/logística
+    8. **Estabelecimento Prisional - Segurança 24/7 (4 Equipas)** — turnos 12h Panama, perímetro/celas/escoltas/reinserção
+  - Total: 65 presets (era 57). Cobertura alargada a 8 novos setores (total 49 indústrias distintas).
+- `src/i18n/locales/{pt,en,es,fr,de}.ts`:
+  - Novas chaves `presetSelector.industries.*` para as 8 novas indústrias em 5 línguas (40 chaves novas).
+
+**Verificação:** `npm run build` → OK; `vitest` → **646 passam**, 0 falham; `eslint` → 0 erros (52 warnings pré-existentes); typecheck → OK.
+
+**Decisão registada:** Presets industriais expandidos de 57 para 65, cobrindo agora 49 setores distintos incluindo serviços de emergência, segurança nacional, saúde crítica e operações de infraestrutura linear. Próximos passos sugeridos: auditoria de performance de renderização (React DevTools Profiler), ou expansão para setores de defesa/aeroespacial operacional (centro operações espaciais, defesa aérea, ciberdefesa militar).
+
 ## Round 90 — 2026-10-06
 **Objetivo:** Expandir presets industriais com +8 novos nichos de infraestruturas e serviços essenciais (Ferroviário, Portos, Água e Saneamento, Gás Natural, Telecom Campo, Serviços Funerários, Segurança Eletrónica, Manutenção Industrial).
 
