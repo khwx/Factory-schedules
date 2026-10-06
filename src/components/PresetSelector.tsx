@@ -186,7 +186,7 @@ const PresetSelector: React.FC<PresetSelectorProps> = ({ onLoadPreset }) => {
                             <button
                                 onClick={() => setSelectedIndustry('all')}
                                 className="text-gray-400 hover:text-white p-1"
-                                aria-label="Limpar filtro"
+                                aria-label={t.presetSelector.clearFilter}
                             >
                                 <X className="w-4 h-4" />
                             </button>

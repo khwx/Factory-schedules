@@ -1040,6 +1040,7 @@ holidayCalendar: {
     pattern: 'Modèle',
     loadPreset: 'Charger',
     noScenariosFound: 'Aucun scénario trouvé pour cette industrie.',
+    clearFilter: 'Effacer le filtre',
     industries: {
       manufacturing: 'Fabrication',
       oilGas: 'Pétrole / Gaz',

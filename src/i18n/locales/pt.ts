@@ -1038,6 +1038,7 @@ export const pt = {
     pattern: 'Padrao',
     loadPreset: 'Carregar',
     noScenariosFound: 'Nenhum cenario encontrado para esta industria.',
+    clearFilter: 'Limpar filtro',
     industries: {
       manufacturing: 'Industria / Fabrico',
       oilGas: 'Petroleo / Gas',

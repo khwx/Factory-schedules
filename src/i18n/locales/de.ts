@@ -1040,6 +1040,7 @@ holidayCalendar: {
     pattern: 'Muster',
     loadPreset: 'Laden',
     noScenariosFound: 'Keine Szenarien für diese Branche gefunden.',
+    clearFilter: 'Filter löschen',
     industries: {
       manufacturing: 'Fertigung',
       oilGas: 'Öl & Gas',

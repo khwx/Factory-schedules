@@ -1040,6 +1040,7 @@ closeCalendar: 'Cerrar calendario',
     pattern: 'Patrón',
     loadPreset: 'Cargar',
     noScenariosFound: 'No se encontraron escenarios para esta industria.',
+    clearFilter: 'Limpiar filtro',
     industries: {
       manufacturing: 'Fabricacion',
       oilGas: 'Petroleo / Gas',

@@ -1040,6 +1040,7 @@ export const en: Translations = {
     pattern: 'Pattern',
     loadPreset: 'Load',
     noScenariosFound: 'No scenarios found for this industry.',
+    clearFilter: 'Clear filter',
     industries: {
       manufacturing: 'Manufacturing',
       oilGas: 'Oil & Gas',
