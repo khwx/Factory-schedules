@@ -2,6 +2,30 @@
 
 Log de execuções autónomas do Bot Orquestrador (modelos free: `opencode/hy3-free`).
 
+## Round 89 — 2026-10-06
+**Objetivo:** Expandir presets industriais com +8 novos nichos emergentes (Hidrogénio Verde, Data Center IA, Logística Última Milha, Biotecnologia, Aeroespacial, Semicondutores, Veículos Elétricos/Baterias, Cibersegurança/SOC).
+
+**Contexto:** A Round 88 completou a migração i18n de todos os componentes UI. A Round 87 expandiu para 41 presets cobrindo 26 indústrias. Havia oportunidade de cobrir setores de tecnologia avançada e transição energética: hidrogénio verde (eletrólise 24/7), data centers IA (clusters GPU/cooling), logística última milha (entregas e-commerce picos), biotecnologia (bioprocessamento contínuo GMP), aeroespacial (centro controle missão), semicondutores (litografia EUV sala limpa), veículos elétricos (gigafactory baterias), cibersegurança (SOC 24/7 monitoramento ameaças).
+
+**O que foi feito:**
+- `src/data/presetScenarios.ts`:
+  - Adicionados 8 novos presets com `teamPatterns` individuais:
+    1. **Hidrogénio Verde - Eletrólise 24/7 (4 Equipas)** — turnos 12h Panama, monitoramento eletrólitos contínuo
+    2. **Data Center IA - Clusters GPU 24/7 (4 Equipas)** — turnos 12h Panama, monitoramento GPU/cooling contínuo
+    3. **Logística Última Milha - Entregas (5 Equipas)** — turnos 8h/10h mistos, picos e-commerce, rotas dinâmicas
+    4. **Biotecnologia - Bioprocessamento Contínuo (4 Equipas)** — turnos 12h Panama, fermentadores/biorreatores 24/7 GMP
+    5. **Aeroespacial - Centro Controle Missão (4 Equipas)** — turnos 12h Panama, telemetria/veículo lançamento
+    6. **Semicondutores - Fab 24/7 Litografia (4 Equipas)** — turnos 12h Panama, scanners EUV sala limpa contínua
+    7. **Veículos Elétricos - Gigafactory Baterias (5 Equipas)** — turnos 8h/12h mistos, linha eletrodo/célula contínua
+    8. **Cibersegurança - SOC 24/7 (4 Equipas)** — turnos 12h Panama, triagem/investigação/threat hunting/incident response
+  - Total: 49 presets (era 41). Cobertura alargada a 8 novos setores (total 34 indústrias distintas).
+- `src/i18n/locales/{pt,en,es,fr,de}.ts`:
+  - Novas chaves `presetSelector.industries.*` para as 8 novas indústrias em 5 línguas (40 chaves novas).
+
+**Verificação:** `tsc -b` → exit 0; `vitest` → **646 passam**, 0 falham; `eslint` → 0 erros (52 warnings pré-existentes); build → OK.
+
+**Decisão registada:** Presets industriais expandidos de 41 para 49, cobrindo agora 34 setores distintos incluindo nichos de tecnologia avançada e transição energética. Próximos passos sugeridos: auditoria de performance de renderização (React DevTools Profiler), ou dashboard de comparação QoL entre cenários (radar/linha lado a lado já existe como `QualityOfLifeComparison`).
+
 ## Round 88 — 2026-10-05
 **Objetivo:** Migrar strings hardcoded PT/EN em `AdvancedMetricsDisplay`, `DemoMode` e `PayEstimateDisplay` para i18n (5 línguas).
 

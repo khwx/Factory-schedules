@@ -629,4 +629,142 @@ export const PRESET_SCENARIOS: PresetScenario[] = [
         ],
         industry: 'Casino / Entretenimento'
     },
+    // Green Hydrogen - 24/7 electrolysis monitoring
+    {
+        name: 'Hidrogénio Verde - Eletrólise 24/7 (4 Equipas)',
+        description: 'Produção H2 verde - 4 equipas, turnos 12h, monitoramento contínuo de eletrólitos',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 42,
+        pattern: 'DDNNOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'DDNNOO', // Team A: sala controle eletrólise
+            'OODDNN', // Team B: manutenção preventiva
+            'NNOODD', // Team C: qualidade gás/pureza
+            'DDOONN', // Team D: logística compressão
+        ],
+        industry: 'Hidrogénio Verde'
+    },
+    // AI Data Centers - GPU cluster monitoring
+    {
+        name: 'Data Center IA - Clusters GPU 24/7 (4 Equipas)',
+        description: 'Datacenter IA - 4 equipas, turnos 12h, monitoramento GPU/cooling contínuo',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 42,
+        pattern: 'DDNNOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'DDNNOO', // Team A: operações cluster treino
+            'OODDNN', // Team B: cooling/energia
+            'NNOODD', // Team C: rede/storage
+            'DDOONN', // Team D: segurança/modelos
+        ],
+        industry: 'Data Center IA'
+    },
+    // Last-mile Logistics - Delivery optimization
+    {
+        name: 'Logística Última Milha - Entregas (5 Equipas)',
+        description: 'Entrega urbana - 5 equipas, turnos 8h/10h, picos e-commerce, rotas dinâmicas',
+        teams: 5,
+        shiftDuration: 9,
+        weeklyHoursContract: 40,
+        pattern: 'MMMTTTNNNFF',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMTTTNNNFF', // Team A: rota centro manhã
+            'FFMMMTTTNNN', // Team B: rota sul tarde
+            'NFFMMMTTTNN', // Team C: rota norte noite
+            'NNFMMMTTTNN', // Team D: rota oeste swing
+            'NNNFFMMMTTT', // Team E: reserva/picos Black Friday
+        ],
+        industry: 'Logística Última Milha'
+    },
+    // Biotech / Advanced Pharma - Continuous bioprocessing
+    {
+        name: 'Biotecnologia - Bioprocessamento Contínuo (4 Equipas)',
+        description: 'Bioprocessos - 4 equipas, turnos 12h, fermentadores/biorreatores 24/7 GMP',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 42,
+        pattern: 'DDNNOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'DDNNOO', // Team A: biorreatores upstream
+            'OODDNN', // Team B: purificação downstream
+            'NNOODD', // Team C: controle qualidade/analytics
+            'DDOONN', // Team D: utilidades/esterilização
+        ],
+        industry: 'Biotecnologia'
+    },
+    // Aerospace / Space Launch - Mission control
+    {
+        name: 'Aeroespacial - Centro Controle Missão (4 Equipas)',
+        description: 'Lançamento espacial - 4 equipas, turnos 12h, monitoramento veículo/telemetria',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 42,
+        pattern: 'DDNNOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'DDNNOO', // Team A: controle voo/guidance
+            'OODDNN', // Team B: telemetria/comunicações
+            'NNOODD', // Team C: sistemas propulsão
+            'DDOONN', // Team D: range safety/meteorologia
+        ],
+        industry: 'Aeroespacial'
+    },
+    // Semiconductors / Fabs - Photolithography cleanroom
+    {
+        name: 'Semicondutores - Fab 24/7 Litografia (4 Equipas)',
+        description: 'Fab semicondutores - 4 equipas, turnos 12h, sala limpa litografia EUV contínua',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 42,
+        pattern: 'DDNNOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'DDNNOO', // Team A: scanners EUV/ArF
+            'OODDNN', // Team B: metrologia/inspeção
+            'NNOODD', // Team C: track/coater/developer
+            'DDOONN', // Team D: manutenção preventiva
+        ],
+        industry: 'Semicondutores'
+    },
+    // EV Battery Manufacturing - Gigafactory
+    {
+        name: 'Veículos Elétricos - Gigafactory Baterias (5 Equipas)',
+        description: 'Produção baterias - 5 equipas, turnos 8h/12h mistos, linha contínua electrode/cell',
+        teams: 5,
+        shiftDuration: 10,
+        weeklyHoursContract: 40,
+        pattern: 'MMMTTTNNNFF',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMTTTNNNFF', // Team A: eletrodos (coating/calendering)
+            'FFMMMTTTNNN', // Team B: montagem célula (stacking/winding)
+            'NFFMMMTTTNN', // Team C: formação/envelhecimento
+            'NNFMMMTTTNN', // Team C: módulo/pack
+            'NNNFFMMMTTT', // Team E: qualidade/reciclagem
+        ],
+        industry: 'Veículos Elétricos'
+    },
+    // Cybersecurity / SOC - Security Operations Center
+    {
+        name: 'Cibersegurança - SOC 24/7 (4 Equipas)',
+        description: 'Security Operations Center - 4 equipas, turnos 12h (Panama), monitoramento ameaças contínuo',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 42,
+        pattern: 'DDNNOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'DDNNOO', // Team A: triagem alertas Tier 1
+            'OODDNN', // Team B: investigação Tier 2
+            'NNOODD', // Team C: threat hunting/inteligência
+            'DDOONN', // Team D: resposta incidente/forense
+        ],
+        industry: 'Cibersegurança'
+    },
 ];

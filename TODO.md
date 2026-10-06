@@ -84,3 +84,6 @@ Corrigir avisos de `react-hooks/exhaustive-deps` em componentes principais (pote
 
 ## 10. Presets industriais — expansão nicho (Round 87)
 - [x] **+8 novos presets nicho:** Educação/Escolas, Administração Pública, Telecomunicações/NOC, SAMU/Emergência Médica, Segurança Pública/Polícia, Gestão Resíduos, Energia Renovável, Casino/Entretenimento — total 41 presets, 26 indústrias cobertas (concluído Round 87).
+
+## 11. Presets industriais — nichos emergentes (Round 89)
+- [x] **+8 novos presets emergentes:** Hidrogénio Verde, Data Center IA, Logística Última Milha, Biotecnologia, Aeroespacial, Semicondutores, Veículos Elétricos/Baterias, Cibersegurança/SOC — total 49 presets, 34 indústrias cobertas (concluído Round 89).
