@@ -111,3 +111,6 @@ Corrigir avisos de `react-hooks/exhaustive-deps` em componentes principais (pote
 
 ## 19. Presets industriais — tecnologia emergente e transição energética (Round 94)
 - [x] **+8 novos presets tech emergente:** Semicondutores Avançados (empacotamento 3D/teste), Energia de Fusão (tokamak/laser), Captura de Carbono (DAC/fonte pontual), Computação Quântica, Materiais Avançados (nanofabricação) — total 89 presets, 70 indústrias cobertas (concluído Round 94).
+
+## 20. Presets industriais — biofabricação, mineração espacial e novos materiais (Round 95)
+- [x] **+8 novos presets tech/bio emergentes:** Biofabricação (bioprinting 3D órgãos), Mineração Espacial (asteroides), Hidrogénio Verde Distribuição, Biobanco/Criopreservação, Engenharia de Tecidos (medicina regenerativa), Agricultura Celular (carne cultivada), Química de Fluxo (farmacêutica contínua), Materiais Meta (nanomateriais programáveis) — total 97 presets, 77 indústrias cobertas (concluído Round 95).

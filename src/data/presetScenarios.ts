@@ -1438,4 +1438,137 @@ export const PRESET_SCENARIOS: PresetScenario[] = [
         ],
         industry: 'Materiais Avançados'
     },
+    // Biofabrication / Artificial Organs - Bioprinting
+    {
+        name: 'Biofabricação - Bioprinting 3D Órgãos (4 Equipas)',
+        description: 'Biofabricação de órgãos - 4 equipas, turnos 12h, bioprinting 3D + cultura células + maturação + QC',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 42,
+        pattern: 'DDNNOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'DDNNOO', // Team A: design CAD + bioprinting multi-material
+            'OODDNN', // Team B: cultura células estaminais + expansão + diferenciação
+            'NNOODD', // Team C: biorreatores maturação + perfusão + monitoramento
+            'DDOONN', // Team D: controlo qualidade (histologia/funcionalidade) + esterilização
+        ],
+        industry: 'Biofabricação'
+    },
+    // Space Mining - Asteroid Mining Operations
+    {
+        name: 'Mineração Espacial - Operações Asteroides (3 Equipas)',
+        description: 'Mineração asteroides - 3 equipas, turnos 16h mistos, teleoperação robótica + processamento in-situ + logística orbital',
+        teams: 3,
+        shiftDuration: 16,
+        weeklyHoursContract: 40,
+        pattern: 'DDNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'DDNNOOOO', // Team A: teleoperação robôs mineração + navegação autónoma
+            'OODDNNNN', // Team B: processamento minério + extração água/metais + refinação
+            'NNNNOODD', // Team C: logística orbital + transferência carga + manutenção sistemas
+        ],
+        industry: 'Mineração Espacial'
+    },
+    // Green Hydrogen - Distribution & Logistics
+    {
+        name: 'Hidrogénio Verde - Distribuição Logística (4 Equipas)',
+        description: 'Distribuição H2 verde - 4 equipas, turnos 12h (Panama), compressão + transporte + postos abastecimento',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 42,
+        pattern: 'DDNNOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'DDNNOO', // Team A: compressão/liquefação + armazenamento alta pressão
+            'OODDNN', // Team B: logística transporte (tubagem/camiões ISO) + rastreamento
+            'NNOODD', // Team C: operação postos abastecimento + dispensadores 700bar
+            'DDOONN', // Team D: manutenção rede + detecção fugas + certificação pureza
+        ],
+        industry: 'Hidrogénio Verde Distribuição'
+    },
+    // Biobanking / Cryopreservation
+    {
+        name: 'Biobanco - Criopreservação 24/7 (3 Equipas)',
+        description: 'Biobanco clínico/investigação - 3 equipas, turnos 8h/12h, processamento amostras + armazenamento azoto líquido + gestão dados',
+        teams: 3,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMTTTTNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMTTTTNNNNOOOO', // Team A: receção/processamento amostras (sangue/tecidos/ADN)
+            'NNNNOOOOMMMMTTTT', // Team B: criopreservação controlada + armazenamento LN2 (-196°C)
+            'TTTTNNNNOOOOMMMM', // Team C: gestão LIMS + rastreabilidade + controlo qualidade + expedição
+        ],
+        industry: 'Biobanco / Criopreservação'
+    },
+    // Tissue Engineering / Regenerative Medicine
+    {
+        name: 'Engenharia Tecidos - Medicina Regenerativa (4 Equipas)',
+        description: 'Medicina regenerativa - 4 equipas, turnos 12h, scaffolds + células + biorreatores + implantes personalizados',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 42,
+        pattern: 'DDNNOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'DDNNOO', // Team A: fabrico scaffolds (eletrófiação/impressão 3D) + biomateriais
+            'OODDNN', // Team B: semeadura células + expansão + condicionamento mecânico
+            'NNOODD', // Team C: biorreatores perfusão + monitoramento não-invasivo + maturação
+            'DDOONN', // Team D: controlo qualidade (mecânico/biológico) + embalagem estéril + envio clínico
+        ],
+        industry: 'Engenharia de Tecidos'
+    },
+    // Cultured Food / Cellular Agriculture
+    {
+        name: 'Agricultura Celular - Carne Cultivada (4 Equipas)',
+        description: 'Proteína cultivada - 4 equipas, turnos 12h, biorreatores escala industrial + meio cultura + colheita + processamento',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 42,
+        pattern: 'DDNNOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'DDNNOO', // Team A: linhas celulares + banco células mestre + controlo qualidade genómico
+            'OODDNN', // Team B: biorreatores 50kL+ + otimização meio (sem soro) + perfusão
+            'NNOODD', // Team C: colheita + separação células/medio + concentração + texturização
+            'DDOONN', // Team D: processamento final (extrusão/corte) + segurança alimentar + embalagem
+        ],
+        industry: 'Agricultura Celular'
+    },
+    // Flow Chemistry / Continuous Pharma Manufacturing
+    {
+        name: 'Química de Fluxo - Farmacêutica Contínua (4 Equipas)',
+        description: 'Síntese contínua fármacos - 4 equipas, turnos 12h, microrreatores + purificação inline + PAT + formulação',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 42,
+        pattern: 'DDNNOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'DDNNOO', // Team A: síntese fluxo contínuo (microrreatores) + telescoping reações
+            'OODDNN', // Team B: purificação inline (cromatografia/extração/cristalização) + PAT
+            'NNOODD', // Team C: formulação contínua (compressão/revestimento) + controlo dose
+            'DDOONN', // Team D: controlo qualidade tempo real (NIR/Raman) + lote digital + GMP
+        ],
+        industry: 'Química de Fluxo'
+    },
+    // Metamaterials / Programmable Nanomaterials
+    {
+        name: 'Materiais Meta - Nanomateriais Programáveis (3 Equipas)',
+        description: 'Metamateriais ativos - 3 equipas, turnos 8h/12h, nanoestruturação + propriedades tunáveis + integração dispositivos',
+        teams: 3,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOO', // Team A: nano-fabricação (litografia/focused ion beam) + meta-átomos
+            'NNNNOOOOMMMM', // Team B: caracterização óptica/EM/terahertz + modelagem inversa
+            'OOOOMMMMNNNN', // Team C: integração dispositivos (sensores/comunicações/energia) + testes campo
+        ],
+        industry: 'Materiais Meta'
+    },
 ];

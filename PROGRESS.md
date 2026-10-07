@@ -2,6 +2,32 @@
 
 Log de execuções autónomas do Bot Orquestrador (modelos free: `opencode/hy3-free`).
 
+## Round 95 — 2026-10-07
+**Objetivo:** Expandir presets industriais com +8 novos nichos de biofabricação, mineração espacial e novos materiais emergentes (Biofabricação, Mineração Espacial, Hidrogénio Verde Distribuição, Biobanco, Engenharia de Tecidos, Agricultura Celular, Química de Fluxo, Materiais Meta).
+
+**Contexto:** A Round 94 completou a expansão para 89 presets cobrindo 70 indústrias com foco em tecnologia profunda e transição energética. Conforme sugerido na decisão da Round 94, havia oportunidade de cobrir setores de biofabricação/órgãos artificiais, mineração espacial, hidrogénio verde distribuição, biobancos/criopreservação, engenharia de tecidos/medicina regenerativa, agricultura celular/carne cultivada, química de fluxo/farmacêutica contínua, e metamateriais/nanomateriais programáveis.
+
+**O que foi feito:**
+- `src/data/presetScenarios.ts`:
+  - Adicionados 8 novos presets com `teamPatterns` individuais:
+    1. **Biofabricação - Bioprinting 3D Órgãos (4 Equipas)** — turnos 12h, design CAD + bioprinting + cultura células + maturação + QC
+    2. **Mineração Espacial - Operações Asteroides (3 Equipas)** — turnos 16h, teleoperação robótica + processamento in-situ + logística orbital
+    3. **Hidrogénio Verde - Distribuição Logística (4 Equipas)** — turnos 12h, compressão + transporte + postos abastecimento + manutenção rede
+    4. **Biobanco - Criopreservação 24/7 (3 Equipas)** — turnos 12h, processamento amostras + armazenamento LN2 + gestão LIMS
+    5. **Engenharia Tecidos - Medicina Regenerativa (4 Equipas)** — turnos 12h, scaffolds + células + biorreatores + implantes personalizados
+    6. **Agricultura Celular - Carne Cultivada (4 Equipas)** — turnos 12h, biorreatores escala industrial + meio cultura + colheita + processamento
+    7. **Química de Fluxo - Farmacêutica Contínua (4 Equipas)** — turnos 12h, microrreatores + purificação inline + PAT + formulação
+    8. **Materiais Meta - Nanomateriais Programáveis (3 Equipas)** — turnos 12h, nano-fabricação + caracterização + integração dispositivos
+  - Total: 97 presets (era 89). Cobertura alargada a 7 novos setores (total 77 indústrias distintas).
+- `src/i18n/locales/{pt,en,es,fr,de}.ts`:
+  - Novas chaves `presetSelector.industries.*` para as 7 novas indústrias em 5 línguas (35 chaves novas).
+- `src/components/PresetSelector.tsx`:
+  - Atualizado `INDUSTRY_KEY_MAP` com as 7 novas indústrias.
+
+**Verificação:** `npm run build` → OK; `vitest` → **646 passam**, 0 falham; `eslint` → 0 erros (52 warnings pré-existentes); typecheck → OK.
+
+**Decisão registada:** Presets industriais expandidos de 89 para 97, cobrindo agora 77 setores distintos incluindo biofabricação, mineração espacial, distribuição hidrogénio verde, biobancos, engenharia de tecidos, agricultura celular, química de fluxo e metamateriais. Próximos passos sugeridos: auditoria de performance de renderização (React DevTools Profiler), ou expansão para setores de captura de carbono oceânica, energia de fusão comercial, ou computação quântica tolerante a falhas.
+
 ## Round 94 — 2026-10-07
 **Objetivo:** Expandir presets industriais com +8 novos nichos de tecnologia emergente (Semicondutores Avançados, Energia de Fusão, Captura de Carbono, Computação Quântica, Materiais Avançados).
 

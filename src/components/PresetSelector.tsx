@@ -75,6 +75,14 @@ const INDUSTRY_KEY_MAP: Record<string, keyof Translations['presetSelector']['ind
     'Captura de Carbono': 'carbonCapture',
     'Computação Quântica': 'quantumComputing',
     'Materiais Avançados': 'advancedMaterials',
+    'Biofabricação': 'biofabrication',
+    'Mineração Espacial': 'spaceMining',
+    'Hidrogénio Verde Distribuição': 'greenHydrogenDistribution',
+    'Biobanco / Criopreservação': 'biobanking',
+    'Engenharia de Tecidos': 'tissueEngineering',
+    'Agricultura Celular': 'cellularAgriculture',
+    'Química de Fluxo': 'flowChemistry',
+    'Materiais Meta': 'metamaterials',
 };
 
 interface PresetSelectorProps {
