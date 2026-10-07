@@ -2,6 +2,30 @@
 
 Log de execuções autónomas do Bot Orquestrador (modelos free: `opencode/hy3-free`).
 
+## Round 92 — 2026-10-07
+**Objetivo:** Expandir presets industriais com +8 novos nichos de defesa e aeroespacial operacional (Operações Espaciais, Defesa Aérea, Ciberdefesa Militar, Operações Navais, Defesa de Mísseis, Operações de Satélites, Comando Estratégico, Logística de Defesa).
+
+**Contexto:** A Round 91 completou a expansão para 65 presets cobrindo 49 indústrias com foco em serviços de emergência, segurança nacional e saúde crítica 24/7. Conforme sugerido na decisão da Round 91, havia oportunidade de cobrir setores de defesa/aeroespacial operacional: centro de operações espaciais (monitoramento satélites/veículos lançamento), defesa aérea integrada (vigilância radar/interceptação/C2), ciberdefesa militar (SOC defesa monitoramento APT), operações navais (consciência situacional marítima/ASW), defesa de mísseis (alerta antecipado/interceptação exo-atmosférica), operações de satélites (TT&C/constelação/carga útil), comando estratégico nacional (C2 nuclear/convencional/NC3), logística de defesa (cadeia suprimentos/manutenção/prontidão).
+
+**O que foi feito:**
+- `src/data/presetScenarios.ts`:
+  - Adicionados 8 novos presets com `teamPatterns` individuais:
+    1. **Operações Espaciais - Centro Controle Missão (4 Equipas)** — turnos 12h Panama, controle voo orbital/telemetria/SSA/carga útil
+    2. **Defesa Aérea - Comando Controle (4 Equipas)** — turnos 12h Panama, vigilância radar 3D/interceptação/IFF/coordenação civil-militar
+    3. **Ciberdefesa Militar - SOC Defesa (4 Equipas)** — turnos 12h Panama, monitoramento rede militar/análise malware/threat hunting/resposta incidente
+    4. **Operações Navais - Centro Combate (4 Equipas)** — turnos 12h Panama, vigilância superfície/ASW/guerra aérea naval/comando força-tarefa
+    5. **Defesa de Mísseis - Alerta Antecipado (3 Equipas)** — turnos 8h/12h mistos, radares UEWR/SBIRS/C2BMC/discriminação alvo/BDA
+    6. **Operações Satélites - Controle Constelação (4 Equipas)** — turnos 12h Panama, TT&C/station-keeping/carga útil/gestão constelação
+    7. **Comando Estratégico - Centro Operações (3 Equipas)** — turnos 12h/24h mistos, monitoramento DEFCON/planejamento emprego/NC3
+    8. **Logística Defesa - Sustentação 24/7 (4 Equipas)** — turnos 12h Panama, gestão estoques/MRO/transporte estratégico/aquisição
+  - Total: 73 presets (era 65). Cobertura alargada a 8 novos setores (total 57 indústrias distintas).
+- `src/i18n/locales/{pt,en,es,fr,de}.ts`:
+  - Novas chaves `presetSelector.industries.*` para as 8 novas indústrias em 5 línguas (40 chaves novas).
+
+**Verificação:** `npm run build` → OK; `vitest` → **646 passam**, 0 falham; `eslint` → 0 erros (52 warnings pré-existentes); typecheck → OK.
+
+**Decisão registada:** Presets industriais expandidos de 65 para 73, cobrindo agora 57 setores distintos incluindo defesa operacional, aeroespacial, ciberdefesa militar e comando estratégico. Próximos passos sugeridos: auditoria de performance de renderização (React DevTools Profiler), ou expansão para setores de saúde especializada (oncologia, hemodiálise, cuidados paliativos, saúde mental) ou indústria de semicondutores avançada (empacotamento avançado, teste wafers, materiais).
+
 ## Round 91 — 2026-10-06
 **Objetivo:** Expandir presets industriais com +8 novos nichos de serviços de emergência e segurança crítica (Atendimento Emergência 112, Controle Tráfego Aéreo, Metropolitano/Metro, Oleodutos/Gasodutos, Central Nuclear, Banco de Sangue/Transfusão, Procura Órgãos/Transplante, Estabelecimento Prisional).
 
