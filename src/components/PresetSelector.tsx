@@ -99,6 +99,14 @@ const INDUSTRY_KEY_MAP: Record<string, keyof Translations['presetSelector']['ind
     'Data Centers Submersos': 'underwaterDataCenters',
     'Fabrico Orbital': 'orbitalManufacturing',
     'Armazenamento Energia Longa Duração': 'longDurationEnergyStorage',
+    'Infraestrutura AGI': 'agiInfrastructure',
+    'Biologia Sintética Programável': 'syntheticBiologyProgrammable',
+    'Energia Solar Espacial': 'spaceBasedSolarPower',
+    'Nuclear Híbrido Fusão-Fissão': 'hybridFusionFission',
+    'Materiais Carbono-Negativo': 'carbonNegativeMaterials',
+    'Computação Neuromórfica / BCI': 'neuromorphicBCI',
+    'Biofabricação Terapias Celulares': 'cellGeneTherapyManufacturing',
+    'Defesa Planetária': 'planetaryDefense',
 };
 
 interface PresetSelectorProps {

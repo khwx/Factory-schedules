@@ -1834,4 +1834,136 @@ export const PRESET_SCENARIOS: PresetScenario[] = [
         ],
         industry: 'Armazenamento Energia Longa Duração'
     },
+    // AGI Infrastructure - Large-Scale AI Training
+    {
+        name: 'Infraestrutura AGI - Treino Massivo (4 Equipas)',
+        description: 'AGI treino - 4 equipas, turnos 12h, clusters GPU/TPU 100k+ + refrigeração líquida + energia dedicada + checkpoints distribuídos',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 42,
+        pattern: 'DDNNOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'DDNNOO', // Team A: orquestração treino (data parallelism/pipeline/tensor) + monitoramento loss
+            'OODDNN', // Team B: refrigeração directa-a-chip (CDU/manifolds) + gestão térmica + detecção vazamentos
+            'NNOODD', // Team C: infraestrutura energia (subestação/UPS/geradores) + otimização PUE + carbono
+            'DDOONN', // Team D: checkpoints/resiliência (fault tolerance) + storage scale + recuperação desastre
+        ],
+        industry: 'Infraestrutura AGI'
+    },
+    // Synthetic Biology / Programmable Matter Bio-foundries
+    {
+        name: 'Biologia Sintética - Bio-fundições Programáveis (4 Equipas)',
+        description: 'Bio-fundição - 4 equipas, turnos 12h, design-construção-teste-aprendizagem (DBTL) + automação líquida + IA generativa DNA',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'DDNNOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'DDNNOO', // Team A: design genómico (CAD biológico) + síntese oligos + montagem Gibson/Golden Gate
+            'OODDNN', // Team B: automação robótica (liquid handling) + biorreatores microfluídicos + screening HT
+            'NNOODD', // Team C: caracterização fenotípica (omics/imagem) + ML loop + otimização cepas
+            'DDOONN', // Team D: escala piloto (fermentação 10kL+) + downstream + formulação + GMP/QC
+        ],
+        industry: 'Biologia Sintética Programável'
+    },
+    // Space-Based Solar Power
+    {
+        name: 'Energia Solar Espacial - Estações Orbitais (3 Equipas)',
+        description: 'SBSP - 3 equipas, turnos 12h, painéis fotovoltaicos orbitais + conversão microondas/laser + transmissão terra + receptor rectena',
+        teams: 3,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMTTTTNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMTTTTNNNNOOOO', // Team A: array solar (desdobramento/pointing) + conversão DC-RF + gestão térmica orbital
+            'NNNNOOOOMMMMTTTT', // Team B: feixe microondas/laser (formação/steering) + segurança exclusão + rastreamento
+            'TTTTNNNNOOOOMMMM', // Team C: estação terra (rectena) + integração rede + armazenamento + monitoramento RF
+        ],
+        industry: 'Energia Solar Espacial'
+    },
+    // Advanced Nuclear - Fusion-Fission Hybrid
+    {
+        name: 'Nuclear Avançado - Híbrido Fusão-Fissão (4 Equipas)',
+        description: 'Híbrido fusão-fissão - 4 equipas, turnos 12h, manta fértil + transmutação actinídeos + produção isótopos + ciclagem combustível',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 42,
+        pattern: 'DDNNOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'DDNNOO', // Team A: núcleo fusão (fonte nêutrons 14 MeV) + blanket multiplicador + trítio breeding
+            'OODDNN', // Team B: zona físsil (tório/URANIO/actínideos) + transmutação resíduos + extração isótopos
+            'NNOODD', // Team C: ciclo combustível (reprocessamento piroquímico) + reciclagem + fabricação pellets
+            'DDOONN', // Team D: segurança (desligamento passivo) + blindagem + licenciamento + monitoramento rad
+        ],
+        industry: 'Nuclear Híbrido Fusão-Fissão'
+    },
+    // Carbon-Negative Materials / Mineralization
+    {
+        name: 'Materiais Carbono-Negativo - Mineralização (3 Equipas)',
+        description: 'Mineralização CO2 - 3 equipas, turnos 12h, carbonatação minerais (olivina/serpentina) + agregados construção + curinga acelerada + MRV',
+        teams: 3,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOO', // Team A: preparação matéria-prima (moagem/ativação) + reatores carbonatação + controle pH/T
+            'NNNNOOOOMMMM', // Team B: separação carbonatos + lavagem + pelotização + cura CO2 (câmara pressurizada)
+            'OOOOMMMMNNNN', // Team C: controle qualidade (RDT/resistência) + certificação EPD + logística obra + MRV blockchain
+        ],
+        industry: 'Materiais Carbono-Negativo'
+    },
+    // Neuromorphic Computing / Brain-Computer Interfaces
+    {
+        name: 'Computação Neuromórfica - Interfaces Cérebro-Máquina (3 Equipas)',
+        description: 'Neuromórfico/BCI - 3 equipas, turnos 12h, chips espinhais (memristores/event-driven) + decodificação neural + estimulação + biocompatibilidade',
+        teams: 3,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMTTTTNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMTTTTNNNNOOOO', // Team A: fabricação neuromórfica (CMOS/memristor/3D stacking) + caracterização sinapses
+            'NNNNOOOOMMMMTTTT', // Team B: algoritmos SNN (STDP/plasticidade) + decodificação tempo real + loop fechado
+            'TTTTNNNNOOOOMMMM', // Team C: implante (eletrodos flexíveis/hermeticidade) + telemetria sem fios + ensaios clínicos
+        ],
+        industry: 'Computação Neuromórfica / BCI'
+    },
+    // Bio-manufacturing at Scale - Cell & Gene Therapy
+    {
+        name: 'Biofabricação Escala - Terapias Celulares/Génicas (4 Equipas)',
+        description: 'CGT manufatura - 4 equipas, turnos 12h, autólogas/allogénicas + vetores virais (AAV/lentivírus) + expansão bioreator + fill/finish GMP',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 42,
+        pattern: 'DDNNOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'DDNNOO', // Team A: coleta aférese + ativação/transdução (TIL/CAR-T) + controle vetor viral
+            'OODDNN', // Team B: expansão bioreator (perfusão/perfusão tangencial) + fenotipagem + liberação
+            'NNOODD', // Team C: produção vetores (HEK293/suspensão) + purificação cromatografia + titer/genoma
+            'DDOONN', // Team D: fill/finish asséptico (CGT) + liofilização + serialização + cold chain -80°C/LN2
+        ],
+        industry: 'Biofabricação Terapias Celulares'
+    },
+    // Planetary Defense / Asteroid Deflection
+    {
+        name: 'Defesa Planetária - Desvio Asteroides (3 Equipas)',
+        description: 'Defesa planetária - 3 equipas, turnos 12h, detecção/rastreamento (NEO) + cinético/ion-beam/gravity tractor + simulação impacto + coordenação internacional',
+        teams: 3,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOO', // Team A: survey óptico/radar (LSST/NEOWISE) + determinação órbita + probabilidade impacto
+            'NNNNOOOOMMMM', // Team B: missão desvio (DART/kinetic/ion-beam/gravity) + navegação terminal + avaliação momentum
+            'OOOOMMMMNNNN', // Team C: modelagem efeitos (tsunami/climático) + mitigação civil + protocolo ONU/SMPAG/IAWN
+        ],
+        industry: 'Defesa Planetária'
+    },
 ];
