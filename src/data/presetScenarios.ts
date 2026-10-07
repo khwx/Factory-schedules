@@ -1037,4 +1037,138 @@ export const PRESET_SCENARIOS: PresetScenario[] = [
         ],
         industry: 'Estabelecimento Prisional'
     },
+    // Space Operations Center - Centro Operações Espaciais
+    {
+        name: 'Operações Espaciais - Centro Controle Missão (4 Equipas)',
+        description: 'Centro operações espaciais - 4 equipas, turnos 12h (Panama), monitoramento satélites/veículos lançamento + telemetria',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 42,
+        pattern: 'DDNNOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'DDNNOO', // Team A: controle voo orbital / rendezvous
+            'OODDNN', // Team B: telemetria / comando / TT&C
+            'NNOODD', // Team C: dinâmica orbital / prevenção colisão (SSA)
+            'DDOONN', // Team D: operações carga útil / experimentos científicos
+        ],
+        industry: 'Operações Espaciais'
+    },
+    // Air Defense - Defesa Aérea
+    {
+        name: 'Defesa Aérea - Comando Controle (4 Equipas)',
+        description: 'Defesa aérea integrada - 4 equipas, turnos 12h (Panama), vigilância radar + interceptação + C2',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 42,
+        pattern: 'DDNNOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'DDNNOO', // Team A: vigilância radar 3D / consciência situacional
+            'OODDNN', // Team B: controle interceptação / scrambling
+            'NNOODD', // Team C: identificação amigo/inimigo (IFF) + ROE
+            'DDOONN', // Team D: gestão espaço aéreo / coordenação civil-militar
+        ],
+        industry: 'Defesa Aérea'
+    },
+    // Military Cyber Defense - Ciberdefesa Militar
+    {
+        name: 'Ciberdefesa Militar - SOC Defesa (4 Equipas)',
+        description: 'Centro operações cibernéticas defesa - 4 equipas, turnos 12h (Panama), monitoramento ameaças APT + resposta incidente',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 42,
+        pattern: 'DDNNOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'DDNNOO', // Team A: monitoramento rede militar / detecção intrusão
+            'OODDNN', // Team B: análise malware / engenharia reversa
+            'NNOODD', // Team C: threat hunting / inteligência ameaças (CTI)
+            'DDOONN', // Team D: resposta incidente / forense digital / hardening
+        ],
+        industry: 'Ciberdefesa Militar'
+    },
+    // Naval Operations - Operações Navais
+    {
+        name: 'Operações Navais - Centro Combate (4 Equipas)',
+        description: 'Centro operações navais - 4 equipas, turnos 12h (Panama), consciência situacional marítima + guerra anti-submarino',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 42,
+        pattern: 'DDNNOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'DDNNOO', // Team A: vigilância superfície / AIS / radar marítimo
+            'OODDNN', // Team B: guerra anti-submarino (ASW) / sonares
+            'NNOODD', // Team C: guerra aérea naval / defesa antimíssil
+            'DDOONN', // Team D: comando força-tarefa / logística / comunicações
+        ],
+        industry: 'Operações Navais'
+    },
+    // Missile Defense - Defesa de Mísseis
+    {
+        name: 'Defesa de Mísseis - Alerta Antecipado (3 Equipas)',
+        description: 'Sistema defesa antimísseis - 3 equipas, turnos 8h/12h mistos, alerta antecipado + interceptação exo-atmosférica',
+        teams: 3,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMTTTTNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMTTTTNNNNOOOO', // Team A: radares alerta antecipado (UEWR/SBIRS) / track
+            'NNNNOOOOMMMMTTTT', // Team B: comando lançamento interceptores / C2BMC
+            'TTTTNNNNOOOOMMMM', // Team C: discriminação alvo / kill assessment / BDA
+        ],
+        industry: 'Defesa de Mísseis'
+    },
+    // Satellite Operations - Operações de Satélites
+    {
+        name: 'Operações Satélites - Controle Constelação (4 Equipas)',
+        description: 'Controle constelação satélites - 4 equipas, turnos 12h (Panama), TT&C + manutenção orbital + gestão carga útil',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 42,
+        pattern: 'DDNNOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'DDNNOO', // Team A: telemetria/comando (TT&C) passes contato solo
+            'OODDNN', // Team B: determinação órbita / manobras station-keeping
+            'NNOODD', // Team C: operações carga útil (comms/EO/SAR/GNSS)
+            'DDOONN', // Team D: gestão constelação / planejamento passes / anomalias
+        ],
+        industry: 'Operações Satélites'
+    },
+    // Strategic Command - Comando Estratégico
+    {
+        name: 'Comando Estratégico - Centro Operações (3 Equipas)',
+        description: 'Comando estratégico nacional - 3 equipas, turnos 12h/24h mistos, C2 nuclear/convencional + avaliação ameaças',
+        teams: 3,
+        shiftDuration: 16,
+        weeklyHoursContract: 40,
+        pattern: 'DDNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'DDNNOOOO', // Team A: monitoramento indicadores estratégicos / DEFCON
+            'OODDNNNN', // Team B: planejamento emprego forças / targeting
+            'NNNNOODD', // Team C: comunicações sobrevivíveis / NC3 / continuidade governo
+        ],
+        industry: 'Comando Estratégico'
+    },
+    // Defense Logistics - Logística de Defesa
+    {
+        name: 'Logística Defesa - Sustentação 24/7 (4 Equipas)',
+        description: 'Logística militar - 4 equipas, turnos 12h (Panama), cadeia suprimentos + manutenção equipamento + prontidão',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 42,
+        pattern: 'DDNNOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'DDNNOO', // Team A: gestão estoques / munições / combustíveis / peças
+            'OODDNN', // Team B: manutenção nível depósito / revisão geral (MRO)
+            'NNOODD', // Team C: transporte estratégico / aéreo / marítimo / ferroviário
+            'DDOONN', // Team D: aquisição / contratação / prontidão industrial
+        ],
+        industry: 'Logística Defesa'
+    },
 ];
