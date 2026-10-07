@@ -2,6 +2,32 @@
 
 Log de execuções autónomas do Bot Orquestrador (modelos free: `opencode/hy3-free`).
 
+## Round 93 — 2026-10-07
+**Objetivo:** Expandir presets industriais com +8 novos nichos de saúde especializada (Oncologia, Hemodiálise, Cuidados Paliativos, Saúde Mental, Unidade Queimados, Neonatologia, Medicina Nuclear, Radioterapia).
+
+**Contexto:** A Round 92 completou a expansão para 73 presets cobrindo 57 indústrias com foco em defesa/aeroespacial operacional. Conforme sugerido na decisão da Round 92, havia oportunidade de cobrir setores de saúde especializada de alta complexidade: oncologia (quimioterapia 24/7 + farmácia oncológica), hemodiálise (3 sessões/dia 4h + preparação máquinas/água), cuidados paliativos/hospice (controle sintomas + suporte família + plantão 24h), saúde mental/psiquiatria (observação contínua + grupos terapêuticos + contenção), unidade queimados (curativos complexos + enxertos + UTI queimados), neonatologia/UTI neonatal (ventilação + transporte neonatal + kangaroo care), medicina nuclear/radiofarmácia (síntese radiofármacos GMP + PET/CT + terapia metabólica), radioterapia/aceleradores lineares (planejamento IMRT/VMAT + QA + IGRT + braquiterapia).
+
+**O que foi feito:**
+- `src/data/presetScenarios.ts`:
+  - Adicionados 8 novos presets com `teamPatterns` individuais:
+    1. **Oncologia - Quimioterapia 24/7 (4 Equipas)** — turnos 12h Panama, infusão quimioterápicos + farmácia oncológica + toxicidade + survivorship
+    2. **Hemodiálise - Centro Diálise (4 Equipas)** — turnos 12h, 3 sessões/dia (manhã/tarde/noite) + preparação máquinas/RO + acesso vascular
+    3. **Cuidados Paliativos - Hospice 24h (3 Equipas)** — turnos 12h/24h mistos, controle sintomas + plantão noturno 24h + admissões/equipa multidisciplinar
+    4. **Saúde Mental - Unidade Psiquiátrica (4 Equipas)** — turnos 12h Panama, observação enfermaria + grupos terapêuticos + vigilância risco + admissões
+    5. **Unidade Queimados - Burn Unit (3 Equipas)** — turnos 8h/12h mistos, curativos complexos/desbridamento + enxertos/cirurgia + monitoramento hemodinâmico/nutrição
+    6. **Neonatologia - UTI Neonatal (4 Equipas)** — turnos 12h Panama, ventilação/CPAP + nutrição parenteral/fototerapia + transporte neonatal + alta/kangaroo care
+    7. **Medicina Nuclear - Radiofarmácia (3 Equipas)** — turnos 8h/12h mistos, síntese radiofármacos GMP + PET/CT/dosimetria + terapia metabólica Lu-177/I-131
+    8. **Radioterapia - Aceleradores Lineares (4 Equipas)** — turnos 10h, simulação/contorno + planejamento dosimétrico/QA + tratamento linacs/IGRT + braquiterapia/radiocirurgia
+  - Total: 81 presets (era 73). Cobertura alargada a 8 novos setores (total 65 indústrias distintas).
+- `src/i18n/locales/{pt,en,es,fr,de}.ts`:
+  - Novas chaves `presetSelector.industries.*` para as 8 novas indústrias em 5 línguas (40 chaves novas).
+- `src/components/PresetSelector.tsx`:
+  - Atualizado `INDUSTRY_KEY_MAP` com todas as 65 indústrias (incluía apenas 33; adicionadas 32 em falta das Rounds 90-92 + 8 novas).
+
+**Verificação:** `npm run build` → OK; `vitest` → **646 passam**, 0 falham; `eslint` → 0 erros (52 warnings pré-existentes); typecheck → OK.
+
+**Decisão registada:** Presets industriais expandidos de 73 para 81, cobrindo agora 65 setores distintos incluindo saúde especializada de alta complexidade. Próximos passos sugeridos: auditoria de performance de renderização (React DevTools Profiler), ou expansão para indústria de semicondutores avançada (empacotamento avançado, teste wafers, materiais), ou setores de energia de fusão / captura carbono.
+
 ## Round 92 — 2026-10-07
 **Objetivo:** Expandir presets industriais com +8 novos nichos de defesa e aeroespacial operacional (Operações Espaciais, Defesa Aérea, Ciberdefesa Militar, Operações Navais, Defesa de Mísseis, Operações de Satélites, Comando Estratégico, Logística de Defesa).
 
