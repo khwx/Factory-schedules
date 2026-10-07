@@ -1571,4 +1571,136 @@ export const PRESET_SCENARIOS: PresetScenario[] = [
         ],
         industry: 'Materiais Meta'
     },
+    // Floating Offshore Wind - Emerging renewable energy
+    {
+        name: 'Eólica Offshore Flutuante - Operações 24/7 (4 Equipas)',
+        description: 'Parques eólicos flutuantes - 4 equipas, turnos 12h (Panama), monitoramento turbinas + cabos + fundações flutuantes',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 42,
+        pattern: 'DDNNOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'DDNNOO', // Team A: centro controle SCADA turbinas + performance
+            'OODDNN', // Team B: inspeção ROV/subsea cabos dinâmicos + ancoragem
+            'NNOODD', // Team C: manutenção pás/caixas multiplicadoras + helicóptero
+            'DDOONN', // Team D: logística offshore + transferência tripulação + meteo
+        ],
+        industry: 'Eólica Offshore Flutuante'
+    },
+    // Small Modular Reactors (SMR) - Next-gen nuclear
+    {
+        name: 'Reactores Modulares Pequenos - SMR (4 Equipas)',
+        description: 'SMR fábrica/módulo - 4 equipas, turnos 12h, fabricação modular + teste fábrica + comissionamento local',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 42,
+        pattern: 'DDNNOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'DDNNOO', // Team A: fabricação vaso pressão + soldagem automatizada
+            'OODDNN', // Team B: integração sistemas segurança passiva + instrumentação
+            'NNOODD', // Team C: teste fábrica (FAT) + simulação acidentes + QA nuclear
+            'DDOONN', // Team D: transporte módulo + montagem local + comissionamento
+        ],
+        industry: 'Reactores Modulares Pequenos (SMR)'
+    },
+    // Carbon Utilization - CO2 to Products
+    {
+        name: 'Utilização Carbono - CO2 para Produtos (3 Equipas)',
+        description: 'Conversão CO2 - 3 equipas, turnos 8h/12h, eletroquímica/catalítica + separação + purificação produtos (metanol/plásticos/combustíveis)',
+        teams: 3,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMTTTTNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMTTTTNNNNOOOO', // Team A: eletrolisadores CO2 + catálise + reatores fluxo
+            'NNNNOOOOMMMMTTTT', // Team B: separação produtos (destilação/membranas) + purificação
+            'TTTTNNNNOOOOMMMM', // Team C: controle qualidade + formulação final + certificação
+        ],
+        industry: 'Utilização de Carbono'
+    },
+    // Autonomous Vehicle Fleet Operations
+    {
+        name: 'Frota Veículos Autónomos - Depósito 24/7 (4 Equipas)',
+        description: 'Robotaxi/camiões autónomos - 4 equipas, turnos 12h (Panama), carregamento + limpeza + manutenção sensores + teleoperação remota',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 42,
+        pattern: 'DDNNOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'DDNNOO', // Team A: operações carregamento (MW charging) + gestão energia
+            'OODDNN', // Team B: limpeza interior/exterior + inspeção sensores LiDAR/câmaras
+            'NNOODD', // Team C: manutenção preventiva/preditiva + atualizações OTA software
+            'DDOONN', // Team D: teleoperação remota (reserva) + resposta incidentes + logística
+        ],
+        industry: 'Frota Veículos Autónomos'
+    },
+    // Space Situational Awareness / Orbital Debris
+    {
+        name: 'Consciência Espacial - Lixo Orbital (3 Equipas)',
+        description: 'SSA/space traffic - 3 equipas, turnos 8h/12h, rastreamento objetos + prevenção colisão + remoção ativa detritos',
+        teams: 3,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMTTTTNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMTTTTNNNNOOOO', // Team A: radares/óptica rastreamento + catálogo objetos (catalogação)
+            'NNNNOOOOMMMMTTTT', // Team B: análise conjunção + alertas colisão + manobras evasivas
+            'TTTTNNNNOOOOMMMM', // Team C: operações remoção ativa (captura/de-orbit) + verificação
+        ],
+        industry: 'Consciência Espacial / Lixo Orbital'
+    },
+    // Synthetic Biology / Cell-Free Systems
+    {
+        name: 'Biologia Sintética - Sistemas Livres Células (3 Equipas)',
+        description: 'CFPS biomanufacturing - 3 equipas, turnos 8h/12h, lisados celulares + síntese proteica sem células + purificação rápida',
+        teams: 3,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOO', // Team A: preparação lisados (E. coli/wheat germ) + controle qualidade
+            'NNNNOOOOMMMM', // Team B: reatores CFPS + adição DNA/energia + monitoramento tempo real
+            'OOOOMMMMNNNN', // Team C: purificação proteína (cromatografia inline) + formulação + QC
+        ],
+        industry: 'Biologia Sintética / Cell-Free'
+    },
+    // Hypersonic Test Facilities
+    {
+        name: 'Instalações Teste Hipersónico - Túneis Vento (3 Equipas)',
+        description: 'Teste hipersónico Mach 5+ - 3 equipas, turnos 8h/12h, túneis vento arco/choque + instrumentação + modelagem CFD',
+        teams: 3,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOO', // Team A: operação túneis (driver gás/arc-jet) + condição fronteira
+            'NNNNOOOOMMMM', // Team B: instrumentação (pressão/calor/velocidade) + aquisição dados alta velocidade
+            'OOOOMMMMNNNN', // Team C: modelagem CFD/validação + preparação modelos + pós-teste
+        ],
+        industry: 'Testes Hipersónicos'
+    },
+    // Deep Sea / Subsea Operations
+    {
+        name: 'Operações Submarinas - Deep Sea (4 Equipas)',
+        description: 'Óleo/gás/mineração/cabos mar profundos - 4 equipas, turnos 12h (Panama), ROV/AUV + intervenção subsea + monitoramento risers',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 42,
+        pattern: 'DDNNOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'DDNNOO', // Team A: pilotagem ROV trabalho + manipulação + inspeção visual/sonar
+            'OODDNN', // Team B: intervenção subsea (válvulas/jumpers/tree) + tooling especializado
+            'NNOODD', // Team C: monitoramento risers/flowlines + integridade estrutural + CP
+            'DDOONN', // Team D: logística navio apoio + lançamento/recolha ROV + meteo/ondas
+        ],
+        industry: 'Operações Submarinas / Deep Sea'
+    },
 ];

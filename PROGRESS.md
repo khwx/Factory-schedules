@@ -2,6 +2,32 @@
 
 Log de execuções autónomas do Bot Orquestrador (modelos free: `opencode/hy3-free`).
 
+## Round 96 — 2026-10-07
+**Objetivo:** Expandir presets industriais com +8 novos nichos de energia de próxima geração, autonomia e espaço (Eólica Offshore Flutuante, Reactores Modulares Pequenos SMR, Utilização de Carbono, Frota Veículos Autónomos, Consciência Espacial/Lixo Orbital, Biologia Sintética Cell-Free, Testes Hipersónicos, Operações Submarinas Deep Sea).
+
+**Contexto:** A Round 95 completou a expansão para 97 presets cobrindo 77 indústrias com foco em biofabricação, mineração espacial e novos materiais. Conforme sugerido na decisão da Round 95, havia oportunidade de cobrir setores de energia de próxima geração (eólica offshore flutuante, SMR nucleares), utilização de carbono (CO2 para produtos), autonomia (frotas veículos autónomos robotaxi/camiões), espaço (SSA/lixo orbital), biologia sintética (sistemas livres de células), aeroespacial (testes hipersónicos Mach 5+), e operações deep sea (óleo/gás/mineração/cabos mar profundos).
+
+**O que foi feito:**
+- `src/data/presetScenarios.ts`:
+  - Adicionados 8 novos presets com `teamPatterns` individuais:
+    1. **Eólica Offshore Flutuante - Operações 24/7 (4 Equipas)** — turnos 12h Panama, SCADA turbinas + inspeção ROV/subsea + manutenção pás + logística offshore
+    2. **Reactores Modulares Pequenos - SMR (4 Equipas)** — turnos 12h, fabricação vaso pressão + integração segurança passiva + teste fábrica FAT + comissionamento local
+    3. **Utilização Carbono - CO2 para Produtos (3 Equipas)** — turnos 8h/12h mistos, eletroquímica/catalítica + separação purificação + controle qualidade formulação
+    4. **Frota Veículos Autónomos - Depósito 24/7 (4 Equipas)** — turnos 12h Panama, carregamento MW + limpeza sensores LiDAR + manutenção preditiva OTA + teleoperação remota
+    5. **Consciência Espacial - Lixo Orbital (3 Equipas)** — turnos 8h/12h, rastreamento radar/óptica + análise conjunção/alertas + remoção ativa detritos
+    6. **Biologia Sintética - Sistemas Livres Células (3 Equipas)** — turnos 12h, lisados celulares + síntese proteica CFPS + purificação inline + formulação
+    7. **Testes Hipersónicos - Túneis Vento (3 Equipas)** — turnos 12h, túneis arco/choque Mach 5+ + instrumentação alta velocidade + CFD validação
+    8. **Operações Submarinas - Deep Sea (4 Equipas)** — turnos 12h Panama, pilotagem ROV trabalho + intervenção subsea + monitoramento risers + logística navio apoio
+  - Total: 105 presets (era 97). Cobertura alargada a 8 novos setores (total 85 indústrias distintas).
+- `src/i18n/locales/{pt,en,es,fr,de}.ts`:
+  - Novas chaves `presetSelector.industries.*` para as 8 novas indústrias em 5 línguas (40 chaves novas).
+- `src/components/PresetSelector.tsx`:
+  - Atualizado `INDUSTRY_KEY_MAP` com as 8 novas indústrias.
+
+**Verificação:** `npm run build` → OK; `vitest` → **646 passam**, 0 falham; `eslint` → 0 erros (52 warnings pré-existentes); typecheck → OK.
+
+**Decisão registada:** Presets industriais expandidos de 97 para 105, cobrindo agora 85 setores distintos incluindo energia de próxima geração, autonomia, espaço, biologia sintética, hipersónicos e deep sea. Próximos passos sugeridos: auditoria de performance de renderização (React DevTools Profiler), ou expansão para setores de captura carbono oceânica, energia de fusão comercial, ou computação quântica tolerante a falhas.
+
 ## Round 95 — 2026-10-07
 **Objetivo:** Expandir presets industriais com +8 novos nichos de biofabricação, mineração espacial e novos materiais emergentes (Biofabricação, Mineração Espacial, Hidrogénio Verde Distribuição, Biobanco, Engenharia de Tecidos, Agricultura Celular, Química de Fluxo, Materiais Meta).
 

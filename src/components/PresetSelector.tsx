@@ -83,6 +83,14 @@ const INDUSTRY_KEY_MAP: Record<string, keyof Translations['presetSelector']['ind
     'Agricultura Celular': 'cellularAgriculture',
     'Química de Fluxo': 'flowChemistry',
     'Materiais Meta': 'metamaterials',
+    'Eólica Offshore Flutuante': 'floatingOffshoreWind',
+    'Reactores Modulares Pequenos (SMR)': 'smr',
+    'Utilização de Carbono': 'carbonUtilization',
+    'Frota Veículos Autónomos': 'autonomousVehicleFleet',
+    'Consciência Espacial / Lixo Orbital': 'spaceSituationalAwareness',
+    'Biologia Sintética / Cell-Free': 'syntheticBiology',
+    'Testes Hipersónicos': 'hypersonicTesting',
+    'Operações Submarinas / Deep Sea': 'deepSeaOperations',
 };
 
 interface PresetSelectorProps {

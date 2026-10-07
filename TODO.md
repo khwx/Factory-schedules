@@ -114,3 +114,6 @@ Corrigir avisos de `react-hooks/exhaustive-deps` em componentes principais (pote
 
 ## 20. Presets industriais — biofabricação, mineração espacial e novos materiais (Round 95)
 - [x] **+8 novos presets tech/bio emergentes:** Biofabricação (bioprinting 3D órgãos), Mineração Espacial (asteroides), Hidrogénio Verde Distribuição, Biobanco/Criopreservação, Engenharia de Tecidos (medicina regenerativa), Agricultura Celular (carne cultivada), Química de Fluxo (farmacêutica contínua), Materiais Meta (nanomateriais programáveis) — total 97 presets, 77 indústrias cobertas (concluído Round 95).
+
+## 21. Presets industriais — energia de próxima geração, autonomia e espaço (Round 96)
+- [x] **+8 novos presets next-gen:** Eólica Offshore Flutuante, Reactores Modulares Pequenos (SMR), Utilização de Carbono (CO2 para produtos), Frota Veículos Autónomos (robotaxi/camiões), Consciência Espacial / Lixo Orbital (SSA), Biologia Sintética / Cell-Free, Testes Hipersónicos (Mach 5+), Operações Submarinas / Deep Sea — total 105 presets, 85 indústrias cobertas (concluído Round 96).
