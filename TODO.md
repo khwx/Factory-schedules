@@ -93,3 +93,21 @@ Corrigir avisos de `react-hooks/exhaustive-deps` em componentes principais (pote
 
 ## 13. Presets industriais — serviços de emergência e segurança crítica (Round 91)
 - [x] **+8 novos presets críticos:** Atendimento Emergência 112, Controle Tráfego Aéreo, Metropolitano/Metro, Oleodutos/Gasodutos, Central Nuclear, Banco de Sangue/Transfusão, Procura Órgãos/Transplante, Estabelecimento Prisional — total 65 presets, 49 indústrias cobertas (concluído Round 91).
+
+## 14. Presets industriais — infraestruturas e serviços essenciais (Round 90)
+- [x] **+8 novos presets infraestruturas:** Ferroviário/Tráfego, Portos/Logística Portuária, Água e Saneamento, Gás Natural/Distribuição, Telecom/Serviços Campo, Serviços Funerários, Segurança Eletrónica/Central Alarmes, Manutenção Industrial/Facilities — total 57 presets, 41 indústrias cobertas (concluído Round 90).
+
+## 15. Presets industriais — nichos emergentes (Round 89)
+- [x] **+8 novos presets emergentes:** Hidrogénio Verde, Data Center IA, Logística Última Milha, Biotecnologia, Aeroespacial, Semicondutores, Veículos Elétricos/Baterias, Cibersegurança/SOC — total 49 presets, 34 indústrias cobertas (concluído Round 89).
+
+## 16. Presets industriais — expansão nicho (Round 87)
+- [x] **+8 novos presets nicho:** Educação/Escolas, Administração Pública, Telecomunicações/NOC, SAMU/Emergência Médica, Segurança Pública/Polícia, Gestão Resíduos, Energia Renovável, Casino/Entretenimento — total 41 presets, 26 indústrias cobertas (concluído Round 87).
+
+## 17. Presets industriais — defesa e aeroespacial operacional (Round 92)
+- [x] **+8 novos presets defesa/aeroespacial:** Operações Espaciais, Defesa Aérea, Ciberdefesa Militar, Operações Navais, Defesa de Mísseis, Operações de Satélites, Comando Estratégico, Logística de Defesa — total 73 presets, 57 indústrias cobertas (concluído Round 92).
+
+## 18. Presets industriais — saúde especializada de alta complexidade (Round 93)
+- [x] **+8 novos presets saúde:** Oncologia, Hemodiálise, Cuidados Paliativos, Saúde Mental, Unidade Queimados, Neonatologia, Medicina Nuclear, Radioterapia — total 81 presets, 65 indústrias cobertas (concluído Round 93).
+
+## 19. Presets industriais — tecnologia emergente e transição energética (Round 94)
+- [x] **+8 novos presets tech emergente:** Semicondutores Avançados (empacotamento 3D/teste), Energia de Fusão (tokamak/laser), Captura de Carbono (DAC/fonte pontual), Computação Quântica, Materiais Avançados (nanofabricação) — total 89 presets, 70 indústrias cobertas (concluído Round 94).
