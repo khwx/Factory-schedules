@@ -110,8 +110,8 @@ export default function EmployeeSchedule() {
             <div className="max-w-4xl mx-auto p-6">
                 <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-8 text-center">
                     <User className="h-12 w-12 mx-auto mb-4 text-gray-400" />
-                    <h2 className="text-xl font-semibold text-gray-800 mb-2">Horario Individual do Colaborador</h2>
-                    <p className="text-gray-500">Crie ou selecione um cenario para visualizar o horario individual.</p>
+                    <h2 className="text-xl font-semibold text-gray-800 mb-2">{t.employeeSchedule.title}</h2>
+                    <p className="text-gray-500">{t.employeeSchedule.emptyState}</p>
                 </div>
             </div>
         );
@@ -123,23 +123,23 @@ export default function EmployeeSchedule() {
                 <div>
                     <h1 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
                         <User className="h-6 w-6 text-blue-600" />
-                        Horario Individual do Colaborador
+                        {t.employeeSchedule.title}
                     </h1>
-                    <p className="text-sm text-gray-500 mt-1">Visualize o horario detalhado por colaborador e mes</p>
+                    <p className="text-sm text-gray-500 mt-1">{t.employeeSchedule.subtitle}</p>
                 </div>
                 <button
                     onClick={handlePrint}
                     className="flex items-center gap-2 px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors no-print"
                 >
                     <Printer className="h-4 w-4" />
-                    Imprimir
+                    {t.employeeSchedule.print}
                 </button>
             </div>
 
             <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 md:p-6 no-print">
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Cenario</label>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">{t.employeeSchedule.scenarioLabel}</label>
                         <select
                             value={activeScenarioId}
                             onChange={e => setSelectedScenarioId(e.target.value)}
@@ -152,7 +152,7 @@ export default function EmployeeSchedule() {
                     </div>
 
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Equipa</label>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">{t.employeeSchedule.teamLabel}</label>
                         <select
                             value={employeeTeam}
                             onChange={e => setEmployeeTeam(Number(e.target.value))}
@@ -165,12 +165,12 @@ export default function EmployeeSchedule() {
                     </div>
 
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Nome do Colaborador</label>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">{t.employeeSchedule.employeeNameLabel}</label>
                         <input
                             type="text"
                             value={employeeName}
                             onChange={e => setEmployeeName(e.target.value)}
-                            placeholder="Ex: Joao Silva"
+                            placeholder={t.employeeSchedule.employeeNamePlaceholder}
                             className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                         />
                     </div>
@@ -183,17 +183,17 @@ export default function EmployeeSchedule() {
                                 onChange={e => setShowPayEstimate(e.target.checked)}
                                 className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                             />
-                            <span className="text-sm text-gray-700">Simular Remuneracao</span>
+                            <span className="text-sm text-gray-700">{t.employeeSchedule.simulatePay}</span>
                         </label>
                     </div>
                 </div>
 
                 {showPayEstimate && (
                     <div className="mt-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
-                        <h4 className="text-sm font-medium text-gray-700 mb-3">Configuracao de Remuneracao</h4>
+                        <h4 className="text-sm font-medium text-gray-700 mb-3">{t.employeeSchedule.payConfigTitle}</h4>
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                             <div>
-                                <label className="block text-xs text-gray-500 mb-1">Taxa Horaria (€)</label>
+                                <label className="block text-xs text-gray-500 mb-1">{t.employeeSchedule.hourlyRateLabel}</label>
                                 <input
                                     type="number"
                                     value={payConfig.hourlyRate}
@@ -203,7 +203,7 @@ export default function EmployeeSchedule() {
                                 />
                             </div>
                             <div>
-                                <label className="block text-xs text-gray-500 mb-1">Premio Noturno (%)</label>
+                                <label className="block text-xs text-gray-500 mb-1">{t.employeeSchedule.nightPremiumLabel}</label>
                                 <input
                                     type="number"
                                     value={Math.round(payConfig.nightPremium * 100)}
@@ -213,7 +213,7 @@ export default function EmployeeSchedule() {
                                 />
                             </div>
                             <div>
-                                <label className="block text-xs text-gray-500 mb-1">Premio Fim de Semana (%)</label>
+                                <label className="block text-xs text-gray-500 mb-1">{t.employeeSchedule.weekendPremiumLabel}</label>
                                 <input
                                     type="number"
                                     value={Math.round(payConfig.weekendPremium * 100)}
@@ -223,7 +223,7 @@ export default function EmployeeSchedule() {
                                 />
                             </div>
                             <div>
-                                <label className="block text-xs text-gray-500 mb-1">Premio Feriados (%)</label>
+                                <label className="block text-xs text-gray-500 mb-1">{t.employeeSchedule.holidayPremiumLabel}</label>
                                 <input
                                     type="number"
                                     value={Math.round(payConfig.holidayPremium * 100)}
@@ -257,28 +257,28 @@ export default function EmployeeSchedule() {
                     <div className="bg-blue-50 rounded-lg p-3 border border-blue-100">
                         <div className="flex items-center gap-2 text-blue-600 mb-1">
                             <Clock className="h-4 w-4" />
-                            <span className="text-xs font-medium">Horas Trabalhadas</span>
+                            <span className="text-xs font-medium">{t.employeeSchedule.hoursWorked}</span>
                         </div>
                         <span className="text-lg font-bold text-blue-800">{monthData.totalHours}h</span>
                     </div>
                     <div className="bg-emerald-50 rounded-lg p-3 border border-emerald-100">
                         <div className="flex items-center gap-2 text-emerald-600 mb-1">
                             <Calendar className="h-4 w-4" />
-                            <span className="text-xs font-medium">Dias de Turno</span>
+                            <span className="text-xs font-medium">{t.employeeSchedule.workDays}</span>
                         </div>
                         <span className="text-lg font-bold text-emerald-800">{monthData.workDays}</span>
                     </div>
                     <div className="bg-gray-50 rounded-lg p-3 border border-gray-200">
                         <div className="flex items-center gap-2 text-gray-600 mb-1">
                             <Palmtree className="h-4 w-4" />
-                            <span className="text-xs font-medium">Dias de Folga</span>
+                            <span className="text-xs font-medium">{t.employeeSchedule.offDaysLabel}</span>
                         </div>
                         <span className="text-lg font-bold text-gray-800">{monthData.offDays}</span>
                     </div>
                     <div className="bg-purple-50 rounded-lg p-3 border border-purple-100">
                         <div className="flex items-center gap-2 text-purple-600 mb-1">
                             <Moon className="h-4 w-4" />
-                            <span className="text-xs font-medium">Turnos Noturnos</span>
+                            <span className="text-xs font-medium">{t.employeeSchedule.nightShifts}</span>
                         </div>
                         <span className="text-lg font-bold text-purple-800">{monthData.nightShifts}</span>
                     </div>
@@ -286,45 +286,45 @@ export default function EmployeeSchedule() {
 
                 {payEstimate && (
                     <div className="mb-6 bg-gradient-to-r from-emerald-50 to-teal-50 rounded-lg p-4 border border-emerald-200">
-                        <h4 className="text-sm font-medium text-emerald-800 mb-2">Simulacao de Remuneracao Anual</h4>
+                        <h4 className="text-sm font-medium text-emerald-800 mb-2">{t.employeeSchedule.paySimulationTitle}</h4>
                         <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
                             <div>
-                                <span className="text-xs text-emerald-600">Regulares</span>
+                                <span className="text-xs text-emerald-600">{t.employeeSchedule.regularPay}</span>
                                 <p className="font-semibold text-emerald-900">{formatCurrency(payEstimate.regularPay)}</p>
                                 <p className="text-[10px] text-emerald-500">{payEstimate.regularHours}h</p>
                             </div>
                             <div>
-                                <span className="text-xs text-emerald-600">Noturno</span>
+                                <span className="text-xs text-emerald-600">{t.employeeSchedule.nightPay}</span>
                                 <p className="font-semibold text-emerald-900">{formatCurrency(payEstimate.nightPay)}</p>
                                 <p className="text-[10px] text-emerald-500">{payEstimate.nightHours}h</p>
                             </div>
                             <div>
-                                <span className="text-xs text-emerald-600">Feriados</span>
+                                <span className="text-xs text-emerald-600">{t.employeeSchedule.holidayPay}</span>
                                 <p className="font-semibold text-emerald-900">{formatCurrency(payEstimate.holidayPay)}</p>
                                 <p className="text-[10px] text-emerald-500">{payEstimate.holidayHours}h</p>
                             </div>
                             <div>
-                                <span className="text-xs text-emerald-600">Fins de Semana</span>
+                                <span className="text-xs text-emerald-600">{t.employeeSchedule.weekendPay}</span>
                                 <p className="font-semibold text-emerald-900">{formatCurrency(payEstimate.weekendPay)}</p>
                                 <p className="text-[10px] text-emerald-500">{payEstimate.weekendHours}h</p>
                             </div>
                             <div>
-                                <span className="text-xs text-emerald-600">Total Anual</span>
+                                <span className="text-xs text-emerald-600">{t.employeeSchedule.totalAnnualPay}</span>
                                 <p className="text-xl font-bold text-emerald-900">{formatCurrency(payEstimate.totalPay)}</p>
                                 <p className="text-[10px] text-emerald-500">{payEstimate.totalHours}h</p>
                             </div>
                         </div>
-                        <p className="text-[10px] text-emerald-600 mt-2">Media Mensal: {formatCurrency(payEstimate.monthlyAvg)}</p>
+                        <p className="text-[10px] text-emerald-600 mt-2">{t.employeeSchedule.monthlyAvgPay}: {formatCurrency(payEstimate.monthlyAvg)}</p>
                     </div>
                 )}
 
                 <div className="mb-3 flex flex-wrap gap-2">
-                    <span className="text-xs text-gray-500 font-medium mr-2">Legenda:</span>
-                    <span className="text-xs px-2 py-0.5 rounded-full border bg-blue-100 text-blue-800 border-blue-300">Manha</span>
-                    <span className="text-xs px-2 py-0.5 rounded-full border bg-amber-100 text-amber-800 border-amber-300">Tarde</span>
-                    <span className="text-xs px-2 py-0.5 rounded-full border bg-purple-100 text-purple-800 border-purple-300">Noite</span>
-                    <span className="text-xs px-2 py-0.5 rounded-full border bg-emerald-50 text-emerald-700 border-emerald-200">Folga</span>
-                    <span className="text-xs px-2 py-0.5 rounded-full bg-red-50 text-red-700 border border-red-200">Feriado</span>
+                    <span className="text-xs text-gray-500 font-medium mr-2">{t.employeeSchedule.legend}</span>
+                    <span className="text-xs px-2 py-0.5 rounded-full border bg-blue-100 text-blue-800 border-blue-300">{t.employeeSchedule.shiftMorning}</span>
+                    <span className="text-xs px-2 py-0.5 rounded-full border bg-amber-100 text-amber-800 border-amber-300">{t.employeeSchedule.shiftAfternoon}</span>
+                    <span className="text-xs px-2 py-0.5 rounded-full border bg-purple-100 text-purple-800 border-purple-300">{t.employeeSchedule.shiftNight}</span>
+                    <span className="text-xs px-2 py-0.5 rounded-full border bg-emerald-50 text-emerald-700 border-emerald-200">{t.employeeSchedule.shiftOff}</span>
+                    <span className="text-xs px-2 py-0.5 rounded-full bg-red-50 text-red-700 border border-red-200">{t.employeeSchedule.holidayLabel}</span>
                 </div>
 
                 <div className="grid grid-cols-7 gap-1 md:gap-2">
@@ -359,30 +359,30 @@ export default function EmployeeSchedule() {
                 </div>
 
                 <div className="mt-4 pt-4 border-t border-gray-200">
-                    <h4 className="text-sm font-medium text-gray-700 mb-2">Resumo do Mes</h4>
+                    <h4 className="text-sm font-medium text-gray-700 mb-2">{t.employeeSchedule.monthSummary}</h4>
                     <div className="grid grid-cols-3 md:grid-cols-6 gap-2 text-center">
                         <div className="bg-blue-50 rounded p-2">
-                            <p className="text-xs text-gray-500">Manhas</p>
+                            <p className="text-xs text-gray-500">{t.employeeSchedule.mornings}</p>
                             <p className="font-bold text-blue-800">{monthData.days.filter(d => d.shift === 'M').length}</p>
                         </div>
                         <div className="bg-amber-50 rounded p-2">
-                            <p className="text-xs text-gray-500">Tardes</p>
+                            <p className="text-xs text-gray-500">{t.employeeSchedule.afternoons}</p>
                             <p className="font-bold text-amber-800">{monthData.days.filter(d => d.shift === 'T').length}</p>
                         </div>
                         <div className="bg-purple-50 rounded p-2">
-                            <p className="text-xs text-gray-500">Noites</p>
+                            <p className="text-xs text-gray-500">{t.employeeSchedule.nights}</p>
                             <p className="font-bold text-purple-800">{monthData.days.filter(d => d.shift === 'N').length}</p>
                         </div>
                         <div className="bg-emerald-50 rounded p-2">
-                            <p className="text-xs text-gray-500">Folgas</p>
+                            <p className="text-xs text-gray-500">{t.employeeSchedule.offDays}</p>
                             <p className="font-bold text-emerald-800">{monthData.days.filter(d => d.shift === 'F').length}</p>
                         </div>
                         <div className="bg-red-50 rounded p-2">
-                            <p className="text-xs text-gray-500">Feriados</p>
+                            <p className="text-xs text-gray-500">{t.employeeSchedule.holidays}</p>
                             <p className="font-bold text-red-800">{monthData.days.filter(d => d.isHoliday).length}</p>
                         </div>
                         <div className="bg-gray-50 rounded p-2">
-                            <p className="text-xs text-gray-500">FDS Trab.</p>
+                            <p className="text-xs text-gray-500">{t.employeeSchedule.weekendsWorked}</p>
                             <p className="font-bold text-gray-800">{monthData.days.filter(d => d.isWeekend && d.shift !== 'F').length}</p>
                         </div>
                     </div>
@@ -390,7 +390,7 @@ export default function EmployeeSchedule() {
             </div>
 
             <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 md:p-6">
-                <h3 className="font-semibold text-gray-800 mb-3">Proximo Mes</h3>
+                <h3 className="font-semibold text-gray-800 mb-3">{t.employeeSchedule.nextMonth}</h3>
                 <div className="grid grid-cols-7 gap-1 md:gap-2">
                     {t.calendar.dayNames.map(day => (
                         <div key={day} className="text-center text-[10px] font-semibold text-gray-400 py-1">
