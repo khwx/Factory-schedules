@@ -91,6 +91,14 @@ const INDUSTRY_KEY_MAP: Record<string, keyof Translations['presetSelector']['ind
     'Biologia Sintética / Cell-Free': 'syntheticBiology',
     'Testes Hipersónicos': 'hypersonicTesting',
     'Operações Submarinas / Deep Sea': 'deepSeaOperations',
+    'Captura Carbono Oceânica': 'oceanCarbonCapture',
+    'Energia de Fusão Comercial': 'commercialFusionEnergy',
+    'Computação Quântica Tolerante a Falhas': 'faultTolerantQuantumComputing',
+    'Mineração Nódulos Polimetálicos': 'polymetallicNoduleMining',
+    'Hidrogénio Verde Offshore': 'offshoreGreenHydrogen',
+    'Data Centers Submersos': 'underwaterDataCenters',
+    'Fabrico Orbital': 'orbitalManufacturing',
+    'Armazenamento Energia Longa Duração': 'longDurationEnergyStorage',
 };
 
 interface PresetSelectorProps {

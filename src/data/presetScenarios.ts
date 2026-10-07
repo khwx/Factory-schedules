@@ -1703,4 +1703,135 @@ export const PRESET_SCENARIOS: PresetScenario[] = [
         ],
         industry: 'Operações Submarinas / Deep Sea'
     },
+    // Ocean Carbon Capture - Direct Ocean Capture
+    {
+        name: 'Captura Carbono Oceânica - Captura Direta Oceano (3 Equipas)',
+        description: 'DAC oceânica - 3 equipas, turnos 12h, contactores oceânicos + mineralização alcalinidade + monitoramento ambiental marinho',
+        teams: 3,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOO', // Team A: contactores água do mar + bombas + alcalinização controlada
+            'NNNNOOOOMMMM', // Team B: precipitação carbonatos + separação sólidos + disposição
+            'OOOOMMMMNNNN', // Team C: monitoramento pH/alcalinidade + ecotoxicologia + relatórios MRV
+        ],
+        industry: 'Captura Carbono Oceânica'
+    },
+    // Commercial Fusion Energy - Reactor Operations
+    {
+        name: 'Energia de Fusão Comercial - Operações Reator (4 Equipas)',
+        description: 'Fusão comercial - 4 equipas, turnos 12h, plasma contínuo + criogenia + ciclo trítio + diagnóstico avançado',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 42,
+        pattern: 'DDNNOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'DDNNOO', // Team A: controle plasma (forma/posição/instabilidades) + aquecimento (NBI/ICRF/ECRH)
+            'OODDNN', // Team B: criogenia (hélio superfluido) + supercondutores + blindagem nêutrons
+            'NNOODD', // Team C: ciclo combustível (trítio breeding/recuperação) + vácuo + primeiros materiais
+            'DDOONN', // Team D: diagnósticos avançados (bolômetro/neutrões/imagem) + proteção disruptiva
+        ],
+        industry: 'Energia de Fusão Comercial'
+    },
+    // Fault-Tolerant Quantum Computing - Error Correction
+    {
+        name: 'Computação Quântica Tolerante a Falhas - Correção Erros (3 Equipas)',
+        description: 'QC tolerante a falhas - 3 equipas, turnos 12h, qubits lógicos + códigos superfície + decodificação tempo real + calibração',
+        teams: 3,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOO', // Team A: controle qubits físicos + portas Clifford + medição síndromes
+            'NNNNOOOOMMMM', // Team B: decodificação (MWPM/neural) + feedback tempo real + correção lógica
+            'OOOOMMMMNNNN', // Team C: calibração contínua (RB/GST) + caracterização ruído + benchmarking
+        ],
+        industry: 'Computação Quântica Tolerante a Falhas'
+    },
+    // Polymetallic Nodule Mining - Deep Sea
+    {
+        name: 'Mineração Nódulos Polimetálicos - Mar Profundo (4 Equipas)',
+        description: 'Mineração fundo mar - 4 equipas, turnos 12h, veículos coletores + riser + processamento navio + monitoramento ambiental',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 42,
+        pattern: 'DDNNOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'DDNNOO', // Team A: operação veículos coletores (caterpillar/tracked) + navegação AUV
+            'OODDNN', // Team B: sistema riser (bomba/ar comprimido) + separação nódulos/sedimento
+            'NNOODD', // Team C: processamento navio (lavagem/classificação) + armazenamento + logística
+            'DDOONN', // Team D: monitoramento plumas sedimento + biodiversidade + conformidade ISA
+        ],
+        industry: 'Mineração Nódulos Polimetálicos'
+    },
+    // Offshore Green Hydrogen Production
+    {
+        name: 'Hidrogénio Verde Offshore - Produção Marítima (3 Equipas)',
+        description: 'H2 verde offshore - 3 equipas, turnos 12h, eletrólise eólica offshore + compressão + exportação pipeline/navio + segurança',
+        teams: 3,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMTTTTNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMTTTTNNNNOOOO', // Team A: eletrólise PEM/alcalina + retificação + purificação H2
+            'NNNNOOOOMMMMTTTT', // Team B: compressão/liquefação + armazenamento + exportação (pipeline/navio)
+            'TTTTNNNNOOOOMMMM', // Team C: segurança processo (H2/incêndio) + instrumentação + manutenção preventiva
+        ],
+        industry: 'Hidrogénio Verde Offshore'
+    },
+    // Underwater Data Centers
+    {
+        name: 'Data Centers Submersos - Operações Subaquáticas (3 Equipas)',
+        description: 'DC submersos - 3 equipas, turnos 12h, monitoramento térmico + manutenção ROV + conectividade + energia renovável',
+        teams: 3,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOO', // Team A: monitoramento racks (temperatura/vibração/vazamento) + energia onda/maré
+            'NNNNOOOOMMMM', // Team B: manutenção ROV (troca servidores/cabos) + inspeção casco + biofouling
+            'OOOOMMMMNNNN', // Team C: conectividade (cabo submarino/satélite) + resiliência + disaster recovery
+        ],
+        industry: 'Data Centers Submersos'
+    },
+    // Orbital Manufacturing - Microgravity
+    {
+        name: 'Fabrico Orbital - Microgravidade (3 Equipas)',
+        description: 'Fabrico espacial - 3 equipas, turnos 12h, impressão 3D orbital + crescimento cristais + fibras ZBLAN + retorno carga',
+        teams: 3,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMTTTTNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMTTTTNNNNOOOO', // Team A: manufatura aditiva (metais/polímeros) + controle térmico vácuo
+            'NNNNOOOOMMMMTTTT', // Team B: crescimento cristais (semicon/proteína) + fibras ópticas ZBLAN + monitoramento
+            'TTTTNNNNOOOOMMMM', // Team C: integração payload + acoplagem/desacoplagem + retorno cápsula + QC terrestre
+        ],
+        industry: 'Fabrico Orbital'
+    },
+    // Long-Duration Energy Storage - Flow Batteries
+    {
+        name: 'Armazenamento Energia Longa Duração - Baterias Fluxo (4 Equipas)',
+        description: 'LDES baterias fluxo - 4 equipas, turnos 12h, preparação eletrólitos + bombas + stacks + gestão térmica + BMS',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 42,
+        pattern: 'DDNNOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'DDNNOO', // Team A: preparação eletrólitos (vanádio/ferro/organicos) + tanques + controle qualidade
+            'OODDNN', // Team B: bombas circulação + stacks célula + otimização densidade potência/energia
+            'NNOODD', // Team C: gestão térmica (resfriamento/aquecimento) + BMS + balanceamento células
+            'DDOONN', // Team D: integração rede (carga/descarga 10h+) + ancilaridade + manutenção preventiva
+        ],
+        industry: 'Armazenamento Energia Longa Duração'
+    },
 ];
