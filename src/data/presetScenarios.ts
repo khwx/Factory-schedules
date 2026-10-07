@@ -1304,4 +1304,138 @@ export const PRESET_SCENARIOS: PresetScenario[] = [
         ],
         industry: 'Radioterapia'
     },
+    // Advanced Semiconductors - Advanced Packaging
+    {
+        name: 'Semicondutores Avançados - Empacotamento 3D/Chiplets (4 Equipas)',
+        description: 'Advanced packaging - 4 equipas, turnos 12h, 3D stacking + chiplet integration + HBM bonding + test',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOO', // Team A: wafer thinning + TSV etch + die attach
+            'OOOOMMMMNNNN', // Team B: chiplet placement + reflow + underfill
+            'NNNNOOOOMMMM', // Team C: HBM stacking + hybrid bonding + metrology
+            'MMMMNNNNOOOO', // Team D: final test + singulation + ship prep
+        ],
+        industry: 'Semicondutores Avançados'
+    },
+    // Advanced Semiconductors - Wafer Test
+    {
+        name: 'Semicondutores Avançados - Teste Wafers/Final (4 Equipas)',
+        description: 'Wafer probe & final test - 4 equipas, turnos 12h, probe card + burn-in + SLT + ATE',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMTTNNFF',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMTTNNFF', // Team A: wafer sort (probe) + parametric test
+            'TTNNFFMM', // Team B: burn-in board load/unload + HTOL
+            'NNFFMMTT', // Team C: system level test (SLT) + ATE pattern debug
+            'FFMMTTNN', // Team D: final test + mark/pack + datalog
+        ],
+        industry: 'Semicondutores Avançados'
+    },
+    // Fusion Energy - Tokamak Operations
+    {
+        name: 'Energia de Fusão - Operações Tokamak (4 Equipas)',
+        description: 'Tokamak operations - 4 equipas, turnos 12h, plasma control + heating + diagnostics + cryogenics',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMTTTTNNNN',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMTTTTNNNN', // Team A: plasma control + magnetic config + fuelling
+            'TTTTNNNNMMMM', // Team B: heating systems (NBI/ICRH/ECRH) + power supplies
+            'NNNNMMMMTTTT', // Team C: diagnostics (magnetics/bolometry/TS) + data acquisition
+            'MMMMTTTTNNNN', // Team D: cryogenics + vacuum + first wall conditioning
+        ],
+        industry: 'Energia de Fusão'
+    },
+    // Fusion Energy - Inertial Confinement
+    {
+        name: 'Energia de Fusão - Confinamento Inercial Laser (4 Equipas)',
+        description: 'Laser fusion - 4 equipas, turnos 12h, laser drivers + target fab + diagnostics + chamber ops',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOO', // Team A: laser alignment + pulse shaping + amplifier chain
+            'NNNNOOOOMMMM', // Team B: target fabrication + metrology + cryo-layering
+            'OOOOMMMMNNNN', // Team C: diagnostics (neutron/x-ray/optical) + data systems
+            'MMMMNNNNOOOO', // Team D: chamber recovery + debris clearing + shot prep
+        ],
+        industry: 'Energia de Fusão'
+    },
+    // Carbon Capture - Direct Air Capture
+    {
+        name: 'Captura Carbono - Captura Direta Ar DAC (3 Equipas)',
+        description: 'Direct Air Capture - 3 equipas, turnos 8h/12h mistos, contactores + sorbent regen + CO2 compressão',
+        teams: 3,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOO', // Team A: air contactor ops + fan control + sorbent monitoring
+            'NNNNOOOOMMMM', // Team B: thermal swing regeneration + vacuum/steam systems
+            'OOOOMMMMNNNN', // Team C: CO2 compression + dehydration + pipeline injection
+        ],
+        industry: 'Captura de Carbono'
+    },
+    // Carbon Capture - Point Source
+    {
+        name: 'Captura Carbono - Captura Fonte Pontual (4 Equipas)',
+        description: 'Point source capture - 4 equipas, turnos 12h, absorção + regeneração solvente + compressão CO2',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMTTNNFF',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMTTNNFF', // Team A: absorber column ops + flue gas conditioning
+            'TTNNFFMM', // Team B: stripper/regenerator + reboiler + lean/rich solvent
+            'NNFFMMTT', // Team C: CO2 compression train + dehydration + metering
+            'FFMMTTNN', // Team D: solvent makeup + reclaim + emissions monitoring
+        ],
+        industry: 'Captura de Carbono'
+    },
+    // Quantum Computing - Cryogenic Operations
+    {
+        name: 'Computação Quântica - Operações Criogénicas (3 Equipas)',
+        description: 'Quantum computing - 3 equipas, turnos 8h/12h mistos, dilution fridges + qubit control + error correction',
+        teams: 3,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMTTTTNNNN',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMTTTTNNNN', // Team A: dilution fridge ops + cryogenics + wiring
+            'TTTTNNNNMMMM', // Team B: qubit control electronics + microwave + flux bias
+            'NNNNMMMMTTTT', // Team C: quantum error correction + calibration + benchmarking
+        ],
+        industry: 'Computação Quântica'
+    },
+    // Advanced Materials - Nanofabrication
+    {
+        name: 'Materiais Avançados - Nanofabricação 24/7 (4 Equipas)',
+        description: 'Nanofabrication cleanroom - 4 equipas, turnos 12h, e-beam litho + ALD/CVD + etch + metrology',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOO', // Team A: e-beam lithography + resist process + pattern transfer
+            'NNNNOOOOMMMM', // Team B: ALD/CVD deposition + precursor management + thickness control
+            'OOOOMMMMNNNN', // Team C: etch (RIE/ICP) + endpoint detection + profile control
+            'MMMMNNNNOOOO', // Team D: metrology (SEM/AFM/ellipsometry) + defect inspection
+        ],
+        industry: 'Materiais Avançados'
+    },
 ];

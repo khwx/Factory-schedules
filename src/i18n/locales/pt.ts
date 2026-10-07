@@ -1105,6 +1105,11 @@ export const pt = {
       neonatology: 'Neonatologia',
       nuclearMedicine: 'Medicina Nuclear',
       radiationTherapy: 'Radioterapia',
+      advancedSemiconductors: 'Semicondutores Avançados',
+      fusionEnergy: 'Energia de Fusão',
+      carbonCapture: 'Captura de Carbono',
+      quantumComputing: 'Computação Quântica',
+      advancedMaterials: 'Materiais Avançados',
     },
   },
   employeeSchedule: {

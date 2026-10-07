@@ -70,6 +70,11 @@ const INDUSTRY_KEY_MAP: Record<string, keyof Translations['presetSelector']['ind
     'Neonatologia': 'neonatology',
     'Medicina Nuclear': 'nuclearMedicine',
     'Radioterapia': 'radiationTherapy',
+    'Semicondutores Avançados': 'advancedSemiconductors',
+    'Energia de Fusão': 'fusionEnergy',
+    'Captura de Carbono': 'carbonCapture',
+    'Computação Quântica': 'quantumComputing',
+    'Materiais Avançados': 'advancedMaterials',
 };
 
 interface PresetSelectorProps {

@@ -1107,6 +1107,11 @@ export const en: Translations = {
       neonatology: 'Neonatology',
       nuclearMedicine: 'Nuclear Medicine',
       radiationTherapy: 'Radiation Therapy',
+      advancedSemiconductors: 'Advanced Semiconductors',
+      fusionEnergy: 'Fusion Energy',
+      carbonCapture: 'Carbon Capture',
+      quantumComputing: 'Quantum Computing',
+      advancedMaterials: 'Advanced Materials',
     },
   },
   employeeSchedule: {

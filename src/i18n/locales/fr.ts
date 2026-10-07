@@ -1107,6 +1107,11 @@ holidayCalendar: {
       neonatology: 'Néonatologie',
       nuclearMedicine: 'Médecine Nucléaire',
       radiationTherapy: 'Radiothérapie',
+      advancedSemiconductors: 'Semi-conducteurs Avancés',
+      fusionEnergy: 'Energie de Fusion',
+      carbonCapture: 'Capture de Carbone',
+      quantumComputing: 'Informatique Quantique',
+      advancedMaterials: 'Matériaux Avancés',
     },
   },
   employeeSchedule: {
