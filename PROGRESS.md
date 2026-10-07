@@ -2,6 +2,32 @@
 
 Log de execuções autónomas do Bot Orquestrador (modelos free: `opencode/hy3-free`).
 
+## Round 94 — 2026-10-07
+**Objetivo:** Expandir presets industriais com +8 novos nichos de tecnologia emergente (Semicondutores Avançados, Energia de Fusão, Captura de Carbono, Computação Quântica, Materiais Avançados).
+
+**Contexto:** A Round 93 completou a expansão para 81 presets cobrindo 65 indústrias com foco em saúde especializada de alta complexidade. Conforme sugerido na decisão da Round 93, havia oportunidade de cobrir setores de tecnologia profunda e transição energética: semicondutores avançados (empacotamento 3D/chiplets/HBM + teste wafers/probe/burn-in/SLT), energia de fusão (tokamak operações plasma/aquecimento/diagnósticos/criogenia + confinamento inercial laser/target fabricação), captura de carbono (DAC direta do ar contactores/sorvente regeneração/compressão + fonte pontual absorção/regeneração solvente), computação quântica (dilution fridges/qubit control/error correction/calibration), materiais avançados (nanofabricação cleanroom e-beam litho/ALD CVD/etch/metrologia).
+
+**O que foi feito:**
+- `src/data/presetScenarios.ts`:
+  - Adicionados 8 novos presets com `teamPatterns` individuais:
+    1. **Semicondutores Avançados - Empacotamento 3D/Chiplets (4 Equipas)** — turnos 12h, wafer thinning + TSV + chiplet placement + HBM bonding + final test
+    2. **Semicondutores Avançados - Teste Wafers/Final (4 Equipas)** — turnos 12h, wafer sort + burn-in HTOL + SLT + ATE final test
+    3. **Energia de Fusão - Operações Tokamak (4 Equipas)** — turnos 12h, plasma control + heating (NBI/ICRH/ECRH) + diagnostics + cryogenics
+    4. **Energia de Fusão - Confinamento Inercial Laser (4 Equipas)** — turnos 12h, laser drivers + target fabrication + diagnostics + chamber recovery
+    5. **Captura Carbono - Captura Direta Ar DAC (3 Equipas)** — turnos 12h, air contactors + thermal swing regeneration + CO2 compression
+    6. **Captura Carbono - Captura Fonte Pontual (4 Equipas)** — turnos 12h, absorber/stripper + solvent regeneration + CO2 compression train
+    7. **Computação Quântica - Operações Criogénicas (3 Equipas)** — turnos 12h, dilution fridges + qubit control electronics + QEC/calibration
+    8. **Materiais Avançados - Nanofabricação 24/7 (4 Equipas)** — turnos 12h, e-beam lithography + ALD/CVD + etch + metrology/defect inspection
+  - Total: 89 presets (era 81). Cobertura alargada a 5 novos setores (total 70 indústrias distintas).
+- `src/i18n/locales/{pt,en,es,fr,de}.ts`:
+  - Novas chaves `presetSelector.industries.*` para as 5 novas indústrias em 5 línguas (25 chaves novas).
+- `src/components/PresetSelector.tsx`:
+  - Atualizado `INDUSTRY_KEY_MAP` com as 5 novas indústrias.
+
+**Verificação:** `npm run build` → OK; `vitest` → **646 passam**, 0 falham; `eslint` → 0 erros (52 warnings pré-existentes); typecheck → OK.
+
+**Decisão registada:** Presets industriais expandidos de 81 para 89, cobrindo agora 70 setores distintos incluindo tecnologia profunda (semicondutores avançados, fusão, captura carbono, computação quântica, materiais avançados). Próximos passos sugeridos: auditoria de performance de renderização (React DevTools Profiler), ou expansão para setores de biofabricação/órgãos artificiais, mineração espacial, ou hidrogénio verde distribuição.
+
 ## Round 93 — 2026-10-07
 **Objetivo:** Expandir presets industriais com +8 novos nichos de saúde especializada (Oncologia, Hemodiálise, Cuidados Paliativos, Saúde Mental, Unidade Queimados, Neonatologia, Medicina Nuclear, Radioterapia).
 
