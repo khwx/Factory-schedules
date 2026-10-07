@@ -1966,4 +1966,137 @@ export const PRESET_SCENARIOS: PresetScenario[] = [
         ],
         industry: 'Defesa Planetária'
     },
+    // Quantum Communication Networks / Quantum Internet
+    {
+        name: 'Comunicações Quânticas - Internet Quântica (3 Equipas)',
+        description: 'Rede quântica - 3 equipas, turnos 12h, distribuição chaves quânticas (QKD) + repetidores quânticos + teleportação + nódes satélite/fibra',
+        teams: 3,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOO', // Team A: geração/distribuição chaves (QKD) + fontes fotão único + detetores SNSPD
+            'NNNNOOOOMMMM', // Team B: repetidores quânticos (memórias/emaranhamento) + correção erros + purificação
+            'OOOOMMMMNNNN', // Team C: ligações satélite-terra (free-space) + rede fibra confiável + gestão chaves clássicas
+        ],
+        industry: 'Comunicações Quânticas'
+    },
+    // Molten Salt Reactors / Advanced Nuclear (Thorium)
+    {
+        name: 'Reactores Sal Fundido - Tório/MSR (4 Equipas)',
+        description: 'Reator sal fundido/tório - 4 equipas, turnos 12h, processamento sal online + reprocessamento piroquímico + refrigeração passiva + licenciamento',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 42,
+        pattern: 'DDNNOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'DDNNOO', // Team A: operação núcleo (sal combustível/coolant) + controlo redox + temperatura 700°C+
+            'OODDNN', // Team B: processamento sal online (extração gases/actínideos) + reposição tório/URANIO
+            'NNOODD', // Team C: sistemas segurança passiva (dreno congelado) + blindagem + instrumentação alta temperatura
+            'DDOONN', // Team D: ciclo combustível (FLiBe/sal portador) + gestão resíduos + validação regulatória
+        ],
+        industry: 'Reactores Sal Fundido'
+    },
+    // Urban Air Mobility / eVTOL Operations
+    {
+        name: 'Mobilidade Aérea Urbana - eVTOL (4 Equipas)',
+        description: 'eVTOL/vertiports - 4 equipas, turnos 10h/12h, operações voo urbano + carregamento baterias + gestão tráfego UTM + manutenção',
+        teams: 4,
+        shiftDuration: 10,
+        weeklyHoursContract: 40,
+        pattern: 'MMMTTTNNNFFF',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMTTTNNNFFF', // Team A: operações voo (piloto/autónomo) + vertiporto partida/chegada + passageiros
+            'FFFMMMTTTNNN', // Team B: carregamento rápido (MW) + gestão baterias (swap/health) + infraestrutura energia
+            'NNNFFFMMMTTT', // Team C: gestão tráfego UTM (corredores/desconflito) + comunicações 5G/6G + meteorologia urbana
+            'TTTNNNFFFMMM', // Team D: manutenção linha (inspeção rotores/aviónicos) + certificação contínua + peças reserva
+        ],
+        industry: 'Mobilidade Aérea Urbana'
+    },
+    // Enhanced/Deep Geothermal Energy
+    {
+        name: 'Geotermia Profunda - Superhot Rock (4 Equipas)',
+        description: 'Geotermia supercrítica - 4 equipas, turnos 12h, perfuração ultraprofunda (10km+) + fluidos supercríticos + estimulação + central binária',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 42,
+        pattern: 'DDNNOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'DDNNOO', // Team A: perfuração direcional (rotary/laser/plasma) + revestimento alta T/P + logging
+            'OODDNN', // Team B: estimulação hidráulica/shear + monitoramento sísmico + gestão reservatório
+            'NNOODD', // Team C: central potência binária (CO2/sCO2/ORC) + trocadores + turbinas + injeção
+            'DDOONN', // Team D: monitoramento induzido sismicidade + qualidade água + conformidade ambiental + manutenção poço
+        ],
+        industry: 'Geotermia Profunda'
+    },
+    // Active Space Debris Removal
+    {
+        name: 'Remoção Ativa Detritos Espaciais - ADR (3 Equipas)',
+        description: 'ADR missões - 3 equipas, turnos 12h, captura detritos (rede/gancho/laser) + desorbitar + verificação + operações proximidade',
+        teams: 3,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOO', // Team A: rendez-vous/proximidade + captura (rede/braço/ião) + acoplamento não-cooperativo
+            'NNNNOOOOMMMM', // Team B: desorbitar controlado (vela/propulsão) + verificação reentrada + telemetria final
+            'OOOOMMMMNNNN', // Team C: planejamento missão (alvos/prioridade) + licenciamento espacial + coordenação internacional IADC
+        ],
+        industry: 'Remoção Detritos Espaciais'
+    },
+    // Metal Additive Manufacturing at Industrial Scale
+    {
+        name: 'Fabrico Aditivo Metálico - Escala Industrial (4 Equipas)',
+        description: 'AM metal larga escala - 4 equipas, turnos 12h, LPBF/DED/EBM multi-laser + pós-processamento (HIP/maquinação) + QC em linha + certificação',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 42,
+        pattern: 'DDNNOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'DDNNOO', // Team A: impressão (LPBF/DED/EBM) + gestão pó (reciclagem/sieving) + monitoramento melt pool
+            'OODDNN', // Team B: tratamento térmico (HIP/alívio tensões) + maquinação CNC 5-eixos + acabamento superfície
+            'NNOODD', // Team C: controlo qualidade (CT/tomografia/ultrassom) + metrologia dimensional + rastreabilidade lote
+            'DDOONN', // Team D: qualificação processo/material + certificação (AMS/ASME/NADCAP) + digital twin + supply chain
+        ],
+        industry: 'Fabrico Aditivo Metálico'
+    },
+    // Biological Computing / DNA Data Storage
+    {
+        name: 'Computação Biológica - Armazenamento DNA (3 Equipas)',
+        description: 'Armazenamento DNA - 3 equipas, turnos 12h, síntese oligos (enzimática/fotolitográfica) + sequenciação leitura + codificação erro + biblioteca fria',
+        teams: 3,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOO', // Team A: síntese DNA em massa (array/chip) + codificação (fountain/Reed-Solomon) + verificação QC
+            'NNNNOOOOMMMM', // Team B: sequenciação leitura (nanopore/Illumina) + decodificação + correção erros + reconstrução dados
+            'OOOOMMMMNNNN', // Team C: armazenamento frio (LN2/-80°C) + gestão biblioteca + indexação + recuperação seletiva + longevidade
+        ],
+        industry: 'Computação Biológica / DNA'
+    },
+    // Autonomous Maritime Surface Operations
+    {
+        name: 'Operações Marítimas Autónomas - USV (4 Equipas)',
+        description: 'Navios superfície não tripulados - 4 equipas, turnos 12h, teleoperação/autonomia + sensores (lidar/radar/AIS) + COLREGs + centro controle terra',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 42,
+        pattern: 'DDNNOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'DDNNOO', // Team A: centro operações terra (ROC) + teleoperação múltiplos USV + planejamento missão
+            'OODDNN', // Team B: autonomia navegação (evitamento/ COLREGs) + fusão sensores + comunicações satélite/LOS
+            'NNOODD', // Team C: payload missão (hidrografia/inspeção/segurança) + processamento dados + transmissão tempo real
+            'DDOONN', // Team D: logística lançamento/recuperação + manutenção cascos/propulsão + abastecimento + conformidade IMO
+        ],
+        industry: 'Operações Marítimas Autónomas'
+    },
 ];
