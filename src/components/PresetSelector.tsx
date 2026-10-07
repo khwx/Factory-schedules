@@ -107,6 +107,14 @@ const INDUSTRY_KEY_MAP: Record<string, keyof Translations['presetSelector']['ind
     'Computação Neuromórfica / BCI': 'neuromorphicBCI',
     'Biofabricação Terapias Celulares': 'cellGeneTherapyManufacturing',
     'Defesa Planetária': 'planetaryDefense',
+    'Comunicações Quânticas': 'quantumCommunications',
+    'Reactores Sal Fundido': 'moltenSaltReactors',
+    'Mobilidade Aérea Urbana': 'urbanAirMobility',
+    'Geotermia Profunda': 'deepGeothermal',
+    'Remoção Detritos Espaciais': 'activeDebrisRemoval',
+    'Fabrico Aditivo Metálico': 'metalAdditiveManufacturing',
+    'Computação Biológica / DNA': 'biologicalComputing',
+    'Operações Marítimas Autónomas': 'autonomousMaritime',
 };
 
 interface PresetSelectorProps {
