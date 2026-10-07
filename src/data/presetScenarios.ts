@@ -1171,4 +1171,137 @@ export const PRESET_SCENARIOS: PresetScenario[] = [
         ],
         industry: 'Logística Defesa'
     },
+    // Oncology - Quimioterapia 24/7
+    {
+        name: 'Oncologia - Quimioterapia 24/7 (4 Equipas)',
+        description: 'Unidade oncologia - 4 equipas, turnos 12h (Panama), infusão quimioterápicos + monitoramento toxicidade + suporte',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 42,
+        pattern: 'DDNNOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'DDNNOO', // Team A: infusão quimioterapia dia (cadeiras/leitos)
+            'OODDNN', // Team B: preparação citotóxicos / farmácia oncológica
+            'NNOODD', // Team C: monitoramento toxicidade / urgências febris
+            'DDOONN', // Team D: consultas seguimento / survivorship / paliativos
+        ],
+        industry: 'Oncologia'
+    },
+    // Hemodialysis Center - Centro Diálise
+    {
+        name: 'Hemodiálise - Centro Diálise (4 Equipas)',
+        description: 'Centro hemodiálise - 4 equipas, turnos 12h, 3 sessões/dia (4h cada) + preparação máquinas/água',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 42,
+        pattern: 'DDNNOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'DDNNOO', // Team A: sessão manhã (6h-10h) + monitoramento
+            'OODDNN', // Team B: sessão tarde (11h-15h) + acesso vascular
+            'NNOODD', // Team C: sessão noite (16h-20h) + complicações
+            'DDOONN', // Team D: preparação máquinas/RO + manutenção + triagem
+        ],
+        industry: 'Hemodiálise'
+    },
+    // Palliative Care - Hospice 24h
+    {
+        name: 'Cuidados Paliativos - Hospice 24h (3 Equipas)',
+        description: 'Unidade paliativos/hospice - 3 equipas, turnos 12h/24h mistos, controle sintomas + suporte família + plantão',
+        teams: 3,
+        shiftDuration: 16,
+        weeklyHoursContract: 40,
+        pattern: 'DDNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'DDNNOOOO', // Team A: cuidados diurnos + controle sintomas (12h)
+            'OODDNNNN', // Team B: plantão noturno 24h + suporte família + óbitos
+            'NNNNOODD', // Team C: admissões/alta + coordenação equipa multidisciplinar
+        ],
+        industry: 'Cuidados Paliativos'
+    },
+    // Mental Health - Psychiatric Unit
+    {
+        name: 'Saúde Mental - Unidade Psiquiátrica (4 Equipas)',
+        description: 'Internamento psiquiátrico - 4 equipas, turnos 12h (Panama), observação contínua + grupos terapêuticos + contenção',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 42,
+        pattern: 'DDNNOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'DDNNOO', // Team A: observação enfermaria + medicação oral/IM
+            'OODDNN', // Team B: grupos terapêuticos + atividades ocupacionais
+            'NNOODD', // Team C: vigilância contínua risco suicídio/fuga + contenção
+            'DDOONN', // Team D: admissões/altas + reunião clínica + família
+        ],
+        industry: 'Saúde Mental'
+    },
+    // Burn Unit - Unidade Queimados
+    {
+        name: 'Unidade Queimados - Burn Unit (3 Equipas)',
+        description: 'Centro tratamento queimados - 3 equipas, turnos 8h/12h mistos, curativos complexos + reabilitação + UTI queimados',
+        teams: 3,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMTTTTNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMTTTTNNNNOOOO', // Team A: curativos complexos (banho/desbridamento) + UTI
+            'NNNNOOOOMMMMTTTT', // Team B: enxertos/cirurgia + reabilitação precoce
+            'TTTTNNNNOOOOMMMM', // Team C: monitoramento hemodinâmico + nutrição/infecção
+        ],
+        industry: 'Unidade Queimados'
+    },
+    // Neonatology - NICU
+    {
+        name: 'Neonatologia - UTI Neonatal (4 Equipas)',
+        description: 'UTI neonatal - 4 equipas, turnos 12h (Panama), cuidados intensivos recém-nascidos + transporte neonatal',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 42,
+        pattern: 'DDNNOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'DDNNOO', // Team A: ventilação/CPAP + acesso vascular umbilical
+            'OODDNN', // Team B: nutrição parenteral + fototerapia + triagem
+            'NNOODD', // Team C: transporte neonatal (SAMU/helicóptero) + estabilização
+            'DDOONN', // Team D: alta/seguimento + aconselhamento pais + kangaroo care
+        ],
+        industry: 'Neonatologia'
+    },
+    // Nuclear Medicine - Radiofarmácia
+    {
+        name: 'Medicina Nuclear - Radiofarmácia (3 Equipas)',
+        description: 'Medicina nuclear - 3 equipas, turnos 8h/12h mistos, produção radiofármacos + PET/CT + terapia metabólica',
+        teams: 3,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMTTTTNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMTTTTNNNNOOOO', // Team A: síntese radiofármacos (GMP) + controle qualidade
+            'NNNNOOOOMMMMTTTT', // Team B: PET/CT/SPECT + dosimetria + proteção radiológica
+            'TTTTNNNNOOOOMMMM', // Team C: terapia metabólica (Lu-177/I-131) + alta proteção
+        ],
+        industry: 'Medicina Nuclear'
+    },
+    // Radiation Therapy - Linear Accelerators
+    {
+        name: 'Radioterapia - Aceleradores Lineares (4 Equipas)',
+        description: 'Serviço radioterapia - 4 equipas, turnos 10h, planejamento tratamento + QA máquinas + sessões pacientes',
+        teams: 4,
+        shiftDuration: 10,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMMFFFFF',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMMFFFFF', // Team A: simulação CT + contorno alvo/órgãos risco
+            'FFFFFMMMMM', // Team B: planejamento dosimétrico (IMRT/VMAT/SBRT) + QA
+            'MMMMMFFFFF', // Team C: tratamento diário (linacs) + verificação imagem (IGRT)
+            'FFFFFMMMMM', // Team D: braquiterapia + radiocirurgia + seguimento toxicidade
+        ],
+        industry: 'Radioterapia'
+    },
 ];
