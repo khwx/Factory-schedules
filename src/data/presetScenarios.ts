@@ -2362,4 +2362,142 @@ export const PRESET_SCENARIOS: PresetScenario[] = [
         ],
         industry: 'Geração Atmosférica de Água'
     },
+    {
+        name: 'Mineração Mar Profunda - Nódulos/SSC (4 Equipas)',
+        description: 'Coleta nódulos polimetálicos 4000-6000m + elevação riser + processamento navio + gestão sedimentos/pluma - 4 equipas, turnos 12h Panama',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOO', // Team A: pilotagem veículo coleta (ROV/AUV) + posicionamento GPS/acústico + coleta seletiva nódulos + monitoramento pluma sedimentos + sistemas elevação (bomba ar/riser)
+            'NNNNOOOOMMMM', // Team B: processamento a bordo (lavagem/classificação/secagem) + separação minerais (Cu/Ni/Co/Mn/REE) + gestão rejeitos/água produção + certificação MRV (monitoramento/relatório/verificação)
+            'OOOOMMMMNNNN', // Team C: manutenção equipamentos subsea (ROV intervenção/hidráulica/elétrica) + inspeção integridade riser/umbilical + logística abastecimento navio (combustível/peças/tripulação) + gestão resíduos perigosos
+            'MMMMNNNNOOOO', // Team D: sala controle integrada (SCADA subsea + navegação dinâmica DP + monitoramento ambiental tempo real) + coordenação operações simultâneas (SIMOPS) + comunicação satélite + relatórios conformidade ISA/regulatório
+        ],
+        industry: 'Mineração Mar Profunda'
+    },
+    {
+        name: 'Propulsão Nuclear Espacial - NTP/NEP (3 Equipas)',
+        description: 'Desenvolvimento/teste propulsão térmica nuclear (NTP) e elétrica nuclear (NEP) - 3 equipas, turnos 12h, reatores espaciais + criogenia H2/LH2 + válvulas alta temperatura',
+        teams: 3,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOO', // Team A: montagem/integração reator (combustível HALEU/UN + moderador ZrH/BeO + refletor Be) + teste não-nuclear (vazão/pressão/vibração) + preparação ensaios nucleares (criticalidade/reatividade)
+            'NNNNOOOOMMMM', // Team B: sistema propulsão criogênico (tanques LH2/LOX + bombas turbina + válvulas reguladoras + isolamento MLI/vácuo) + teste fluxo/pressão/choque térmico + integração bocais expansão (C-C/SiC)
+            'OOOOMMMMNNNN', // Team C: instrumentação/telemetria (neutrões/gama/temperatura/pressão/vazão) + aquisição dados alta velocidade + simulação CFD/neutrónica (MCNP/SERPENT) + segurança radiológica (blindagem/contaminação/ALARA) + documentação NASA/DOE
+        ],
+        industry: 'Propulsão Nuclear Espacial'
+    },
+    {
+        name: 'Computação Criogénica - Qubits Supercondutores (3 Equipas)',
+        description: 'Operação/maintenance frigoríficos diluição (mK) para computação quântica - 3 equipas, turnos 12h, refrigeração adiabática + blindagem magnética + eletrónica controle qubits',
+        teams: 3,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOO', // Team A: operação frigoríficos diluição (mistura 3He/4He + compressores + trocadores calor + válvulas mistura) + monitoramento temperatura base (<15mK) + carga térmica + diagnóstico vazamentos (hélio mass spec)
+            'NNNNOOOOMMMM', // Team B: eletrónica controle qubits (DAC/ADC + FPGA + microondas 4-12GHz + cabos atenuação/isolamento térmico) + calibração portas 1Q/2Q + correção erro superfície (surface code) + caracterização coerência (T1/T2/readout)
+            'OOOOMMMMNNNN', // Team C: infraestrutura laboratório (blindagem μ-metal + filtramento EMI/RFI + aterramento estrela + UPS/gerador) + gestão hélio (liquefação/recuperação/pureza) + manutenção preventiva compressores/valves + segurança criogenia (asfixia/pressão)
+        ],
+        industry: 'Computação Criogénica'
+    },
+    {
+        name: 'Materiais Quânticos Topológicos - Nano-fab (3 Equipas)',
+        description: 'Fabricação materiais 2D/topológicos (grafeno/TMDs/isolantes topológicos) - 3 equipas, turnos 12h, e-beam litho + MBE/CVD + caracterização ARPES/STM',
+        teams: 3,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOO', // Team A: crescimento epitaxial (MBE/MOCVD/CVD) + controle fluxo/pressão/temperatura + heteroestruturas van der Waals (twistronics/ângulo mágico) + dopagem in-situ + RHEED/LEED monitoramento
+            'NNNNOOOOMMMM', // Team B: nano-fabricação (e-beam litho + etching reativo/íons + deposição ALD/PVD + lift-off/transferência 2D) + litografia multi-camada + alinhamento nanométrico + metrologia SEM/AFM
+            'OOOOMMMMNNNN', // Team C: caracterização quântica (ARPES + STM/STS + transporte magneto-elétrico + magneto-óptica Kerr/Faraday) + medições campo magnético alto (30T+) + temperatura ultra-baixa (mK) + análise topológica (número Chern/estado borda)
+        ],
+        industry: 'Materiais Quânticos Topológicos'
+    },
+    {
+        name: 'Fusão Anêutica - p-B11 / He-3 (3 Equipas)',
+        description: 'Pesquisa fusão anêutica (próton-boro11 / hélio-3) - 3 equipas, turnos 12h, confinamento IEC/field-reversed + diagnósticos plasma + captação energia direta',
+        teams: 3,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOO', // Team A: operação dispositivo fusão (IEC/poço potencial / FRC / tokamak esférico) + injeção combustível (p/B11/He-3) + aquecimento RF/neutro + diagnósticos plasma (interferometria/Thomson/neutrões)
+            'NNNNOOOOMMMM', // Team B: sistema captação energia direta (coleta partículas carregadas + conversão eletrostática/indutiva + condicionamento potência) + blindagem radiação (nêutrons/gama) + validação ganho líquido (Q>1)
+            'OOOOMMMMNNNN', // Team C: engenharia materiais (plasma-facing: W/Be/C-SiC + supercondutores HTS + isolamento vácuo) + gestão trítio/activation + simulação PIC/fluidos (Gkeyll/WARPX) + licenciamento regulatório nuclear
+        ],
+        industry: 'Fusão Anêutica'
+    },
+    {
+        name: 'Biofabricação Órgãos - Bioprinting 4D (4 Equipas)',
+        description: 'Bioprinting 4D órgãos/tecidos vascularizados - 4 equipas, turnos 12h, bioinks células-tronco + vascularização sacrificial + maturação biorreator + QC funcional',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOOPPPP',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOOPPPP', // Team A: design CAD órgão (segmentação TC/MRI + modelagem vascular/arquitetura) + formulação bioinks (hidrogéis/alginato/gelatina/celulose + células iPSC/derivadas) + reologia/printabilidade
+            'NNNNOOOOPPPPMMMM', // Team B: bioprinting multi-material (extrusão/inkjet/laser-assisted + resolução <50μm) + vascularização sacrificial (Pluronic/F127 + remoção térmica) + impressão 4D (resposta estímulo: pH/temperatura/luz)
+            'OOOOPPPPMMMMNNNN', // Team C: maturação biorreator (perfusão pulsátil + condicionamento mecânico/elétrico + fatores crescimento + monitoramento metabolismo/viabilidade) + integração nervos/linfa + enxerto pré-vascularizado
+            'PPPPMMMMNNNNOOOO', // Team D: controle qualidade funcional (histologia/imunofluorescência + fisiologia: contractilidade/barreira/filtration) + esterilização/embalagem + logística cadeia frio + assuntos regulatórios (FDA/EMA ATMP) + ensaios pré-clínicos
+        ],
+        industry: 'Biofabricação Órgãos'
+    },
+    {
+        name: 'Computação Neuromórfica - Chips Spiking (4 Equipas)',
+        description: 'Desenvolvimento chips neuromórficos (spiking neural networks) - 4 equipas, turnos 12h, design SNN + silício/MEMristors + algoritmo aprendizagem STDP + benchmark edge AI',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOOPPPP',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOOPPPP', // Team A: arquitetura SNN (neurônios LIF/Izhikevich + sinapses STDP/R-STDP + topologia: feedforward/recorrente/convolucional) + mapeamento algoritmo (CNN→SNN / conversão taxa/latência) + simulação (Brian2/NEST/BindsNET)
+            'NNNNOOOOPPPPMMMM', // Team B: design silício (CMOS 28nm/22nm/FD-SOI + memristores/RRAM/PCM + array crossbar + periféricos ADC/DAC/PWM) + layout/PDK + tapeout + caracterização elétrica (IV/retention/endurance)
+            'OOOOPPPPMMMMNNNN', // Team C: sistema embarcado (FPGA/ASIC + RTOS + middleware neuromórfico + interface sensores: DVS/event-camera + atuadores) + benchmark (MNIST/N-MNIST/gesture/keyword spotting) + otimização energia/latência/throughput
+            'PPPPMMMMNNNNOOOO', // Team D: software stack (compilador SNN + quantização/pruning + deployment edge: MCU/SoC/neuromorphic core) + API desenvolvedor (Python/Rust) + CI/CD teste hardware-in-loop + documentação + open-source community
+        ],
+        industry: 'Computação Neuromórfica'
+    },
+    {
+        name: 'Energia Solar Espacial - SBSP Demonstrador (3 Equipas)',
+        description: 'Demonstrador energia solar espacial (SBSP) - 3 equipas, turnos 12h, painéis fotovoltaicos espaciais + transmissão microondas/laser + retrodireção feixe + rectena terra',
+        teams: 3,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOO', // Team A: segmento espacial (painéis multi-junção III-V + concentração + deployável/estrutura leve + gestão térmica radiadores/heat pipes) + apontamento solar (sun sensor + reaction wheels/CMG) + tolerância radiação/anel Van Allen
+            'NNNNOOOOMMMM', // Team B: transmissão potência (array faseado microondas 2.45/5.8GHz / laser 1.06/1.55μm + retrodireção pilot tone + eficiência DC-RF/DC-optical) + segurança (exclusão zona/voos/pássaros + ICC/ITU regulatório)
+            'OOOOMMMMNNNN', // Team C: segmento terra (rectena array dipolos/retrodireção + conversão RF-DC >85% + integração rede/armazenamento + monitoramento campo EM + avaliação impacto ambiental/saúde) + operações lançamento/órbita (LEO/GEO/Molniya) + logística manutenção orbital
+        ],
+        industry: 'Energia Solar Espacial'
+    },
+    {
+        name: 'Defesa Planetária - Desvio Asteroide (3 Equipas)',
+        description: 'Missão defesa planetária (desvio asteroide cinético/íon) - 3 equipas, turnos 8h/12h, rastreamento NEO + caracterização + deflexão + coordenação IAWN/SMPAG',
+        teams: 3,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOO', // Team A: observação/astreamento (radar planetário 70m/300m + telescópios ópticos/IR + fotometria/astrometria + determinação órbita + previsão impacto Sentry/NEODyS)
+            'NNNNOOOOMMMM', // Team B: missão desvio (impactador cinético DART-like / trator iônico / gravity tractor / nuclear standoff) + GNC (navegação relativa + apontamento autonôomo + correção trajetória) + validação Δv/momento transferido
+            'OOOOMMMMNNNN', // Team C: coordenação internacional (IAWN alerta + SMPAG planejamento resposta + protocolo ONU COPUOS + comunicação pública/mitigação pânico) + análise risco residual (fragmentação/reentrada) + exercícios simulação (tabletop/real-time) + lições aprendidas/aprimoramento
+        ],
+        industry: 'Defesa Planetária'
+    },
 ];

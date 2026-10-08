@@ -131,6 +131,15 @@ const INDUSTRY_KEY_MAP: Record<string, keyof Translations['presetSelector']['ind
     'Produção Isótopos Médicos': 'medicalIsotopes',
     'Cabos Submarinos Fibra Óptica': 'subseaCableOperations',
     'Geração Atmosférica de Água': 'atmosphericWaterGeneration',
+    'Mineração Mar Profunda': 'deepSeaMining',
+    'Propulsão Nuclear Espacial': 'spaceNuclearPropulsion',
+    'Computação Criogénica': 'cryogenicComputing',
+    'Materiais Quânticos Topológicos': 'topologicalQuantumMaterials',
+    'Fusão Anêutica': 'aneutronicFusion',
+    'Biofabricação Órgãos 4D': 'organBiofabrication4D',
+    'Computação Neuromórfica': 'neuromorphicComputing',
+    'Energia Solar Espacial Demonstrador': 'spaceBasedSolarPowerDemo',
+    'Missão Defesa Planetária': 'planetaryDefenseMission',
 };
 
 interface PresetSelectorProps {
