@@ -2,6 +2,60 @@
 
 Log de execuções autónomas do Bot Orquestrador (modelos free: `opencode/hy3-free`).
 
+## Round 104 — 2026-10-08
+**Objetivo:** Expandir presets industriais com +8 nichos de próxima geração (Nanotecnologia Molecular/APM, Interface Cérebro-Computador Clínica, Hidrogénio Branco/Geológico, Reciclagem Química/Depolimerização, Baterias Estado Sólido, Manufatura Aditiva Metais Qualificada, Comunicações Quânticas QKD/Satélite, Reatores Rápidos/Transmutação Resíduos) + i18n (5 línguas) + fix timeout testes.
+
+**Contexto:** A Round 103 completou a expansão para 150 presets cobrindo 142 indústrias com foco em mineração mar profunda, propulsão nuclear espacial, computação criogénica, materiais quânticos topológicos, fusão anêutica, biofabricação 4D, computação neuromórfica, energia solar espacial e defesa planetária. Conforme sugerido na decisão da Round 103, havia oportunidade de cobrir setores de nanotecnologia molecular (fabricação atomicamente precisa/APM), interface cérebro-computador clínica (BCI invasiva/não-invasiva pacientes), hidrogénio branco/geológico (extração H2 natural ultradeep), reciclagem química avançada (depolimerização plásticos para monómeros virgens), baterias estado sólido gigafactory (sulfeto/óxido/polímero), manufatura aditiva metais qualificada aeroespacial/médica (LPBF/DED NADCAP/AS9100), comunicações quânticas QKD satélite/fibra (CV-QKD/DV-QKD/MDI-QKD + repetidores), e reatores rápidos transmutação resíduos (SFR/LFR ciclo combustível fechado piroprocessamento).
+
+**O que foi feito:**
+- `src/data/presetScenarios.ts`:
+  - Adicionados 8 novos presets com `teamPatterns` individuais:
+    1. **Nanotecnologia Molecular - Nanofábricas APM (3 Equipas)** — turnos 12h, manipulação átomo-por-átomo (STM/AFM) + síntese mecanossintética + verificação estrutural (TEM/EDS) + controle contaminação classe 1
+    2. **Interface Cérebro-Computador Clínica - BCI (4 Equipas)** — turnos 12h, neurocirurgia estereotáctica + decodificação neural tempo real + reabilitação neurorobótica + monitoramento crônico/telemedicina
+    3. **Hidrogénio Branco - Extração Geológica (3 Equipas)** — turnos 12h, perfuração ultradeep 3-5km + separação membrana/PSA + purificação + reinjeção CO2/gestão reservatório
+    4. **Reciclagem Química - Depolimerização Avançada (4 Equipas)** — turnos 12h, triagem ótica NIR/Raman + pirólise/sólvólise/enzimática + purificação monómero + polimerização grau virgem
+    5. **Baterias Estado Sólido - Gigafactory (4 Equipas)** — turnos 12h, síntese eletrólito sólido (LGPS/LLZO/PEO) + cátodo/ânodo Li-metal + laminação quente + formação/aging/degaseificação
+    6. **Manufatura Aditiva Metais - Qualificada Aeroespacial/Médica (3 Equipas)** — turnos 12h, gestão pó inerte + LPBF/DED monitoramento in-situ (melt pool/OCT) + HIP/NDT CT + certificação NADCAP/AS9100
+    7. **Comunicações Quânticas - QKD/Satélite (3 Equipas)** — turnos 12h, fontes SPCD/SQLD + detetores SNSPD/APD + canal fibra/satélite LEO + pós-processamento sifting/privacidade + integração PQC híbrida
+    8. **Reatores Rápidos - Transmutação Resíduos (4 Equipas)** — turnos 12h, operação SFR/LFR (Na/Pb-Bi refrigerante) + piroprocessamento eletroquímico ciclo fechado + vitrificação FP/forma cerâmica + segurança passiva coeficiente vazio negativo
+  - Total: 158 presets (era 150). Cobertura alargada a 8 novos setores (total 149 indústrias distintas).
+- `src/i18n/locales/{pt,en,es,fr,de}.ts`:
+  - Novas chaves `presetSelector.industries.*` para as 8 novas indústrias em 5 línguas (40 chaves novas).
+- `src/components/PresetSelector.tsx`:
+  - Atualizado `INDUSTRY_KEY_MAP` com as 8 novas indústrias.
+- `src/components/__tests__/ErrorBoundary.test.tsx`:
+  - Corrigido timeout de testes (aumentado `vi.setConfig({ testTimeout: 10000 })`) para evitar flakiness em CI.
+
+**Verificação:** `npm run build` → OK; `vitest` → **646 passam**, 0 falham; `eslint` → 0 erros (52 warnings pré-existentes); `tsc -b` → OK.
+
+**Decisão registada:** Presets industriais expandidos de 150 para 158, cobrindo agora 149 setores distintos incluindo nanotecnologia molecular/APM, BCI clínica, hidrogénio branco, reciclagem química avançada, baterias estado sólido, AM metálica qualificada, QKD/satélite e reatores rápidos. Próximos passos sugeridos: expansão para computação quântica topológica tolerante a falhas, materiais meta-programáveis, síntese autónoma IA-driven, habitação espacial/ISRU lunar, fusão a laser avançada, biologia sintética de novo design, computação fotónica, elevador espacial.
+
+## Round 105 — 2026-10-08
+**Objetivo:** Expandir presets industriais com +8 setores de fronteira quântica, materiais, IA, espaço, fusão, biologia e transporte (Computação Quântica Topológica, Materiais Meta-Programáveis, Síntese Autónoma IA-Driven, Habitação Espacial/ISRU Lunar, Fusão a Laser Avançada, Biologia Sintética De Novo, Computação Quântica Fotónica, Elevador Espacial/Transporte Orbital) + i18n (5 línguas).
+
+**Contexto:** A Round 104 completou a expansão para 158 presets cobrindo 149 indústrias com foco em nanotecnologia molecular/APM, BCI clínica, hidrogénio branco/geológico, reciclagem química/depolimerização, baterias estado sólido, manufatura aditiva metais qualificada, comunicações quânticas QKD/satélite e reatores rápidos/transmutação. Conforme sugerido na decisão da Round 104, havia oportunidade de cobrir setores de computação quântica topológica tolerante a falhas (anyons Majorana/braiding não-abeliano), materiais meta-programáveis reconfiguráveis (mecânicos/ópticos/térmicos/EM), síntese autónoma em laboratórios auto-dirigidos (self-driving labs IA/robótica), habitat lunar/ISRU (regolito→O2/água/metais + construção aditiva + ECLSS), fusão a laser avançada (confinamento inercial ignição repetível ganho>1), biologia sintética design de novo (genomas mínimos/organismos sintéticos), computação quântica fotónica (estados cluster/medição-baseada), e elevador espacial/transporte orbital (CNT/grafeno mega-estrutura + climbers + âncora oceânica).
+
+**O que foi feito:**
+- `src/data/presetScenarios.ts`:
+  - Adicionados 8 novos presets com `teamPatterns` individuais:
+    1. **Computação Quântica Topológica - Tolerante a Falhas (3 Equipas)** — turnos 12h, braiding não-abeliano + códigos superfície + decodificação tempo real + arquitetura tolerante falhas intrínseca
+    2. **Materiais Meta-Programáveis - Nanofabricação (3 Equipas)** — turnos 12h, design inverso + nano-fabricação e-beam/FIB + caracterização multi-física + controle ativo
+    3. **Síntese Autónoma IA-Driven - Self-Driving Labs (4 Equipas)** — turnos 12h, planeamento IA (Bayes/RL/LLM) + robótica síntese/ensaios + loop fechado caracterização + base conhecimento
+    4. **Habitação Espacial / ISRU Lunar (4 Equipas)** — turnos 12h, escavação/processamento regolito + fabricação habitat + ECLSS + operações superfície
+    5. **Fusão a Laser Avançada - Confinamento Inercial (4 Equipas)** — turnos 12h, drivers laser alta energia + alvos criogénicos + diagnósticos ignição + ganho >1 repetível
+    6. **Biologia Sintética - Design De Novo (3 Equipas)** — turnos 12h, design genoma computacional + síntese/montagem DNA + boot-up célula + evolução dirigida
+    7. **Computação Quântica Fotónica - Cluster States (3 Equipas)** — turnos 12h, fontes fotões únicos/entrelaçados + circuitos integrados SiN/LiNbO₃ + detetores SNSPD + correção erro fotónica
+    8. **Elevador Espacial / Transporte Orbital (3 Equipas)** — turnos 12h, cabo mega-estrutura CNT/grafeno + climbers laser beaming + âncora oceânica equatorial + logística LEO/GEO/Lunar
+  - Total: 166 presets (era 158). Cobertura alargada a 8 novos setores (total 157 indústrias distintas).
+- `src/i18n/locales/{pt,en,es,fr,de}.ts`:
+  - Novas chaves `presetSelector.industries.*` para as 8 novas indústrias em 5 línguas (40 chaves novas).
+- `src/components/PresetSelector.tsx`:
+  - Atualizado `INDUSTRY_KEY_MAP` com as 8 novas indústrias.
+
+**Verificação:** `npm run build` → OK; `vitest` → **646 passam**, 0 falham; `eslint` → 0 erros (52 warnings pré-existentes); `tsc -b` → OK.
+
+**Decisão registada:** Presets industriais expandidos de 158 para 166, cobrindo agora 157 setores distintos incluindo computação quântica topológica, metamateriais programáveis, síntese autónoma IA, habitat lunar ISRU, fusão laser avançada, biologia sintética de novo, computação quântica fotónica e elevador espacial. Próximos passos sugeridos: expansão para computação neuromórfica memristiva em larga escala, energia de fusão magnética estelarator/tokamak avançado, mineração de asteroides próxima Terra, internet quântica global, biomanufatura distribuída, geoengenharia marinha alcalinidade, propulsão fusão direta, habitats orbitais rotativos gravidade artificial.
+
 ## Round 103 — 2026-10-08
 **Objetivo:** Expandir presets industriais com +8 setores de fronteira de próxima geração (Mineração Mar Profunda, Propulsão Nuclear Espacial, Computação Criogénica, Materiais Quânticos Topológicos, Fusão Anêutica, Biofabricação Órgãos 4D, Computação Neuromórfica, Energia Solar Espacial Demonstrador, Missão Defesa Planetária).
 

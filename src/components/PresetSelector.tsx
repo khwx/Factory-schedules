@@ -148,6 +148,14 @@ const INDUSTRY_KEY_MAP: Record<string, keyof Translations['presetSelector']['ind
     'Manufatura Aditiva Metais Qualificada': 'qualifiedMetalAM',
     'Comunicações Quânticas QKD/Satélite': 'quantumCommunicationsQKD',
     'Reatores Rápidos / Transmutação Resíduos': 'fastReactors',
+    'Computação Quântica Topológica': 'topologicalQuantumComputing',
+    'Materiais Meta-Programáveis': 'programmableMetamaterials',
+    'Síntese Autónoma IA-Driven': 'autonomousAISynthesis',
+    'Habitação Espacial / ISRU Lunar': 'lunarISRUHabitat',
+    'Fusão a Laser Avançada': 'advancedLaserFusion',
+    'Biologia Sintética De Novo': 'syntheticBiologyDeNovo',
+    'Computação Quântica Fotónica': 'photonicQuantumComputing',
+    'Elevador Espacial / Transporte Orbital': 'spaceElevator',
 };
 
 interface PresetSelectorProps {

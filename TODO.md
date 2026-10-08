@@ -138,3 +138,9 @@ Corrigir avisos de `react-hooks/exhaustive-deps` em componentes principais (pote
 
 ## 28. Presets industriais — mineração mar profunda, propulsão nuclear espacial, computação criogénica, materiais quânticos topológicos, fusão anêutica, biofabricação 4D, computação neuromórfica, energia solar espacial, defesa planetária (Round 103)
 - [x] **+8 novos presets fronteira next-gen:** Mineração Mar Profunda, Propulsão Nuclear Espacial, Computação Criogénica, Materiais Quânticos Topológicos, Fusão Anêutica, Biofabricação Órgãos 4D, Computação Neuromórfica, Energia Solar Espacial Demonstrador, Missão Defesa Planetária — total 150 presets, 142 indústrias cobertas (concluído Round 103).
+
+## 29. Presets industriais — nanotecnologia molecular, BCI clínica, hidrogénio branco, reciclagem química, baterias estado sólido, AM metálica qualificada, QKD/satélite, reatores rápidos (Round 104)
+- [x] **+8 novos presets next-gen:** Nanotecnologia Molecular/APM, Interface Cérebro-Computador Clínica, Hidrogénio Branco/Geológico, Reciclagem Química/Depolimerização, Baterias Estado Sólido, Manufatura Aditiva Metais Qualificada, Comunicações Quânticas QKD/Satélite, Reatores Rápidos/Transmutação — total 158 presets, 149 indústrias cobertas (concluído Round 104).
+
+## 30. Presets industriais — computação quântica topológica, metamateriais programáveis, síntese autónoma IA, habitat lunar ISRU, fusão laser avançada, biologia sintética de novo, computação quântica fotónica, elevador espacial (Round 105)
+- [x] **+8 novos presets fronteira:** Computação Quântica Topológica, Materiais Meta-Programáveis, Síntese Autónoma IA-Driven, Habitação Espacial/ISRU Lunar, Fusão a Laser Avançada, Biologia Sintética De Novo, Computação Quântica Fotónica, Elevador Espacial/Transporte Orbital — total 166 presets, 157 indústrias cobertas (concluído Round 105).

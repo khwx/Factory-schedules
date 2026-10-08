@@ -2632,4 +2632,135 @@ export const PRESET_SCENARIOS: PresetScenario[] = [
         ],
         industry: 'Reatores Rápidos / Transmutação Resíduos'
     },
+    // Quantum Computing Topological Fault-Tolerant
+    {
+        name: 'Computação Quântica Topológica - Tolerante a Falhas (3 Equipas)',
+        description: 'Computação quântica topológica (anyons Majorana/parafermions) - 3 equipas, turnos 12h, braiding não-abeliano + códigos superfície + decodificação tempo real + arquitetura tolerante falhas intrínseca',
+        teams: 3,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOO', // Team A: operação qubits topológicos (nanofios Majorana/Josephson junctions + braiding portas Clifford + medição topológica) + síntese materiais (InAs/Al/EuS epitaxia MBE) + caracterização condutância quantizada (2e²/h)
+            'NNNNOOOOMMMM', // Team B: correção erro quântica intrínseca (código superfície topológico / código cor códigos cor) + decodificação union-find/MWPM tempo real + latência <1μs + limiar erro >1% + overhead físico/lógico <10x
+            'OOOOMMMMNNNN', // Team C: arquitetura escalável (interconexão qubits topológicos + bus fotónico/microondas + criogenia diluição mK + controle clássico FPGA/ASIC) + benchmark (factorização Shor / simulação Hubbard / QAOA) + roadmap milhões qubits lógicos
+        ],
+        industry: 'Computação Quântica Topológica'
+    },
+    // Meta-Materials Programmable
+    {
+        name: 'Materiais Meta-Programáveis - Nanofabricação (3 Equipas)',
+        description: 'Metamateriais/nanomateriais reconfiguráveis (mecânicos/ópticos/térmicos/EM) - 3 equipas, turnos 12h, design inverso + nano-fabricação e-beam/FIB + caracterização multi-física + controle ativo',
+        teams: 3,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOO', // Team A: design inverso/topologia otimização (adjoint method / ML generativo + restrições fabricação) + meta-átomos (split-ring / dielétrico Mie / kirigami/auxético) + simulação multi-física (FDTD/FEM/COMSOL) + banda proibida / índice negativo / cloaking
+            'NNNNOOOOMMMM', // Team B: nano-fabricação alta resolução (e-beam litho <10nm + FIB/He-IB milling + ALD conformal + transferência 2D/heteroestruturas) + processos CMOS-compatíveis (fundição multi-project wafer) + metrologia SEM/AFM/elipsometria
+            'OOOOMMMMNNNN', // Team C: caracterização dinâmica (pump-probe fs/THz + micro-ondas/THz vectores + imagem campo próximo SNOM) + controle ativo (MEMS/VO2/ferroelétrico/gráfico + bias elétrico/térmico/óptico) + aplicações: antenas reconfiguráveis / lentes planas / camuflagem térmica / harvesting
+        ],
+        industry: 'Materiais Meta-Programáveis'
+    },
+    // Autonomous AI-Driven Synthesis / Self-Driving Labs
+    {
+        name: 'Síntese Autónoma IA-Driven - Self-Driving Labs (4 Equipas)',
+        description: 'Laboratórios auto-dirigidos IA (descoberta materiais/fármacos/catalisadores) - 4 equipas, turnos 12h, planeamento IA (Bayes/RL/LLM) + robótica síntese/ensaios + loop fechado caracterizaçăo + base conhecimento',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOOPPPP',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOOPPPP', // Team A: planeamento experimental IA (otimização Bayesiana / RL multi-objetivo / LLM agente químico + raciocínio causal + incerteza epistémica) + seleção candidatos (espaço busca 10⁶-10¹²) + priorização Pareto (propriedades/custo/sustentabilidade)
+            'NNNNOOOOPPPPMMMM', // Team B: robótica síntese (líquido manipulador / dispensação acústica / microfluídica gota-a-gota + síntese fluxo contínuo / estado sólido) + paralelização 96-1536 poços + manipulação inerte (glovebox robótico) + rastreabilidade digital (blockchain/LIMS)
+            'OOOOPPPPMMMMNNNN', // Team C: caracterização alta throughput (XRD/DRX rápida + Raman/IR imaging + UV-Vis/fluorescência + espectrometria massa autómata) + análise IA (reconhecimento padrões / deteção anomalias + extração parâmetros físicos) + feedback loop <30 min
+            'PPPPMMMMNNNNOOOO', // Team D: base conhecimento (grafo conhecimento químico + literatura mineração NLP + dados FAIR/ontologias) + modelo fundação materiais (GNoME/MatBERT/ChemBERTa) + transfer learning domínios + publicação automática + IP/patentes + colaboração aberta (Open Science)
+        ],
+        industry: 'Síntese Autónoma IA-Driven'
+    },
+    // Space Habitat / Lunar ISRU Habitat
+    {
+        name: 'Habitação Espacial / ISRU Lunar (4 Equipas)',
+        description: 'Habitat lunar/ISRU (regolito → oxigénio/água/metais + construção aditiva + suporte vida) - 4 equipas, turnos 12h, escavação/processamento + fabricação habitat + ECLSS + operações superfície',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOOPPPP',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOOPPPP', // Team A: escavação/processamento regolito (rovers escavação + beneficiamento magnético/eletrostático + redução hidrogénio/molten salt electrolysis + extração O2/H2O/Fe/Al/Ti/Si) + pureza >99% + rendimento >80%
+            'NNNNOOOOPPPPMMMM', // Team B: construção habitat (impressão 3D regolito/geopolímero + sinterização microondas/laser + revestimento radiação/micrometeoritos + arquitetura inflável/rígida híbrida) + integração ECLSS (ar/água/resíduos ciclo fechado >98%)
+            'OOOOPPPPMMMMNNNN', // Team C: ECLSS/suporte vida (remoção CO2 zeólito/amina + eletrólise água + gestão térmica radiadores/heat pipes + monitoramento qualidade ar/água + redundância 3x + certificação NASA/ESA)
+            'PPPPMMMMNNNNOOOO', // Team D: operações superfície (EVA robótica/humana + manutenção preventiva/preditiva + logística reabastecimento Gateway/Starship + ciência (geologia/astrobiologia/radioastronomia) + coordenação missão Houston/ESOC + protocolo Artemis/ILRS
+        ],
+        industry: 'Habitação Espacial / ISRU Lunar'
+    },
+    // Laser Fusion / Inertial Confinement Advanced
+    {
+        name: 'Fusão a Laser Avançada - Confinamento Inercial (4 Equipas)',
+        description: 'Fusão confinamento inercial laser (NIF/LMJ/Shenguang/laser directo) - 4 equipas, turnos 12h, drivers laser alta energia + alvos criogénicos + diagnósticos ignição + ganho >1 repetível',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOOPPPP',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOOPPPP', // Team A: drivers laser (Nd:glass/NF-fibra/Óxido Ti:Sa + amplificação chirped-pulse + conversão frequência 3ω/2ω + energia >2MJ/350kJ + precisão apontamento <50μm) + óptica adaptativa + proteção danos laser
+            'NNNNOOOOPPPPMMMM', // Team B: alvos criogénicos (cápsula DT/HD camadas + casca diamante/polímero/Be + preenchimento camada β-DT 18-20K + caracterização rugosidade <1nm + injeção taxa >1Hz + rastreamento alvo)
+            'OOOOPPPPMMMMNNNN', // Team C: diagnósticos ignição (neutrões tempo-voo + raios-X imagem + gama espectroscopia + partículas carregadas + interferometria VISAR + PIيون + resolução temporal <10ps + ganho >1 validação)
+            'PPPPMMMMNNNNOOOO', // Team D: câmara reação/reciclagem (limpeza detritos + recuperação trítio + blindagem nêutrons/ativação + gestão calor + engenharia wall/blanket + licença regulatória + economia energia líquida + roadmap central comercial)
+        ],
+        industry: 'Fusão a Laser Avançada'
+    },
+    // Synthetic Biology De Novo Design
+    {
+        name: 'Biologia Sintética - Design De Novo (3 Equipas)',
+        description: 'Design de novo genomas/organismos (células mínimas/organismos sintéticos) - 3 equipas, turnos 12h, design genoma computacional + síntese/montagem DNA + boot-up célula + evolução dirigida',
+        teams: 3,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOO', // Team A: design genoma computacional (modelos escala genoma / ML previsão fenótipo + essencialidade genes / vias metabólicas / regulação) + genoma mínimo (JCVI-syn3.0/4.0 + redução não-essencial + robustez ambiental) + circuitos genéticos ortogonais
+            'NNNNOOOOMMMM', // Team B: síntese/montagem DNA (oligonucleótidos microarray + montagem Gibson/CPEC/levadura + clones BAC/YAC + verificação NGS/long-read PacBio/ONT) + erro <10⁻⁸ bp + escala megabase + custo <$0,01/bp
+            'OOOOMMMMNNNN', // Team C: boot-up célula (transplantação genoma + citoplasma receptor + ativação replicação/transcrição/tradução + viabilidade >90%) + evolução dirigida (ALE quimiostato + seleção fitness + genómica populações + fixação mutações benéficas) + aplicações: biofabricação / biossensores / terapêutica
+        ],
+        industry: 'Biologia Sintética De Novo'
+    },
+    // Photonic Quantum Computing
+    {
+        name: 'Computação Quântica Fotónica - Cluster States (3 Equipas)',
+        description: 'Computação quântica fotónica (estados cluster/medição-baseada) - 3 equipas, turnos 12h, fontes fotões únicos/entrelaçados + circuitos integrados SiN/LiNbO₃ + detetores SNSPD + correção erro fotónica',
+        teams: 3,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOO', // Team A: fontes quânticas (quantum dots/SiV/SiC/SPD + microcavidades Purcell + indistinguibilidade >99% + taxa >GHz + multiplexação temporal/espectral/espacial) + entrelaçamento (fusion gates tipo-I/II + cluster states 2D/3D + topologia Raussendorf)
+            'NNNNOOOOMMMM', // Team B: circuitos integrados fotónicos (SiN/LiNbO₃/BTO + moduladores electro-ópticos >40GHz + faseadores térmicos/MEMS + perdas <0,1dB/cm + escalabilidade >1000 modos + packaging flip-chip/edge-coupling)
+            'OOOOMMMMNNNN', // Team C: deteção/medição (SNSPD eficiência >98% / resolução número fotões + homodina/heterodina + feed-forward clássico <100ns + decodificação LDPC/GKP + tolerância perda >50% + benchmark (boson sampling / QFT / VQE fotónico)
+        ],
+        industry: 'Computação Quântica Fotónica'
+    },
+    // Space Elevator / Orbital Transport
+    {
+        name: 'Elevador Espacial / Transporte Orbital (3 Equipas)',
+        description: 'Elevador espacial / tether orbital (nanotubos carbono/grafeno/boron nitride) - 3 equipas, turnos 12h, cabo mega-estrutura + climbers + âncora oceânica/equatorial + logística LEO/GEO/Lunar',
+        teams: 3,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOO', // Team A: cabo mega-estrutura (CNT/grafeno/BNNT resistência >100GPa + densidade <2g/cm³ + fabricação metro-escala + união/solda nano + revestimento proteção atômico oxigénio/UV/radiação) + tensão operacional 60-80GPa + fator segurança >2
+            'NNNNOOOOMMMM', // Team B: climbers (propulsão elétrica/laser beaming + motores lineares + gestão térmica radiadores + carga útil 10-100t + velocidade 200km/h + tempo subida ~5 dias + redundância/fail-safe + docking autónomo)
+            'OOOOMMMMNNNN', // Team C: âncora/operações (plataforma oceânica equatorial móvel + tensão ativa + evasão detritos/colisão + controle vibrações/modos + logística LEO/GEO/Lunar + custo <$100/kg vs $10k/kg foguete + roadmap demonstrador 2035/operacional 2045)
+        ],
+        industry: 'Elevador Espacial / Transporte Orbital'
+    },
 ];
