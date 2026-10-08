@@ -172,6 +172,14 @@ const INDUSTRY_KEY_MAP: Record<string, keyof Translations['presetSelector']['ind
     'Geoengenharia Marinha Alcalinidade Eletroquímica': 'marineGeoengineeringElectrochemical',
     'Propulsão Fusão Direta Interestelar': 'directFusionPropulsionInterstellar',
     'Habitats Orbitais Gravidade Artificial Variável': 'rotatingOrbitalHabitatsVariableGravity',
+    'Assentamento Marte ISRU': 'marsISRU',
+    'Sensores Quânticos Gravimetria': 'quantumSensors',
+    'Úteros Artificiais Ectogénese': 'artificialWombs',
+    'Robótica Molecular Nanobots': 'molecularNanobots',
+    'Data Centers Orbitais': 'orbitalDataCenters',
+    'Sondas Von Neumann': 'vonNeumannProbes',
+    'Matéria Programável Claytronics': 'programmableMatter',
+    'Produção Armazenamento Antimatéria': 'antimatter',
 };
 
 interface PresetSelectorProps {
