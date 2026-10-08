@@ -123,6 +123,14 @@ const INDUSTRY_KEY_MAP: Record<string, keyof Translations['presetSelector']['ind
     'Computação Fotónica / Processadores Ópticos': 'photonicComputing',
     'Internet Quântica / Redes Quânticas': 'quantumInternet',
     'Captura Direta Oceânica / Ocean DAC': 'oceanDAC',
+    'Integridade de Dutos / Proteção Catódica': 'pipelineIntegrity',
+    'Reciclagem Baterias / Black Mass': 'batteryRecycling',
+    'Semicondutores Potência SiC/GaN': 'powerSemiconductors',
+    'Hidrogénio Verde Liquefação / Transporte': 'hydrogenLiquefaction',
+    'Monitoramento Sísmico / Alerta Precoce': 'seismicMonitoring',
+    'Produção Isótopos Médicos': 'medicalIsotopes',
+    'Cabos Submarinos Fibra Óptica': 'subseaCableOperations',
+    'Geração Atmosférica de Água': 'atmosphericWaterGeneration',
 };
 
 interface PresetSelectorProps {

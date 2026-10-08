@@ -2230,4 +2230,136 @@ export const PRESET_SCENARIOS: PresetScenario[] = [
         ],
         industry: 'Captura Direta Oceânica / Ocean DAC'
     },
+    // Pipeline Integrity / Cathodic Protection
+    {
+        name: 'Integridade de Dutos - Proteção Catódica (3 Equipas)',
+        description: 'Monitoramento integridade dutos - 3 equipas, turnos 12h, inspeção pigging inteligente + proteção catódica (CC/galvânica) + detecção vazamentos fibra óptica + reparos subsea',
+        teams: 3,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOO', // Team A: operações pigging (MFL/UT/calibração) + mapeamento anomalia + reporte integridade + logística lançamento/recepção
+            'NNNNOOOOMMMM', // Team B: proteção catódica (retificadores/ânodos/sacrifíciais) + monitoramento potencial (CIPS/DCVG) + interferências stray current + compliance NACE/API
+            'OOOOMMMMNNNN', // Team C: detecção vazamentos (DAS/DTS fibra óptica/acústica) + resposta emergência + reparo (mangas/compressão/substituição) + recomissionamento
+        ],
+        industry: 'Integridade de Dutos / Proteção Catódica'
+    },
+    // Advanced Battery Recycling / Black Mass Processing
+    {
+        name: 'Reciclagem Baterias Avançada - Black Mass (4 Equipas)',
+        description: 'Reciclagem hidrometalúrgica baterias LFP/NMC - 4 equipas, turnos 12h Panama, desmontagem segura + lixiviação seletiva + purificação solvente + precipitação carbonato/hidróxido',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'DDDDOOOONNNN',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'DDDDOOOONNNN', // Team A: recepção/descarregamento seguro (inertização N2/CO2) + desmontagem robótica (células/módulos/pack) + trituração inerte + separação frações
+            'NNNNDDDDOOOO', // Team B: lixiviação ácida/redutora (H2SO4/H2O2) + extração solvente (D2EHPA/Cyanex/PC88A) + separação Co/Ni/Mn/Li + purificação impurezas
+            'OOOONNNNDDDD', // Team C: precipitação seletiva (carbonato Li/hidróxido Ni/Co/Mn) + lavagem/secagem + controle qualidade (ICP/OES/XRD) + embalagem grau bateria
+            'DDDDOOOONNNN', // Team D: gestão efluentes (tratamento água/recirculação) + recuperação grafito/eletrólito/separador + balanço massa/energia + certificação cadeia custódia
+        ],
+        industry: 'Reciclagem Baterias / Black Mass'
+    },
+    // Power Semiconductor Manufacturing (SiC/GaN)
+    {
+        name: 'Semicondutores Potência - SiC/GaN (4 Equipas)',
+        description: 'Fabricacão wide-bandgap (SiC 200mm/GaN 200mm) - 4 equipas, turnos 12h, epitaxia CVD + processamento wafers (fotolitografia/gravação/implantação) + metalização/sinterização + teste/qualificação',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOO', // Team A: epitaxia (SiC: CVD horiz/vert; GaN: MOCVD/HVPE) + caracterização (XRD/AFM/PL/IV) + defeitos micropipe/basal plane + uniformidade dopagem
+            'NNNNOOOOMMMM', // Team B: processamento front-end (foto i-line/KrF/ArF + gravação ICP/RIE + implantação Al/N/P + ativação recozimento 1700C+) + isolamento borda/junção terminação
+            'OOOOMMMMNNNN', // Team C: back-end (metalização Ni/Ti/Ag + sinterização prata/ligação fio Cu/Al + passivação SiN/SiO2) + wafer probe (IV/CV/HTRB/HTGB) + binning performance
+            'MMMMNNNNOOOO', // Team D: packaging power (DBC/AMB/substrato Cu) + solda sinterização Ag/TLP + módulo (press-pack/transfer-mold) + teste final (clamping/short-circuit/avalanche) + qualificação AEC-Q101/JEDEC
+        ],
+        industry: 'Semicondutores Potência SiC/GaN'
+    },
+    // Green Hydrogen Liquefaction & Transport
+    {
+        name: 'Hidrogénio Verde - Liquefação e Transporte (4 Equipas)',
+        description: 'Liquefação H2 verde (-253C) e logística criogénica - 4 equipas, turnos 12h Panama, compressão multi-estágio + ciclo Claude/Linde + armazenamento esférico + carregamento ISO/tube-trailer/navio',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'DDDDOOOONNNN',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'DDDDOOOONNNN', // Team A: compressão (reciprocante/diaphragm/iónico 30-90 bar) + purificação (PSA/TSA/membrana) + pré-resfriamento (N2/He) + alimentação cold-box
+            'NNNNDDDDOOOO', // Team B: cold-box (trocadores placa-aleta + turbinas expansão + válvulas Joule-Thomson) + separação orto-para (catalisador Fe2O3/Cr2O3) + controle pureza (H2O/O2/N2/Ar < ppm)
+            'OOOONNNNDDDD', // Team C: armazenamento (tanques esféricos vácuo/perlite/espuma + bombas criogênicas submersas) + carregamento (bunkering navio/balsa + tube-trailers ISO 40ft + dispensação 350/700 bar)
+            'DDDDOOOONNNN', // Team D: instrumentação segurança (vazamento H2/chama invisível/pressão/vácuo) + gestão boil-off (reliquefação/combustão/celula combustível) + logística cadeia fria + certificação IMO/ADR/ISO
+        ],
+        industry: 'Hidrogénio Verde Liquefação / Transporte'
+    },
+    // Seismic Monitoring & Early Warning Systems
+    {
+        name: 'Monitoramento Sísmico - Alerta Precoce (3 Equipas)',
+        description: 'Rede alerta precoce terremotos (EEW) - 3 equipas, turnos 8h/12h mistos, sensores banda larga/strong-motion + processamento tempo real (P-wave/PD) + disseminação alerta (CAP/Cell Broadcast/API) + coordenação proteção civil',
+        teams: 3,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOO', // Team A: operações rede (sítios superfície/profundo/ocean-bottom) + telemetria (satelite/4G/fibra/rádio) + controle qualidade (ruído/cruzamento/timing GPS/GNSS) + manutenção preventiva/corretiva
+            'NNNNOOOOMMMM', // Team B: processamento EEW (ElarmS/EPIC/ShakeAlert/PIER) + estimação magnitude/localização tempo real (<3s) + previsão intensidade (GMPE/site-response) + geração alerta (magnitude/latência/confiabilidade)
+            'OOOOMMMMNNNN', // Team C: disseminação multi-canal (sirene/TV/rádio/Cell Broadcast/app/API/sirenas industriais) + integração sistemas críticos (ferroviário/gás/eletricidade/barragens) + exercícios público + pós-evento validação (ground-truth/danos)
+        ],
+        industry: 'Monitoramento Sísmico / Alerta Precoce'
+    },
+    // Medical Isotope Production (Cyclotron/Reactor)
+    {
+        name: 'Isótopos Médicos - Ciclotrão/Reator (3 Equipas)',
+        description: 'Produção radioisótopos diagnósticos/terapêuticos (F-18/C-11/Ga-68/Zn-62/Cu-64/Ac-225/Lu-177) - 3 equipas, turnos 12h, preparação alvos + irradiação (p/d/alpha/n) + radioquímica automatizada + QC/GMP liberação',
+        teams: 3,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOO', // Team A: preparação alvos (gás/fluido/sólido - H2O-18/CO2/Ni/Zn/Ra/Th) + carregamento ciclotrão (H-/p/d 10-30MeV) / reator (n térmico/rápido) + monitoramento feixe (corrente/perfil/ativação) + descomissão alvo
+            'NNNNOOOOMMMM', // Team B: síntese radioquímica (módulos automatizados FASTlab/Explora/GE) + purificação (SPE/HPLC/destilação) + formulação (salina/etanol/ascorbato) + dispensação frascos/seringas estéreis + controle asepsia (isoladores/RABS)
+            'OOOOMMMMNNNN', // Team C: QC completo (identidade/radioquímica/radiquímica/esterilidade/pirogênios/endotoxinas) + documentação lote (GMP/EudraLex/USP) + liberação pessoa qualificada (QP) + logística transporte (Tipo A/B/Excepted) + rastreabilidade decaimento
+        ],
+        industry: 'Produção Isótopos Médicos'
+    },
+    // Subsea Fiber Optic Cable Operations
+    {
+        name: 'Cabos Submarinos Fibra Óptica - Operações (4 Equipas)',
+        description: 'Instalação/manutenção cabos submarinos transoceânicos - 4 equipas, turnos 12h Panama, navegação DP + ROV inspeção/enterramento + emenda fusão/fabricação junção + teste OTDR/caracterização + comissionamento sistema',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'DDDDOOOONNNN',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'DDDDOOOONNNN', // Team A: navegação DP (classe 2/3) + levantamento rota (MBES/SSS/perfilador subfundo) + assentamento cabo (carrossel/tanque/estilingue) + controle tensão/velocidade + monitoramento posicionamento USBL/LBL
+            'NNNNDDDDOOOO', // Team B: operações ROV (observação/classe trabalho) + inspeção visual/CP/UT + enterramento (arado/jato/perfuração) + proteção (colchões/rochas/mangas) + cruzamentos/aterros praia
+            'OOOONNNNDDDD', // Team C: emenda fusão (arco/fusão núcleo revestido + proteção manga termoencolhível/mecânica) + fabricação junção (corpo pressão/vedação/validação fábrica) + teste OTDR bidirecional + caracterização dispersão/atenuação/PMD
+            'DDDDOOOONNNN', // Team D: comissionamento sistema (laser/pump/ROADM/DCI) + integração CLS/NMS + teste aceitação fábrica/local (FAT/SAT) + documentação as-built + plano manutenção 25 anos + reserva capacidades (dark fiber)
+        ],
+        industry: 'Cabos Submarinos Fibra Óptica'
+    },
+    // Atmospheric Water Generation
+    {
+        name: 'Geração Atmosférica de Água - AWG Industrial (3 Equipas)',
+        description: 'Produção água potável do ar (refrigeração/adsorção) - 3 equipas, turnos 12h, unidades AWG (compressão/dessecante/híbrido) + tratamento multi-barreiра (UV/RO/mineralização) + monitoramento qualidade (ISO 22000/WHO) + logística distribuição',
+        teams: 3,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOO', // Team A: operação unidades AWG (ciclo refrigeração: compressor/condensador/evaporador; adsorção: zeólita/MOF/sílica-gel + regeneração térmica) + controle ponto orvalho/eficiência energetica + manutenção filtros/trocas calor
+            'NNNNOOOOMMMM', // Team B: tratamento água (pré-filtração carvão/cerâmica + osmose reversa/UF + UV-C/LED + mineralização calcita/magnesio + pH/ORP/condutividade) + validação multi-barreira (HACCP/ISO 22000) + engarrafamento/embalagem asseptica
+            'OOOOMMMMNNNN', // Team C: monitoramento qualidade contínuo (IoT sensores: turbidez/Cl2/pH/TDS/microbiologia) + logística distribuição (caminhões isotérmicos/pontos coleta/kiosks solares) + gestão energia (solar+eolica+bateria+rede) + relatórios conformidade regulatória + engajamento comunidades
+        ],
+        industry: 'Geração Atmosférica de Água'
+    },
 ];
