@@ -2,6 +2,32 @@
 
 Log de execuções autónomas do Bot Orquestrador (modelos free: `opencode/hy3-free`).
 
+## Round 108 — 2026-10-08
+**Objetivo:** Expandir presets industriais com +8 setores de fronteira de próxima geração (Assentamento Marte/ISRU, Sensores Quânticos/Gravimetria, Úteros Artificiais/Ectogénese, Robótica Molecular/Nanobots, Data Centers Orbitais, Sondas Von Neumann Auto-replicantes, Matéria Programável/Claytronics, Produção/Armazenamento Antimatéria) + i18n (5 línguas).
+
+**Contexto:** A Round 107 completou a expansão para 182 presets cobrindo 173 indústrias com foco em computação neuromórfica 3D, estelarator HTS, mineração asteroides ISRU, repetidores quânticos estado sólido, biofabricação GenAI, geoengenharia eletroquímica, propulsão interestelar e habitats gravidade variável. Conforme sugerido na decisão da Round 107, havia oportunidade de cobrir setores de assentamento Marte com ISRU integrado (regolito→O2/água/metais + habitat + agricultura + ECLSS), sensores quânticos de gravimetria (gradiômetros atómicos/FOG para navegação/subsuperfície), úteros artificiais/ectogénese (gestação extracorpórea + monitoramento fetal + ética/regulação), robótica molecular/nanobots (manipulação atômica + nanofabricação + entrega de fármacos), data centers orbitais (refrigeração espaço + laser comms + radiação hardening), sondas Von Neumann auto-replicantes (exploração interestelar + ISRU + replicação autónoma), matéria programável/claytronics (catomos + reconfiguração 3D + matéria inteligente), e produção/armazenamento antimatéria (armadilhas Penning + síntese pbar/anti-H + propulsão).
+
+**O que foi feito:**
+- `src/data/presetScenarios.ts`:
+  - Adicionados 8 novos presets com `teamPatterns` individuais:
+    1. **Assentamento Marte - ISRU Integrado (4 Equipas)** — turnos 12h, escavação/processamento regolito + produção O2/água/metais + habitat inflável/impressão 3D + agricultura indoor + ECLSS fechado
+    2. **Sensores Quânticos - Gravimetria (3 Equipas)** — turnos 12h, gradiômetros atómicos frios + FOG/MEMS híbridos + navegação inercial quântica + mapeamento subsuperfície recursos
+    3. **Úteros Artificiais - Ectogénese (4 Equipas)** — turnos 12h, biobolsa amniótica sintética + circulação extracorpórea + monitoramento fetal contínuo + regulação ética/legal
+    4. **Robótica Molecular - Nanobots (3 Equipas)** — turnos 12h, manipulação STM/AFM + montagem molecular + nanomotores DNA/proteína + entrega fármacos alvo + autopropulsão
+    5. **Data Centers Orbitais - Refrigeração Espaço (3 Equipas)** — turnos 12h, servidores rad-hard + refrigeração radiativa/loop bifásico + interligação laser óptica + energia solar + gestão detritos
+    6. **Sondas Von Neumann - Auto-replicantes (3 Equipas)** — turnos 12h, ISRU in-situ + fabricação aditiva réplica + IA autónoma navegação/decisão + comunicação interestelar + ciclo vida auto-sustentado
+    7. **Matéria Programável - Claytronics (4 Equipas)** — turnos 12h, catomos milimétricos + atuação eletrostática/magnética + reconfiguração 3D tempo real + software enxame + aplicações forma/tato
+    8. **Produção Armazenamento Antimatéria (3 Equipas)** — turnos 12h, armadilhas Penning/Malatesta + síntese antiprotões/anti-hidrogénio + refrigeração criogénica + blindagem radiação + logística propulsão
+  - Total: 190 presets (era 182). Cobertura alargada a 8 novos setores (total 181 indústrias distintas).
+- `src/i18n/locales/{pt,en,es,fr,de}.ts`:
+  - Novas chaves `presetSelector.industries.*` para as 8 novas indústrias em 5 línguas (40 chaves novas).
+- `src/components/PresetSelector.tsx`:
+  - Atualizado `INDUSTRY_KEY_MAP` com as 8 novas indústrias.
+
+**Verificação:** `npm run build` → OK; `vitest` → **646 passam**, 0 falham; `eslint` → 0 erros (52 warnings pré-existentes); `tsc -b` → OK.
+
+**Decisão registada:** Presets industriais expandidos de 182 para 190, cobrindo agora 181 setores distintos incluindo assentamento Marte ISRU, sensores quânticos gravimetria, úteros artificiais ectogénese, robótica molecular nanobots, data centers orbitais, sondas Von Neumann, matéria programável claytronics e produção/armazenamento antimatéria. Próximos passos sugeridos: expansão para computação quântica topológica tolerante a falhas avançada, materiais meta-programáveis reconfiguráveis em tempo real, síntese autónoma IA-driven de novo nível, habitats espaciais permanentes além de Marte, fusão anêutica comercial, biofabricação órgãos complexos vascularizados, internet quântica global operacional, elevador espacial/transporte orbital mega-estrutura.
+
 ## Round 104 — 2026-10-08
 **Objetivo:** Expandir presets industriais com +8 nichos de próxima geração (Nanotecnologia Molecular/APM, Interface Cérebro-Computador Clínica, Hidrogénio Branco/Geológico, Reciclagem Química/Depolimerização, Baterias Estado Sólido, Manufatura Aditiva Metais Qualificada, Comunicações Quânticas QKD/Satélite, Reatores Rápidos/Transmutação Resíduos) + i18n (5 línguas) + fix timeout testes.
 

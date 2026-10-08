@@ -150,3 +150,6 @@ Corrigir avisos de `react-hooks/exhaustive-deps` em componentes principais (pote
 
 ## 32. Presets industriais — computação neuromórfica 3D, estelarator HTS, mineração asteroides ISRU, repetidores quânticos estado sólido, biofabricação GenAI, geoengenharia eletroquímica, propulsão interestelar, habitats gravidade variável (Round 107)
 - [x] **+8 novos presets next-gen:** Computação Neuromórfica 3D Memristores Empilhados, Fusão Magnética Estelarator HTS, Mineração Asteroides ISRU Integrado, Internet Quântica Repetidores Estado Sólido, Biofabricação Distribuída IA Generativa, Geoengenharia Marinha Alcalinidade Eletroquímica, Propulsão Fusão Direta Interestelar, Habitats Orbitais Gravidade Artificial Variável — total 182 presets, 173 indústrias cobertas (concluído Round 107).
+
+## 33. Presets industriais — assentamento Marte, sensores quânticos, úteros artificiais, nanobots, data centers orbitais, sondas Von Neumann, matéria programável, antimatéria (Round 108)
+- [x] **+8 novos presets fronteira:** Assentamento Marte/ISRU, Sensores Quânticos Gravimetria, Úteros Artificiais Ectogénese, Robótica Molecular Nanobots, Data Centers Orbitais, Sondas Von Neumann Auto-replicantes, Matéria Programável Claytronics, Produção/Armazenamento Antimatéria — total 190 presets, 181 indústrias cobertas (concluído Round 108).
