@@ -140,6 +140,14 @@ const INDUSTRY_KEY_MAP: Record<string, keyof Translations['presetSelector']['ind
     'Computação Neuromórfica': 'neuromorphicComputing',
     'Energia Solar Espacial Demonstrador': 'spaceBasedSolarPowerDemo',
     'Missão Defesa Planetária': 'planetaryDefenseMission',
+    'Nanotecnologia Molecular / Nanofábricas APM': 'molecularNanotech',
+    'Interface Cérebro-Computador Clínica': 'clinicalBCI',
+    'Hidrogénio Branco / Geológico Natural': 'naturalHydrogen',
+    'Reciclagem Química / Depolimerização': 'chemicalRecycling',
+    'Baterias Estado Sólido - Gigafactory': 'solidStateBatteries',
+    'Manufatura Aditiva Metais Qualificada': 'qualifiedMetalAM',
+    'Comunicações Quânticas QKD/Satélite': 'quantumCommunicationsQKD',
+    'Reatores Rápidos / Transmutação Resíduos': 'fastReactors',
 };
 
 interface PresetSelectorProps {

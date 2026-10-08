@@ -2500,4 +2500,136 @@ export const PRESET_SCENARIOS: PresetScenario[] = [
         ],
         industry: 'Defesa Planetária'
     },
+    // Molecular Nanotechnology / APM Nanofactories
+    {
+        name: 'Nanotecnologia Molecular - Nanofábricas APM (3 Equipas)',
+        description: 'Fabricação atomicamente precisa (APM) - 3 equipas, turnos 12h, manipulação átomo-por-átomo (STM/AFM) + síntese mecanossintética + verificação estrutural (TEM/EDS) + controle contaminação classe 1',
+        teams: 3,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOO', // Team A: operação microscópio túnel/força atômica (STM/AFM) + manipulação átomos/moléculas individuais + síntese mecanossintética (pontas reativas + posicionamento sub-nm) + feedback tempo real
+            'NNNNOOOOMMMM', // Team B: síntese molecular programada (rotores/engates/rolamentos diamante) + montagem hierárquica (nano→micro→macro) + verificação estrutural (TEM/EDS/Raman) + pureza 99.9999%
+            'OOOOMMMMNNNN', // Team C: controle contaminação (classe ISO 1 / vácuo ultra-alto <10^-10 mbar) + gestão resíduos nano + monitoramento saúde ocupacional (nanopartículas) + certificação produto (ISO/TS 12901) + documentação rastreabilidade atômica
+        ],
+        industry: 'Nanotecnologia Molecular / Nanofábricas APM'
+    },
+    // Clinical Brain-Computer Interface
+    {
+        name: 'Interface Cérebro-Computador Clínica - BCI (4 Equipas)',
+        description: 'Implantação/operação BCI invasiva/não-invasiva pacientes - 4 equipas, turnos 12h, neurocirurgia + decodificação neural + reabilitação + monitoramento crônico',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOOPPPP',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOOPPPP', // Team A: neurocirurgia estereotáctica (robô/neuronavegação) + implantação microeletrodos (Utah/Neuropixels/SEEG) + mapeamento cortical (ECoG/MEG/fMRI) + fechamento craniano + ICU pós-op
+            'NNNNOOOOPPPPMMMM', // Team B: decodificação neural tempo real (spikes/LFP/ondas lentas) + algoritmos ML (Kalman/RNN/Transformer) + calibração adaptativa + interface aplicações (cursor/prótese/fala/exoesqueleto)
+            'OOOOPPPPMMMMNNNN', // Team C: reabilitação neurorobótica (treino BCI + feedback sensorial artificial + plasticidade Hebbiana) + terapia ocupacional/fonoaudiologia + avaliação funcional (FMA/ARAT/MOCA) + ajuste parâmetros
+            'PPPPMMMMNNNNOOOO', // Team D: monitoramento crônico (impedância/sinal/tecido cicatricial) + telemedicina + atualização firmware/algoritmo OTA + gestão bateria/carregamento indutivo + ética/consentimento/controle dados neurais + coordenação regulatória (FDA/EMA/ANVISA)
+        ],
+        industry: 'Interface Cérebro-Computador Clínica'
+    },
+    // Natural / White Hydrogen
+    {
+        name: 'Hidrogénio Branco - Extração Geológica (3 Equipas)',
+        description: 'Extração hidrogénio natural (branco/geo-H2) - 3 equipas, turnos 12h, perfuração ultradeep + separação membrana/PSA + purificação + injeção/reinjeção CO2',
+        teams: 3,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOO', // Team A: perfuração ultradeep (3-5km) + revestimento/cimentação HP/HT + teste formação (DST/MDT) + logging (gama/neutrão/ressonância nuclear) + conclusão poço (telas/empacotadores)
+            'NNNNOOOOMMMM', // Team B: separação H2/CH4/N2/He (membranas poliméricas/metálicas + PSA + criogenia) + purificação (desoxidação/dessecção) + compressão 350-700 bar + medição vazão/composição (GC/MS)
+            'OOOOMMMMNNNN', // Team C: monitoramento reservatório (pressão/temperatura/sismicidade induzida) + reinjeção CO2/água (EOR/armazenamento) + integridade poço (cement bond log/pressure testing) + conformidade ambiental (metano fugitivo/água) + logística transporte (tubulação/tubo-tubo/amônia)
+        ],
+        industry: 'Hidrogénio Branco / Geológico Natural'
+    },
+    // Chemical Recycling / Depolymerization
+    {
+        name: 'Reciclagem Química - Depolimerização Avançada (4 Equipas)',
+        description: 'Depolimerização plásticos (PET/PU/PS/PMMA) para monómeros - 4 equipas, turnos 12h, pré-tratamento + pirólise/sólvólise/enzimática + purificação monómero + polimerização virgem',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOOPPPP',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOOPPPP', // Team A: receção/resíduos plásticos mistos + triagem ótica (NIR/Raman) + pré-tratamento (lavagem/tricotomia/moagem) + remoção contaminantes (PVC/metais/orgânicos) + alimentação reator
+            'NNNNOOOOPPPPMMMM', // Team B: reatores depolimerização (glicólise/meólise/aminólise PET + hidrólise alcalina/ácida PU + pirólise catalítica PS/PMMA + enzimática PETase/MHETase) + controle temperatura/pressão/catalisador + rendimento >95%
+            'OOOOPPPPMMMMNNNN', // Team C: purificação monómeros (destilação/criSTALIZAÇÃO/extração/adsorção) + remoção corantes/aditivos/degradação + QC pureza (HPLC/GC/NMR) + recuperação solvente/catalisador
+            'PPPPMMMMNNNNOOOO', // Team D: polimerização grau virgem (PET/rPET + PU reciclado + PS reciclado) + controle viscosidade/massa molar + certificação contato alimentar (EFSA/FDA) + LCA pegada carbono + logística cadeia circular (marcas/retalho/recicladores)
+        ],
+        industry: 'Reciclagem Química / Depolimerização'
+    },
+    // Solid-State Batteries Gigafactory
+    {
+        name: 'Baterias Estado Sólido - Gigafactory (4 Equipas)',
+        description: 'Fabrico baterias estado sólido (sulfeto/óxido/polímero) - 4 equipas, turnos 12h, síntese eletrólito + cátodo/ânodo + laminação + formação/aging',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOOPPPP',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOOPPPP', // Team A: síntese eletrólito sólido (LGPS/Li6PS5Cl/LLZO/LATP/PEO-based) + moagem mecânica/sinterização + caracterização condutividade iônica (>1 mS/cm) + estabilidade janela eletroquímica + pureza <ppm H2O/O2
+            'NNNNOOOOPPPPMMMM', // Team B: cátodo (NMC/LFP/LNMO + ligante condutor) + ânodo (Li metal/Si/C + proteção interface) + revestimento slot-die/doctor blade + calandragem densidade + corte/slit + empilhamento (pouch/cilíndrico/prismático)
+            'OOOOPPPPMMMMNNNN', // Team C: laminação quente (roll-to-roll + pressão/ temperatura controlada) + selagem pouch + injeção eletrólito (líquido residual/gel) + formação inicial (ciclos C/20-C/10) + degasificação + selagem final
+            'PPPPMMMMNNNNOOOO', // Team D: envelhecimento (armazenamento alta temperatura + monitoramento impedância/tensão) + teste fim-de-linha (capacidade/IR/OCV/vazamento) + classificação (A/B/C) + rastreabilidade (genealogia célula/módulo/pack) + embalagem transporte (UN38.3)
+        ],
+        industry: 'Baterias Estado Sólido - Gigafactory'
+    },
+    // Qualified Metal Additive Manufacturing
+    {
+        name: 'Manufatura Aditiva Metais - Qualificada Aeroespacial/Médica (3 Equipas)',
+        description: 'LPBF/DED qualificado (Ti6Al4V/Inconel/AlSi10Mg/CoCr) - 3 equipas, turnos 12h, preparação pó + impressão + tratamento térmico + inspeção NDT + certificação NADCAP/ISO 9001/AS9100',
+        teams: 3,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOO', // Team A: gestão pó (atomização gás/plasma + peneiramento 15-45μm/45-105μm + caracterização morfologia/fluidez/química + reciclagem pó + atmosfera inerte Ar/N2) + preparação build (suporte/orientação/nesting)
+            'NNNNOOOOMMMM', // Team B: impressão LPBF (laser fibra 500-1000W + varredura galvô + estratégia hatching/ilhas + monitoramento in-situ: melt pool/pireometria/OCT) + DED (pó/fio + laser/arco + reparo/adição) + controle dimensional (CT/laser tracker)
+            'OOOOMMMMNNNN', // Team C: tratamento térmico (HIP/alívio tensões/solubilização/envelhecimento + vácuo/Ar) + acabamento (CNC/EDM/polimento/shot peening) + inspeção NDT (CT/UT/ET/PT + densidade/porosidade <0.1%) + certificação material (ASTM F3001/F3302) + rastreabilidade digital (blockchain/digital twin)
+        ],
+        industry: 'Manufatura Aditiva Metais Qualificada'
+    },
+    // Quantum Communications QKD/Satellite
+    {
+        name: 'Comunicações Quânticas - QKD/Satélite (3 Equipas)',
+        description: 'Rede QKD fibra/satélite (CV-QKD/DV-QKD/MDI-QKD) - 3 equipas, turnos 12h, geração/distribuição chaves + repetidores quânticos + integração rede clássica + segurança criptográfica',
+        teams: 3,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOO', // Team A: fontes quânticas (SPDC/SQLD/quantum dots + lasers pulsados 1550nm/780nm + modulação fase/amplitude/polarização) + detetores SNSPD/APD (eficiência >90%/dark count <1Hz) + geração chaves (BB84/E91/CV-QKD) + taxa chave >Mbps
+            'NNNNOOOOMMMM', // Team B: canal quântico fibra (baixa perda/baixo ruído Raman + multiplexação DWDM/TDM) + satélite (órbita LEO/GEO + apontamento <μrad + link óptico downlink/uplink + estações terra móveis/fixas) + repetidores (memória quântica/entanglement swapping)
+            'OOOOMMMMNNNN', // Team C: pós-processamento (sifting/correção erro/amplificação privacidade + autenticação Wegman-Carter) + integração rede clássica (SDN/NFV + PQC híbrido: Kyber/Dilithium) + gestão chaves (KMS/ETSI GS QKD 014) + certificação Common Criteria/EAL + monitoramento intrusão (QBER/ataque PNS/Trojan horse)
+        ],
+        industry: 'Comunicações Quânticas QKD/Satélite'
+    },
+    // Fast Reactors / Waste Transmutation
+    {
+        name: 'Reatores Rápidos - Transmutação Resíduos (4 Equipas)',
+        description: 'Reator rápido refrigerado sódio/chumbo (SFR/LFR) transmutação actinídeos menores - 4 equipas, turnos 12h, operação reator + ciclo combustível fechado + piroprocessamento + segurança passiva',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOOPPPP',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOOPPPP', // Team A: operação reator rápido (núcleo MOX/metal U-Pu-Zr + refrigerante Na/Pb-Bi + bombas EM/bombas imersas + trocadores calor intermediários + sistema shutdown passivo) + instrumentação nêutrons/temperatura/vazão + controle reatividade
+            'NNNNOOOOPPPPMMMM', // Team B: ciclo combustível fechado (piroprocessamento eletroquímico: eletrorefinação/eletrorredução + recuperação U/Pu/Am/Cm/Np + fabricação combustível remoto (caixa quente) + reciclagem múltiplas passagens + balanço massa isotópica
+            'OOOOPPPPMMMMNNNN', // Team C: gestão resíduos (vitrificação FP + matriz cerâmica/forma de vidro actinídeos + armazenamento geológico profundo + barreira engenheirada/bentonita) + monitoramento repositório (temperatura/pressão/geoquímica) + dose público <0.1 mSv/ano
+            'PPPPMMMMNNNNOOOO', // Team D: segurança passiva (coeficiente vazio negativo + expansão Doppler + convecção natural refrigerante + contenção metálica) + análise acidentes severos (SAUNA/SAS4A) + licenciamento (IAEA SSR-2/1 + nacional) + formação operadores (simulador/treino cenários além-base) + salvaguardas (C/S medidas + IAEA)
+        ],
+        industry: 'Reatores Rápidos / Transmutação Resíduos'
+    },
 ];

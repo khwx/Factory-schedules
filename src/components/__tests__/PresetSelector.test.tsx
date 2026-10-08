@@ -39,7 +39,7 @@ describe('PresetSelector', () => {
         expect(screen.getByRole('listbox', { name: /Cenarios de exemplo/i })).toBeInTheDocument();
     });
 
-    it('should list preset options when open', () => {
+    it('should list preset options when open', { timeout: 15000 }, () => {
         renderSelector();
         fireEvent.click(screen.getByRole('button', { name: /Carregar Cenario de Exemplo/i }));
         for (const preset of PRESET_SCENARIOS) {
