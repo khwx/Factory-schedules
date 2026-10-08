@@ -2099,4 +2099,135 @@ export const PRESET_SCENARIOS: PresetScenario[] = [
         ],
         industry: 'Operações Marítimas Autónomas'
     },
+    // Lunar Mining / ISRU (In-Situ Resource Utilization)
+    {
+        name: 'Mineração Lunar - ISRU (3 Equipas)',
+        description: 'Extração recursos lunares - 3 equipas, turnos 12h, escavação regolito + processamento oxigénio/água + fabricação aditiva in-situ + logística superfície',
+        teams: 3,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOO', // Team A: escavação/transporte regolito + robótica autónoma + processamento térmico/químico
+            'NNNNOOOOMMMM', // Team B: extração oxigénio (H2/CH4 redução) + eletrólise água gelo + liquefação armazenamento
+            'OOOOMMMMNNNN', // Team C: fabricação aditiva (regolito sinterizado) + construção habitats/estruturas + manutenção sistemas ISRU
+        ],
+        industry: 'Mineração Lunar / ISRU'
+    },
+    // Alternative Proteins / Precision Fermentation
+    {
+        name: 'Proteínas Alternativas - Fermentação Precisão (4 Equipas)',
+        description: 'Fermentação precisão proteínas - 4 equipas, turnos 12h, biorreatores 200kL+ + downstream purificação + formulação + QC GMP contínuo',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 42,
+        pattern: 'DDNNOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'DDNNOO', // Team A: operação biorreatores (alimentação/controlo pH/DO/temperatura) + monitoramento metabolómico
+            'OODDNN', // Team B: separação/purificação (centrífuga/ cromatografia/filtruação) + concentração + diafiltração
+            'NNOODD', // Team C: formulação (texturização/extrusão) + ingredientes funcionais + embalagem aséptica + rastreabilidade
+            'DDOONN', // Team D: controlo qualidade (analítica/microbiológico/sensorial) + validação processo + conformidade regulatória (EFSA/FDA)
+        ],
+        industry: 'Proteínas Alternativas / Fermentação Precisão'
+    },
+    // Hyperloop / Ultra-High-Speed Transport
+    {
+        name: 'Hiperloop - Operações Tubo Vácuo (4 Equipas)',
+        description: 'Sistema hiperloop - 4 equipas, turnos 12h, gestão tubo vácuo + propulsão maglev + controle tráfego + segurança emergência + manutenção infraestrutura',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'DDNNOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'DDNNOO', // Team A: centro controle operações (pods/tráfego/vácuo) + gestão emergências + comunicação passageiros
+            'OODDNN', // Team B: manutenção tubo (bombas vácuo/vedação/inspeção) + infraestrutura pista/estacas + monitoramento estrutural
+            'NNOODD', // Team C: sistemas propulsão (LIM/linear motor) + levitação magnética + gestão energia + criogenia supercondutores
+            'DDOONN', // Team D: estações passageiros (embarque/segurança/UX) + logística cápsulas + certificação segurança + expansão rede
+        ],
+        industry: 'Hiperloop / Transporte Ultra-Rápido'
+    },
+    // Solar Radiation Management / Geoengineering
+    {
+        name: 'Geoengenharia Solar - Gestão Radiação (3 Equipas)',
+        description: 'Gestão radiação solar (SRM) - 3 equipas, turnos 12h, injeção estratosfera aerossóis + monitoramento climático + modelação + governança internacional',
+        teams: 3,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOO', // Team A: operações lançamento (balões/aeronaves/artilharia) + dispersão partículas (SO2/CaCO3/diamante) + dosimetria
+            'NNNNOOOOMMMM', // Team B: monitoramento atmosférico (LIDAR/satélite/radiossondas) + modelação impacto climático + verificação efeitos colaterais
+            'OOOOMMMMNNNN', // Team C: governança (tratados/transparência/consentimento) + avaliação risco ético + coordenação internacional + plano término
+        ],
+        industry: 'Geoengenharia Solar / Gestão Radiação'
+    },
+    // Vertical Farming / Urban Agriculture
+    {
+        name: 'Agricultura Vertical - Fábricas Urbanas (4 Equipas)',
+        description: 'Vertical farming indoor - 4 equipas, turnos 12h, cultivo hidropónico/aeropónico LED + climatização VPD + automação colheita + logística última milha',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 42,
+        pattern: 'DDNNOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'DDNNOO', // Team A: gestão cultivo (receitas luz/nutrientes/CO2) + monitoramento fenotipagem + ciclo semente-colheita
+            'OODDNN', // Team B: automação (robôs plantio/transplante/colheita) + sistemas transporte vertical + embalagem flow-pack
+            'NNOODD', // Team C: infraestrutura (HVAC/desumidificação/CO2 enriquecimento) + gestão energia renovável + circularidade água/nutrientes
+            'DDOONN', // Team D: qualidade alimentar (resíduos pesticidas/nutrientes/microbiologia) + rastreabilidade blockchain + distribuição urbana
+        ],
+        industry: 'Agricultura Vertical / Fábricas Urbanas'
+    },
+    // Photonic / Optical Computing
+    {
+        name: 'Computação Fotónica - Processadores Ópticos (3 Equipas)',
+        description: 'Computação fotónica integrada - 3 equipas, turnos 12h, fabricação PICs (fotónica silício/nióbio) + teste wafers + packaging co-packaged optics + data centers',
+        teams: 3,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOO', // Team A: fabricação cleanroom (litografia/e-beam/gravação) + guias onda/acopladores/moduladores + metrologia óptica
+            'NNNNOOOOMMMM', // Team B: teste caracterização (VNA/espectroscopia/olho diagrama) + qualificação confiabilidade + binning performance
+            'OOOOMMMMNNNN', // Team C: packaging (chiplets/optical I/O/interposers) + integração CPO (co-packaged optics) + validação sistema data center
+        ],
+        industry: 'Computação Fotónica / Processadores Ópticos'
+    },
+    // Quantum Networks / Quantum Internet
+    {
+        name: 'Internet Quântica - Redes Quânticas (3 Equipas)',
+        description: 'Rede quântica distribuição chaves/repetidores - 3 equipas, turnos 12h, QKD satélite/fibra + memórias quânticas + emaranhamento + criptografia pós-quântica híbrida',
+        teams: 3,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOO', // Team A: nós QKD (preparação/medição estados) + canais quânticos (fibra livre espaço) + sincronização relógios atómicos
+            'NNNNOOOOMMMM', // Team B: repetidores quânticos (memórias/emaranhamento/troca) + purificação + correção erros quântica + taxas segredo
+            'OOOOMMMMNNNN', // Team C: camada clássica (autenticação/sync/gestaão chaves) + integração PQC híbrida + orquestração rede + standardização ETSI/IETF
+        ],
+        industry: 'Internet Quântica / Redes Quânticas'
+    },
+    // Ocean Direct Air Capture / Ocean DAC
+    {
+        name: 'Captura Direta Oceânica - Ocean DAC (3 Equipas)',
+        description: 'Remoção CO2 oceano - 3 equipas, turnos 12h, alcalinização oceânica/eletrólise água mar + medição MRV + impacto ecossistema + governação marinha',
+        teams: 3,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOO', // Team A: operações plataforma (eletrólise bipolar/alcalinização) + adição minerais (olivina/cal) + bombagem/ dispersão
+            'NNNNOOOOMMMM', // Team B: monitoramento MRV (sensores pH/alcalinidade/DIC) + modelação biogeoquímica + verificação adicionalidade + certificação créditos
+            'OOOOMMMMNNNN', // Team C: avaliação impacto (ecossistema/pescas/acidificação local) + licenciamento (LCM/IMO/UNCLOS) + engajamento stakeholders + economia azul
+        ],
+        industry: 'Captura Direta Oceânica / Ocean DAC'
+    },
 ];

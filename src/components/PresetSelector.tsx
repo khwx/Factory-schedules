@@ -115,6 +115,14 @@ const INDUSTRY_KEY_MAP: Record<string, keyof Translations['presetSelector']['ind
     'Fabrico Aditivo Metálico': 'metalAdditiveManufacturing',
     'Computação Biológica / DNA': 'biologicalComputing',
     'Operações Marítimas Autónomas': 'autonomousMaritime',
+    'Mineração Lunar / ISRU': 'lunarMining',
+    'Proteínas Alternativas / Fermentação Precisão': 'altProteins',
+    'Hiperloop / Transporte Ultra-Rápido': 'hyperloop',
+    'Geoengenharia Solar / Gestão Radiação': 'solarRadiationMgmt',
+    'Agricultura Vertical / Fábricas Urbanas': 'verticalFarming',
+    'Computação Fotónica / Processadores Ópticos': 'photonicComputing',
+    'Internet Quântica / Redes Quânticas': 'quantumInternet',
+    'Captura Direta Oceânica / Ocean DAC': 'oceanDAC',
 };
 
 interface PresetSelectorProps {
