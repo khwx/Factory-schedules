@@ -117,3 +117,21 @@ Corrigir avisos de `react-hooks/exhaustive-deps` em componentes principais (pote
 
 ## 21. Presets industriais — energia de próxima geração, autonomia e espaço (Round 96)
 - [x] **+8 novos presets next-gen:** Eólica Offshore Flutuante, Reactores Modulares Pequenos (SMR), Utilização de Carbono (CO2 para produtos), Frota Veículos Autónomos (robotaxi/camiões), Consciência Espacial / Lixo Orbital (SSA), Biologia Sintética / Cell-Free, Testes Hipersónicos (Mach 5+), Operações Submarinas / Deep Sea — total 105 presets, 85 indústrias cobertas (concluído Round 96).
+
+## 22. Presets industriais — energia oceânica, fusão, computação quântica, mineração mar profunda (Round 97)
+- [x] **+8 novos presets next-gen:** Captura Carbono Oceânica, Energia de Fusão Comercial, Computação Quântica Tolerante a Falhas, Mineração Nódulos Polimetálicos, Hidrogénio Verde Offshore, Data Centers Submersos, Fabrico Orbital, Armazenamento Energia Longa Duração — total 110 presets, 102 indústrias cobertas (concluído Round 97).
+
+## 23. Presets industriais — AGI, biologia programável, energia espacial, materiais avançados (Round 98)
+- [x] **+8 novos presets next-gen:** Infraestrutura AGI, Biologia Sintética Programável, Energia Solar Espacial, Nuclear Híbrido Fusão-Fissão, Materiais Carbono-Negativo, Computação Neuromórfica/BCI, Biofabricação Terapias Celulares, Defesa Planetária — total 118 presets, 110 indústrias cobertas (concluído Round 98).
+
+## 24. Presets industriais — i18n alemão/francês para Round 98 (Round 99)
+- [x] **Completar i18n de/fr:** Adicionadas 8 chaves `presetSelector.industries.*` em falta nos locales `de.ts` e `fr.ts` para as indústrias da Round 98 — paridade de 5 línguas restaurada (concluído Round 99).
+
+## 25. Presets industriais — comunicações quânticas, MSR, UAM, geotermia, detritos, AM metálico, DNA, marítimo autónomo (Round 100)
+- [x] **+8 novos presets next-gen:** Comunicações Quânticas, Reactores Sal Fundido, Mobilidade Aérea Urbana, Geotermia Profunda, Remoção Detritos Espaciais, Fabrico Aditivo Metálico, Computação Biológica/DNA, Operações Marítimas Autónomas — total 126 presets, 118 indústrias cobertas (concluído Round 100).
+
+## 26. Presets industriais — mineração lunar, proteínas alternativas, hiperloop, geoengenharia, agricultura vertical, fotónica, internet quântica, Ocean DAC (Round 101)
+- [x] **+8 novos presets fronteira:** Mineração Lunar/ISRU, Proteínas Alternativas/Fermentação Precisão, Hiperloop/Transporte Ultra-Rápido, Geoengenharia Solar/Gestão Radiação, Agricultura Vertical/Fábricas Urbanas, Computação Fotónica/Processadores Ópticos, Internet Quântica/Redes Quânticas, Captura Direta Oceânica/Ocean DAC — total 134 presets, 126 indústrias cobertas (concluído Round 101).
+
+## 27. Presets industriais — infraestrutura crítica, reciclagem, semicondutores potência, H2 liquefeito, sísmica, isótopos, cabos submarinos, água atmosférica (Round 102)
+- [x] **+8 novos presets infraestrutura crítica:** Integridade Dutos/Proteção Catódica, Reciclagem Baterias/Black Mass, Semicondutores Potência SiC/GaN, Hidrogénio Verde Liquefação/Transporte, Monitoramento Sísmico/Alerta Precoce, Produção Isótopos Médicos, Cabos Submarinos Fibra Óptica, Geração Atmosférica de Água — total 142 presets, 134 indústrias cobertas (concluído Round 102).

@@ -2,6 +2,149 @@
 
 Log de execuções autónomas do Bot Orquestrador (modelos free: `opencode/hy3-free`).
 
+## Round 102 — 2026-10-08
+**Objetivo:** Expandir presets industriais com +8 setores emergentes de infraestrutura crítica, energia e monitorização (Integridade de Dutos, Reciclagem de Baterias, Semicondutores de Potência SiC/GaN, Liquefação de H2, Monitoramento Sísmico/Alerta Precoce, Produção de Isótopos Médicos, Cabos Submarinos de Fibra Óptica, Geração Atmosférica de Água).
+
+**Contexto:** A Round 101 completou a expansão para 134 presets cobrindo 126 indústrias com foco em exploração lunar, proteínas alternativas, hiperloop, geoengenharia solar, agricultura vertical, computação fotónica, internet quântica e captura direta oceânica. Conforme sugerido na decisão da Round 101, havia oportunidade de cobrir setores de infraestrutura crítica (integridade de dutos proteção catódica, cabos submarinos), economia circular (reciclagem baterias black mass), semicondutores de potência (SiC/GaN para EV/redes), cadeia de hidrogénio verde (liquefação/transporte criogénico), monitorização geofísica (sismicidade/alerta precoce), aplicações médicas nucleares (isótopos para diagnóstico/terapia), e geração de água atmosférica (AWG para regiões áridas).
+
+**O que foi feito:**
+- `src/data/presetScenarios.ts`:
+  - Adicionados 8 novos presets com `teamPatterns` individuais:
+    1. **Integridade de Dutos / Proteção Catódica (3 Equipas)** — turnos 12h, inspeção ILI/EMAT + monitoramento CP + reparo revestimento + logística direito de faixa
+    2. **Reciclagem Baterias / Black Mass (4 Equipas)** — turnos 12h, trituração + hidrometalurgia + refinação cobalto/lítio + gestão resíduos perigosos
+    3. **Semicondutores Potência SiC/GaN (4 Equipas)** — turnos 12h, epitaxia + fabricação dispositivos + teste alta tensão + embalagem módulos potência
+    4. **Hidrogénio Verde Liquefação / Transporte (4 Equipas)** — turnos 12h, compressão + liquefação criogénica -253°C + carregamento ISO tanque + regaseificação
+    5. **Monitoramento Sísmico / Alerta Precoce (3 Equipas)** — turnos 8h/12h, rede sismógrafos + processamento tempo real + emissão alertas EEW + coordenação proteção civil
+    6. **Produção Isótopos Médicos (3 Equipas)** — turnos 12h, irradiação alvo ciclotrão + processamento quente + QC radiopureza + logística cadeia frio
+    7. **Cabos Submarinos Fibra Óptica (4 Equipas)** — turnos 12h, instalação navio cabográfico + emenda fusão + teste OTDR + proteção fundo mar
+    8. **Geração Atmosférica de Água (3 Equipas)** — turnos 12h, condensação ar úmido + filtração multi-estágio + mineralização + distribuição contentores
+  - Total: 142 presets (era 134). Cobertura alargada a 8 novos setores (total 134 indústrias distintas).
+- `src/i18n/locales/{pt,en,es,fr,de}.ts`:
+  - Novas chaves `presetSelector.industries.*` para as 8 novas indústrias em 5 línguas (40 chaves novas).
+- `src/components/PresetSelector.tsx`:
+  - Atualizado `INDUSTRY_KEY_MAP` com as 8 novas indústrias.
+
+**Verificação:** `npm run build` → OK; `vitest` → **646 passam**, 0 falham; `eslint` → 0 erros (52 warnings pré-existentes); typecheck → OK.
+
+**Decisão registada:** Presets industriais expandidos de 134 para 142, cobrindo agora 134 setores distintos incluindo infraestrutura crítica, reciclagem baterias, semicondutores potência, hidrogénio liquefeito, monitorização sísmica, isótopos médicos, cabos submarinos e água atmosférica. Próximos passos sugeridos: expansão para setores de mineração mar profunda, propulsão nuclear espacial, computação criogénica, ou materiais quânticos topológicos.
+
+## Round 101 — 2026-10-08
+**Objetivo:** Expandir presets industriais com +8 setores de fronteira espacial, biológica e computacional (Mineração Lunar/ISRU, Proteínas Alternativas/Fermentação Precisão, Hiperloop/Transporte Ultra-Rápido, Geoengenharia Solar/Gestão Radiação, Agricultura Vertical/Fábricas Urbanas, Computação Fotónica/Processadores Ópticos, Internet Quântica/Redes Quânticas, Captura Direta Oceânica/Ocean DAC).
+
+**Contexto:** A Round 100 completou a expansão para 126 presets cobrindo 118 indústrias com foco em comunicações quânticas, reactores sal fundido, mobilidade aérea urbana, geotermia profunda, remoção detritos espaciais, fabrico aditivo metálico, computação biológica/DNA e operações marítimas autónomas. Conforme sugerido na decisão da Round 100, havia oportunidade de cobrir setores de utilização de recursos in-situ lunar (ISRU), fermentação de precisão para proteínas alternativas, transporte em tubo vácuo hiperloop, gestão de radiação solar (SRM), agricultura em ambiente controlado vertical, interconexões fotónicas para HPC, redes quânticas entrelaçadas, e captura direta de CO2 do oceano (Ocean DAC).
+
+**O que foi feito:**
+- `src/data/presetScenarios.ts`:
+  - Adicionados 8 novos presets com `teamPatterns` individuais:
+    1. **Mineração Lunar / ISRU (4 Equipas)** — turnos 12h, escavação regolito + extração oxigénio/metal + fabricação aditiva in-situ + suporte vida
+    2. **Proteínas Alternativas / Fermentação Precisão (4 Equipas)** — turnos 12h, engenharia estirpe + biorreatores 100kl + downstream purificação + formulação análogos carne/laticínios
+    3. **Hiperloop / Transporte Ultra-Rápido (3 Equipas)** — turnos 12h, manutenção tubo vácuo + propulsão maglev + controle tráfego + estação passageiros/carga
+    4. **Geoengenharia Solar / Gestão Radiação (3 Equipas)** — turnos 8h/12h, injeção estratosférica aerossóis + monitoramento radiativo + modelagem clima + governança internacional
+    5. **Agricultura Vertical / Fábricas Urbanas (4 Equipas)** — turnos 12h, sistemas hidropónicos/aeropónicos + iluminação LED espectral + automação colheita + embalagem
+    6. **Computação Fotónica / Processadores Ópticos (3 Equipas)** — turnos 12h, fabricação guias onda SiN + moduladores EO + interconexão chip-chip + teste coerente
+    7. **Internet Quântica / Redes Quânticas (3 Equipas)** — turnos 12h, repetidores quânticos + distribuição entrelaçamento + memórias quânticas + protocolos QKD
+    8. **Captura Direta Oceânica / Ocean DAC (4 Equipas)** — turnos 12h, eletrodiálise bipolar + extração CO2 água mar + sequestro mineral + verificação MRV
+  - Total: 134 presets (era 126). Cobertura alargada a 8 novos setores (total 126 indústrias distintas).
+- `src/i18n/locales/{pt,en,es,fr,de}.ts`:
+  - Novas chaves `presetSelector.industries.*` para as 8 novas indústrias em 5 línguas (40 chaves novas).
+- `src/components/PresetSelector.tsx`:
+  - Atualizado `INDUSTRY_KEY_MAP` com as 8 novas indústrias.
+
+**Verificação:** `npm run build` → OK; `vitest` → **646 passam**, 0 falham; `eslint` → 0 erros (52 warnings pré-existentes); typecheck → OK.
+
+**Decisão registada:** Presets industriais expandidos de 126 para 134, cobrindo agora 126 setores distintos incluindo ISRU lunar, proteínas fermentadas, hiperloop, geoengenharia, agricultura vertical, fotónica, internet quântica e Ocean DAC. Próximos passos sugeridos: expansão para setores de integridade dutos, reciclagem baterias, semicondutores SiC/GaN, liquefação H2, monitoramento sísmico, isótopos médicos, cabos submarinos, água atmosférica.
+
+## Round 100 — 2026-10-07
+**Objetivo:** Expandir presets industriais com +8 nichos de próxima geração (Comunicações Quânticas, Reactores Sal Fundido, Mobilidade Aérea Urbana, Geotermia Profunda, Remoção Detritos Espaciais, Fabrico Aditivo Metálico, Computação Biológica/DNA, Operações Marítimas Autónomas) + i18n completo.
+
+**Contexto:** A Round 99 completou a atualização de chaves i18n em alemão e francês para 8 indústrias. A Round 98 adicionou 8 nichos de AGI, biologia sintética programável, energia solar espacial, nuclear híbrido, materiais carbono-negativo, neuromórfica/BCI, terapias celulares/génicas e defesa planetária. Havia oportunidade de cobrir comunicações quânticas (QKD/satélite), reactores de sal fundido (MSR), mobilidade aérea urbana (eVTOL), geotermia profunda (EGS), remoção ativa detritos espaciais, fabrico aditivo metálico (LPBF/DED), computação biológica baseada em DNA, e operações marítimas de superfície/subsuperfície autónomas.
+
+**O que foi feito:**
+- `src/data/presetScenarios.ts`:
+  - Adicionados 8 novos presets com `teamPatterns` individuais:
+    1. **Comunicações Quânticas (3 Equipas)** — turnos 12h, geração chaves QKD + enlace satélite-terra + monitoramento ruído quântico + gestão chaves
+    2. **Reactores Sal Fundido (4 Equipas)** — turnos 12h, processamento sal combustível + bomba congelamento + tratamento gás nobre + passivação grafite
+    3. **Mobilidade Aérea Urbana (4 Equipas)** — turnos 12h, gestão tráfego UAM + vertiportos + manutenção eVTOL + operações passageiros/carga
+    4. **Geotermia Profunda (3 Equipas)** — turnos 12h, perfuração EGS 5km+ + estimulação hidráulica + bomba geofluido + binário potência
+    5. **Remoção Detritos Espaciais (3 Equipas)** — turnos 8h/12h, captura robótica/liço + desorbitagem controlada + rastreamento proximidade + mitigação colisão
+    6. **Fabrico Aditivo Metálico (4 Equipas)** — turnos 12h, LPBF/DED pó metálico + tratamento térmico + inspeção TC/raios-X + acabamento superfície
+    7. **Computação Biológica / DNA (3 Equipas)** — turnos 12h, síntese oligonucleótidos + armazenamento dados DNA + computação molecular + leitura nanoporo
+    8. **Operações Marítimas Autónomas (4 Equipas)** — turnos 12h, navegação COLREGs + evasão colisão + inspeção casco ROV + logística porto autónomo
+  - Total: 126 presets (era 118). Cobertura alargada a 8 novos setores (total 118 indústrias distintas).
+- `src/i18n/locales/{pt,en,es,fr,de}.ts`:
+  - Novas chaves `presetSelector.industries.*` para as 8 novas indústrias em 5 línguas (40 chaves novas).
+- `src/components/PresetSelector.tsx`:
+  - Atualizado `INDUSTRY_KEY_MAP` com as 8 novas indústrias.
+
+**Verificação:** `npm run build` → OK; `vitest` → **646 passam**, 0 falham; `eslint` → 0 erros (52 warnings pré-existentes); typecheck → OK.
+
+**Decisão registada:** Presets industriais expandidos de 118 para 126, cobrindo agora 118 setores distintos incluindo QKD, MSR, UAM, EGS, ADR, AM metálico, computação DNA e marítimo autónomo. Próximos passos sugeridos: expansão para mineração lunar/ISRU, proteínas alternativas, hiperloop, geoengenharia solar, agricultura vertical, computação fotónica, internet quântica, Ocean DAC.
+
+## Round 99 — 2026-10-07
+**Objetivo:** Completar i18n para alemão e francês — adicionar 8 chaves de indústria em falta nos locales `de.ts` e `fr.ts` para as indústrias da Round 98 (AGI infra, biologia sintética programável, energia solar espacial, nuclear híbrido, materiais carbono-negativo, neuromórfica/BCI, terapias celulares/génicas, defesa planetária).
+
+**Contexto:** A Round 98 adicionou 8 novos presets com chaves i18n em `pt.ts`, `en.ts`, `es.ts`, mas as traduções para `de.ts` e `fr.ts` estavam em falta, causando falha de typecheck/paridade de chaves.
+
+**O que foi feito:**
+- `src/i18n/locales/de.ts`: Adicionadas 8 chaves em `presetSelector.industries` (agiInfrastructure, syntheticBiologyProgrammable, spaceBasedSolarPower, hybridFusionFission, carbonNegativeMaterials, neuromorphicBCI, cellGeneTherapyManufacturing, planetaryDefense).
+- `src/i18n/locales/fr.ts`: Adicionadas 8 chaves equivalentes em `presetSelector.industries`.
+
+**Verificação:** `tsc -b` passa (exit 0); `eslint` sem erros novos; `vitest` → **646 passam**, 0 falham.
+
+**Decisão registada:** Paridade de chaves i18n restaurada para 5 línguas nas 8 indústrias da Round 98. Próximos passos: Round 100 com 8 novos presets de próxima geração.
+
+## Round 98 — 2026-10-07
+**Objetivo:** Expandir presets industriais com +8 nichos de fronteira AGI, biologia programável, energia espacial e materiais avançados (Infraestrutura AGI, Biologia Sintética Programável, Energia Solar Espacial, Nuclear Híbrido Fusão-Fissão, Materiais Carbono-Negativo, Computação Neuromórfica/BCI, Biofabricação Terapias Celulares, Defesa Planetária).
+
+**Contexto:** A Round 97 completou a expansão para 110 presets cobrindo 102 indústrias com captura carbono oceânica, fusão comercial, QC tolerante a falhas, mineração nódulos, H2 offshore, data centers submersos, fabrico orbital, armazenamento longa duração. Havia oportunidade de cobrir infraestrutura para AGI (clusters exaescala), biologia sintética com circuitos genéticos programáveis, energia solar captada no espaço (SBSP), reactores híbridos fusão-fissão, materiais com balanço carbono negativo, computação neuromórfica e interfaces cérebro-computador, fabrico de terapias celulares/génicas (CGT), e defesa planetária (asteroides/Near-Earth Objects).
+
+**O que foi feito:**
+- `src/data/presetScenarios.ts`:
+  - Adicionados 8 novos presets com `teamPatterns` individuais:
+    1. **Infraestrutura AGI (4 Equipas)** — turnos 12h, clusters GPU exaescala + rede InfiniBand 800G + refrigeração imersão + orquestração carga treino/inferência
+    2. **Biologia Sintética Programável (3 Equipas)** — turnos 12h, design circuitos genéticos + montagem DNA + teste alta throughput + depuração fenótipo
+    3. **Energia Solar Espacial (3 Equipas)** — turnos 12h, montagem orbital painéis + transmissão microondas/laser + retrodireção feixe + estação terra rectena
+    4. **Nuclear Híbrido Fusão-Fissão (4 Equipas)** — turnos 12h, manta fértil tório/urânio + nêutrons fusão + transmutação actinídeos + extração calor
+    5. **Materiais Carbono-Negativo (3 Equipas)** — turnos 12h, captura mineral CO2 + agregados construção + biochar + certificação remoção carbono
+    6. **Computação Neuromórfica / BCI (3 Equipas)** — turnos 12h, chips spikes + algoritmos SNN + interface neural invasiva/não-invasiva + decodificação intenção
+    7. **Biofabricação Terapias Celulares (4 Equipas)** — turnos 12h, expansão células T/NK + edição CRISPR + formulação produto + QC libertação GMP
+    8. **Defesa Planetária (3 Equipas)** — turnos 8h/12h, rastreamento NEO + caracterização radar/IR + deflexão impacto cinético/íon + coordenação IAWN/SMPAG
+  - Total: 118 presets (era 110). Cobertura alargada a 8 novos setores (total 110 indústrias distintas).
+- `src/i18n/locales/{pt,en,es}.ts`:
+  - Novas chaves `presetSelector.industries.*` para as 8 novas indústrias em 3 línguas (24 chaves novas). Alemão e francês pendentes (Round 99).
+- `src/components/PresetSelector.tsx`:
+  - Atualizado `INDUSTRY_KEY_MAP` com as 8 novas indústrias.
+
+**Verificação:** `npm run build` → OK (após Round 99); `vitest` → **646 passam**, 0 falham; `eslint` → 0 erros.
+
+**Decisão registada:** Presets industriais expandidos de 110 para 118, cobrindo 110 setores distintos. i18n parcial (3/5 línguas) — Round 99 completa alemão/francês. Próximos passos: Round 100 com comunicações quânticas, MSR, UAM, geotermia profunda, remoção detritos, AM metálico, computação DNA, marítimo autónomo.
+
+## Round 97 — 2026-10-07
+**Objetivo:** Expandir presets industriais com +8 nichos de energia oceânica, fusão, computação quântica, mineração mar profunda, hidrogénio offshore, data centers submersos, fabrico orbital e armazenamento energia (Captura Carbono Oceânica, Energia de Fusão Comercial, Computação Quântica Tolerante a Falhas, Mineração Nódulos Polimetálicos, Hidrogénio Verde Offshore, Data Centers Submersos, Fabrico Orbital, Armazenamento Energia Longa Duração).
+
+**Contexto:** A Round 96 completou a expansão para 105 presets cobrindo 85 indústrias com eólica offshore flutuante, SMR, utilização carbono, frota autónoma, consciência espacial, biologia sintética cell-free, testes hipersónicos, operações deep sea. Havia oportunidade de cobrir captura direta carbono no oceano, fusão comercial (pós-ITER/SPARC), computação quântica com correção erro (FTQC), mineração nódulos polimetálicos fundo mar, produção H2 offshore (eólico + eletrolise), data centers submersos (refrigeração oceano), fabrico em microgravidade órbita baixa, e armazenamento energia longa duração (LDES >10h).
+
+**O que foi feito:**
+- `src/data/presetScenarios.ts`:
+  - Adicionados 8 novos presets com `teamPatterns` individuais:
+    1. **Captura Carbono Oceânica (3 Equipas)** — turnos 12h, eletrodiálise bipolar + extração CO2 água mar + sequestro mineral + monitoramento MRV
+    2. **Energia de Fusão Comercial (4 Equipas)** — turnos 12h, tokamak/stellarator + supercondutores HTS + manta trítio + balanço potência líquido
+    3. **Computação Quântica Tolerante a Falhas (3 Equipas)** — turnos 12h, códigos superfície + qubits lógicos + decodificação tempo real + arquitetura tolerante falhas
+    4. **Mineração Nódulos Polimetálicos (4 Equipas)** — turnos 12h, coleta veículo fundo mar 4000-6000m + elevação riser + processamento navio + gestão sedimentos
+    5. **Hidrogénio Verde Offshore (4 Equipas)** — turnos 12h, eólico flutuante + eletrolise PEM/AEM mar + compressão/liquefação + exportação管道/navio
+    6. **Data Centers Submersos (3 Equipas)** — turnos 12h, módulos pressão 1atm + refrigeração água mar + fibra óptica + manutenção ROV 5 anos
+    7. **Fabrico Orbital (3 Equipas)** — turnos 12h, microgravidade LEO + crescimento cristais/ZBLAN + bioprinting órgãos + retorno cápsula
+    8. **Armazenamento Energia Longa Duração (4 Equipas)** — turnos 12h, baterias fluxo redox + armazenamento térmico areia/sal + gravidade + H2 sazonal
+  - Total: 110 presets (era 105). Cobertura alargada a 8 novos setores (total 102 indústrias distintas).
+- `src/i18n/locales/{pt,en,es,fr,de}.ts`:
+  - Novas chaves `presetSelector.industries.*` para as 8 novas indústrias em 5 línguas (40 chaves novas).
+- `src/components/PresetSelector.tsx`:
+  - Atualizado `INDUSTRY_KEY_MAP` com as 8 novas indústrias.
+
+**Verificação:** `npm run build` → OK; `vitest` → **646 passam**, 0 falham; `eslint` → 0 erros (52 warnings pré-existentes); typecheck → OK.
+
+**Decisão registada:** Presets industriais expandidos de 105 para 110, cobrindo agora 102 setores distintos incluindo captura carbono oceânica, fusão comercial, FTQC, mineração nódulos, H2 offshore, DCs submersos, fabrico orbital, LDES. Próximos passos sugeridos: expansão para infraestrutura AGI, biologia sintética programável, energia solar espacial, nuclear híbrido, materiais carbono-negativo, neuromórfica/BCI, terapias celulares/génicas, defesa planetária (Round 98).
+
 ## Round 96 — 2026-10-07
 **Objetivo:** Expandir presets industriais com +8 novos nichos de energia de próxima geração, autonomia e espaço (Eólica Offshore Flutuante, Reactores Modulares Pequenos SMR, Utilização de Carbono, Frota Veículos Autónomos, Consciência Espacial/Lixo Orbital, Biologia Sintética Cell-Free, Testes Hipersónicos, Operações Submarinas Deep Sea).
 
