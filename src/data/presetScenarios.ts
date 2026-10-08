@@ -3027,4 +3027,136 @@ export const PRESET_SCENARIOS: PresetScenario[] = [
         ],
         industry: 'Habitats Orbitais Gravidade Artificial Variável'
     },
+    // Mars Settlement ISRU
+    {
+        name: 'Assentamento Marte ISRU Integrado (4 Equipas)',
+        description: 'Assentamento permanente Marte com ISRU integrado (regolito→O₂/CH₄/H₂O/metais + construção aditiva habitat + agricultura indoor + ECLSS fechado) - 4 equipas, turnos 12h, ciclo 24h sols + operações superfície EVA/rovers + logística Terra-Marte janela 26m',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOOPPPP',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOOPPPP', // Team A: ISRU produção consumíveis (reatores Sabatier/RWGS/eletrólise + extração água gelo subsuperfície/regolito + síntese metano/oxigénio propulsão/vida + produção aço/alumínio/silício regolito + fabricação aditiva habitat radiação/micrometeoritos + certificação NASA/ESA)
+            'NNNNOOOOPPPPMMMM', // Team B: operações superfície/EVA (rovers pressurizados/não-pressurizados + construção robótica swarm + manutenção sistemas energia nuclear/solar + gestão poeira/abrasão + EVA ciência/geologia/biologia + teleoperação baixa latência orbital) + logística entrega carga Starship
+            'OOOOPPPPMMMMNNNN', // Team C: habitat/vida/saúde (ECLSS regenerativo >99.9% + agricultura vertical/hidropónica LED espectral + reciclagem nutrientes/resíduos + medicina preventiva/telemedicina/IA + gravidade parcial 0.38g contrabalanço exercício/farmacêuticos + psicologia isolamento/grupo + simulação Terra VR)
+            'PPPPMMMMNNNNOOOO', // Team D: expansão/ciência/economia (expansão modular habitat + mineração recursos estratégicos (terras-raras/gelo/voláteis) + ciência (astrobiologia/clima/geologia) + manufatura orbital/interestelar + hub logístico Lua-Marte/cinturão + governança autónoma + roadmap: base 2030 / vila 2040 / cidade 2050 / civilização multiplanetária 2100)
+        ],
+        industry: 'Assentamento Marte ISRU'
+    },
+    // Quantum Sensors Gravimetry
+    {
+        name: 'Sensores Quânticos Gravimetria Navegação (3 Equipas)',
+        description: 'Sensores quânticos de última geração (gravimetros atom-interferométricos / magnetómetros NV-center / relógios óticos de rede / giroscópios átomo-fotónicos) - 3 equipas, turnos 12h, fabricação sala limpa + calibração metrológica + deployment campo/espacial + aplicações navegação/GW/recursos',
+        teams: 3,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOO', // Team A: fabricação sensores quânticos (câmara vácuo UHV + armadilha magneto-óptica/MOT + laser resfriamento/deteção (Ti:Sa/fibra/frequência-comb) + espelho atómico/grating Bragg + integração fotónica SiN/LiNbO₃ + metrologia primária SI rastreável + rendimento >90% + custo <$100k/unidade)
+            'NNNNOOOOMMMM', // Team B: calibração/validação metrológica (padrões absolutos gravidade/magnetismo/tempo + incerteza <10⁻¹² g / <1fT / <10⁻¹⁸ s/s + comparação internacional BIPM/NMIs + certificação ISO 17025 + compensação ambiente (vibração/temperatura/gradiente campo) + autocalibração contínua IA)
+            'OOOOMMMMNNNN', // Team C: deployment aplicações (navegação inercial quântica GPS-denied submarinos/aviação/espacial + gravimetria aérea/satélite/terra recursos minerais/água/óleo + monitoramento vulcões/sismos/aquíferos + detecção ondas gravitacionais terrestres + relógio ótico rede sincronização global + defesa/submarinos/geofísica/relatividade)
+        ],
+        industry: 'Sensores Quânticos Gravimetria'
+    },
+    // Artificial Wombs Ectogenesis
+    {
+        name: 'Úteros Artificiais Ectogénese Clínica (4 Equipas)',
+        description: 'Ectogénese clínica - úteros artificiais para gestação parcial/completa (biobolsa perfundida + placenta sintética + monitoramento fetal não-invasivo + regulação hormonal/nutriente IA) - 4 equipas, turnos 12h, GMP ISO 13485 + ensaios clínicos + ética/governança',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOOPPPP',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOOPPPP', // Team A: bioengenharia útero artificial (biobolsa biocompátivel (PDMS/poliuretano/seda) + placenta sintética microfluídica troca gasosa/nutriente/imune + circuitos perfusão acelular/sanguíneos + oxigenação membrana ECMO neonatal + regulação pressão/fluxo/pH/temperatura IA tempo real + materiais degradação controlada 40sem)
+            'NNNNOOOOPPPPMMMM', // Team B: monitoramento fetal/desenvolvimento (imagem ultra-som/Óptica/MRI fetal contínua + oximetria cerebral NIRS + ECG/EEG não-invasivo + metabolómica líquida amniótica/sanguínea + biomarcadores stress/crescimento/maturação órgãos + IA preditiva resultados neonatais + alerta precoce patologia)
+            'OOOOPPPPMMMMNNNN', // Team C: regulação hormonal/nutricional IA (bomba infusão multi-canal hormonas (hCG/progesterona/estrogénio/cortisol/insulina/IGF) + nutrientes aminoácidos/ácidos-gordos/eletrólitos/oligoelementos + controle laço fechado IA modelo fisiológico digital twin fetal + dosagem personalizada genómica/epigenética + segurança funcional IEC 62304)
+            'PPPPMMMMNNNNOOOO', // Team D: ensaios clínicos/ética/governança (fases I/II/III prematuros extremos 22-28sem + consentimento informado pais/comité ética + regulação FDA/EMA/ANVISA + diretrizes OMS/ISSCR/Helsinki + equidade acesso / justiça reprodutiva / definição viabilidade/legalidade / custo-efetividade / roadmap: suporte 22sem 2030 / gestação parcial 2040 / completa 2050)
+        ],
+        industry: 'Úteros Artificiais Ectogénese'
+    },
+    // Molecular Robotics Nanobots
+    {
+        name: 'Robótica Molecular Nanobots Médicos (3 Equipas)',
+        description: 'Nanorrobôs médicos programáveis (DNA origami / proteína design / nanomotores catalíticos / enxame IA) para entrega fármacos / cirurgia celular / diagnóstico in-vivo - 3 equipas, turnos 12h, nanofabricação DNA/proteína + validação in-vitro/vivo + aprovação regulatória',
+        teams: 3,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOO', // Team A: design/nanofabricação nanobots (DNA origami auto-montagem 100nm + proteínas design de novo (RFdiffusion/AlphaFold) + nanomotores catalíticos (urease/catalase/ATPase) + propulsão auto-quimio-táxis/gradiente pH/temperatura + carga fármaco/ácido nucleico/proteína + disparo gatilho microambiente tumoral/inflamação)
+            'NNNNOOOOMMMM', // Team B: validação biológica/segurança (cultura células 3D/organoides + modelos murinos/xenógrafos + biodistribuição/imagem corpo inteiro (PET/fluorescência/Raman) + toxicidade/imunogenicidade/genotoxicidade + clearance renal/hepático + dose letal/eficácia terapêutica + fabricação GMP escalável 10¹² unidades/lote)
+            'OOOOMMMMNNNN', // Team C: controle enxame IA / clínica (coordenação multi-agente RL/gráficos neurais + navegação vasculatura/barreira hematoencefálica + comunicação quorum sensing/acústica/óptica + tarefas: entrega direcionada / biópsia líquida / trombólise / neuromodulação / edição génica in-vivo + ensaio fase I humano + roadmap: câncer 2030 / neurodegeneração 2035 / envelhecimento 2040)
+        ],
+        industry: 'Robótica Molecular Nanobots'
+    },
+    // Space-Based Data Centers
+    {
+        name: 'Data Centers Orbitais Laser Comm (4 Equipas)',
+        description: 'Data centers orbitais com comunicações laser livre-espaço (clusters GPU/TPU/ASIC + refrigeração radiação espaço + energia solar III-V + links óticos 100Gbps-10Tbps inter-satélite/terra) - 4 equipas, turnos 12h, montagem orbital robótica + operação autónoma IA + latência ultra-baixa',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOOPPPP',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOOPPPP', // Team A: hardware orbital compute (GPU H100/B200/Blackwell + TPU v5/v6 + ASIC inferência/training custom + memória HBM4/CXL + interconexão NVLink/NVSwitch/óptica + refrigeração radiação painéis deployáveis / heat pipes / fluido dielétrico imersão + proteção radiação SEE/SEL hardening + lançamento Starship/novos veículos + custo <$5k/kg órbita)
+            'NNNNOOOOPPPPMMMM', // Team B: comunicações laser livre-espaço (terminais óticos coerentes 100Gbps-10Tbps + aquisição/rastreamento ponto <1µrad + link inter-satélite malha LEO/MEO/GEO + downlink ótico terra estação adaptativa óptica + quantum key distribution QKD + latência <10ms global + resiliência multi-caminho + padrão CCSDS/Optical Internet)
+            'OOOOPPPPMMMMNNNN', // Team C: operação autónoma IA (orquestração carga training/inferência multi-inquilino + escalonamento elástico spot/reserved + otimização energia/térmica/latência IA + manutenção preditiva falha hardware + migração workload live + segurança zero-trust/confidential computing + certificação FedRAMP/ISO 27001 + SLA 99.99%)
+            'PPPPMMMMNNNNOOOO', // Team D: economia/casos uso/roadmap (treino LLM fundação orbitais (dados sintéticos/privacidade) + inferência edge global latência zero + computação quântica híbrida orbita-terra + blockchain/ledger orbital + observação terra processamento bordo + roadmap: demonstrador 2028 / constelação 100 satélites 2032 / exaescala orbital 2035 / zettaescala 2040)
+        ],
+        industry: 'Data Centers Orbitais'
+    },
+    // Von Neumann Probes
+    {
+        name: 'Sondas Von Neumann Auto-Replicantes (3 Equipas)',
+        description: 'Sondas interestelares auto-replicantes (Von Neumann) - fábrica nanoscópica/microscópica a bordo + ISRU asteróides/cometas + IA geral exploratória + comunicação interestelar - 3 equipas, turnos 12h, design robustez extrema + verificação formal + ética expansão',
+        teams: 3,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOO', // Team A: arquitetura auto-replicação (fábrica nanoscópica APM/mecanossíntese + microrrobótica montagem + ISRU asteróides tipo C/S/M (água/metais/orgânicos/voláteis) + energia RTG/fissão compacta/vela solar/laser beaming + computação rad-hard neuromórfica/quântica + redundância tripla + verificação formal Coq/Isabelle + mutação/erro taxa <10⁻⁹)
+            'NNNNOOOOMMMM', // Team B: IA geral exploratória (planeamento missão autónomo LLM/RL + decisão ética/valor alinhado + ciência autónoma (hipótese/experiência/análise) + coordenação enxame milhares sondas + comunicação interestelar laser/quântica + compressão dados semântica + hibernação séculos + despertar evento interesse)
+            'OOOOMMMMNNNN', // Team C: ética/governança/roadmap (protocolo não-contaminação planetária COSPAR/CAT-III + limite replicação/expansão + interruptor kill/autodestruição + responsabilidade civilizacional + tratado ONU espaço/asteroides + simulação Monte Carlo expansão galáctica + roadmap: demonstrador sistema solar 2040 / sonda interestelar 2060 / onda colonização 2100+ / custo <$1B/sonda)
+        ],
+        industry: 'Sondas Von Neumann'
+    },
+    // Programmable Matter Claytronics
+    {
+        name: 'Matéria Programável Claytronics (3 Equipas)',
+        description: 'Matéria programável / Claytronics (catoms milimétricos-micrométricos auto-montagem 3D + atuação eletrostática/magnética + comunicação near-field + forma/função reconfigurável tempo real) - 3 equipas, turnos 12h, nanofabricação CMOS/MEMS/NEMS + enxame IA + aplicações médicas/espaciais/consumo',
+        teams: 3,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOO', // Team A: hardware catoms (MEMS/NEMS silício/polímero condutivo 1mm-100µm + atuação eletrostática (força >1mN) / magnética (coil PCB) / térmica (SMA) + sensores IMU/pressão/temperatura/proximidade + comunicação near-field capacitiva/indutiva/óptica 1Gbps + energia captação RF/indução/bateria micro + CPU/RAM/Flash embebido RISC-V + auto-montagem 3D algoritmo distribuído)
+            'NNNNOOOOMMMM', // Team B: software enxame IA (planeamento forma global → metas locais catom + controle distribuído consenso + tolerância falhas catoms perdidos/danificados + reconfiguração dinâmica <1s + simulação física GPU milhões catoms + linguagem programação forma/função (Meld/LDP) + verificação formal propriedades emergentes + API design generativo IA texto→forma)
+            'OOOOMMMMNNNN', // Team C: aplicações/roadmap (médico: stents auto-expansíveis / ferramentas cirúrgicas reconfiguráveis / implantes adaptativos / microcirurgia enxame + espacial: antenas/refletores deployáveis / habitats auto-montagem / blindagem adaptativa / robôs exploradores metamórficos + consumo: móveis/veículos/eletrónica auto-reconfiguráveis + roadmap: 10⁶ catoms 2030 / 10⁹ 2035 / 10¹² 2040 / matéria digital ubíqua 2050)
+        ],
+        industry: 'Matéria Programável Claytronics'
+    },
+    // Antimatter Production Storage
+    {
+        name: 'Produção Armazenamento Antimatéria (4 Equipas)',
+        description: 'Produção e armazenamento de antimatéria (antiprotões/anti-hidrogénio/anti-hélio) - acelerador dedicado + armadilha Penning/íonico/magnética + conversão energia propulsão/energia - 4 equipas, turnos 12h, física partículas alta energia + criogenia mK + vácuo extremo + segurança nuclear',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOOPPPP',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOOPPPP', // Team A: produção antiprotões/anti-H (acelerador protões 100GeV+ alvo tungsténio + separação magnética antiprotões + desaceleração anel armazenamento/AD/ELENA + armadilha Penning/Malmerg-Penning + síntese anti-hidrogénio (antiprotão + positrão) + resfriamento laser/evaporativo <1mK + produção meta 10¹⁵ p̄/ano / 10¹² H̄/ano + custo <$1M/µg)
+            'NNNNOOOOPPPPMMMM', // Team B: armazenamento/transporte (armadilha Penning supercondutora campo 5-10T + vácuo criogénico <10⁻¹⁷ mbar + tempo vida >1ano / transporte contentor blindado radiação/choque/vibração + monitoramento contínuo aniquilação/resíduos + certificação IAEA/OTAN/FAA + segurança crítica (falha contenção = energia 43kt/µg) + redundância quíntupla)
+            'OOOOPPPPMMMMNNNN', // Team C: aplicações propulsão/energia (motor antimatéria: aniquilação p̄-p → pions/muons/γ + nozzle magnético direcionamento produtos carregados + impulso específico >10⁷s / Δv >0.5c + geração energia: aniquilação direta calor/eletricidade + densidade energia 9×10¹⁶ J/kg + demonstrador CubeSat 2035 / sonda interestelar 2050 / nave tripulada 2075)
+            'PPPPMMMMNNNNOOOO', // Team D: física fundamental/roadmap (teste CPT/CP violação precisão 10⁻¹⁸ + espectroscopia anti-H 1S-2S/hiperfina + gravidade antimatéria (ALPHA-g/GBAR) + busca matéria escura/energia escura assinaturas aniquilação + roadmap: fábrica dedicada 2030 / gramas/ano 2040 / quilogramas 2060 / civilização interestelar antimatéria 2100)
+        ],
+        industry: 'Produção Armazenamento Antimatéria'
+    },
 ];

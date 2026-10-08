@@ -56,6 +56,32 @@ Log de execuções autónomas do Bot Orquestrador (modelos free: `opencode/hy3-f
 
 **Decisão registada:** Presets industriais expandidos de 166 para 174, cobrindo agora 165 setores distintos incluindo computação neuromórfica memristiva, fusão magnética avançada, mineração asteroides NEA, internet quântica global, biofabricação distribuída, geoengenharia marinha, propulsão fusão direta e habitats orbitais rotativos. Próximos passos sugeridos: expansão para computação neuromórfica em larga escala com memristores 3D, fusão magnética estelarator de alta temperatura, mineração asteroides com ISRU integrado, internet quântica com repetidores de estado sólido, biofabricação distribuída com IA generativa, geoengenharia marinha com alcalinidade eletroquímica, propulsão fusão direta para missões interestelares, habitats orbitais com gravidade artificial variável.
 
+## Round 107 — 2026-10-08
+**Objetivo:** Expandir presets industriais com +8 setores de fronteira de próxima geração (Computação Neuromórfica 3D, Fusão Magnética Estelarator HTS, Mineração Asteroides ISRU, Internet Quântica Repetidores Estado Sólido, Biofabricação Distribuída IA Generativa, Geoengenharia Marinha Alcalinidade Eletroquímica, Propulsão Fusão Direta Interestelar, Habitats Orbitais Gravidade Artificial Variável) + i18n (5 línguas).
+
+**Contexto:** A Round 106 completou a expansão para 174 presets cobrindo 165 indústrias com foco em computação neuromórfica memristiva, fusão magnética avançada, mineração asteroides NEA, internet quântica global, biofabricação distribuída, geoengenharia marinha alcalinidade, propulsão fusão direta e habitats orbitais rotativos. Conforme sugerido na decisão da Round 106, havia oportunidade de cobrir setores de computação neuromórfica em larga escala com memristores 3D empilhados (SNN/RRAM/PCM 3D edge AI), energia de fusão magnética estelarator de alta temperatura supercondutora (HTS REBCO/Q>10), mineração de asteroides com ISRU integrado (extração+processamento+fabricação in-situ), internet quântica global com repetidores de estado sólido (memórias quânticas/transdutores microondas-ópticas), biomanufatura distribuída com IA generativa (design proteínas/enzimas + bioprocessamento autónomo), geoengenharia marinha alcalinidade eletroquímica (bipolar electrodialysis/OAE + MRV), propulsão fusão direta para missões interestelares (compacta aneutrónica p-¹¹B/³He-D + impulso específico >10.000s), e habitats orbitais rotativos com gravidade artificial variável (Stanford Torus/O'Neill Cylinder + AG 0.1-1g ajustável + população 100-10.000).
+
+**O que foi feito:**
+- `src/data/presetScenarios.ts`:
+  - Adicionados 8 novos presets com `teamPatterns` individuais:
+    1. **Computação Neuromórfica 3D - Memristores Empilhados (4 Equipas)** — turnos 12h, arquitetura 3D vertical RRAM/PCM + STDP on-chip 3D + inferência edge + co-design térmico/elétrico
+    2. **Fusão Magnética Estelarator HTS (4 Equipas)** — turnos 12h, bobinas HTS REBCO otimizadas + controle plasma stellarator + manta trítio breeding + balanço energia líquido >Q=10
+    3. **Mineração Asteroides ISRU Integrado (3 Equipas)** — turnos 12h, prospecção espectral + extração robótica água/metais + processamento in-situ + fabricação aditiva + logística cis-lunar
+    4. **Internet Quântica Repetidores Estado Sólido (3 Equipas)** — turnos 12h, memórias quânticas rare-earth + transdutores microondas-ópticas + distribuição entrelaçamento + correção erro quântica
+    5. **Biofabricação Distribuída IA Generativa (4 Equipas)** — turnos 12h, design proteínas/enzimas GenAI + plataformas modulares autónomas + bioprocessamento contínuo + QC inline + logística cadeia frio descentralizada
+    6. **Geoengenharia Marinha Alcalinidade Eletroquímica (3 Equipas)** — turnos 12h, eletrodíálise bipolar + adição alcalinidade controlada + monitoramento MRV + governança internacional OAE
+    7. **Propulsão Fusão Direta Interestelar (3 Equipas)** — turnos 12h, reator compacto aneutrónico (p-¹¹B/³He-D) / magnético inercial híbrido + exaustão plasma direta + impulso específico >10.000s + escudo radiação
+    8. **Habitats Orbitais Gravidade Artificial Variável (4 Equipas)** — turnos 12h, estrutura mega-escala rotativa + controle AG 0.1-1g + ECLSS fechado + logística reabastecimento + população 100-10.000
+  - Total: 182 presets (era 174). Cobertura alargada a 8 novos setores (total 173 indústrias distintas).
+- `src/i18n/locales/{pt,en,es,fr,de}.ts`:
+  - Novas chaves `presetSelector.industries.*` para as 8 novas indústrias em 5 línguas (40 chaves novas).
+- `src/components/PresetSelector.tsx`:
+  - Atualizado `INDUSTRY_KEY_MAP` com as 8 novas indústrias.
+
+**Verificação:** `npm run build` → OK; `vitest` → **646 passam**, 0 falham; `eslint` → 0 erros (52 warnings pré-existentes); `tsc -b` → OK.
+
+**Decisão registada:** Presets industriais expandidos de 174 para 182, cobrindo agora 173 setores distintos incluindo computação neuromórfica 3D, estelarator HTS, mineração asteroides ISRU, repetidores quânticos estado sólido, biofabricação GenAI, geoengenharia eletroquímica, propulsão interestelar e habitats gravidade variável. Próximos passos sugeridos: expansão para assentamento Marte/ISRU, sensores quânticos/gravimetria, úteros artificiais/ectogénese, robótica molecular/nanobots, data centers orbitais, sondas Von Neumann auto-replicantes, matéria programável/claytronics, produção/armazenamento antimatéria.
+
 ## Round 105 — 2026-10-08
 **Objetivo:** Expandir presets industriais com +8 setores de fronteira quântica, materiais, IA, espaço, fusão, biologia e transporte (Computação Quântica Topológica, Materiais Meta-Programáveis, Síntese Autónoma IA-Driven, Habitação Espacial/ISRU Lunar, Fusão a Laser Avançada, Biologia Sintética De Novo, Computação Quântica Fotónica, Elevador Espacial/Transporte Orbital) + i18n (5 línguas).
 
