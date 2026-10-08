@@ -164,6 +164,14 @@ const INDUSTRY_KEY_MAP: Record<string, keyof Translations['presetSelector']['ind
     'Geoengenharia Marinha Alcalinidade': 'marineAlkalinityGeoengineering',
     'Propulsão Fusão Direta': 'directFusionPropulsion',
     'Habitats Orbitais Rotativos': 'rotatingOrbitalHabitats',
+    'Computação Neuromórfica 3D Memristiva': 'neuromorphic3DMemristive',
+    'Fusão Magnética Estelarator HTS': 'stellaratorHTSFusion',
+    'Mineração Asteroides ISRU Integrado': 'asteroidMiningISRU',
+    'Internet Quântica Repetidores Estado Sólido': 'quantumInternetSolidStateRepeaters',
+    'Biofabricação Distribuída IA Generativa': 'distributedBiomanufacturingGenAI',
+    'Geoengenharia Marinha Alcalinidade Eletroquímica': 'marineGeoengineeringElectrochemical',
+    'Propulsão Fusão Direta Interestelar': 'directFusionPropulsionInterstellar',
+    'Habitats Orbitais Gravidade Artificial Variável': 'rotatingOrbitalHabitatsVariableGravity',
 };
 
 interface PresetSelectorProps {

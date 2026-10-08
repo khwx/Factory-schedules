@@ -2895,4 +2895,136 @@ export const PRESET_SCENARIOS: PresetScenario[] = [
         ],
         industry: 'Habitats Orbitais Rotativos'
     },
+    // Neuromorphic 3D Memristive Computing
+    {
+        name: 'Computação Neuromórfica 3D - Memristores Empilhados (4 Equipas)',
+        description: 'Computação neuromórfica 3D com memristores empilhados verticalmente (RRAM/PCM/Oxide 3D crossbar) - 4 equipas, turnos 12h, integração monolítica 3D + STDP on-chip multi-camada + inferência edge ultra-baixa energia + co-design hardware/algoritmo neuromórfico 3D',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOOPPPP',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOOPPPP', // Team A: arquitetura 3D (neurónios LIF/ALIF empilhados + vias verticais TSV/monolíticas + plasticidade STDP 3D + sparsity estruturada multi-camada) + simulação multi-física (térmica/elétrica/mecânica) + métricas (energia/latência/precisão/densidade)
+            'NNNNOOOOPPPPMMMM', // Team B: fabricação 3D (RRAM HfO₂/TaOₓ 3D + PCM Ge₂Sb₂Te₅ empilhado + óxidos perovskita + crossbar vertical 128+ camadas + seletor 1T1R/1S1R 3D) + variabilidade <3% + retenção >10 anos + endurance >10¹² ciclos + gestão térmica inter-camada
+            'OOOOPPPPMMMMNNNN', // Team C: integração sistema 3D (CMOS 28nm/22nm/7nm base + interposers 3D ativos + roteamento vertical high-speed + refrigeração microfluidica integrada + power delivery 3D) + compilador neuromórfico 3D (mapeamento grafo → crossbar 3D + otimização energia/latência/térmica) + benchmark edge (visão eventos/robótica/IoT/médica/defesa)
+            'PPPPMMMMNNNNOOOO', // Team D: deploy edge 3D (inferência <0.5ms + consumo <5mW + aprendizagem contínua online 3D + privacidade federada + atualização OTA modelo 3D) + aplicações: visão neuromórfica eventos (DVS 3D) / robótica autónoma / IoT industrial / diagnóstico médico point-of-care / defesa / autonomia veicular L4/L5 + roadmap exaescala neuromórfica 3D
+        ],
+        industry: 'Computação Neuromórfica 3D Memristiva'
+    },
+    // Stellarator HTS Fusion
+    {
+        name: 'Fusão Magnética Estelarator HTS (4 Equipas)',
+        description: 'Fusão magnética estelarator de alta temperatura (HTS REBCO / otimização quási-isodinâmica / Q>10) - 4 equipas, turnos 12h, supercondutores HTS não-planares + controle plasma tempo real + manta trítio breeding >1.1 + balanço energia líquido >Q=10 steady-state',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOOPPPP',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOOPPPP', // Team A: ímãs HTS estelarator (bobinas não-planares REBCO 20T+ + geometria quási-isodinâmica/quási-helicamente simétrica + proteção quench distribuída + corrente persistente + alinhamento <0.1mm + forças Lorentz complexas 3D) + criogenia hélio 4K/1.8K otimizada
+            'NNNNOOOOPPPPMMMM', // Team B: aquecimento/controle plasma estelarator (ECRH gyrotrons 1-2MW + ICRH + controle feedback MHD tempo real <0.5ms + estabilidade intrínseca sem corrente + ELM-free + diagnósticos ECE/Thomson/reflectometria/bolômetros + cenários steady-state contínuo)
+            'OOOOPPPPMMMMNNNN', // Team C: manta trítio estelarator (breeding >1.1 / Li₄SiO₄/Li₂TiO₃ pebble bed + multiplicador nêutrons Be₁₂Ti / PbLi + extração permeação contra-corrente + purificação ISS criogénica + inventário <0.5kg + ciclo auto-suficiente steady-state) + materiais plasma-facing (W mono-bloco / compósitos CFC / HTS tapes expostos)
+            'PPPPMMMMNNNNOOOO', // Team D: engenharia sistema estelarator (vaso vácuo geometria complexa / criostato modular + manutenção remota hot cell multi-eixo + licenciamento nuclear simplificado steady-state + economia LCOE <$40/MWh + roadmap DEMO estelarator 2035/central comercial 2040s + supply chain HTS REBCO/ITER-grade)
+        ],
+        industry: 'Fusão Magnética Estelarator HTS'
+    },
+    // Asteroid Mining with ISRU
+    {
+        name: 'Mineração Asteroides ISRU Integrado (3 Equipas)',
+        description: 'Mineração asteroides NEA com ISRU integrado (metais/água/voláteis → propelente/estruturas in-situ) - 3 equipas, turnos 12h, prospecção espectral + extração robótica + processamento ISRU completo + logística cis-lunar reutilizável',
+        teams: 3,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOO', // Team A: prospecção/caracterização ISRU (telescópios + radar + espectroscopia VIS/NIR/MIR/Terahertz + classificação taxonômica + delta-v <5km/s + window lançamento) + mapeamento 3D composição/voláteis/estrutura + seleção alvo ISRU-otimizado
+            'NNNNOOOOMMMM', // Team B: extração/processamento ISRU integrado (anchoring microgravidade adaptativo + perfuração/abração laser/cavitação + coleta regolito + processamento térmico/químico/eletroquímico in-situ: extração água/voláteis → eletrolise H2/O2 + redução metalúrgica metais → impressão 3D estruturas/peças sobressalentes) + pureza >99.9% + autonomia robótica total
+            'OOOOMMMMNNNN', // Team C: logística cis-lunar circular (veículo retorno reutilizável + aerocaptura/aerofrenagem + reabastecimento ISRU propelente H2/O2 + carga útil 10-500t + custo <$100/kg LEO) + mercado orbital (água propelente / metais construção orbital / PGMs/REEs retorno Terra) + governança (Outer Space Treaty / Artemis Accords / Moon Agreement / partilha benefícios equitativa) + roadmap: demonstrador 2028 / operacional 2032 / escala comercial 2040
+        ],
+        industry: 'Mineração Asteroides ISRU Integrado'
+    },
+    // Quantum Internet Solid-State Repeaters
+    {
+        name: 'Internet Quântica Repetidores Estado Sólido (3 Equipas)',
+        description: 'Internet quântica global com repetidores de estado sólido (vacância diamante NV/SiV / quantum dots / rare-earth íons) - 3 equipas, turnos 12h, memórias quânticas estado sólido + purificação/swapping entrelaçamento + integração rede clássica/fibra/satélite',
+        teams: 3,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOO', // Team A: repetidores estado sólido (vacância diamante NV/SiV: tempo coerência >1s / fidelidade >99.9% / operação 4K / fotões 637nm/738nm + quantum dots InAs/GaAs: operação 4K / emissão determinística / integração fotónica SiN + rare-earth Yb/Er/Tm:YSO: coerência >1ms / telecom 1.5μm nativo + multiplexação temporal/espectral/espacial) + purificação entrelaçamento DEJMPS/recorrente + swapping determinístico
+            'NNNNOOOOMMMM', // Team B: rede híbrida fibra/satélite (fibra: perda ultra-baixa <0.1dB/km + DWDM quântico+clássico C/L-band + amplificadores quânticos fase-sensíveis) + satélites LEO/MEO: fontes entrelaçamento SPDC/SQLD + apontamento <0.1μrad + link óptico >10Gbps + estações terra adaptativas + constelação >1000 sat + repetidores espaço estado sólido) + segmentos terrestres urbanos/interurbanos
+            'OOOOMMMMNNNN', // Team C: pilha protocolo quântica (QKD: BB84/E91/MDI/CV/TF-QKD + teletransporte quântico multi-nó / clock sincronização attosegundo / sensorimetria distribuída) + camada controle (SDN quântico / roteamento entrelaçamento adaptativo / QoS fidelidade/taxa/latência) + integração PQC pós-quântica (Kyber/Dilithium/FALCON) + certificação ETSI/ISO/Common Criteria + casos uso: banca/governo/defesa/infraestrutura crítica/saúde/blockchain quântico
+        ],
+        industry: 'Internet Quântica Repetidores Estado Sólido'
+    },
+    // Distributed Biomanufacturing Generative AI
+    {
+        name: 'Biofabricação Distribuída IA Generativa (4 Equipas)',
+        description: 'Biofabricação distribuída point-of-care com IA generativa (design proteínas/terapias/otimização bioprocesso) - 4 equipas, turnos 12h, plataformas modulares autónomas + IA generativa design/otimização + bioprocessamento contínuo + QC inline IA + logística cadeia frio descentralizada',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOOPPPP',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOOPPPP', // Team A: plataformas modulares IA-native (bióreatores single-use 50-500L + perfusão/tangential flow + automação PAT/NIR/Raman + controle modelo-preditivo IA + digital twin generativo + gêmeo virtual processo IA + escalabilidade number-up/out autónomo) + design proteínas/enzimas IA generativa (diffusion/flow matching/RL)
+            'NNNNOOOOPPPPMMMM', // Team B: bioprocessamento contínuo IA-otimizado (expansão células T/NK/linfócitos + transdução viral/não-viral CRISPR/TCR/CAR design IA + formulação fill-finish asséptica IA-otimizada + liofilização IA + dose paciente personalizada IA) + tempo veia-veia <5 dias + IA closed-loop controle processo
+            'OOOOPPPPMMMMNNNN', // Team C: QC inline/real-time IA (NGS/QC genómico IA + citometria fluxo IA + potência/segurança/esterilidade teste rápido IA <1h) + blockchain rastreabilidade IA + conformidade GMP/FDA/EMA/ANVISA automatizada IA + pharmacovigilância preditiva IA
+            'PPPPMMMMNNNNOOOO', // Team D: rede distribuída IA-orquestrada (hubs regionais + spokes hospitalares + logística criogénica LN2/vapor phase IA-otimizada + monitoramento IoT temperatura/choque IA + reabastecimento just-in-time IA + economia CAPEX/OPEX vs centralizado IA) + acesso equitativo global + preparação pandemia resposta <100 dias
+        ],
+        industry: 'Biofabricação Distribuída IA Generativa'
+    },
+    // Marine Geoengineering Electrochemical Alkalinity
+    {
+        name: 'Geoengenharia Marinha Alcalinidade Eletroquímica (3 Equipas)',
+        description: 'Aumento alcalinidade oceânica eletroquímica (eletrodíálise bipolar / eletrolise água mar / membranas AEM/CEM avançadas) - 3 equipas, turnos 12h, produção H2/alcalinidade acoplada + energia renovável offshore + MRV autonomo + governança internacional',
+        teams: 3,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOO', // Team A: sistemas eletroquímicos marinhos (eletrodíálise bipolar avançada / eletrolise água mar PEM/AEM + produção simultânea H₂ verde + alcalinidade + membranas AEM/CEM condutividade >100mS/cm + seletividade >99% + energia renovável offshore eólica flutuante/solar + custos <$50/tCO₂ + LCA emissões líquidas negativas) + acoplamento DAC/OAE híbrido
+            'NNNNOOOOMMMM', // Team B: implantação/operação offshore (plataformas modulares autónomas + dispersão alcalinidade controlada pH/TA/DIC + dosagem adaptativa 1-50 Gt/ano + cinética dissolução monitorada tempo real + ciclo vida: fabricação membranas/energia/transporte + integração parques eólicos offshore existentes + simbiose industrial)
+            'OOOOMMMMNNNN', // Team C: MRV/ecologia/governança avançada (monitoramento autonomo: gliders/boias/satélites/drones subaquáticos + sensores pH/pCO₂/alcalinidade/nutrientes/O₂/isótopos + modelo biogeoquímico acoplado IA + impactos ecossistema: fitoplâncton/coral/acidificação/biodiversidade) + governança (LC/LP/UNFCCC/CDR-CoP/UNCLOS + consentimento livre prévio informado + equidade Norte/Sul + créditos carbono CDR verificados + seguro responsabilidade ambiental)
+        ],
+        industry: 'Geoengenharia Marinha Alcalinidade Eletroquímica'
+    },
+    // Direct Fusion Propulsion Interstellar
+    {
+        name: 'Propulsão Fusão Direta Interestelar (3 Equipas)',
+        description: 'Propulsão fusão direta para missões interestelares (DFD/PRF/MTF aneutrónico p-¹¹B/³He-D + exaustão plasma direta + impulso específico >100.000s) - 3 equipas, turnos 12h, reator compacto + conversão energia direta + arquitetura nave interestelar',
+        teams: 3,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOO', // Team A: núcleo fusão compacto interestelar (FRC/espelho magnético/estelarator miniaturizado HTS REBCO 30T+ + β alto >50% + ignição/auto-sustentação + razão potência/massa >10kW/kg) + combustível aneutrónico (p-¹¹B/³He-D + captação energia direta partículas carregadas α/p + blindagem radiação mínima) + materiais plasma-facing ultra-refratários (W nano-estruturado / compósitos CFC/SiC)
+            'NNNNOOOOMMMM', // Team B: conversão energia direta interestelar (expansão magnética/nozzle magnético supercondutor + separação carga partículas α/p + conversão eletrostática/indutiva eficiência >90% + potência elétrica bordo >1MW) + gestão térmica extrema (radiadores carbon-carbon / heat pipes metal líquido / PCM alta temperatura) + blindagem radiação tripulação/eletrónica interestelar (GCR/SEP)
+            'OOOOMMMMNNNN', // Team C: missão interestelar (Próxima Centauri b / Alpha Centauri / Barnard Star: viagem 20-50 anos @ 0.1-0.2c) + arquitetura nave (habitat rotativo gravidade artificial 1g + ISRU reabastecimento interestelar + autonomia IA geral + comunicações laser/quântica interestelar + hibernação tripulação / criopreservação) + roadmap: demonstrador sistema solar 2035 / precursor interestelar 2050 / missão tripulada 2075 + custo <$10B/missão
+        ],
+        industry: 'Propulsão Fusão Direta Interestelar'
+    },
+    // Rotating Orbital Habitats Variable Gravity
+    {
+        name: 'Habitats Orbitais Gravidade Artificial Variável (4 Equipas)',
+        description: 'Habitats orbitais rotativos com gravidade artificial variável (0.1-1g ajustável / múltiplos raios / população 1.000-100.000) - 4 equipas, turnos 12h, estrutura mega-escala expansível + controle atitude/estabilidade variável + ECLSS fechado regenerativo + logística reabastecimento autónoma + sociedade/economia orbital',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOOPPPP',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOOPPPP', // Team A: estrutura expansível gravidade variável (materiais compósitos CFRP/alumínio-lítio/grafeno/CNT + múltiplos anéis concêntricos raio 50-1000m + rotação independente 0.5-5 RPM + gravidade 0.1-1g por anel + tensão centrífuga distribuída + modos vibração/precessão/nutation controle ativo multi-corpo + montagem orbital robótica enxame + lançamento Starship/SLS/novos veículos)
+            'NNNNOOOOPPPPMMMM', // Team B: ECLSS/suporte vida regenerativo escala cidade (ciclo fechado ar/água/resíduos >99.9% + agricultura hidropónica/aeropónica/vertical multi-nível + bioregenerativo algas/cianobactérias/plantas geneticamente modificadas + redundância 10x + certificação NASA STD-3001/ESA) + saúde multi-g (contrabalanço gravidade variável + exercício/farmacologia/genética personalizada + monitoramento contínuo IA + medicina preventiva preditiva)
+            'OOOOPPPPMMMMNNNN', // Team C: operações/segurança/resiliência mega-habitat (controle atitude CMG/reaction wheels/distribuído + propulsão elétrica station-keeping/manobra + evasão detritos/conjunção IA + blindagem radiação multi-camada (polietileno/água/regolito/materiais meta) + abrigo tempestade solar distribuído + supressão incêndio gravidade variável + evacuação emergência modular + resiliência sistema crítico IA)
+            'PPPPMMMMNNNNOOOO', // Team D: sociedade/economia/ciência interestelar (governança autónoma multi-nível / lei espacial evoluída / propriedade / comércio interestelar / moeda orbital) + ciência (microgravidade variável controlada / astrobiologia / materiais / telescópios interferométricos base-line 100km+) + turismo / indústria orbital / hub logístico cis-lunar/Marte/interestelar + roadmap: demonstrador 2030 / colónia 2040 / cidade 2050 / mega-habitat interestelar 2075
+        ],
+        industry: 'Habitats Orbitais Gravidade Artificial Variável'
+    },
 ];
