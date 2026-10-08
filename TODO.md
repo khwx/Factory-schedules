@@ -135,3 +135,6 @@ Corrigir avisos de `react-hooks/exhaustive-deps` em componentes principais (pote
 
 ## 27. Presets industriais — infraestrutura crítica, reciclagem, semicondutores potência, H2 liquefeito, sísmica, isótopos, cabos submarinos, água atmosférica (Round 102)
 - [x] **+8 novos presets infraestrutura crítica:** Integridade Dutos/Proteção Catódica, Reciclagem Baterias/Black Mass, Semicondutores Potência SiC/GaN, Hidrogénio Verde Liquefação/Transporte, Monitoramento Sísmico/Alerta Precoce, Produção Isótopos Médicos, Cabos Submarinos Fibra Óptica, Geração Atmosférica de Água — total 142 presets, 134 indústrias cobertas (concluído Round 102).
+
+## 28. Presets industriais — mineração mar profunda, propulsão nuclear espacial, computação criogénica, materiais quânticos topológicos, fusão anêutica, biofabricação 4D, computação neuromórfica, energia solar espacial, defesa planetária (Round 103)
+- [x] **+8 novos presets fronteira next-gen:** Mineração Mar Profunda, Propulsão Nuclear Espacial, Computação Criogénica, Materiais Quânticos Topológicos, Fusão Anêutica, Biofabricação Órgãos 4D, Computação Neuromórfica, Energia Solar Espacial Demonstrador, Missão Defesa Planetária — total 150 presets, 142 indústrias cobertas (concluído Round 103).
