@@ -156,6 +156,14 @@ const INDUSTRY_KEY_MAP: Record<string, keyof Translations['presetSelector']['ind
     'Biologia Sintética De Novo': 'syntheticBiologyDeNovo',
     'Computação Quântica Fotónica': 'photonicQuantumComputing',
     'Elevador Espacial / Transporte Orbital': 'spaceElevator',
+    'Computação Neuromórfica Memristiva': 'neuromorphicMemristive',
+    'Fusão Magnética Avançada': 'advancedMagneticFusion',
+    'Mineração Asteroides Próxima Terra': 'nearEarthAsteroidMining',
+    'Internet Quântica Global': 'globalQuantumInternet',
+    'Biofabricação Distribuída': 'distributedBiomanufacturing',
+    'Geoengenharia Marinha Alcalinidade': 'marineAlkalinityGeoengineering',
+    'Propulsão Fusão Direta': 'directFusionPropulsion',
+    'Habitats Orbitais Rotativos': 'rotatingOrbitalHabitats',
 };
 
 interface PresetSelectorProps {
