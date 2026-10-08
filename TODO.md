@@ -144,3 +144,6 @@ Corrigir avisos de `react-hooks/exhaustive-deps` em componentes principais (pote
 
 ## 30. Presets industriais — computação quântica topológica, metamateriais programáveis, síntese autónoma IA, habitat lunar ISRU, fusão laser avançada, biologia sintética de novo, computação quântica fotónica, elevador espacial (Round 105)
 - [x] **+8 novos presets fronteira:** Computação Quântica Topológica, Materiais Meta-Programáveis, Síntese Autónoma IA-Driven, Habitação Espacial/ISRU Lunar, Fusão a Laser Avançada, Biologia Sintética De Novo, Computação Quântica Fotónica, Elevador Espacial/Transporte Orbital — total 166 presets, 157 indústrias cobertas (concluído Round 105).
+
+## 31. Presets industriais — computação neuromórfica memristiva, fusão magnética avançada, mineração asteroides NEA, internet quântica global, biofabricação distribuída, geoengenharia marinha, propulsão fusão direta, habitats orbitais rotativos (Round 106)
+- [x] **+8 novos presets next-gen:** Computação Neuromórfica Memristiva, Fusão Magnética Avançada, Mineração Asteroides Próxima Terra, Internet Quântica Global, Biofabricação Distribuída, Geoengenharia Marinha Alcalinidade, Propulsão Fusão Direta, Habitats Orbitais Rotativos — total 174 presets, 165 indústrias cobertas (concluído Round 106).

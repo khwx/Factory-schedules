@@ -30,6 +30,32 @@ Log de execuções autónomas do Bot Orquestrador (modelos free: `opencode/hy3-f
 
 **Decisão registada:** Presets industriais expandidos de 150 para 158, cobrindo agora 149 setores distintos incluindo nanotecnologia molecular/APM, BCI clínica, hidrogénio branco, reciclagem química avançada, baterias estado sólido, AM metálica qualificada, QKD/satélite e reatores rápidos. Próximos passos sugeridos: expansão para computação quântica topológica tolerante a falhas, materiais meta-programáveis, síntese autónoma IA-driven, habitação espacial/ISRU lunar, fusão a laser avançada, biologia sintética de novo design, computação fotónica, elevador espacial.
 
+## Round 106 — 2026-10-08
+**Objetivo:** Expandir presets industriais com +8 setores de fronteira de próxima geração (Computação Neuromórfica Memristiva, Fusão Magnética Avançada, Mineração Asteroides Próxima Terra, Internet Quântica Global, Biofabricação Distribuída, Geoengenharia Marinha Alcalinidade, Propulsão Fusão Direta, Habitats Orbitais Rotativos Gravidade Artificial) + i18n (5 línguas).
+
+**Contexto:** A Round 105 completou a expansão para 166 presets cobrindo 157 indústrias com foco em computação quântica topológica, metamateriais programáveis, síntese autónoma IA-driven, habitat lunar ISRU, fusão laser avançada, biologia sintética de novo, computação quântica fotónica e elevador espacial. Conforme sugerido na decisão da Round 105, havia oportunidade de cobrir setores de computação neuromórfica memristiva em larga escala (SNN/RRAM/PCM edge AI), energia de fusão magnética estelarator/tokamak avançado (HTS REBCO/Q>10), mineração de asteroides próxima Terra (NEA metais/água/voláteis), internet quântica global (repetidores quânticos/satélites/fibra), biomanufatura distribuída (CGT/vacinas point-of-care), geoengenharia marinha alcalinidade (OAE/eletroquímica/MRV), propulsão fusão direta (compacta aneutrónica/impulso específico >10.000s), e habitats orbitais rotativos gravidade artificial (Stanford Torus/O'Neill Cylinder/população 100-10.000).
+
+**O que foi feito:**
+- `src/data/presetScenarios.ts`:
+  - Adicionados 8 novos presets com `teamPatterns` individuais:
+    1. **Computação Neuromórfica Memristiva - Larga Escala (4 Equipas)** — turnos 12h, arquitetura spiking + STDP on-chip + inferência edge + treinamento in-situ + co-design hardware/algoritmo
+    2. **Fusão Magnética Avançada - Stellarator/Tokamak (4 Equipas)** — turnos 12h, supercondutores HTS REBCO + controle plasma tempo real + manta trítio + balanço energia líquido >Q=10
+    3. **Mineração Asteroides Próxima Terra (3 Equipas)** — turnos 12h, prospecção espectral + extração robótica + processamento in-situ + retorno carga útil / logística cis-lunar
+    4. **Internet Quântica Global (3 Equipas)** — turnos 12h, distribuição entrelaçamento intercontinental + protocolos QKD/teletransporte + integração rede clássica
+    5. **Biofabricação Distribuída (4 Equipas)** — turnos 12h, plataformas modulares autónomas + bioprocessamento contínuo + QC inline + logística cadeia frio descentralizada
+    6. **Geoengenharia Marinha - Alcalinidade Oceânica (3 Equipas)** — turnos 12h, adição minerais alcalinos / eletrodíálise bipolar / monitoramento MRV + governança internacional
+    7. **Propulsão Fusão Direta - Motor Espacial (3 Equipas)** — turnos 12h, reator compacto aneutrónico (p-¹¹B/³He-D) / magnético inercial híbrido + exaustão plasma direta + impulso específico >10.000s
+    8. **Habitats Orbitais Rotativos - Gravidade Artificial (4 Equipas)** — turnos 12h, estrutura mega-escala + controle atitude/estabilidade + ECLSS fechado + logística reabastecimento + população 100-10.000
+  - Total: 174 presets (era 166). Cobertura alargada a 8 novos setores (total 165 indústrias distintas).
+- `src/i18n/locales/{pt,en,es,fr,de}.ts`:
+  - Novas chaves `presetSelector.industries.*` para as 8 novas indústrias em 5 línguas (40 chaves novas).
+- `src/components/PresetSelector.tsx`:
+  - Atualizado `INDUSTRY_KEY_MAP` com as 8 novas indústrias.
+
+**Verificação:** `npm run build` → OK; `vitest` → **646 passam**, 0 falham; `eslint` → 0 erros (52 warnings pré-existentes); `tsc -b` → OK.
+
+**Decisão registada:** Presets industriais expandidos de 166 para 174, cobrindo agora 165 setores distintos incluindo computação neuromórfica memristiva, fusão magnética avançada, mineração asteroides NEA, internet quântica global, biofabricação distribuída, geoengenharia marinha, propulsão fusão direta e habitats orbitais rotativos. Próximos passos sugeridos: expansão para computação neuromórfica em larga escala com memristores 3D, fusão magnética estelarator de alta temperatura, mineração asteroides com ISRU integrado, internet quântica com repetidores de estado sólido, biofabricação distribuída com IA generativa, geoengenharia marinha com alcalinidade eletroquímica, propulsão fusão direta para missões interestelares, habitats orbitais com gravidade artificial variável.
+
 ## Round 105 — 2026-10-08
 **Objetivo:** Expandir presets industriais com +8 setores de fronteira quântica, materiais, IA, espaço, fusão, biologia e transporte (Computação Quântica Topológica, Materiais Meta-Programáveis, Síntese Autónoma IA-Driven, Habitação Espacial/ISRU Lunar, Fusão a Laser Avançada, Biologia Sintética De Novo, Computação Quântica Fotónica, Elevador Espacial/Transporte Orbital) + i18n (5 línguas).
 
