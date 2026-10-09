@@ -951,6 +951,9 @@ holidayCalendar: {
     line: 'Linien',
     area: 'Flaeche',
     monthsShort: ['Jan', 'Feb', 'Mar', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'],
+    legendGreenNumbers: 'Gruene Zahlen',
+    legendFullWeekends: 'Vollstaendige Wochenenden',
+    legendSatSun: 'Gesamt Samstage und Sonntage frei',
   },
   multiTeamCalendar: {
     title: 'Multi-Team-Ansicht',

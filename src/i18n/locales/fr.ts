@@ -951,6 +951,9 @@ holidayCalendar: {
     line: 'Lignes',
     area: 'Aire',
     monthsShort: ['Jan', 'Fev', 'Mar', 'Avr', 'Mai', 'Jun', 'Jul', 'Aou', 'Sep', 'Oct', 'Nov', 'Dec'],
+    legendGreenNumbers: 'Chiffres verts',
+    legendFullWeekends: 'Week-ends complets',
+    legendSatSun: 'Total samedis et dimanches libres',
   },
   multiTeamCalendar: {
     title: 'Vue Multi-Équipe',

@@ -2,6 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import MultiYearAnalysis from '../MultiYearAnalysis';
 import { YearlyAnalysis } from '../../types';
+import { I18nProvider } from '../../i18n';
 
 const multiYearData: YearlyAnalysis[] = [
     {
@@ -30,39 +31,41 @@ const multiYearData: YearlyAnalysis[] = [
     },
 ];
 
+const renderWithI18n = (component: React.ReactNode) => render(<I18nProvider>{component}</I18nProvider>);
+
 describe('MultiYearAnalysis', () => {
     it('should render header with scenario name', () => {
-        render(<MultiYearAnalysis multiYearData={multiYearData} scenarioName="Test Scenario" />);
-        expect(screen.getByText(/Análise de Fins de Semana \(5 Anos\)/)).toBeInTheDocument();
+        renderWithI18n(<MultiYearAnalysis multiYearData={multiYearData} scenarioName="Test Scenario" />);
+        expect(screen.getByText(/Comparacao de Fins de Semana e Horas/)).toBeInTheDocument();
         expect(screen.getByText(/Test Scenario/)).toBeInTheDocument();
     });
 
     it('should render year rows', () => {
-        render(<MultiYearAnalysis multiYearData={multiYearData} scenarioName="Test" />);
+        renderWithI18n(<MultiYearAnalysis multiYearData={multiYearData} scenarioName="Test" />);
         expect(screen.getByText('2026')).toBeInTheDocument();
         expect(screen.getByText('2027')).toBeInTheDocument();
     });
 
     it('should show totals', () => {
-        render(<MultiYearAnalysis multiYearData={multiYearData} scenarioName="Test" />);
+        renderWithI18n(<MultiYearAnalysis multiYearData={multiYearData} scenarioName="Test" />);
         expect(screen.getAllByText('40').length).toBeGreaterThan(0);
         expect(screen.getByText('200')).toBeInTheDocument();
         expect(screen.getByText('190')).toBeInTheDocument();
     });
 
     it('should render month columns', () => {
-        render(<MultiYearAnalysis multiYearData={multiYearData} scenarioName="Test" />);
+        renderWithI18n(<MultiYearAnalysis multiYearData={multiYearData} scenarioName="Test" />);
         expect(screen.getAllByText('Jan').length).toBeGreaterThan(0);
         expect(screen.getAllByText('Fev').length).toBeGreaterThan(0);
     });
 
     it('should render legend', () => {
-        render(<MultiYearAnalysis multiYearData={multiYearData} scenarioName="Test" />);
-        expect(screen.getByText(/Números verdes/)).toBeInTheDocument();
+        renderWithI18n(<MultiYearAnalysis multiYearData={multiYearData} scenarioName="Test" />);
+        expect(screen.getByText(/Numeros verdes/)).toBeInTheDocument();
     });
 
     it('should return null for empty data', () => {
-        const { container } = render(<MultiYearAnalysis multiYearData={[]} scenarioName="Test" />);
+        const { container } = renderWithI18n(<MultiYearAnalysis multiYearData={[]} scenarioName="Test" />);
         expect(container.firstChild).toBeNull();
     });
 });

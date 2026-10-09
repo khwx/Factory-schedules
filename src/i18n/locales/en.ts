@@ -951,6 +951,9 @@ export const en: Translations = {
     line: 'Line',
     area: 'Area',
     monthsShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+    legendGreenNumbers: 'Green numbers',
+    legendFullWeekends: 'Full weekends',
+    legendSatSun: 'Total Saturdays and Sundays off',
   },
   multiTeamCalendar: {
     title: 'Multi-Team View',

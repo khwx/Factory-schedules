@@ -1,6 +1,7 @@
 import React from 'react';
 import { YearlyAnalysis } from '../types';
 import { Calendar } from 'lucide-react';
+import { useI18n } from '../i18n';
 
 interface MultiYearAnalysisProps {
     multiYearData: YearlyAnalysis[];
@@ -8,6 +9,7 @@ interface MultiYearAnalysisProps {
 }
 
 const MultiYearAnalysis: React.FC<MultiYearAnalysisProps> = ({ multiYearData, scenarioName }) => {
+    const { t } = useI18n();
     if (!multiYearData || multiYearData.length === 0) return null;
 
     return (
@@ -15,7 +17,7 @@ const MultiYearAnalysis: React.FC<MultiYearAnalysisProps> = ({ multiYearData, sc
             <div className="p-4 border-b border-gray-700 flex items-center gap-2">
                 <Calendar className="w-5 h-5 text-blue-400" />
                 <h3 className="text-lg font-semibold text-white">
-                    Análise de Fins de Semana (5 Anos): {scenarioName}
+                    {t.comparisonCharts.weekendsAndHours}: {scenarioName}
                 </h3>
             </div>
 
@@ -30,7 +32,7 @@ const MultiYearAnalysis: React.FC<MultiYearAnalysisProps> = ({ multiYearData, sc
                             <th className="p-3 text-center text-gray-400 font-medium border-b border-gray-700">Total de Dias de Folga</th>
                             {multiYearData[0]?.monthlyBreakdown.map(m => (
                                 <th key={m.month} className="p-2 text-center text-gray-400 font-medium border-b border-gray-700 border-l border-gray-700">
-                                    {m.monthName}
+                                    {t.comparisonCharts.monthsShort[m.month - 1]}
                                 </th>
                             ))}
                         </tr>
@@ -61,8 +63,8 @@ const MultiYearAnalysis: React.FC<MultiYearAnalysisProps> = ({ multiYearData, sc
             </div>
 
             <div className="p-3 bg-gray-900/30 text-xs text-gray-400 border-t border-gray-700">
-                <span className="text-green-400">Números verdes</span>: Fins de semana completos •
-                <span className="text-gray-500 ml-2">S/D</span>: Total de Sábados e Domingos livres
+                <span className="text-green-400">{t.comparisonCharts.legendGreenNumbers}</span>: {t.comparisonCharts.legendFullWeekends} •
+                <span className="text-gray-500 ml-2">S/D</span>: {t.comparisonCharts.legendSatSun}
             </div>
         </div>
     );

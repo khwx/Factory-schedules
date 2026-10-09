@@ -949,6 +949,9 @@ export const pt = {
     line: 'Linhas',
     area: 'Area',
     monthsShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+    legendGreenNumbers: 'Numeros verdes',
+    legendFullWeekends: 'Fins de semana completos',
+    legendSatSun: 'Total de Sabados e Domingos livres',
   },
   multiTeamCalendar: {
     title: 'Vista Multi-Equipa',
