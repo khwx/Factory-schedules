@@ -153,3 +153,6 @@ Corrigir avisos de `react-hooks/exhaustive-deps` em componentes principais (pote
 
 ## 33. Presets industriais — assentamento Marte, sensores quânticos, úteros artificiais, nanobots, data centers orbitais, sondas Von Neumann, matéria programável, antimatéria (Round 108)
 - [x] **+8 novos presets fronteira:** Assentamento Marte/ISRU, Sensores Quânticos Gravimetria, Úteros Artificiais Ectogénese, Robótica Molecular Nanobots, Data Centers Orbitais, Sondas Von Neumann Auto-replicantes, Matéria Programável Claytronics, Produção/Armazenamento Antimatéria — total 190 presets, 181 indústrias cobertas (concluído Round 108).
+
+## 34. Presets industriais — computação quântica topológica FT, materiais meta-programáveis, síntese autónoma IA L2, habitats permanentes além Marte, fusão anêutica comercial, biofabricação órgãos vascularizados, internet quântica global operacional, elevador espacial mega-estrutura (Round 109)
+- [x] **+8 novos presets fronteira:** Computação Quântica Topológica FT Avançada, Materiais Meta-Programáveis Tempo Real, Síntese Autónoma IA-Driven Nível 2, Habitats Espaciais Permanentes Além Marte, Fusão Anêutica Comercial, Biofabricação Órgãos Vascularizados Complexos, Internet Quântica Global Operacional, Elevador Espacial Mega-Estrutura Orbital — total 198 presets, 189 indústrias cobertas (concluído Round 109).

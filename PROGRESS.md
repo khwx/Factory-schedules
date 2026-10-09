@@ -28,6 +28,32 @@ Log de execuções autónomas do Bot Orquestrador (modelos free: `opencode/hy3-f
 
 **Decisão registada:** Presets industriais expandidos de 182 para 190, cobrindo agora 181 setores distintos incluindo assentamento Marte ISRU, sensores quânticos gravimetria, úteros artificiais ectogénese, robótica molecular nanobots, data centers orbitais, sondas Von Neumann, matéria programável claytronics e produção/armazenamento antimatéria. Próximos passos sugeridos: expansão para computação quântica topológica tolerante a falhas avançada, materiais meta-programáveis reconfiguráveis em tempo real, síntese autónoma IA-driven de novo nível, habitats espaciais permanentes além de Marte, fusão anêutica comercial, biofabricação órgãos complexos vascularizados, internet quântica global operacional, elevador espacial/transporte orbital mega-estrutura.
 
+## Round 109 — 2026-10-09
+**Objetivo:** Expandir presets industriais com +8 setores de fronteira de próxima geração (Computação Quântica Topológica FT Avançada, Materiais Meta-Programáveis Tempo Real, Síntese Autónoma IA-Driven Nível 2, Habitats Espaciais Permanentes Além Marte, Fusão Anêutica Comercial, Biofabricação Órgãos Vascularizados Complexos, Internet Quântica Global Operacional, Elevador Espacial Mega-Estrutura Orbital) + i18n (5 línguas).
+
+**Contexto:** A Round 108 completou a expansão para 190 presets cobrindo 181 indústrias com foco em assentamento Marte ISRU, sensores quânticos gravimetria, úteros artificiais ectogénese, robótica molecular nanobots, data centers orbitais, sondas Von Neumann auto-replicantes, matéria programável claytronics e produção/armazenamento antimatéria. Conforme sugerido na decisão da Round 108, havia oportunidade de cobrir setores de computação quântica topológica tolerante a falhas avançada (braiding não-abeliano + códigos superfície + decodificação tempo real), materiais meta-programáveis reconfiguráveis em tempo real (design inverso + nano-fabricação + controle ativo), síntese autónoma IA-driven nível 2 (planeamento IA Bayes/RL/LLM + robótica síntese + loop fechado caracterização), habitats espaciais permanentes além de Marte (estrutura mega-escala + ECLSS avançado + logística interestelar + população 1000+), fusão anêutica comercial (p-¹¹B/³He-D + captação energia direta + engenharia materiais plasma-facing), biofabricação órgãos vascularizados complexos (bioprinting multi-material + vascularização sacrificial + maturação biorreator + QC funcional), internet quântica global operacional (repetidores quânticos satélite/fibra + memórias quânticas + protocolos QKD/teletransporte + integração rede clássica), e elevador espacial mega-estrutura orbital (cabo CNT/grafeno + climbers laser beaming + âncora oceânica + logística LEO/GEO/Lunar).
+
+**O que foi feito:**
+- `src/data/presetScenarios.ts`:
+  - Adicionados 8 novos presets com `teamPatterns` individuais:
+    1. **Computação Quântica Topológica FT Avançada (3 Equipas)** — turnos 12h, braiding não-abeliano + códigos superfície + decodificação tempo real + arquitetura tolerante falhas intrínseca
+    2. **Materiais Meta-Programáveis Tempo Real (3 Equipas)** — turnos 12h, design inverso + nano-fabricação e-beam/FIB + caracterização multi-física + controle ativo
+    3. **Síntese Autónoma IA-Driven Nível 2 (4 Equipas)** — turnos 12h, planeamento IA (Bayes/RL/LLM) + robótica síntese/ensaios + loop fechado caracterização + base conhecimento
+    4. **Habitats Espaciais Permanentes Além Marte (4 Equipas)** — turnos 12h, estrutura mega-escala + ECLSS avançado + logística interestelar + população 1000+
+    5. **Fusão Anêutica Comercial (4 Equipas)** — turnos 12h, reator compacto aneutrónico (p-¹¹B/³He-D) + captação energia direta + materiais plasma-facing HTS
+    6. **Biofabricação Órgãos Vascularizados Complexos (4 Equipas)** — turnos 12h, bioprinting multi-material + vascularização sacrificial + maturação biorreator perfusão + QC funcional histologia/fisiologia
+    7. **Internet Quântica Global Operacional (3 Equipas)** — turnos 12h, repetidores quânticos satélite/fibra + memórias quânticas + protocolos QKD/teletransporte + integração rede clássica
+    8. **Elevador Espacial Mega-Estrutura Orbital (3 Equipas)** — turnos 12h, cabo mega-estrutura CNT/grafeno + climbers laser beaming + âncora oceânica equatorial + logística LEO/GEO/Lunar
+  - Total: 198 presets (era 190). Cobertura alargada a 8 novos setores (total 189 indústrias distintas).
+- `src/i18n/locales/{pt,en,es,fr,de}.ts`:
+  - Novas chaves `presetSelector.industries.*` para as 8 novas indústrias em 5 línguas (40 chaves novas).
+- `src/components/PresetSelector.tsx`:
+  - Atualizado `INDUSTRY_KEY_MAP` com as 8 novas indústrias.
+
+**Verificação:** `npm run build` → OK; `vitest` → **646 passam**, 0 falham; `eslint` → 0 erros (52 warnings pré-existentes); `tsc -b` → OK.
+
+**Decisão registada:** Presets industriais expandidos de 190 para 198, cobrindo agora 189 setores distintos incluindo computação quântica topológica FT, materiais meta-programáveis, síntese autónoma IA L2, habitats permanentes além Marte, fusão anêutica comercial, biofabricação órgãos vascularizados, internet quântica global operacional e elevador espacial mega-estrutura. Próximos passos sugeridos: expansão para fabricação molecular atómica de precisão, computação quântica fotónica tolerante a falhas, energia de fusão comercial operacional, mineração de asteróides da cintura principal, habitats O'Neill cilindro rotativos, biologia sintética organismos mínimos, propulsão antimatiéria interestelar, terraformação marciana fase 1.
+
 ## Round 104 — 2026-10-08
 **Objetivo:** Expandir presets industriais com +8 nichos de próxima geração (Nanotecnologia Molecular/APM, Interface Cérebro-Computador Clínica, Hidrogénio Branco/Geológico, Reciclagem Química/Depolimerização, Baterias Estado Sólido, Manufatura Aditiva Metais Qualificada, Comunicações Quânticas QKD/Satélite, Reatores Rápidos/Transmutação Resíduos) + i18n (5 línguas) + fix timeout testes.
 
