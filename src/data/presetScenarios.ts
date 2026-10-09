@@ -3291,4 +3291,135 @@ export const PRESET_SCENARIOS: PresetScenario[] = [
         ],
         industry: 'Elevador Espacial Mega-Estrutura Orbital'
     },
+    // Atomic Precision Molecular Manufacturing (APM)
+    {
+        name: 'Fabricação Molecular Atómica Precisão - APM (3 Equipas)',
+        description: 'Fabricação atomicamente precisa - 3 equipas, turnos 12h, montagem átomo-a-átomo (STM/AFM) + síntese mecanossintética + verificação estrutural (TEM/EDS) + controle contaminação classe 1 + design CAD IA + simulador dinâmica molecular',
+        teams: 3,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOO', // Team A: síntese mecanossintética (posicionamento átomo-único <0.1nm precisão + feedstock hidrocarbonetos/grafeno + verificação TEM/EDS tempo real + controle contaminação ISO Classe 1)
+            'NNNNOOOOMMMM', // Team B: design/verificação IA (CAD molecular genético + simulação dinâmica/quântica (DFT/MD) + verificação formal propriedades (mecânicas/eletrónicas/térmicas) + otimização multi-objetivo + biblioteca blocos padrão)
+            'OOOOMMMMNNNN', // Team C: integração/sistemas/escala (arquitetura hierárquica nano-micro-macro + fábrica paralela milhão braços robóticos + logística feedstock/produto + QC estatístico + roadmap: componentes 2028 / sistemas 2032 / fábrica macro 2038)
+        ],
+        industry: 'Fabricação Molecular Atómica Precisão (APM)'
+    },
+    // Fault-Tolerant Photonic Quantum Computing
+    {
+        name: 'Computação Quântica Fotónica Tolerante a Falhas (3 Equipas)',
+        description: 'Computação quântica fotónica FT - 3 equipas, turnos 12h, estados cluster/medição-baseada + códigos superfície bosónicos (GKP) + detetores SNSPD >98% + fontes fotões indistinguíveis + correção erro fotónica tempo real + arquitectura modular escalável',
+        teams: 3,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOO', // Team A: hardware fotónico produção (fontes SPDC/QD/SiV fotões únicos/entrelaçados indistinguibilidade >99% + circuitos integrados SiN/LiNbO₃/Si perda <0.1dB/cm + detetores SNSPD eficiência >98% jitter <10ps + criogenia 4K/1K + packaging híbrido)
+            'NNNNOOOOMMMM', // Team B: arquitetura FT/software (códigos superfície bosónicos GKP + estados cluster 3D topológicos + decodificação MWPM/UF tempo real <1µs + compilador medição-baseada MBQC + simulação clássica tensor network + benchmarking QEC)
+            'OOOOMMMMNNNN', // Team C: operação/escalabilidade/comercial (operação 24/7 SLA 99.9% + calibração autónoma IA + multiplexação temporal/espectral/espacial >1000 modos + interconexão módulos chip-chip/board-board/fibra + roadmap: 100 qubits lógicos 2028 / 1000 2032 / utilidade comercial 2035)
+        ],
+        industry: 'Computação Quântica Fotónica Tolerante a Falhas'
+    },
+    // Operational Commercial Fusion Energy
+    {
+        name: 'Energia de Fusão Comercial Operacional (4 Equipas)',
+        description: 'Fusão comercial operacional (tokamak/stellarator HTS REBCO Q>10 + manta trítio autossustentável + balanço energia líquido + ciclo combustível fechado + licenciamento regulatório + economia LCOE <$50/MWh) - 4 equipas, turnos 12h, operação contínua 24/7/365 + segurança nuclear + supply chain HTS',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 42,
+        pattern: 'DDNNOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'DDNNOO', // Team A: operação plasma/controle (controle forma/posição/instabilidades tempo real <1ms + H-mode/pedestal/ELM mitigação + RMP/ECCD/ICRF atuadores + diagnóstico bolometria/refletometria/interferometria + evitação disrupção IA)
+            'OODDNN', // Team B: engenharia reator/manta (manta trítio breeding ratio >1.1 (LiPb/FLiBe/cerâmica) + extração trítio permeação/percolação + materiais plasma-facing W/HTS + escudo nêutrões + manutenção remota hot cell)
+            'NNOODD', // Team C: sistemas energia/balance-of-plant (conversão energia direta/indireta (Brayton/sCO₂/termoelétrica) + captação calor manta + geração elétrica + refrigeração + distribuição + integração rede)
+            'DDOONN', // Team D: licenciamento/segurança/cadeia suprimentos (licenciamento NRC/IAEA/EURATOM + análise segurança probabilística (PSA) + supply chain HTS REBCO km/ano + trítio contabilidade/segurança + economia LCOE <$50/MWh + roadmap: demonstrador 2025 / protótipo 2030 / comercial 2035)
+        ],
+        industry: 'Energia de Fusão Comercial Operacional'
+    },
+    // Main Belt Asteroid Mining
+    {
+        name: 'Mineração Asteróides Cinturão Principal (3 Equipas)',
+        description: 'Mineração cinturão asteróides principal - 3 equipas, turnos 12h, prospecção espectral + extração robótica ISRU (água/metais/voláteis) + processamento in-situ + fabricação aditiva + logística cis-lunar/interestelar + economia recursos >$1T',
+        teams: 3,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOO', // Team A: prospecção/extração (espectroscopia IR/visível/gamma + radar penetração + aterragem autonómia + extração robótica (perfuração/escavação/aquecimento solar) + processamento regolito (eletrolise/termólise/redução carbónica) + separação metais (Fe/Ni/Co/Pt/Au/REE))
+            'NNNNOOOOMMMM', // Team B: processamento/fabricação (refinação metalúrgica vácuo/zero-g + fabricação aditiva (LPBF/DED/fio-arc) peças/estruturas + reciclagem loop fechado + controlo qualidade in-situ (TC/raios-X/EDS) + certificação materiais espaço)
+            'OOOOMMMMNNNN', // Team C: logística/economia/mercado (transporte cis-lunar (tugs solar-elétrico/químico/nuclear) + depósitos propelente LEO/GEO/Lunar + mercado: água $5000/kg LEO / platina $30k/kg / ferro $500/kg + roadmap: missão robótica 2028 / piloto 2032 / comercial 2038 / $1T/ano 2050)
+        ],
+        industry: 'Mineração Asteróides Cinturão Principal'
+    },
+    // O'Neill Cylinder Rotating Habitats
+    {
+        name: 'Habitats O\'Neill Cilindro Rotativos (4 Equipas)',
+        description: 'Habitats O\'Neill cilindro rotativos - 4 equipas, turnos 12h, estrutura mega-escala (raio 4-8km comprimento 30-100km) + gravidade artificial 1g rotação + ECLSS fechado + agricultura intensiva + população 100k-1M + economia pós-escassez',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'DDNNOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'DDNNOO', // Team A: estrutura/mecânica/rotação (estrutura compósitos carbono/kevlar/basalto + tensão centrífuga 1g + controle atitude/precessão/nutação + blindagem radiação/regolito/água + manutenção preditiva fibra óptica distribuída + expansão modular)
+            'OODDNN', // Team B: ECLSS/agricultura/ecologia (reciclagem ar/água/resíduos >99.9% + agricultura vertical/hidropónica/aeropónica + ecossistema sintético (microbioma/solo/polinizadores) + produção alimentar >5000 kcal/pessoa/dia + sequestro carbono)
+            'NNOODD', // Team C: saúde/sociedade/governança (medicina preventiva/genómica/telemedicina + gravidade 1g saúde óssea/muscular/cardiovascular + sociedade pós-escassez (renda básica/recursos livres) + governança democrática/blockchain + cultura/arte/desporto micro-g/1g)
+            'DDOONN', // Team D: economia/indústria/expansão (manufatura orbital (micro-g/vácuo) + energia solar espacial SBSP + mineração asteróides/logística + exportação bens/serviços Terra + roadmap: cilindro 1 2040 / cilindro 10 2060 / cidade 1M 2080 / nação espacial 2100)
+        ],
+        industry: 'Habitats O\'Neill Cilindro Rotativos'
+    },
+    // Minimal Synthetic Biology Organisms
+    {
+        name: 'Biologia Sintética Organismos Mínimos (3 Equipas)',
+        description: 'Biologia sintética organismos mínimos - 3 equipas, turnos 12h, design genoma mínimo computacional (JCVI-syn3.0/ mycoplasma) + síntese/montagem DNA kilobase/megabase + boot-up célula sintética + evolução dirigida + chassis universal aplicações (biomanufatura/terapêutica/ambiente)',
+        teams: 3,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOO', // Team A: design/síntese genoma (design computacional IA (Bayes/RL/LLM) genoma mínimo 500-1000 genes essenciais + síntese oligonucleótidos microarray/enzimática + montagem Gibson/CPEC/levedura + verificação NGS/óptica + depuração fenótipo)
+            'NNNNOOOOMMMM', // Team B: boot-up/caracterização (citoplasma receptor (extracto célula livre / citoplasma mínimo) + transplante genoma + ativação metabolismo/replicação/divisão + caracterização ómica (transcriptoma/proteoma/metaboloma/fluxoma) + estabilidade genética/fenotípica gerações)
+            'OOOOMMMMNNNN', // Team C: chassis/aplicações/escala (chassis universal 'plug-and-play' módulos (via metabólica/sinalização/regulação) + aplicações: biomanufatura (fármacos/químicos/materiais) / terapêutica (probióticos/smart drugs/oncologia) / ambiente (biodegradção/fixação N/CO₂/captura) + biosegurança (kill-switch/auxotrofia/contenção) + roadmap: chassis 1.0 2026 / 2.0 2029 / fábrica célula 2035)
+        ],
+        industry: 'Biologia Sintética Organismos Mínimos'
+    },
+    // Interstellar Antimatter Propulsion
+    {
+        name: 'Propulsão Antimatéria Interestelar (3 Equipas)',
+        description: 'Propulsão antimatéria interestelar - 3 equipas, turnos 12h, armadilhas Penning/Malatesta antiprotões/anti-hidrogénio + refrigeração criogénica <1K + blindagem radiação + bocal magnético/espelho magnético + impulso específico >10⁶s + missão Próxima Centauri <50 anos',
+        teams: 3,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOO', // Team A: produção/armazenamento antimatéria (acelerador dedicado 100GeV+ p-pbar >10¹⁵ pbar/ano + armadilhas Penning/Malatesta multi-célula 10¹⁴ pbar + refrigeração criogénica <1K + conversão pbar → anti-H (positrão) + anti-H gelo/sólido densidade >0.1g/cm³ + estabilidade anos)
+            'NNNNOOOOMMMM', // Team B: motor/bocal/blindagem (bocal magnético supercondutor HTS 20T+ / espelho magnético + aniquilação pbar-p direcionada γ/π-mesões cargados + deflexão partículas carregadas impulso + blindagem radiação ativa/passiva (campo magnético/polímero/hidrogénio) + gestão calor 100GW+)
+            'OOOOMMMMNNNN', // Team C: missão/navegação/comunicação (navegação inercial/estelar/pulsar precisão 10⁻⁶ rad + comunicação laser/ondas gravitacionais/neutrino interestelar + arquitectura nave (payload 100t / escudo 1000t / motor 10t) + perfil missão: aceleração 1g 1 ano / cruzeiro 0.1c 40 anos / desaceleração 1g 1 ano + roadmap: demonstrador LEO 2035 / sonda interestelar 2050 / tripulada 2080)
+        ],
+        industry: 'Propulsão Antimatéria Interestelar'
+    },
+    // Mars Terraforming Phase 1
+    {
+        name: 'Terraformação Marciana Fase 1 (4 Equipas)',
+        description: 'Terraformação Marte Fase 1 - 4 equipas, turnos 12h, aquecimento atmosférico (SF6/CF4/espelhos orbitais) + pressão CO₂ sublimação polos + água líquida estável + microbioma pioneiro (cianobactérias/liquen/musgo) + ISRU expansivo + população 10k+ + roadmap 100 anos',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'DDNNOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'DDNNOO', // Team A: aquecimento/atmosfera (gases estufa superpotentes SF6/CF4/NF3 produção ISRU + libertação controlada + espelhos orbitais Mylar 100km diâmetro foco polos + sublimação CO₂ polos pressão >300mbar + monitoramento clima global MAVEN/EMM/TGO + modelo climático IA)
+            'OODDNN', // Team B: água/recursos/ISRU (extração gelo subsuperfície radar/perfuração + derretimento nuclear/solar + distribuição canalização/aquedutos + lagos/mares estáveis pressão >6mbar + agricultura hidropónica/aeropónica CO₂ atmosférico + mineração metais/terras-raras expansiva)
+            'NNOODD', // Team C: biologia/ecossistema/saúde (cianobactérias/liquen/musgo engenhados radiação/baixa pressão/baixa temperatura + fixação N₂/CO₂ + produção O₂ + solo regolito + microbioma humano/animais/plantas + medicina preventiva gravidade 0.38g + radiação)
+            'DDOONN', // Team D: sociedade/economia/governança/roadmap (população 10k+ 2050 / 1M 2080 / auto-sustentável 2100 + economia: ISRU exportação / turismo / ciência / dados + governança: tratado espaço exterior / propriedade / cidadania / direitos / roadmap: Fase 1 aquecimento/pressão/água 2040-2070 / Fase 2 O₂/bioma 2070-2100 / Fase 3 para-terra 2100+)
+        ],
+        industry: 'Terraformação Marciana Fase 1'
+    },
 ];
