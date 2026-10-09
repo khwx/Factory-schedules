@@ -1,6 +1,6 @@
 import { Scenario, YearlyAnalysis, MonthlyBreakdown, DayInfo, ShiftType } from '../types';
 
-const MONTH_NAMES = [
+const DEFAULT_MONTH_NAMES = [
     'Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun',
     'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'
 ];
@@ -96,14 +96,19 @@ export const generateYearCalendar = (scenario: Scenario, year: number, teamOffse
 /**
  * Analyze a year calendar and extract metrics
  */
-export const analyzeYearCalendar = (calendar: DayInfo[], year: number, shiftDuration: number = 8): YearlyAnalysis => {
+export const analyzeYearCalendar = (
+    calendar: DayInfo[],
+    year: number,
+    shiftDuration: number = 8,
+    monthNames: string[] = DEFAULT_MONTH_NAMES
+): YearlyAnalysis => {
     const monthlyBreakdown: MonthlyBreakdown[] = [];
 
     // Initialize monthly data
     for (let month = 0; month < 12; month++) {
         monthlyBreakdown.push({
             month: month + 1,
-            monthName: MONTH_NAMES[month],
+            monthName: monthNames[month],
             weekendsOff: 0,
             saturdaysOff: 0,
             sundaysOff: 0,
@@ -175,13 +180,17 @@ export const analyzeYearCalendar = (calendar: DayInfo[], year: number, shiftDura
 /**
  * Generate multi-year analysis (5 years)
  */
-export const generateMultiYearAnalysis = (scenario: Scenario, startYear: number = new Date().getFullYear()): YearlyAnalysis[] => {
+export const generateMultiYearAnalysis = (
+    scenario: Scenario,
+    startYear: number = new Date().getFullYear(),
+    monthNames: string[] = DEFAULT_MONTH_NAMES
+): YearlyAnalysis[] => {
     const years: YearlyAnalysis[] = [];
 
     for (let i = 0; i < 5; i++) {
         const year = startYear + i;
         const calendar = generateYearCalendar(scenario, year);
-        const analysis = analyzeYearCalendar(calendar, year, scenario.shiftDuration);
+        const analysis = analyzeYearCalendar(calendar, year, scenario.shiftDuration, monthNames);
         years.push(analysis);
     }
 

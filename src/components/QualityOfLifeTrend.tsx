@@ -10,13 +10,9 @@ interface QualityOfLifeTrendProps {
     year?: number;
 }
 
-const monthNames = [
-    'Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun',
-    'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'
-];
-
 const QualityOfLifeTrend: React.FC<QualityOfLifeTrendProps> = ({ scenario, analysis, year = new Date().getFullYear() }) => {
     const { t } = useI18n();
+    const monthNames = t.calendar.months.map(m => m.substring(0, 3));
 
     const qolData = useMemo(() => {
         return calculateQualityOfLifeScore(scenario, analysis, year);
