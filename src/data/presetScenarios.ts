@@ -3159,4 +3159,136 @@ export const PRESET_SCENARIOS: PresetScenario[] = [
         ],
         industry: 'Produção Armazenamento Antimatéria'
     },
+    // Advanced Fault-Tolerant Topological Quantum Computing
+    {
+        name: 'Computação Quântica Topológica FT Avançada (3 Equipas)',
+        description: 'Computação quântica topológica tolerante a falhas avançada (anyões Majorana/Fibonacci + braiding não-abeliano + códigos superfície/topológicos + decodificação tempo real MWPM/UF + arquitetura FT intrínseca) - 3 equipas, turnos 12h, qubits topológicos protegidos + operação temperatura ultra-baixa + correção erro automática',
+        teams: 3,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOO', // Team A: hardware qubits topológicos (nanofios semicondutor-supercondutor InAs/Al/EuS + junções Josephson topológicas + modo zero Majorana protegido + braiding físicos/medição + interferometria anyônica + tempo coerência >1s + varredura paridade não-destrutiva) + criogenia mK + blindagem magnética/radiação
+            'NNNNOOOOMMMM', // Team B: controle/decodificação FT (síndrome extração medição-paridade + decodificador MWPM/UF/redes neurais tempo real <1µs + limiar erro >1% + protocolo lattice surgery/topological + magia estado injeção T/CCZ + validação experimental benchmarks) + arquitetura modular azulejos topológicos
+            'OOOOMMMMNNNN', // Team C: sistema/aplicações FT (compilador topológico + runtime tolerante falhas + algoritmos quânticos FT (Shor/Grover/VQE/QAOA/química quântica) + integração clássica HPC + roadmap: demonstração qubit lógico 2028 / módulo 100 qubits 2032 / computador FT 1M qubits 2040 / vantagem quântica prática FT 2035)
+        ],
+        industry: 'Computação Quântica Topológica FT Avançada'
+    },
+    // Real-Time Reconfigurable Meta-Programmable Materials
+    {
+        name: 'Materiais Meta-Programáveis Tempo Real (3 Equipas)',
+        description: 'Materiais meta-programáveis reconfiguráveis em tempo real (metamateriais mecânicos/ópticos/térmicos/EM ativos + design inverso IA + atuação multi-física + controle laço fechado sub-ms) - 3 equipas, turnos 12h, nanofabricação avançada + caracterização multi-física + IA design/otimização',
+        teams: 3,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOO', // Team A: nanofabricação meta-atmos (e-beam/FIB/HE-LiN + litografia multi-camada alinhada <5nm + materiais: grafeno twistronics / TMDs heteroestruturas / metassuperfícies dielétricas/Metasuperfícies ativas VO₂/PCM/2D + padrão unidade sub-comprimento onda + rendimento >95% + área cm²)
+            'NNNNOOOOMMMM', // Team B: caracterização/IA design inverso (medidas multi-física: mecânica (nanoindentação/Brillouin) / óptica (elipsometria/espalhamento/near-field) / térmica (TDTR/Raman) / EM (VNA/near-field)) + IA design inverso (diffusion/transformer/GNN) + otimização multi-objetivo (banda/eficiência/ângulo/polarização/tunabilidade) + digital twin meta-material
+            'OOOOMMMMNNNN', // Team C: atuação/controle tempo real (atuação multi-estímulo: elétrica (gating/iônica) / óptica (bombeamento/ressonância) / térmica (joule/laser) / mecânica (piezo/MEMS) + controle laço fechado FPGA/ASIC <0.1ms + reconfiguração forma/função dinâmica + aplicações: camuflagem adaptativa / antenas reconfiguráveis / lentes varifocais / gestão térmica inteligente / captação energia / robótica suave + roadmap: meta-dispositivo comercial 2028 / meta-sistema 2032 / matéria programável ubíqua 2040)
+        ],
+        industry: 'Materiais Meta-Programáveis Tempo Real'
+    },
+    // Autonomous AI-Driven Synthesis Next Level
+    {
+        name: 'Síntese Autónoma IA-Driven Nível 2 (4 Equipas)',
+        description: 'Síntese autónoma de novo nível (self-driving labs IA generativa + robótica cloud + base conhecimento federada + planeamento multi-objetivo Bayes/RL/LLM + descoberta materiais/fármacos autónoma) - 4 equipas, turnos 12h, loop fechado IA-robótica + validação experimental autónoma + publicação autónoma',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOOPPPP',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOOPPPP', // Team A: plataformas robóticas cloud-native (síntese fluxo contínuo + robótica móvel/braço dual + manipulador líquido acústico/digital microfluidics + análise inline PAT/NIR/Raman/MS/DRX + automação padrão AnIML/SIRI + orquestração Kubernetes/ROS2 + multi-inquilino cloud/edge)
+            'NNNNOOOOPPPPMMMM', // Team B: IA planeamento/descoberta (LLM/RL/Bayes planeamento multi-objetivo (rendimento/seletividade/verde/custo/velocidade) + base conhecimento federada (literatura/patentes/dados experimentais/resultados negativos) + IA generativa moléculas/materiais (diffusion/flow/GFlowNet) + validação in-silico (DFT/ML/IP) + hipótese→experiência→análise loop autónomo)
+            'OOOOPPPPMMMMNNNN', // Team C: execução/validação autónoma (agendamento robótico IA-otimizado + execução paralela 100+ experiências/dia + QC autónomo IA (outlier/drift/anomalia) + decisão continuação/paragem/iteração IA + reprodutibilidade/rastreabilidade blockchain + conformidade GLP/GMP automatizada)
+            'PPPPMMMMNNNNOOOO', // Team D: descoberta/impacto (descoberta autónoma: novos catalisadores / fármacos / materiais baterias / polímeros degradáveis / fotocatálise CO₂) + publicação autónoma (rascunho paper IA + submissão/revisão) + transferência tecnologia/licenciamento IA + economia: aceleração 10-100x descoberta + custo 10x menor + roadmap: laboratório autónomo 2026 / descoberta clínica 2028 / fábrica autónoma 2032)
+        ],
+        industry: 'Síntese Autónoma IA-Driven Nível 2'
+    },
+    // Permanent Space Habitats Beyond Mars
+    {
+        name: 'Habitats Espaciais Permanentes Além Marte (4 Equipas)',
+        description: 'Habitats espaciais permanentes além de Marte (cinturão asteróides / luas Júpiter/Saturno / objetos Kuiper / interestelar precursor) - 4 equipas, turnos 12h, ISRU local completo + gravidade artificial + ECLSS regenerativo 99.99% + sociedade autónoma + economia interestelar',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOOPPPP',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOOPPPP', // Team A: ISRU/construção in-situ profunda (asteróides tipo C: água/orgânicos/metais + luas geladas: H₂O/CH₄/NH₃/CO₂ + processamento térmico/químico/eletroquímico + fabricação aditiva regolito/gelo/metal + construção habitats radiação/micrometeoritos + energia nuclear compacta KRUSTY/heat pipe + lançamento in-situ)
+            'NNNNOOOOPPPPMMMM', // Team B: gravidade artificial/ECLSS/energia (habitats rotativos multi-anéis 0.1-1g + ECLSS regenerativo >99.99% (ar/água/resíduos/alimentos) + agricultura vertical/hidropónica/algas + energia fissão/fusão compacta + gestão térmica radiativa extrema + redundância 100x + certificação multi-agência)
+            'OOOOPPPPMMMMNNNN', // Team C: operações/saúde/sociedade (medicina preventiva/genética IA + contrabalanço gravidade parcial/farmacologia + telemedicina interestelar + psicologia isolamento extremo + governança autónoma multi-nível / lei espacial evoluída / economia circular / moeda local / comércio interestelar + cultura/educação/arte interestelar)
+            'PPPPMMMMNNNNOOOO', // Team D: expansão/ciência/economia interestelar (mineração cinturão/Kuiper + telescópios interferométricos base-line AU+ + ciência fundamental (matéria escura/energia escura/neutrinos/GW/astrobiologia) + hub logístico interestelar + sementes sondas Von Neumann + roadmap: base cinturão 2040 / colónias luas Júpiter 2050 / Objectos Kuiper 2060 / precursor interestelar 2075 / civilização multi-estelar 2100+)
+        ],
+        industry: 'Habitats Espaciais Permanentes Além Marte'
+    },
+    // Commercial Aneutronic Fusion
+    {
+        name: 'Fusão Anêutica Comercial (4 Equipas)',
+        description: 'Fusão anêutica comercial (p-¹¹B / ³He-D / p-⁶Li) - reatores compactos + captação energia direta + zero nêutrons + licenciamento simplificado + LCOE <$30/MWh - 4 equipas, turnos 12h, plasma β-alto + conversão direta >90% + materiais avançados + cadeia abastecimento',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOOPPPP',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOOPPPP', // Team A: núcleo fusão anêutica (FRC/espelho/estelarator/tokamak esférico compacto HTS REBCO 20-30T + β >50% + ignição p-¹¹B/³He-D + confinamento energia >10s + razão potência/massa >100kW/kg + materiais plasma-facing W nano-estruturado/SiC + proteção radiação mínima)
+            'NNNNOOOOPPPPMMMM', // Team B: conversão energia direta comercial (expansão magnética/nozzle supercondutor + separação carga partículas α/p + conversão eletrostática/indutiva eficiência >90% + potência elétrica >100MW + gestão térmica radiadores carbon-carbon/heat pipes metal-líquido + integração rede eléctrica/mercado + armazenamento energia acoplado)
+            'OOOOPPPPMMMMNNNN', // Team C: combustível/cadeia abastecimento (produção ³He: Lua/regolito / gaseificação gigante gasosos / D-D secundário + produção ¹¹B: mineração boro / reciclagem + logística combustível segura + economia combustível <$10/kWh + ciclo vida LCA emissões ~zero + certificação verde)
+            'PPPPMMMMNNNNOOOO', // Team D: comercialização/roadmap (licenciamento simplificado (sem nêutrons = sem resíduos alto nível / sem proliferação / zona planeamento emergência reduzida) + LCOE <$30/MWh competitivo gás/solar/eólica + fábrica módulos linha montagem + roadmap: demonstrador 10MW 2028 / comercial 100MW 2032 / GW escala 2035 / substituição combustíveis fósseis 2040)
+        ],
+        industry: 'Fusão Anêutica Comercial'
+    },
+    // Complex Vascularized Organ Biofabrication
+    {
+        name: 'Biofabricação Órgãos Vascularizados Complexos (4 Equipas)',
+        description: 'Biofabricação órgãos complexos vascularizados (coração/rins/fígado/pulmões/pâncreas) - bioprinting 4D multi-material + vascularização hierárquica perfundível + maturação biorreator perfusão + transplante autólogo - 4 equipas, turnos 12h, GMP + ensaios clínicos + roadmap eliminação lista espera',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOOPPPP',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOOPPPP', // Team A: bioprinting 4D vascularização (bioinks multi-material (hidrogéis/descelularizados/sintéticos) + impressão multi-cabeçote resolução <10µm + vascularização hierárquica (artérias/veias/capilares/linfáticos) + células endoteliais/pericitas/músculo liso + sacrifício/canalização perfusão + integração nervos/linfa + arquitetura órgão-específica CAD IA)
+            'NNNNOOOOPPPPMMMM', // Team B: maturação biorreator perfusão (perfusão pulsátil fisiológica + condicionamento mecânico/elétrico/humoral + maturação semanas/meses + monitoramento inline (pH/pO₂/glicose/lactato/metabólitos/força contrátil/barreira endotelial) + QC funcional (histologia/fisiologia/genómica/proteómica) + certificação FDA/EMA/ANVISA)
+            'OOOOPPPPMMMMNNNN', // Team C: células/imunologia/transplante (células estaminais iPSC autólogo/alo-génico universal (HLA-edited/knockout) + diferenciação dirigida órgão-específica + edição genética CRISPR segurança + imunomodulação tolerância / encapsulamento / imunossupressão mínima + cirurgia robótica transplante + monitoramento rejeição IA + immunosuppressão personalizada)
+            'PPPPMMMMNNNNOOOO', // Team D: clínica/economia/roadmap (ensaios clínicos: Fase I segurança 2028 / Fase II eficácia 2030 / Fase III registo 2032 / aprovação 2035) + economia: custo <$100k/órgão vs $1M+ transplante atual + eliminação lista espera (100k+ EUA / milhões global) + acesso equitativo global + roadmap: rim 2030 / fígado 2032 / coração 2035 / pulmão/pâncreas 2038 / fábrica órgãos 2040)
+        ],
+        industry: 'Biofabricação Órgãos Vascularizados Complexos'
+    },
+    // Operational Global Quantum Internet
+    {
+        name: 'Internet Quântica Global Operacional (3 Equipas)',
+        description: 'Internet quântica global operacional (repetidores quânticos espaço/terra + QKD/teletransporte/sensorimetria distribuída + integração rede clássica 5G/6G/fibra/satélite + PQC híbrida + casos uso produção banca/governo/defesa/saúde) - 3 equipas, turnos 12h, padrão ETSI/ISO + SLA 99.9% + gestão chaves autónoma',
+        teams: 3,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOO', // Team A: infraestrutura repetidores produção (repetidores estado sólido (NV/SiV/rare-earth/quantum dots) + memórias quânticas coerência >1s/fidelidade >99.9% + purificação/swapping DEJMPS/recorrente determinístico + multiplexação temporal/espectral/espacial + fibra ultra-baixa perda <0.1dB/km + satélites LEO/MEO/GEO constelação >1000 + estações terra adaptativas)
+            'NNNNOOOOMMMM', // Team B: pilha protocolo/serviços produção (QKD: BB84/E91/MDI/CV/TF-QKD taxa >10Mbps/distância >500km + teletransporte quântico multi-nó + clock sincronização attosegundo + sensorimetria distribuída gravidade/magnetismo/tempo) + camada controle SDN quântico + roteamento adaptativo fidelidade/taxa/latência + integração PQC Kyber/Dilithium/FALCON + certificação Common Criteria EAL5+
+            'OOOOMMMMNNNN', // Team C: operações/casos uso/comercial (operação 24/7 SLA 99.9% + gestão chaves autónoma IA + monitoramento saúde rede tempo real + falha/recuperação <1s + casos uso produção: banca transações quânticas / governo comunicações classificadas / defesa C2 quântico / saúde genómica segura / blockchain quântico / infraestrutura crítica) + modelo negócio: QKDaaS / sensorimetria-a-serviço / clock-a-serviço + roadmap: rede metropolitana 2026 / nacional 2028 / continental 2030 / global 2032)
+        ],
+        industry: 'Internet Quântica Global Operacional'
+    },
+    // Space Elevator Orbital Mega-Structure Transport
+    {
+        name: 'Elevador Espacial Mega-Estrutura Orbital (3 Equipas)',
+        description: 'Elevador espacial / transporte orbital mega-estrutura (cabo CNT/grafeno 100GPa+ + climbers laser beaming 100MW+ + âncora oceânica equatorial + estação GEO + logística LEO/GEO/Lunar/interestelar) - 3 equipas, turnos 12h, materiais extremos + engenharia mega-estrutura + operação contínua + economia acesso espaço <$10/kg',
+        teams: 3,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOO', // Team A: cabo/âncora mega-engenharia (CNT/grafeno macroscópico resistência >100GPa / densidade <1.3g/cm³ + comprimento 100.000km (GEO + contrapeso) + âncora oceânica equatorial móvel (plataforma dinamicamente posicionada / cabo submerso) + estação GEO contador-peso + proteção detritos/radiação/oxigénio atómico + monitoramento saúde estrutural fibra óptica distribuída + redundância multi-cabo)
+            'NNNNOOOOMMMM', // Team B: climbers/propulsão/energia (climbers multi-estágio 20-100t carga + laser beaming 100MW-1GW (fibra/ondas milimétricas) + conversão fotovoltaica/termofotovoltaica eficiência >50% + velocidade 200-500km/h + tempo subida 5-7 dias + frenagem regenerativa descida + manutenção preditiva IA + certificação segurança humana)
+            'OOOOMMMMNNNN', // Team C: operações/logística/economia (operação contínua 24/7/365 + agendamento IA multi-carga (satélites/habitats/propelente/ISRU/tripulantes) + hub LEO/GEO/Lunar/interestelar + economia: custo <$10/kg órbita (vs $1000+ foguetão) + receita: lançamento / turismo / manufatura orbital / energia solar espacial / mineração asteróides + roadmap: demonstrador cabo 10km 2030 / protótipo 1000km 2035 / operacional 2040 / rede multi-elevador 2050 / acesso espaço ubíquo 2060)
+        ],
+        industry: 'Elevador Espacial Mega-Estrutura Orbital'
+    },
 ];

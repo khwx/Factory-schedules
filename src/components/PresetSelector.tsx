@@ -180,6 +180,14 @@ const INDUSTRY_KEY_MAP: Record<string, keyof Translations['presetSelector']['ind
     'Sondas Von Neumann': 'vonNeumannProbes',
     'Matéria Programável Claytronics': 'programmableMatter',
     'Produção Armazenamento Antimatéria': 'antimatter',
+    'Computação Quântica Topológica FT Avançada': 'topologicalQuantumComputingFT',
+    'Materiais Meta-Programáveis Tempo Real': 'realTimeMetaProgrammableMaterials',
+    'Síntese Autónoma IA-Driven Nível 2': 'autonomousAISynthesisLevel2',
+    'Habitats Espaciais Permanentes Além Marte': 'permanentSpaceHabitatsBeyondMars',
+    'Fusão Anêutica Comercial': 'commercialAneutronicFusion',
+    'Biofabricação Órgãos Vascularizados Complexos': 'complexVascularizedOrganBiofabrication',
+    'Internet Quântica Global Operacional': 'operationalGlobalQuantumInternet',
+    'Elevador Espacial Mega-Estrutura Orbital': 'spaceElevatorOrbitalMegaStructure',
 };
 
 interface PresetSelectorProps {
