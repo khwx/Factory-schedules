@@ -23,11 +23,6 @@ const subScoreKeys = [
     'longTermSustainability',
 ] as const;
 
-const monthNames = [
-    'Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun',
-    'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'
-];
-
 const getScoreColor = (index: number) => {
     const colors = ['#4ADE80', '#60A5FA', '#FBBF24', '#F87171', '#A78BFA', '#34D399', '#FB923C', '#EC4899', '#22D3EE', '#EAB308'];
     return colors[index % colors.length];
@@ -58,14 +53,14 @@ const QualityOfLifeComparison: React.FC<QualityOfLifeComparisonProps> = ({ scena
     const trendData = useMemo(() => {
         if (qolDataList.length === 0) return [];
         const months = qolDataList[0]?.qol.monthlyScores.length ?? 12;
-        return monthNames.slice(0, months).map((month, monthIdx) => {
+        return t.calendar.months.slice(0, months).map((month, monthIdx) => {
             const entry: Record<string, number | string> = { month };
             qolDataList.forEach(({ scenario, qol }) => {
                 entry[scenario.name.length > 15 ? scenario.name.substring(0, 15) + '...' : scenario.name] = qol.monthlyScores[monthIdx] ?? 0;
             });
             return entry;
         });
-    }, [qolDataList]);
+    }, [qolDataList, t]);
 
     if (scenarios.length === 0) return null;
 
