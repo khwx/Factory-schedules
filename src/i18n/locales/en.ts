@@ -66,6 +66,7 @@ export const en: Translations = {
     langEsClass: 'bg-[var(--bg-hover)] text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]',
     langFrClass: 'bg-[var(--bg-hover)] text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]',
     langDeClass: 'bg-[var(--bg-hover)] text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]',
+    backupRestore: 'Backup & Restore',
   },
   dashboard: {
     presetTitle: 'Load Example Scenario',
@@ -525,6 +526,19 @@ export const en: Translations = {
     rowHolidaysWorked: 'Holidays Worked',
     dayLabel: 'Day {n}',
     best: 'Best',
+  },
+  teamFairness: {
+    title: 'Team Fairness',
+    weekendOff: 'Weekends Off',
+    totalOffDays: 'Total Off Days',
+    holidaysWorked: 'Holidays Worked',
+    annualHours: 'Annual Hours',
+    hoursDiff: 'Hours Diff',
+    accumulatedDiff: 'Accumulated Diff',
+    weekendDiff: 'Weekend Diff',
+    teamLabel: 'Shift',
+    prevYearAria: 'Previous Year',
+    nextYearAria: 'Next Year',
   },
   reports: {
     title: 'Reports',

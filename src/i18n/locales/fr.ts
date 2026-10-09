@@ -66,6 +66,7 @@ export const fr: Translations = {
     langEsClass: 'bg-[var(--bg-hover)] text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]',
     langFrClass: 'bg-blue-600 text-white',
     langDeClass: 'bg-[var(--bg-hover)] text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]',
+    backupRestore: 'Sauvegarde et restauration',
   },
   dashboard: {
     presetTitle: 'Charger un scénario prédéfini',
@@ -525,6 +526,19 @@ holidayCalendar: {
     rowHolidaysWorked: 'Jours Feries Travailles',
     dayLabel: 'Jour {n}',
     best: 'Meilleur',
+  },
+  teamFairness: {
+    title: 'Equité entre équipes',
+    weekendOff: 'Week-ends de repos',
+    totalOffDays: 'Total jours de repos',
+    holidaysWorked: 'Jours fériés travaillés',
+    annualHours: 'Heures annuelles',
+    hoursDiff: 'Diff. heures',
+    accumulatedDiff: 'Diff. accumulée',
+    weekendDiff: 'Diff. week-ends',
+    teamLabel: 'Tour',
+    prevYearAria: 'Année précédente',
+    nextYearAria: 'Année suivante',
   },
   reports: {
     title: 'Rapports',

@@ -52,14 +52,14 @@ const TeamFairness: React.FC<TeamFairnessProps> = ({ scenario }) => {
         <div className="bg-gray-800 rounded-lg border border-gray-700 overflow-hidden mt-6">
             <div className="p-4 border-b border-gray-700 flex items-center gap-2">
                 <Users className="w-5 h-5 text-purple-400" />
-                <h3 className="text-lg font-semibold text-white">Análise de Equidade da Equipa - {scenario.name}</h3>
+                <h3 className="text-lg font-semibold text-white">{t.teamFairness.title} - {scenario.name}</h3>
 
                 {/* Year Navigation */}
                 <div className="ml-auto flex items-center gap-2">
                     <button
                         onClick={() => setSelectedYear(y => y - 1)}
                         className="p-1 hover:bg-gray-700 rounded transition-colors"
-                        title="Previous Year"
+                        title={t.teamFairness.prevYearAria}
                     >
                         <ChevronLeft className="w-4 h-4 text-gray-400" />
                     </button>
@@ -67,7 +67,7 @@ const TeamFairness: React.FC<TeamFairnessProps> = ({ scenario }) => {
                     <button
                         onClick={() => setSelectedYear(y => y + 1)}
                         className="p-1 hover:bg-gray-700 rounded transition-colors"
-                        title="Next Year"
+                        title={t.teamFairness.nextYearAria}
                     >
                         <ChevronRight className="w-4 h-4 text-gray-400" />
                     </button>
@@ -146,14 +146,14 @@ const TeamFairness: React.FC<TeamFairnessProps> = ({ scenario }) => {
                     <table className="w-full text-sm border-collapse">
                         <thead>
                             <tr className="bg-gray-900/50">
-                                <th className="p-3 text-left text-gray-400 font-medium border-b border-gray-700">Turno</th>
-                                <th className="p-3 text-center text-gray-400 font-medium border-b border-gray-700">Fins de Semana de Folga</th>
-                                <th className="p-3 text-center text-gray-400 font-medium border-b border-gray-700">Total de Dias de Folga</th>
-                                <th className="p-3 text-center text-gray-400 font-medium border-b border-gray-700">Feriados Trabalhados 💰</th>
-                                <th className="p-3 text-center text-gray-400 font-medium border-b border-gray-700">Horas Anuais</th>
-                                <th className="p-3 text-center text-gray-400 font-medium border-b border-gray-700">Dif. Horas</th>
-                                <th className="p-3 text-center text-gray-400 font-medium border-b border-gray-700">Dif. Acumulada (2026+)</th>
-                                <th className="p-3 text-center text-gray-400 font-medium border-b border-gray-700">Dif. Fins de Semana</th>
+                                <th className="p-3 text-left text-gray-400 font-medium border-b border-gray-700">{t.teamFairness.teamLabel}</th>
+                                <th className="p-3 text-center text-gray-400 font-medium border-b border-gray-700">{t.teamFairness.weekendOff}</th>
+                                <th className="p-3 text-center text-gray-400 font-medium border-b border-gray-700">{t.teamFairness.totalOffDays}</th>
+                                <th className="p-3 text-center text-gray-400 font-medium border-b border-gray-700">{t.teamFairness.holidaysWorked} 💰</th>
+                                <th className="p-3 text-center text-gray-400 font-medium border-b border-gray-700">{t.teamFairness.annualHours}</th>
+                                <th className="p-3 text-center text-gray-400 font-medium border-b border-gray-700">{t.teamFairness.hoursDiff}</th>
+                                <th className="p-3 text-center text-gray-400 font-medium border-b border-gray-700">{t.teamFairness.accumulatedDiff}</th>
+                                <th className="p-3 text-center text-gray-400 font-medium border-b border-gray-700">{t.teamFairness.weekendDiff}</th>
                             </tr>
                         </thead>
                         <tbody>

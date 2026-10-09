@@ -21,7 +21,7 @@ const renderWithI18n = (component: React.ReactElement) => {
 describe('TeamFairness', () => {
     it('should render fairness analysis header', () => {
         renderWithI18n(<TeamFairness scenario={scenario} />);
-        expect(screen.getByText(/Análise de Equidade da Equipa|Team Fairness/i)).toBeInTheDocument();
+        expect(screen.getByText(/Equidade entre Equipas|Team Fairness/i)).toBeInTheDocument();
     });
 
     it('should show year navigation', () => {

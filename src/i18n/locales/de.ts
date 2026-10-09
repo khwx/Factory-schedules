@@ -66,6 +66,7 @@ export const de: Translations = {
     langEsClass: 'bg-[var(--bg-hover)] text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]',
     langFrClass: 'bg-[var(--bg-hover)] text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]',
     langDeClass: 'bg-blue-600 text-white',
+    backupRestore: 'Sicherung & Wiederherstellung',
   },
   dashboard: {
     presetTitle: 'Beispielszenario laden',
@@ -525,6 +526,19 @@ holidayCalendar: {
     rowHolidaysWorked: 'Gearbeitete Feiertage',
     dayLabel: 'Tag {n}',
     best: 'Bester',
+  },
+  teamFairness: {
+    title: 'Team-Gerechtigkeit',
+    weekendOff: 'Freie Wochenenden',
+    totalOffDays: 'Gesamte freie Tage',
+    holidaysWorked: 'Gearbeitete Feiertage',
+    annualHours: 'Jahresstunden',
+    hoursDiff: 'Stunden Diff.',
+    accumulatedDiff: 'Akku. Diff.',
+    weekendDiff: 'WE Diff.',
+    teamLabel: 'Schicht',
+    prevYearAria: 'Vorheriges Jahr',
+    nextYearAria: 'Nächstes Jahr',
   },
   reports: {
     title: 'Berichte',

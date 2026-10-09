@@ -215,7 +215,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                         <h3 className="text-lg font-semibold mb-4 text-[var(--text-primary)]">{t.header.settings}</h3>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div className="bg-[var(--bg-tertiary)] p-4 rounded-lg">
-                                <h4 className="font-semibold mb-2 text-sm text-[var(--text-primary)]">Backup & Restore</h4>
+                                <h4 className="font-semibold mb-2 text-sm text-[var(--text-primary)]">{t.header.backupRestore}</h4>
                                 <p className="text-xs text-[var(--text-tertiary)] mb-3">
                                     {t.header.backup} & {t.header.restore}
                                 </p>

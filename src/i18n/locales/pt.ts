@@ -64,6 +64,7 @@ export const pt = {
     langEsClass: 'bg-[var(--bg-hover)] text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]',
     langFrClass: 'bg-[var(--bg-hover)] text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]',
     langDeClass: 'bg-[var(--bg-hover)] text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]',
+    backupRestore: 'Backup & Restauro',
   },
   dashboard: {
     presetTitle: 'Carregar Cenario de Exemplo',
@@ -523,6 +524,19 @@ export const pt = {
     rowHolidaysWorked: 'Feriados Trabalhados',
     dayLabel: 'Dia {n}',
     best: 'Melhor',
+  },
+  teamFairness: {
+    title: 'Equidade entre Equipas',
+    weekendOff: 'Fins de Semana de Folga',
+    totalOffDays: 'Total de Dias de Folga',
+    holidaysWorked: 'Feriados Trabalhados',
+    annualHours: 'Horas Anuais',
+    hoursDiff: 'Dif. Horas',
+    accumulatedDiff: 'Dif. Acumulada',
+    weekendDiff: 'Dif. Fins de Semana',
+    teamLabel: 'Turno',
+    prevYearAria: 'Ano anterior',
+    nextYearAria: 'Próximo ano',
   },
   reports: {
     title: 'Relatorios',
