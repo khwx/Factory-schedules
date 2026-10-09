@@ -188,6 +188,14 @@ const INDUSTRY_KEY_MAP: Record<string, keyof Translations['presetSelector']['ind
     'Biofabricação Órgãos Vascularizados Complexos': 'complexVascularizedOrganBiofabrication',
     'Internet Quântica Global Operacional': 'operationalGlobalQuantumInternet',
     'Elevador Espacial Mega-Estrutura Orbital': 'spaceElevatorOrbitalMegaStructure',
+    'Fabricação Molecular Atómica Precisão (APM)': 'atomicPrecisionManufacturing',
+    'Computação Quântica Fotónica Tolerante a Falhas': 'faultTolerantPhotonicQuantumComputing',
+    'Energia de Fusão Comercial Operacional': 'operationalCommercialFusionEnergy',
+    'Mineração Asteróides Cinturão Principal': 'mainBeltAsteroidMining',
+    'Habitats O\'Neill Cilindro Rotativos': 'oneillCylinderHabitats',
+    'Biologia Sintética Organismos Mínimos': 'minimalSyntheticBiology',
+    'Propulsão Antimatéria Interestelar': 'interstellarAntimatterPropulsion',
+    'Terraformação Marciana Fase 1': 'marsTerraformingPhase1',
 };
 
 interface PresetSelectorProps {
