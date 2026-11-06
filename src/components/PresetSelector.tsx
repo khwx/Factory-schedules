@@ -196,6 +196,14 @@ export const INDUSTRY_KEY_MAP: Record<string, keyof Translations['presetSelector
     'Biologia Sintética Organismos Mínimos': 'minimalSyntheticBiology',
     'Propulsão Antimatéria Interestelar': 'interstellarAntimatterPropulsion',
     'Terraformação Marciana Fase 1': 'marsTerraformingPhase1',
+    'Computação Neuromórfica Óptica': 'opticalNeuromorphicComputing',
+    'Biomanufatura Carne Cultivada': 'cultivatedMeatBiomanufacturing',
+    'Mineração de Gelo Lunar': 'lunarIceMining',
+    'Reatores de Sal Fundido Comerciais': 'commercialMoltenSaltReactors',
+    'Manufactura Aditiva Cerâmica Avançada': 'advancedCeramicAdditiveManufacturing',
+    'Agricultura Biorregenativa Espaço Profundo': 'deepSpaceBioregenerativeAgriculture',
+    'Defesa Cibernética Infraestrutura Crítica': 'criticalInfrastructureCyberDefense',
+    'Redes Neurais Espelhadas': 'mirroredNeuralNetworks',
 };
 
 interface PresetSelectorProps {

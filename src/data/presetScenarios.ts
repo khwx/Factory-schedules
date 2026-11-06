@@ -3422,6 +3422,137 @@ const RAW_PRESET_SCENARIOS: PresetScenario[] = [
         ],
         industry: 'Terraformação Marciana Fase 1'
     },
+    // Optical Neuromorphic Computing
+    {
+        name: 'Computação Neuromórfica Óptica (3 Equipas)',
+        description: 'Computação neuromórfica óptica - 3 equipas, turnos 12h, neurónios fotónicos integrados (SOA/microrresonadores/VCSEL) + sinapses ópticas programáveis (memristores fotónicos/PCM) + interconexão WDM + aprendizagem spike fotónica em tempo real + latência <1ns + eficiência >10 TOPS/W',
+        teams: 3,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOO', // Team A: fabricação hardware fotónico (heterointegração III-V/Si/SiN + gravura e-beam/deep-RIE + fontes de fotões/faseadores/moduladores + detetores SNSPD >98% + calibração wafer + controlo defeitos)
+            'NNNNOOOOMMMM', // Team B: arquitetura/algoritmos (rede spike LIF óptico + aprendizagem STDP/surge fotónica + memórias PCM/memristores + codificação tempo/frequência/polarização + treino SNN + simulação tensor/firmware)
+            'OOOOMMMMNNNN', // Team C: sistemas/aplicações/escalabilidade (sistema 1M+ neurónios 10G+ sinapses + refrigeração passiva + aplicações visão/controle/IA-borde + interconexão rack + roadmap: protótipo 2027 / chip 2030 / datacenter óptico 2035)
+        ],
+        industry: 'Computação Neuromórfica Óptica'
+    },
+    // Industrial Cultivated Meat Biomanufacturing
+    {
+        name: 'Biomanufatura Carne Cultivada Escala Industrial (4 Equipas)',
+        description: 'Biomanufatura de carne cultivada escala industrial - 4 equipas, turnos 12h, cultivo células-tronco miogénicas + bioreatores perfusão 10.000L+ + meios serum-free/animal-free + scaffolds comestíveis 3D + maturação textura/sabor + segurança alimentar + custo <$5/kg',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 42,
+        pattern: 'DDNNOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'DDNNOO', // Team A: bancos celulares/meios (linhagens mioblastos/satélite aves/bovino/suíno/peixe + master/working cell banks + meios serum-free/animal-free (hidrolisados/aminoácidos/vitaminas) + otimização custo/lote + seleção fenotípica + estabilidade genética)
+            'OODDNN', // Team B: bioreatores/escala (perfusão/estiramento/meio contínuo + bioreatores 10.000L+ stirrer/tubo + controlo pH/O₂/nutrientes/espuma tempo real + CIP/SIP + GMP/FDA + IA otimização + escala piloto→industrial)
+            'NNOODD', // Team C: scaffolds/textura/maturação (scaffold comestível 3D/eletrspin/gelatina/colagénio + vascularização + maturação mecânica (estiramento/pulsos) + gordura/sabor (lipídios/aromas) + estrutura fibrosa + embalagem)
+            'DDOONN', // Team D: qualidade/regulação/mercado (segurança alimentar HACCP/BRC + aprovação FDA/EFSA/ANVISA/SGS + ciclo de vida/PEG + cadeia frio + economia <$5/kg 2030 + roadmap: nicho 2026 / commodity 2032 / escala global 2040)
+        ],
+        industry: 'Biomanufatura Carne Cultivada'
+    },
+    // Lunar Ice Mining
+    {
+        name: 'Mineração de Gelo Lunar (3 Equipas)',
+        description: 'Mineração de gelo lunar - 3 equipas, turnos 12h, prospecção neutrons/sísmica/radar + escavação térmica/mecânica + sublimação/destilação → H₂O + eletrólise → H₂/O₂ + armazenamento criogénico + logística polos/LEO + ISRU propelentes',
+        teams: 3,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOO', // Team A: prospecção/extração (mapas polares LRO/LCROSS/neutrons LEND + radar penetração + sísmica + escavação térmica/roçadeira/tuneladora + regolito seco vs gelo profundidade <2m + avaliação massa %H₂O)
+            'NNNNOOOOMMMM', // Team B: processamento/produção (aquecimento sublimação <100°C vácuo + destilação/condensação pureza >99% + eletrólise H₂/O₂ + purificação + armazenamento criogénico/depósito subterrâneo + perdas <5%)
+            'OOOOMMMMNNNN', // Team C: energia/logística/economia (energia nuclear/solar polar sombra + transporte robótico/teleoperado + depósitos LEO/GEO/órbita lunar + propelente $500/kg vs $5000/kg Terra + roadmap: demonstrador 2028 / mina 2032 / ISRU 2036)
+        ],
+        industry: 'Mineração de Gelo Lunar'
+    },
+    // Commercial Molten Salt Reactors
+    {
+        name: 'Reatores de Sal Fundido Comerciais (4 Equipas)',
+        description: 'Reatores de sal fundido comerciais - 4 equipas, turnos 12h, sal fluoreto (FLiBe/FLiNaK) com combustível dissolvido + bombas magnéticas sem selo + trocador de calor hastes/sal + ciclo combustível Th/U (TMSR/LFTR) + segurança passiva fail-safe + licenciamento + LCOE <$60/MWh',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 42,
+        pattern: 'DDNNOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'DDNNOO', // Team A: operação/controle (temperatura sal 650-750°C + bombas magnéticas eletromagnéticas sem selo + controlo boro/xeônio/estado oxidante + partida/paragem + monitoramento radiação/nível + operação 24/7 carga-following)
+            'OODDNN', // Team B: engenharia/materiais (aleação Hastelloy-N/316LH + grafito nucleável isostático + trocador de calor sal-metal tubular + blindagem biológica + manutenção remota hot cell + integridade corrosão >40 anos)
+            'NNOODD', // Team C: combustível/ciclo (Li-7 enriquecido >99.99% + Th-232/U-233 + reprocessamento on-line (fluoração)/remoção Xe/Pm + contabilidade nuclear + proliferação (denaturation) + reciclagem >95%)
+            'DDOONN', // Team D: licenciamento/segurança/economia (licenciamento NRC/ASN/IAEA + segurança passiva drenagem gravitacional + PSA/FMEA + LCOE <$60/MWh + cogeração H₂/processo + roadmap: protótipo 2028 / comercial 2033 / frota 2045)
+        ],
+        industry: 'Reatores de Sal Fundido Comerciais'
+    },
+    // Advanced Ceramic Additive Manufacturing
+    {
+        name: 'Manufactura Aditiva Cerâmica Avançada (3 Equipas)',
+        description: 'Manufactura aditiva de cerâmica avançada - 3 equipas, turnos 12h, feedstock (Al₂O₃/ZrO₃/SiC/Si₃N₄) + SLA/DLP/binder jetting/laser + sinterização/SPS/HIP → densidade >99% + microestrutura fina + aplicações aeroespacial/biomédica/energia + NDT/CT',
+        teams: 3,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOO', // Team A: materiais/processo (pós cerâmicos submicrão/monodispersos + ligantes/dispersantes + DLP/SLA/binder jetting/fusão laser seletiva + espessura camada 20-100µm + parâmetros laser/velocidade + suporte remoção)
+            'NNNNOOOOMMMM', // Team B: pós-processamento/sinterização (debind térmico/solvente + sinterização convencional/SPS/HIP 1400-1800°C + grão <1µm + densidade >99% + warpage/shrinkage compensado + recuperação custo)
+            'OOOOMMMMNNNN', // Team C: design/aplicações/QC (topologia/lattice leve + impressão conformal complexa + aeroespacial (turbina/isolante) + biomédico (implantes/zircônia) + energia (membranas/sofc) + NDT/CT/raios-X + roadmap: protótipo 2026 / série 2030)
+        ],
+        industry: 'Manufactura Aditiva Cerâmica Avançada'
+    },
+    // Deep Space Bioregenerative Agriculture
+    {
+        name: 'Agricultura Biorregenativa Espaço Profundo (4 Equipas)',
+        description: 'Agricultura biorregenativa de espaço profundo - 4 equipas, turnos 12h, cultivo fechado hidropónico/aeropónico + iluminação LED espectral + reciclagem água/ar/nutrientes >99% + variedades adaptadas radiação/micro-g + polinização/colheita autónoma + 100% calorias da missão',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 42,
+        pattern: 'DDNNOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'DDNNOO', // Team A: engenharia de plantas/cultivo (variedades ciclo curto 30-60 dias (trigo/arroz/soja/folhas/tomate) + LED espectral vermelho/azul/FR + hidropónico/aeropónico/nFT + micro-g 0.38-1g + polinização manual/vibratória + densidade)
+            'OODDNN', // Team B: sistemas/suporte de vida (ECLSS fechado + reciclagem água/ar/nutrientes >99% + controlo CO₂/O₂/ETC + fertilizantes minerais/microbianos + bio-regeneração resíduos (compostagem/bioreatores) + integração tripulação)
+            'NNOODD', // Team C: automação/colheita/armazenamento (robótica plantio/colheita autónoma + monitorização IA (visão/ NDVI/sensores) + processamento/embalagem + armazenamento longa duração + controlo pragas biológico + redundância)
+            'DDOONN', // Team D: nutrição/missão/roadmap (100% calorias + micronutrientes/dietas + psicologia/bem-estar (cor/verde/cultura) + missões Marte 2030/interestelar 2050 + closed-loop economy + roadmap: demonstrador 2027 / Marte 2033)
+        ],
+        industry: 'Agricultura Biorregenativa Espaço Profundo'
+    },
+    // Critical Infrastructure Cyber Defense
+    {
+        name: 'Defesa Cibernética Infraestrutura Crítica (3 Equipas)',
+        description: 'Defesa cibernética de infraestrutura crítica - 3 equipas, turnos 12h, inventário OT/SCADA/IoT/IT + SOC 24/7 deteção IA/UEBA + resposta a incidentes/isolamento/forense + hardening zero-trust + conformidade NIS2/IEC 62443 + resiliência e recuperação',
+        teams: 3,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOO', // Team A: monitorização/deteção (inventário ativos OT/SCADA/IoT + IDS/EDR/NDR/asset visibility + threat intel IOC/TTP + IA/UEBA/anomalias + honeypots/bait + integração SIEM/SOAR + cobertura 100% rede)
+            'NNNNOOOOMMMM', // Team B: resposta/contenção (SOC 24/7 triagem + playbooks/IR + segmentação/isolamento OT-safe + forense/malware/desencriptação + coordenação CERT/autoridades + recuperação RTO/RPO + lições aprendidas)
+            'OOOOMMMMNNNN', // Team C: prevenção/governança (zero-trust/segmentação ISA-95 + patching/vulnerabilidades + IEC 62443/NIS2/ISO 27001 + auditorias/red team/exercícios + formação + roadmap: maturidade 2026 / SOAR 2028 / cyber-resilient 2030)
+        ],
+        industry: 'Defesa Cibernética Infraestrutura Crítica'
+    },
+    // Mirrored Neural Networks
+    {
+        name: 'Redes Neurais Espelhadas (3 Equipas)',
+        description: 'Redes neurais espelhadas (digital twin de redes biológicas) - 3 equipas, turnos 12h, connectoma/sinapses mapeadas + espelhamento computacional retina/córtex/cerebelo + calibração e-phys + aprendizagem por espelhamento + neuromorfico/robótica cognitiva + aplicações',
+        teams: 3,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOO', // Team A: aquisição/connectoma (microscopia óptica/EM/expandotomia + mapeamento sináptico milhares neurónios + e-phys patch/MEA + datasets abertos (FlyWire/Human Connectome) + normalização/anotação + ética/dados)
+            'NNNNOOOOMMMM', // Team B: modelagem/espelhamento (modelos Hodgkin-Huxley/LIF/HH-generos + digital twin calibrado e-phys + simulação tempo real GPU/neuromórfico + aprendizagem por espelhamento (imitação) + validação preditiva + parâmetros sinápticos)
+            'OOOOMMMMNNNN', // Team C: hardware/aplicações/escalabilidade (chip neuromórfico espelhado + robótica neurorrobótica (controle/motor) + cognitiva/percepção/decisão + neurólogo/AI safety + benchmark vs biologia + roadmap: retina 2027 / cerebelo 2030 / córtex 2035)
+        ],
+        industry: 'Redes Neurais Espelhadas'
+    },
 ];
 
 /**
