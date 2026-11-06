@@ -54,6 +54,30 @@ Log de execuções autónomas do Bot Orquestrador (modelos free: `opencode/hy3-f
 
 **Decisão registada:** Presets industriais expandidos de 190 para 198, cobrindo agora 189 setores distintos incluindo computação quântica topológica FT, materiais meta-programáveis, síntese autónoma IA L2, habitats permanentes além Marte, fusão anêutica comercial, biofabricação órgãos vascularizados, internet quântica global operacional e elevador espacial mega-estrutura. Próximos passos sugeridos: expansão para fabricação molecular atómica de precisão, computação quântica fotónica tolerante a falhas, energia de fusão comercial operacional, mineração de asteróides da cintura principal, habitats O'Neill cilindro rotativos, biologia sintética organismos mínimos, propulsão antimatiéria interestelar, terraformação marciana fase 1.
 
+## Round 110 — 2026-10-09
+**Objetivo:** Expandir presets industriais com +8 setores de fronteira de próxima geração (Fabricação Molecular Atómica Precisão/APM, Computação Quântica Fotónica Tolerante a Falhas, Energia de Fusão Comercial Operacional, Mineração Asteróides Cinturão Principal, Habitats O'Neill Cilindro Rotativos, Biologia Sintética Organismos Mínimos, Propulsão Antimatéria Interestelar, Terraformação Marciana Fase 1) + i18n (5 línguas).
+
+**O que foi feito:**
+- `src/data/presetScenarios.ts`:
+  - Adicionados 8 novos presets com `teamPatterns` individuais e turnos 12h:
+    1. **Fabricação Molecular Atómica Precisão - APM (3 Equipas)** — manipulação átomo-por-átomo (STM/AFM) + síntese mecanossintética + verificação estrutural (TEM/EDS) + controle contaminação classe 1
+    2. **Computação Quântica Fotónica Tolerante a Falhas (3 Equipas)** — estados cluster/medição-baseada + circuitos integrados SiN/LiNbO₃ + detetores SNSPD + correção de erro fotónica
+    3. **Energia de Fusão Comercial Operacional (4 Equipas)** — tokamak/stellarator + supercondutores HTS + manta trítio + balanço potência líquido
+    4. **Mineração Asteróides Cinturão Principal (3 Equipas)** — prospecção espectral + extração robótica + processamento in-situ + logística cis-lunar
+    5. **Habitats O'Neill Cilindro Rotativos (4 Equipas)** — mega-estrutura rotativa + gravidade artificial ajustável + ECLSS fechado + população 100-10.000
+    6. **Biologia Sintética Organismos Mínimos (3 Equipas)** — design genoma computacional + síntese/montagem DNA + boot-up célula + evolução dirigida
+    7. **Propulsão Antimatéria Interestelar (3 Equipas)** — armadilhas Penning + síntese antiprotões/anti-hidrogénio + refrigeração criogénica + propulsão
+    8. **Terraformação Marciana Fase 1 (4 Equipas)** — regolito→O2/água/metais + habitat impressão 3D + agricultura indoor + ECLSS
+  - Total: 206 presets (era 198). Cobertura alargada a 8 novos setores (189 indústrias distintas).
+- `src/i18n/locales/{pt,en,es,fr,de}.ts`:
+  - Novas chaves `presetSelector.industries.*` para as 8 novas indústrias em 5 línguas (40 chaves novas).
+- `src/components/PresetSelector.tsx`:
+  - Atualizado `INDUSTRY_KEY_MAP` com as 8 novas indústrias.
+
+**Verificação:** `npm run build` → OK; `vitest` → 652 passam, 0 falham; `eslint` → 0 erros; `tsc -b` → OK.
+
+**Decisão registada:** Presets industriais expandidos de 198 para 206, cobrindo agora 189 setores distintos incluindo fabricação molecular APM, QC fotónica FT, fusão comercial operacional, mineração cinturão principal, habitats O'Neill, biologia sintética organismos mínimos, propulsão antimatéria interestelar e terraformação marciana fase 1. Próximos passos sugeridos: expansão para computação neuromórfica óptica, biomanufatura de carne cultivada escala industrial, mineração de gelo lunar, reatores de sal fundido comerciais, redes neurais espelhadas, manufactura aditiva de cerâmica avançada, agricultura biorregenativa em espaço profundo e defesa cibernética de infraestrutura crítica.
+
 ## Round 104 — 2026-10-08
 **Objetivo:** Expandir presets industriais com +8 nichos de próxima geração (Nanotecnologia Molecular/APM, Interface Cérebro-Computador Clínica, Hidrogénio Branco/Geológico, Reciclagem Química/Depolimerização, Baterias Estado Sólido, Manufatura Aditiva Metais Qualificada, Comunicações Quânticas QKD/Satélite, Reatores Rápidos/Transmutação Resíduos) + i18n (5 línguas) + fix timeout testes.
 

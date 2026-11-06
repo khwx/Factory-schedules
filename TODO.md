@@ -156,3 +156,6 @@ Corrigir avisos de `react-hooks/exhaustive-deps` em componentes principais (pote
 
 ## 34. Presets industriais — computação quântica topológica FT, materiais meta-programáveis, síntese autónoma IA L2, habitats permanentes além Marte, fusão anêutica comercial, biofabricação órgãos vascularizados, internet quântica global operacional, elevador espacial mega-estrutura (Round 109)
 - [x] **+8 novos presets fronteira:** Computação Quântica Topológica FT Avançada, Materiais Meta-Programáveis Tempo Real, Síntese Autónoma IA-Driven Nível 2, Habitats Espaciais Permanentes Além Marte, Fusão Anêutica Comercial, Biofabricação Órgãos Vascularizados Complexos, Internet Quântica Global Operacional, Elevador Espacial Mega-Estrutura Orbital — total 198 presets, 189 indústrias cobertas (concluído Round 109).
+
+## 35. Presets industriais — próxima fronteira (Round 111 - planeado)
+- [ ] **+8 novos presets fronteira:** Computação Neuromórfica Óptica, Biomanufatura de Carne Cultivada Escala Industrial, Mineração de Gelo Lunar, Reatores de Sal Fundido Comerciais, Manufactura Aditiva de Cerâmica Avançada, Agricultura Biorregenativa Espaço Profundo, Defesa Cibernética Infraestrutura Crítica, Redes Neurais Espelhadas — total 214 presets, ~197 indústrias cobertas (pendente Round 111).
