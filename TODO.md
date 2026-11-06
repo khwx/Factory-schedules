@@ -160,5 +160,8 @@ Corrigir avisos de `react-hooks/exhaustive-deps` em componentes principais (pote
 ## 35. Presets industriais — próxima fronteira (Round 111)
 - [x] **+8 novos presets fronteira:** Computação Neuromórfica Óptica, Biomanufatura de Carne Cultivada Escala Industrial, Mineração de Gelo Lunar, Reatores de Sal Fundido Comerciais, Manufactura Aditiva de Cerâmica Avançada, Agricultura Biorregenativa Espaço Profundo, Defesa Cibernética Infraestrutura Crítica, Redes Neurais Espelhadas — total 214 presets, 197 indústrias cobertas (concluído Round 111).
 
-## 36. Presets industriais — próxima fronteira (Round 112 - planeado)
-- [ ] **+8 novos presets fronteira:** Computação Quântica por Junção Supercondutora, Fusão Inercial Confinada Comercial, Fábricas Autónomas Lights-Out, Armazenamento Gravitacional de Energia, Sondas Interestelares Vela Laser, Bioimpressão de Tecidos Inteiros, Redes 6G Terahertz, Mineração de Recursos em Vênus (pendente Round 112).
+## 36. Presets industriais — próxima fronteira (Round 112)
+- [x] **+8 novos presets fronteira:** Computação Quântica por Junção Supercondutora, Fusão Inercial Confinada Comercial, Fábricas Autónomas Lights-Out, Armazenamento Gravitacional de Energia, Sondas Interestelares Vela Laser, Bioimpressão de Tecidos Inteiros, Redes 6G Terahertz, Mineração de Recursos em Vênus — total 222 presets, 197 indústrias cobertas (concluído Round 112; sem chaves i18n novas — indústrias reutilizadas).
+
+## 37. Presets industriais — próxima fronteira (Round 113 - planeado)
+- [ ] **+8 novos presets fronteira com indústrias novas (ex.: Laboratórios Lunares ISRU, Materiais de Alta Entropia HEA, Aquicultura Autónoma Offshore, Observatórios de Ondas Gravitacionais, Captura Energética Piezoelétrica Urbana, Impressão 3D Habitacional Autónoma, Medicina de Precisão Personalizada, Remoção/Reciclagem de Microplásticos em Escala) — total 230 presets, exigirá +8 chaves `presetSelector.industries.*` em 5 línguas + `INDUSTRY_KEY_MAP`.

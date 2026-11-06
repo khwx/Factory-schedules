@@ -2,6 +2,29 @@
 
 Log de execuções autónomas do Bot Orquestrador (modelos free: `opencode/hy3-free`).
 
+## Round 112 — 2026-11-06
+**Objetivo:** Expandir presets industriais com +8 setores de fronteira de próxima geração (Computação Quântica por Junção Supercondutora, Fusão Inercial Confinada Comercial, Fábricas Autónomas Lights-Out, Armazenamento Gravitacional de Energia, Sondas Interestelares Vela Laser, Bioimpressão de Tecidos Inteiros, Redes 6G Terahertz, Mineração de Recursos em Vênus).
+
+**Contexto:** A Round 111 completou a expansão para 214 presets cobrindo 197 indústrias com foco em computação neuromórfica óptica, biomanufatura de carne cultivada, mineração de gelo lunar, reatores de sal fundido comerciais, manufactura aditiva de cerâmica avançada, agricultura biorregenativa de espaço profundo, defesa cibernética de infraestrutura crítica e redes neurais espelhadas. Conforme sugerido na decisão da Round 111, havia oportunidade de cobrir computação quântica por junção supercondutora (qubits transmon/fluxo + diluição criogénica <20mK + gates micro-ondas + correção de erros), fusão inercial confinada comercial (drivers laser alta energia + alvos criogénicos + diagnóstico neutrões/raios-X + repetição shot), fábricas autónomas lights-out (produção sem presença humana + cobots + AGV/AMR + visão artificial + manutenção preditiva), armazenamento gravitacional de energia (elevadores de massa + poços/minas + motores/geradores + integração rede renovável), sondas interestelares vela laser, bioimpressão de tecidos inteiros, redes 6G terahertz e mineração de recursos em Vênus.
+
+**O que foi feito:**
+- `src/data/presetScenarios.ts`:
+  - Adicionados 8 novos presets com `teamPatterns` individuais:
+    1. **Computação Quântica por Junção Supercondutora (3 Equipas)** — turnos 12h, qubits transmon/fluxo + diluição criogénica <20mK + gates micro-ondas + correção de erros + calibração + leitura por dispersão
+    2. **Fusão Inercial Confinada Comercial (4 Equipas)** — turnos 12h, drivers laser alta energia + alvos criogénicos + câmara alvo + diagnóstico neutrões/raios-X + repetição shot + trítio/proteção radiação
+    3. **Fábricas Autónomas Lights-Out (4 Equipas)** — turnos 12h, produção sem iluminação/presença humana + robôs colaborativos + AGV/AMR + visão artificial + manutenção preditiva + operações 24/7
+    4. **Armazenamento Gravitacional de Energia (3 Equipas)** — turnos 12h, elevadores de massa/blocos + poços/minas abandonadas + motores/geradores + carga/descarga + integração rede renovável
+    5. **Sondas Interestelares Vela Laser (3 Equipas)** — turnos 12h, véu reflector + propulsão por pressão de radiação laser + navegação interestelar + comunicações deep space
+    6. **Bioimpressão de Tecidos Inteiros (4 Equipas)** — turnos 12h, bioimpressão multi-cabeças + bioinks vivas + vascularização + maturação + validação funcional
+    7. **Redes 6G Terahertz (4 Equipas)** — turnos 12h, espectro THz + massive MIMO + backhaul óptico + edge AI + cobertura urbana/subsolo
+    8. **Mineração de Recursos em Vênus (3 Equipas)** — turnos 12h, sondas/robôs endurecidos para >460°C + balões pressurizados + extração de metais/sulfur + logística orbital
+  - Total: 222 presets (era 214). Cobertura mantida em 197 indústrias distintas (presets reutilizam categorias de indústrias já existentes — sem novas chaves i18n).
+- `src/components/PresetSelector.tsx`: sem alterações — todos os `industry` dos novos presets já mapeados em `INDUSTRY_KEY_MAP`.
+
+**Verificação:** `npm run lint` → 0 erros (53 warnings pré-existentes); `npx tsc -b` → OK; `vitest` → **652 passam**, 0 falham (83 ficheiros).
+
+**Decisão registada:** Presets industriais expandidos de 214 para 222, mantendo 197 setores distintos e incluindo agora junções supercondutoras quânticas, fusão inercial comercial, fábricas lights-out, armazenamento gravitacional, sondas vela laser, bioimpressão de tecidos inteiros, redes 6G terahertz e mineração em Vênus. Próximos passos sugeridos: (a) novo lote de 8 presets com indústrias novas (ex.: laboratórios lunares ISRU, alta entropia HEA, aquicultura autónoma offshore, ondas gravitacionais/observatórios); (b) verificar se novos `lang === 'pt'` hardcoded surgem após adições.
+
 ## Round 111 — 2026-11-06
 **Objetivo:** Expandir presets industriais com +8 setores de fronteira de próxima geração (Computação Neuromórfica Óptica, Biomanufatura de Carne Cultivada Escala Industrial, Mineração de Gelo Lunar, Reatores de Sal Fundido Comerciais, Manufactura Aditiva de Cerâmica Avançada, Agricultura Biorregenativa Espaço Profundo, Defesa Cibernética Infraestrutura Crítica, Redes Neurais Espelhadas) + i18n (5 línguas).
 
