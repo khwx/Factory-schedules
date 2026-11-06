@@ -3553,6 +3553,138 @@ const RAW_PRESET_SCENARIOS: PresetScenario[] = [
         ],
         industry: 'Redes Neurais Espelhadas'
     },
+    // Computação Quântica por Junção Supercondutora
+    {
+        name: 'Computação Quântica por Junção Supercondutora (3 Equipas)',
+        description: 'Computação quântica por junções supercondutoras - 3 equipas, turnos 12h, qubits transmon/fluxo + diluição criogénica <20mK + gates micro-ondas + correção de erros + calibração + leitura por dispersão',
+        teams: 3,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOO', // Team A: qubits/criogenia (junções Josephson + diluição + wiring + controlo temperatura <20mK)
+            'NNNNOOOOMMMM', // Team B: gates/leitura (micro-ondas + flux bias + leitura dispersão/amplificadores paramétricos + calibração gates)
+            'OOOOMMMMNNNN', // Team C: correção erros/software (códigos superfície + decodificação tempo real + benchmarking + integração stack)
+        ],
+        industry: 'Computação Quântica'
+    },
+    // Fusão Inercial Confinada Comercial
+    {
+        name: 'Fusão Inercial Confinada Comercial (4 Equipas)',
+        description: 'Fusão inercial confinada comercial - 4 equipas, turnos 12h, drivers laser alta energia + alvos criogénicos + câmara alvo + diagnóstico neutrões/raios-X + repetição shot + trítio/proteção radiação',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 42,
+        pattern: 'DDNNOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'DDNNOO', // Team A: lasers/drivers (sistemas laser alta potência + alinhamento + pulsaçao + sistemas ópticos + manutenção laser)
+            'OODDNN', // Team B: alvos/câmara (fabricação alvos criogénicos + inserção + câmara de vácuo + primeiras paredes + detritos)
+            'NNOODD', // Team C: diagnóstico/proteção (detetores neutrões/raios-X + proteção radiação + tritio + dados shot + controlo qualidade)
+            'DDOONN', // Team D: operações/segurança (controlo ciclo shot + segurança radiação + licenciamento + integração rede + manutenção preventiva)
+        ],
+        industry: 'Energia de Fusão Comercial'
+    },
+    // Fábricas Autónomas Lights-Out
+    {
+        name: 'Fábricas Autónomas Lights-Out (4 Equipas)',
+        description: 'Fábricas autónomas lights-out - 4 equipas, turnos 12h, produção sem iluminação/presença humana + robôs colaborativos + AGV/AMR + controlo qualidade visão artificial + manutenção preditiva + operações 24/7 sem interrupção',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 42,
+        pattern: 'DDNNOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'DDNNOO', // Team A: produção autónoma (células robotizadas + montagem/soldagem/usinagem + controlo processo + OT/SCADA)
+            'OODDNN', // Team B: logística interna (AGV/AMR + transporte materiais + armazém automático + picking/reabastecimento + estações de trabalho)
+            'NNOODD', // Team C: qualidade/visão (inspeção visão artificial + controlo qualidade estatístico + deteção defeitos + rastreabilidade + metrologia)
+            'DDOONN', // Team D: manutenção preditiva (sensores IoT + vibração/temperatura + IA manutenção + peças sobresselentes + parada programada)
+        ],
+        industry: 'Indústria / Fabrico'
+    },
+    // Armazenamento Gravitacional de Energia
+    {
+        name: 'Armazenamento Gravitacional de Energia (3 Equipas)',
+        description: 'Armazenamento gravitacional de energia - 3 equipas, turnos 12h, elevadores de massa/blocos + poços/minas abandonadas + motores/geradores elétricos + gestão carga/descarga + integração rede renovável + longa duração',
+        teams: 3,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOO', // Team A: elevação/massa (guindastes/elevadores + blocos de massa + sistema de cabos + controlo posição + subida/descida)
+            'NNNNOOOOMMMM', // Team B: conversão elétrica (motores/geradores + inversores + eletrónica de potência + conexão rede + eficiência carga/descarga)
+            'OOOOMMMMNNNN', // Team C: operações/grid (gestão carga/descarga + integração renovável + resposta frequência + mercado energia + manutenção civil/estrutural)
+        ],
+        industry: 'Armazenamento Energia Longa Duração'
+    },
+    // Sondas Interestelares Vela Laser
+    {
+        name: 'Sondas Interestelares Vela Laser (3 Equipas)',
+        description: 'Sondas interestelares vela laser - 3 equipas, turnos 12h, lasers terrestres alta potência + velas ligeiras refletivas + navegação autónoma + comunicações ponto-a-ponto interestelar + proteção radiação + ISRU destino',
+        teams: 3,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOO', // Team A: laser terrestre (array laser alta potência + feixe + apontamento/tracking + atmosfera compensação + energia instalação)
+            'NNNNOOOOMMMM', // Team B: navegação/comunicações (navegação autónoma inercial/estelar + comunicações laser/ondas gravitacionais + telemetria + correção rota)
+            'OOOOMMMMNNNN', // Team C: sonda/vela (vela refletiva/material + proteção radiação/poeira interestelar + payload científico + ISRU destino + fim de vida)
+        ],
+        industry: 'Operações Espaciais'
+    },
+    // Bioimpressão de Tecidos Inteiros
+    {
+        name: 'Bioimpressão de Tecidos Inteiros (4 Equipas)',
+        description: 'Bioimpressão de tecidos inteiros - 4 equipas, turnos 12h, impressão 3D biológica multi-material + bio-tintas celulares + vascularização + biorreatores maturação + controlo qualidade histológico + implantes/órgãos',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 42,
+        pattern: 'DDNNOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'DDNNOO', // Team A: design/bio-tintas (CAD biológico + bio-tintas (alginato/gelatina/colagénio) + células estaminais + mistura bio-tinta + controlo reologia)
+            'OODDNN', // Team B: impressão/maturacão (impressora 3D biológica + camadas tecido + biorreatores perfusão + maturação tecido + controlo ambiente estéril)
+            'NNOODD', // Team C: vascularização/qualidade (canais vasculares + histologia + controlo qualidade + viabilidade celular + testes funcionalidade + esterilização)
+            'DDOONN', // Team D: implantes/regulação (implantes personalizados + ensaios clínicos + regulatório FDA/EMA + embalagem estéril + cadeia de frio + distribuição)
+        ],
+        industry: 'Biofabricação'
+    },
+    // Redes 6G Terahertz
+    {
+        name: 'Redes 6G Terahertz (4 Equipas)',
+        description: 'Redes 6G terahertz - 4 equipas, turnos 12h, estações base sub-THz + antenas superfícies inteligentes (RIS) + backhaul ótico + IA nativa + cobertura indoor/outdoor + latência <1ms + massive MIMO',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 42,
+        pattern: 'DDNNOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'DDNNOO', // Team A: estações base (instalação sub-THz + RF/antenas + rádio definido por software + atualizações firmware + controlo célula)
+            'OODDNN', // Team B: RIS/backhaul (superfícies inteligentes refletivas + backhaul ótico/fibra + ligação ponto-a-ponto + alinhamento + manutenção infraestrutura)
+            'NNOODD', // Team C: IA/otimização (IA nativa rede + otimização recursos + slicing + gestão interferência + massive MIMO + beamforming)
+            'DDOONN', // Team D: cobertura/serviço (cobertura indoor/outdoor + QoS/latência <1ms + testes campo + suporte clientes + expansão rede + licenciamento espectro)
+        ],
+        industry: 'Telecomunicações / NOC'
+    },
+    // Mineração de Recursos em Vênus
+    {
+        name: 'Mineração de Recursos em Vênus (3 Equipas)',
+        description: 'Mineração de recursos em Vênus - 3 equipas, turnos 16h, plataformas atmosféricas flutuantes + perfuração superfície alta pressão/temperatura + extração metais/CO₂/nitrogénio + refrigeração ativa + proteção ácidos sulfúricos + teleoperação',
+        teams: 3,
+        shiftDuration: 16,
+        weeklyHoursContract: 40,
+        pattern: 'DDNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'DDNNOOOO', // Team A: plataformas flutuantes (balões/dirigíveis atmosféricos + estação operacional + suporte vida + controlo altitude + manutenção envelope)
+            'NNNNOODD', // Team B: superfície/perfuração (perfuradeira alta P/T + extração metais/CO₂/nitrogénio + amostragem regolito + refrigeração equipamento + proteção ácidos sulfúricos)
+            'OOOODDNN', // Team C: processamento/teleoperação (refino recursos + processamento CO₂/metais + teleoperação robótica + logística retorno + controlo missão + segurança)
+        ],
+        industry: 'Mineração Espacial'
+    },
 ];
 
 /**
