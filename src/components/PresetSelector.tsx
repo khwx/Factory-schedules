@@ -4,7 +4,7 @@ import { PRESET_SCENARIOS, PresetScenario } from '../data/presetScenarios';
 import { useI18n } from '../i18n';
 import { Translations } from '../i18n/locales/pt';
 
-const INDUSTRY_KEY_MAP: Record<string, keyof Translations['presetSelector']['industries']> = {
+export const INDUSTRY_KEY_MAP: Record<string, keyof Translations['presetSelector']['industries']> = {
     'Indústria / Fabrico': 'manufacturing',
     'Petróleo / Gás': 'oilGas',
     'Segurança Privada': 'privateSecurity',

@@ -10,7 +10,7 @@ export interface PresetScenario {
     industry?: string; // Industry category for filtering
 }
 
-export const PRESET_SCENARIOS: PresetScenario[] = [
+const RAW_PRESET_SCENARIOS: PresetScenario[] = [
     {
         name: 'Horário 5x3x5x4x5x3',
         description: '5 equipas - Ciclo de 25 dias (5M-3F-5T-4F-5N-3F)',
@@ -136,7 +136,7 @@ export const PRESET_SCENARIOS: PresetScenario[] = [
         teams: 4,
         shiftDuration: 12,
         weeklyHoursContract: 42,
-        pattern: 'DDNNOO', // D=Day, N=Night, O=Off (using M/D for day, N for night, F for off)
+        pattern: 'DDNNOODDNNOO', // D=Day, N=Night, O=Off (using M/D for day, N for night, F for off)
         startDate: '2025-01-01',
         teamPatterns: [
             'DDNNOODDNNOO', // Team A: 2 dia, 2 noite, 2 off
@@ -175,7 +175,7 @@ export const PRESET_SCENARIOS: PresetScenario[] = [
             'MFFF', // Team A
             'FMFF', // Team B
             'FFMF', // Team C
-            'FFF', // Team D (will be 'FFFM')
+            'FFFM', // Team D
         ],
         industry: 'Bombeiros'
     },
@@ -192,8 +192,8 @@ export const PRESET_SCENARIOS: PresetScenario[] = [
             'MMMMTTTTNNNNOOOO', // Team A
             'OOOOMMMMTTTTNNNN', // Team B (offset 4)
             'NNNNOOOOMMMMTTTT', // Team C (offset 8)
-            'TTTNNNNOOOOMMMM', // Team D (offset 12)
-            'MMMTTTTNNNNOOOO', // Team E (offset 16)
+            'TTTTNNNNOOOOMMMM', // Team D (offset 12)
+            'MMMMTTTTNNNNOOOO', // Team E (offset 16 - reforço de picos, mesma rotação que A)
         ],
         industry: 'Call Center'
     },
@@ -360,7 +360,7 @@ export const PRESET_SCENARIOS: PresetScenario[] = [
             'MFFFF', // Team A
             'FMFFF', // Team B
             'FFMFF', // Team C
-            'FFF MF', // Team D (FFFMF)
+            'FFFMF', // Team D
             'FFFFM', // Team E
         ],
         industry: 'Saúde / Hospitalar'
@@ -2452,7 +2452,7 @@ export const PRESET_SCENARIOS: PresetScenario[] = [
             'OOOOPPPPMMMMNNNN', // Team C: maturação biorreator (perfusão pulsátil + condicionamento mecânico/elétrico + fatores crescimento + monitoramento metabolismo/viabilidade) + integração nervos/linfa + enxerto pré-vascularizado
             'PPPPMMMMNNNNOOOO', // Team D: controle qualidade funcional (histologia/imunofluorescência + fisiologia: contractilidade/barreira/filtration) + esterilização/embalagem + logística cadeia frio + assuntos regulatórios (FDA/EMA ATMP) + ensaios pré-clínicos
         ],
-        industry: 'Biofabricação Órgãos'
+        industry: 'Biofabricação Órgãos 4D'
     },
     {
         name: 'Computação Neuromórfica - Chips Spiking (4 Equipas)',
@@ -3423,3 +3423,22 @@ export const PRESET_SCENARIOS: PresetScenario[] = [
         industry: 'Terraformação Marciana Fase 1'
     },
 ];
+
+/**
+ * Presets must use only the canonical shift characters (M/T/N/F) so that they
+ * pass `validateScenario()` in src/utils/scenarioValidation.ts — otherwise every
+ * preset-derived scenario is silently dropped from localStorage on reload — and
+ * so analytics (distribuição de turnos, conflitos, QoL) contam todos os dias do
+ * ciclo.
+ *
+ * Presets legados usam 'D' (day), 'O' (off) e 'P' (segundo bloco de folga);
+ * são normalizados para o equivalente canónico: D → M (turno de dia) e O/P → F (folga).
+ */
+const normalizePattern = (value: string): string =>
+    value.replace(/D/g, 'M').replace(/[OP]/g, 'F');
+
+export const PRESET_SCENARIOS: PresetScenario[] = RAW_PRESET_SCENARIOS.map((preset) => ({
+    ...preset,
+    pattern: normalizePattern(preset.pattern),
+    teamPatterns: preset.teamPatterns?.map(normalizePattern),
+}));
