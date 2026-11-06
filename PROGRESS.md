@@ -2,6 +2,32 @@
 
 Log de execuções autónomas do Bot Orquestrador (modelos free: `opencode/hy3-free`).
 
+## Round 111 — 2026-11-06
+**Objetivo:** Expandir presets industriais com +8 setores de fronteira de próxima geração (Computação Neuromórfica Óptica, Biomanufatura de Carne Cultivada Escala Industrial, Mineração de Gelo Lunar, Reatores de Sal Fundido Comerciais, Manufactura Aditiva de Cerâmica Avançada, Agricultura Biorregenativa Espaço Profundo, Defesa Cibernética Infraestrutura Crítica, Redes Neurais Espelhadas) + i18n (5 línguas).
+
+**Contexto:** A Round 110 completou a expansão para 206 presets cobrindo 189 indústrias com foco em fabricação molecular APM, computação quântica fotónica FT, fusão comercial operacional, mineração cinturão principal, habitats O'Neill, biologia sintética organismos mínimos, propulsão antimatéria interestelar e terraformação marciana fase 1. Conforme sugerido na decisão da Round 110, havia oportunidade de cobrir computação neuromórfica óptica (neurónios fotónicos/sinapses programáveis), biomanufatura de carne cultivada em escala industrial (bioreatores perfusão + meios serum-free + scaffolds), mineração de gelo lunar (prospecção neutrons/radar + sublimação/destilação → H₂O + eletrólise), reatores de sal fundido comerciais (FLiBe/FLiNaK + bombas magnéticas + ciclo Th/U), manufactura aditiva de cerâmica avançada (DLP/binder jetting + SPS/HIP >99% densidade), agricultura biorregenativa de espaço profundo (ECLSS fechado + LED espectral + 100% calorias da missão), defesa cibernética de infraestrutura crítica (OT/SCADA + SOC 24/7 IA + NIS2/IEC 62443), e redes neurais espelhadas (connectoma + digital twin de redes biológicas + neuromórfico/robótica cognitiva).
+
+**O que foi feito:**
+- `src/data/presetScenarios.ts`:
+  - Adicionados 8 novos presets com `teamPatterns` individuais:
+    1. **Computação Neuromórfica Óptica (3 Equipas)** — turnos 12h, neurónios fotónicos integrados + sinapses ópticas programáveis (PCM/memristores) + interconexão WDM + aprendizagem spike em tempo real (<1ns, >10 TOPS/W)
+    2. **Biomanufatura Carne Cultivada Escala Industrial (4 Equipas)** — turnos 12h, células-tronco miogénicas + bioreatores perfusão 10.000L+ + meios serum-free + scaffolds comestíveis 3D + custo <$5/kg
+    3. **Mineração de Gelo Lunar (3 Equipas)** — turnos 12h, prospecção neutrons/sísmica/radar + escavação térmica + sublimação/destilação H₂O + eletrólise H₂/O₂ + logística polar/LEO
+    4. **Reatores de Sal Fundido Comerciais (4 Equipas)** — turnos 12h, sal FLiBe/FLiNaK com combustível dissolvido + bombas magnéticas sem selo + ciclo Th/U + segurança passiva + LCOE <$60/MWh
+    5. **Manufactura Aditiva Cerâmica Avançada (3 Equipas)** — turnos 12h, feedstock Al₂O₃/ZrO₃/SiC + DLP/SLA/binder jetting + sinterização SPS/HIP → >99% densidade + NDT/CT
+    6. **Agricultura Biorregenativa Espaço Profundo (4 Equipas)** — turnos 12h, hidropónico/aeropónico + LED espectral + reciclagem >99% + colheita autónoma + 100% calorias da missão
+    7. **Defesa Cibernética Infraestrutura Crítica (3 Equipas)** — turnos 12h, inventário OT/SCADA/IoT + SOC 24/7 deteção IA/UEBA + resposta/isolamento/forense + zero-trust + NIS2/IEC 62443
+    8. **Redes Neurais Espelhadas (3 Equipas)** — turnos 12h, connectoma/e-phys + espelhamento computacional retina/córtex/cerebelo + aprendizagem por espelhamento + neuromórfico/robótica cognitiva
+  - Total: 214 presets (era 206). Cobertura alargada a 8 novos setores (total 197 indústrias distintas).
+- `src/i18n/locales/{pt,en,es,fr,de}.ts`:
+  - Novas chaves `presetSelector.industries.*` para as 8 novas indústrias em 5 línguas (40 chaves novas).
+- `src/components/PresetSelector.tsx`:
+  - Atualizado `INDUSTRY_KEY_MAP` com as 8 novas indústrias.
+
+**Verificação:** `npm run build` → OK; `vitest` → **652 passam**, 0 falham; `eslint` → 0 erros (53 warnings pré-existentes).
+
+**Decisão registada:** Presets industriais expandidos de 206 para 214, cobrindo agora 197 setores distintos incluindo computação neuromórfica óptica, biomanufatura de carne cultivada, mineração de gelo lunar, reatores de sal fundido comerciais, manufactura aditiva de cerâmica avançada, agricultura biorregenativa de espaço profundo, defesa cibernética de infraestrutura crítica e redes neurais espelhadas. Próximos passos sugeridos: expansão para computação quântica por junção supercondutora, fusão inercial confinada, fábricas autónomas lights-out, armazenamento gravitacional de energia, sondas interestelares vela laser, bioimpressão de tecidos inteiros, redes6G terahertz e mineração de recursos em Vênus.
+
 ## Round 108 — 2026-10-08
 **Objetivo:** Expandir presets industriais com +8 setores de fronteira de próxima geração (Assentamento Marte/ISRU, Sensores Quânticos/Gravimetria, Úteros Artificiais/Ectogénese, Robótica Molecular/Nanobots, Data Centers Orbitais, Sondas Von Neumann Auto-replicantes, Matéria Programável/Claytronics, Produção/Armazenamento Antimatéria) + i18n (5 línguas).
 
