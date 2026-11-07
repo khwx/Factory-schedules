@@ -204,6 +204,22 @@ export const INDUSTRY_KEY_MAP: Record<string, keyof Translations['presetSelector
     'Agricultura Biorregenativa Espaço Profundo': 'deepSpaceBioregenerativeAgriculture',
     'Defesa Cibernética Infraestrutura Crítica': 'criticalInfrastructureCyberDefense',
     'Redes Neurais Espelhadas': 'mirroredNeuralNetworks',
+    lunarISRU: "lunarISRU",
+    highEntropyMaterials: "highEntropyMaterials",
+    autonomousAquaculture: "autonomousAquaculture",
+    gravitationalWaveObservatories: "gravitationalWaveObservatories",
+    urbanPiezoelectricEnergy: "urbanPiezoelectricEnergy",
+    home3DPrinting: "home3DPrinting",
+    precisionMedicine: "precisionMedicine",
+    microplasticRecycling: "microplasticRecycling",
+    'Laboratórios Lunares ISRU': 'lunarISRU',
+    'Materiais de Alta Entropia HEA': 'highEntropyMaterials',
+    'Aquicultura Autónoma Offshore': 'autonomousAquaculture',
+    'Observatórios de Ondas Gravitacionais': 'gravitationalWaveObservatories',
+    'Captura Energética Piezoelétrica Urbana': 'urbanPiezoelectricEnergy',
+    'Impressão 3D Habitacional Autónoma': 'home3DPrinting',
+    'Medicina de Precisão Personalizada': 'precisionMedicine',
+    'Remoção/Reciclagem de Microplásticos em Escala': 'microplasticRecycling',
 };
 
 interface PresetSelectorProps {
@@ -221,202 +237,202 @@ const PresetSelector: React.FC<PresetSelectorProps> = ({ onLoadPreset }) => {
     const itemRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
     const industries = useMemo(() => {
-        const uniqueIndustries = [...new Set(PRESET_SCENARIOS.map(p => p.industry).filter(Boolean))];
-        return ['all', ...uniqueIndustries.sort()] as string[];
+      const uniqueIndustries = [...new Set(PRESET_SCENARIOS.map(p => p.industry).filter(Boolean))];
+      return ['all', ...uniqueIndustries.sort()] as string[];
     }, []);
 
     const filteredPresets = useMemo(() => {
-        if (selectedIndustry === 'all') return PRESET_SCENARIOS;
-        return PRESET_SCENARIOS.filter(p => p.industry === selectedIndustry);
+      if (selectedIndustry === 'all') return PRESET_SCENARIOS;
+      return PRESET_SCENARIOS.filter(p => p.industry === selectedIndustry);
     }, [selectedIndustry]);
 
     const getIndustryLabel = (industry: string): string => {
-        const key = INDUSTRY_KEY_MAP[industry];
-        if (key && t.presetSelector.industries[key]) {
-            return t.presetSelector.industries[key];
-        }
-        return industry;
+      const key = INDUSTRY_KEY_MAP[industry];
+      if (key && t.presetSelector.industries[key]) {
+        return t.presetSelector.industries[key];
+      }
+      return industry;
     };
 
     const close = useCallback(() => {
-        setIsOpen(false);
-        setActiveIndex(-1);
+      setIsOpen(false);
+      setActiveIndex(-1);
     }, []);
 
     useEffect(() => {
+      if (!isOpen) return;
+
+      const handleClickOutside = (e: MouseEvent) => {
+        if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
+            close();
+        }
+      };
+
+      const handleKeyDown = (e: KeyboardEvent) => {
+        if (e.key === 'Escape') {
+            close();
+            buttonRef.current?.focus();
+            return;
+        }
+
         if (!isOpen) return;
 
-        const handleClickOutside = (e: MouseEvent) => {
-            if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
-                close();
-            }
-        };
-
-        const handleKeyDown = (e: KeyboardEvent) => {
-            if (e.key === 'Escape') {
+        switch (e.key) {
+            case 'ArrowDown':
+              e.preventDefault();
+              setActiveIndex(prev => {
+                const next = prev < filteredPresets.length - 1 ? prev + 1 : 0;
+                itemRefs.current[next]?.scrollIntoView({ block: 'nearest' });
+                return next;
+              });
+              break;
+            case 'ArrowUp':
+              e.preventDefault();
+              setActiveIndex(prev => {
+                const next = prev > 0 ? prev - 1 : filteredPresets.length - 1;
+                itemRefs.current[next]?.scrollIntoView({ block: 'nearest' });
+                return next;
+              });
+              break;
+            case 'Home':
+              e.preventDefault();
+              setActiveIndex(0);
+              itemRefs.current[0]?.scrollIntoView({ block: 'nearest' });
+              break;
+            case 'End':
+              e.preventDefault();
+              setActiveIndex(filteredPresets.length - 1);
+              itemRefs.current[filteredPresets.length - 1]?.scrollIntoView({ block: 'nearest' });
+              break;
+            case 'Enter':
+            case ' ':
+              if (activeIndex >= 0) {
+                e.preventDefault();
+                onLoadPreset(filteredPresets[activeIndex]);
                 close();
                 buttonRef.current?.focus();
-                return;
-            }
+              }
+              break;
+        }
+      };
 
-            if (!isOpen) return;
-
-            switch (e.key) {
-                case 'ArrowDown':
-                    e.preventDefault();
-                    setActiveIndex(prev => {
-                        const next = prev < filteredPresets.length - 1 ? prev + 1 : 0;
-                        itemRefs.current[next]?.scrollIntoView({ block: 'nearest' });
-                        return next;
-                    });
-                    break;
-                case 'ArrowUp':
-                    e.preventDefault();
-                    setActiveIndex(prev => {
-                        const next = prev > 0 ? prev - 1 : filteredPresets.length - 1;
-                        itemRefs.current[next]?.scrollIntoView({ block: 'nearest' });
-                        return next;
-                    });
-                    break;
-                case 'Home':
-                    e.preventDefault();
-                    setActiveIndex(0);
-                    itemRefs.current[0]?.scrollIntoView({ block: 'nearest' });
-                    break;
-                case 'End':
-                    e.preventDefault();
-                    setActiveIndex(filteredPresets.length - 1);
-                    itemRefs.current[filteredPresets.length - 1]?.scrollIntoView({ block: 'nearest' });
-                    break;
-                case 'Enter':
-                case ' ':
-                    if (activeIndex >= 0) {
-                        e.preventDefault();
-                        onLoadPreset(filteredPresets[activeIndex]);
-                        close();
-                        buttonRef.current?.focus();
-                    }
-                    break;
-            }
-        };
-
-        document.addEventListener('mousedown', handleClickOutside);
-        document.addEventListener('keydown', handleKeyDown);
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
-            document.removeEventListener('keydown', handleKeyDown);
-        };
+      document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener('keydown', handleKeyDown);
+      return () => {
+        document.removeEventListener('mousedown', handleClickOutside);
+        document.removeEventListener('keydown', handleKeyDown);
+      };
     }, [isOpen, activeIndex, close, onLoadPreset, filteredPresets]);
 
     useEffect(() => {
-        if (isOpen && activeIndex >= 0) {
-            itemRefs.current[activeIndex]?.focus();
-        }
+      if (isOpen && activeIndex >= 0) {
+        itemRefs.current[activeIndex]?.focus();
+      }
     }, [isOpen, activeIndex]);
 
     useEffect(() => {
-        setActiveIndex(-1);
+      setActiveIndex(-1);
     }, [selectedIndustry]);
 
     return (
-        <div className="relative mb-4" ref={containerRef}>
-            <button
-                ref={buttonRef}
-                onClick={() => setIsOpen(!isOpen)}
-                className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-medium py-3 px-6 rounded-lg transition-all flex items-center justify-between shadow-lg"
-                aria-expanded={isOpen}
-                aria-haspopup="listbox"
+      <div className="relative mb-4" ref={containerRef}>
+        <button
+            ref={buttonRef}
+            onClick={() => setIsOpen(!isOpen)}
+            className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-medium py-3 px-6 rounded-lg transition-all flex items-center justify-between shadow-lg"
+            aria-expanded={isOpen}
+            aria-haspopup="listbox"
+        >
+            <div className="flex items-center gap-2">
+              <BookOpen className="w-5 h-5" />
+              <span>{t.presetSelector.title}</span>
+            </div>
+            <ChevronDown className={`w-5 h-5 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+        </button>
+
+        {isOpen && (
+            <div
+              ref={listRef}
+              className="absolute top-full left-0 right-0 mt-2 bg-gray-800 border border-gray-700 rounded-lg shadow-xl z-10 overflow-hidden max-h-[500px] overflow-y-auto"
+              role="listbox"
+              aria-label={t.a11y.exampleScenarios}
             >
-                <div className="flex items-center gap-2">
-                    <BookOpen className="w-5 h-5" />
-                    <span>{t.presetSelector.title}</span>
-                </div>
-                <ChevronDown className={`w-5 h-5 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
-            </button>
-
-            {isOpen && (
-                <div
-                    ref={listRef}
-                    className="absolute top-full left-0 right-0 mt-2 bg-gray-800 border border-gray-700 rounded-lg shadow-xl z-10 overflow-hidden max-h-[500px] overflow-y-auto"
-                    role="listbox"
-                    aria-label={t.a11y.exampleScenarios}
+              <div className="p-3 border-b border-gray-700 flex items-center gap-2">
+                <Filter className="w-5 h-5 text-gray-400" />
+                <label htmlFor="preset-industry-filter" className="text-sm text-gray-300">{t.presetSelector.industryLabel}</label>
+                <select
+                    id="preset-industry-filter"
+                    value={selectedIndustry}
+                    onChange={e => setSelectedIndustry(e.target.value)}
+                    className="ml-2 flex-1 bg-gray-700 border border-gray-600 rounded px-2 py-1 text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    aria-label={t.presetSelector.industryLabel}
                 >
-                    <div className="p-3 border-b border-gray-700 flex items-center gap-2">
-                        <Filter className="w-5 h-5 text-gray-400" />
-                        <label htmlFor="preset-industry-filter" className="text-sm text-gray-300">{t.presetSelector.industryLabel}</label>
-                        <select
-                            id="preset-industry-filter"
-                            value={selectedIndustry}
-                            onChange={e => setSelectedIndustry(e.target.value)}
-                            className="ml-2 flex-1 bg-gray-700 border border-gray-600 rounded px-2 py-1 text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            aria-label={t.presetSelector.industryLabel}
-                        >
-                            <option value="all">{t.presetSelector.allIndustries}</option>
-                            {industries.filter(i => i !== 'all').map(industry => (
-                                <option key={industry} value={industry}>{getIndustryLabel(industry)}</option>
-                            ))}
-                        </select>
-                        {selectedIndustry !== 'all' && (
-                            <button
-                                onClick={() => setSelectedIndustry('all')}
-                                className="text-gray-400 hover:text-white p-1"
-                                aria-label={t.presetSelector.clearFilter}
-                            >
-                                <X className="w-4 h-4" />
-                            </button>
-                        )}
-                    </div>
+                    <option value="all">{t.presetSelector.allIndustries}</option>
+                    {industries.filter(i => i !== 'all').map(industry => (
+                      <option key={industry} value={industry}>{getIndustryLabel(industry)}</option>
+                    ))}
+                </select>
+                {selectedIndustry !== 'all' && (
+                    <button
+                      onClick={() => setSelectedIndustry('all')}
+                      className="text-gray-400 hover:text-white p-1"
+                      aria-label={t.presetSelector.clearFilter}
+                    >
+                      <X className="w-4 h-4" />
+                    </button>
+                )}
+              </div>
 
-                    <div className="max-h-[400px] overflow-y-auto">
-                        {filteredPresets.length === 0 ? (
-                            <div className="p-4 text-center text-gray-500">
-                                {t.presetSelector.noScenariosFound}
-                            </div>
-                        ) : (
-                            filteredPresets.map((preset, index) => (
-                                <button
-                                    key={preset.name}
-                                    ref={el => { itemRefs.current[index] = el; }}
-                                    onClick={() => {
-                                        onLoadPreset(preset);
-                                        close();
-                                    }}
-                                    className={`w-full text-left p-4 transition-colors border-b border-gray-700 last:border-b-0 ${
-                                        activeIndex === index ? 'bg-gray-700' : 'hover:bg-gray-700'
-                                    }`}
-                                    role="option"
-                                    aria-selected={activeIndex === index}
-                                    tabIndex={activeIndex === index ? 0 : -1}
-                                >
-                                    <div className="flex items-start justify-between">
-                                        <div className="flex-1 min-w-0">
-                                            <h4 className="font-semibold text-white mb-1">{preset.name}</h4>
-                                            <p className="text-sm text-gray-400 mb-2">{preset.description}</p>
-                                            {preset.industry && (
-                                                <span className="inline-block px-2 py-0.5 text-xs bg-blue-900/50 text-blue-300 rounded mb-2">
-                                                    {getIndustryLabel(preset.industry)}
-                                                </span>
-                                            )}
-                                            <div className="flex gap-4 text-xs text-gray-500 flex-wrap">
-                                                <span>{preset.teams} {t.presetSelector.teams}</span>
-                                                <span>{t.presetSelector.shiftDuration}: {preset.shiftDuration}h</span>
-                                                <span>{t.presetSelector.contract}: {preset.weeklyHoursContract}h/sem</span>
-                                                <span className="font-mono truncate max-w-[200px]" title={preset.pattern}>
-                                                    {preset.pattern.length > 30
-                                                        ? preset.pattern.substring(0, 30) + '...'
-                                                        : preset.pattern}
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <Plus className="w-5 h-5 text-blue-400 flex-shrink-0 ml-4" />
-                                    </div>
-                                </button>
-                            ))
-                        )}
+              <div className="max-h-[400px] overflow-y-auto">
+                {filteredPresets.length === 0 ? (
+                    <div className="p-4 text-center text-gray-500">
+                      {t.presetSelector.noScenariosFound}
                     </div>
-                </div>
-            )}
-        </div>
+                ) : (
+                    filteredPresets.map((preset, index) => (
+                      <button
+                        key={preset.name}
+                        ref={el => { itemRefs.current[index] = el; }}
+                        onClick={() => {
+                            onLoadPreset(preset);
+                            close();
+                        }}
+                        className={`w-full text-left p-4 transition-colors border-b border-gray-700 last:border-b-0 ${
+                            activeIndex === index ? 'bg-gray-700' : 'hover:bg-gray-700'
+                        }`}
+                        role="option"
+                        aria-selected={activeIndex === index}
+                        tabIndex={activeIndex === index ? 0 : -1}
+                      >
+                        <div className="flex items-start justify-between">
+                            <div className="flex-1 min-w-0">
+                              <h4 className="font-semibold text-white mb-1">{preset.name}</h4>
+                              <p className="text-sm text-gray-400 mb-2">{preset.description}</p>
+                              {preset.industry && (
+                                <span className="inline-block px-2 py-0.5 text-xs bg-blue-900/50 text-blue-300 rounded mb-2">
+                                    {getIndustryLabel(preset.industry)}
+                                </span>
+                              )}
+                              <div className="flex gap-4 text-xs text-gray-500 flex-wrap">
+                                <span>{preset.teams} {t.presetSelector.teams}</span>
+                                <span>{t.presetSelector.shiftDuration}: {preset.shiftDuration}h</span>
+                                <span>{t.presetSelector.contract}: {preset.weeklyHoursContract}h/sem</span>
+                                <span className="font-mono truncate max-w-[200px]" title={preset.pattern}>
+                                    {preset.pattern.length > 30
+                                      ? preset.pattern.substring(0, 30) + '...'
+                                      : preset.pattern}
+                                </span>
+                              </div>
+                            </div>
+                            <Plus className="w-5 h-5 text-blue-400 flex-shrink-0 ml-4" />
+                        </div>
+                      </button>
+                    ))
+                )}
+              </div>
+            </div>
+        )}
+      </div>
     );
 };
 
