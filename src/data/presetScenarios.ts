@@ -3685,6 +3685,139 @@ const RAW_PRESET_SCENARIOS: PresetScenario[] = [
         ],
         industry: 'Mineração Espacial'
     },
+    // Laboratórios Lunares ISRU
+    {
+        name: 'Laboratórios Lunares ISRU (4 Equipas)',
+        description: 'Laboratórios ISRU lunar - 4 equipas, turnos 12h, extração recursos regolito + processamento oxigénio/água + fabricação habitat + ECLSS',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 42,
+        pattern: 'DDNNOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'DDNNOO', // Team A: centro controle ISRU + monitoramento produção + gestão energia + logística superfície
+            'OODDNN', // Team B: escavação robótica + processamento regolito + beneficiamento magnético + extração O2
+            'NNOODD', // Team C: construção habitat + impressão 3D regolito + integração ECLSS + monitoramento vida support
+            'DDOONN', // Team D: operações superfície + EVA + reabastecimento Gateway + ciência geologia/astrobiologia
+        ],
+        industry: 'Laboratórios Lunares ISRU'
+    },
+    // Materiais de Alta Entropia HEA
+    {
+        name: 'Materiais de Alta Entropia HEA (3 Equipas)',
+        description: 'Matérias-primas HEA - 3 equipas, turnos 12h, síntese multi-elementos + processamento powder + caracterização estrutural + QC propriedades',
+        teams: 3,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOO', // Team A: síntese pó (fusionamento arc + sputtering + homogeneização + atomização + controlo composição) + caracterização XRD/SEM
+            'NNNNOOOOMMMM', // Team B: processamento powder (classificação + peneiramento + atomização + garantia qualidade + embalagem) + logística fornecimento
+            'OOOOMMMMNNNN', // Team C: caracterização propriedades (DSC/TGA/ENSINO + ensaios mecânicos + micro-análise + mapeamento fases + reologia)
+        ],
+        industry: 'Materiais de Alta Entropia HEA'
+    },
+    // Aquicultura Autónoma Offshore
+    {
+        name: 'Aquicultura Autónoma Offshore (4 Equipas)',
+        description: 'Aquicultura offshore autónoma - 4 equipas, turnos 12h, criação espécimes marinhos + alimentação automática + monitoramento qualidade + colheita sustentável',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 42,
+        pattern: 'DDNNOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'DDNNOO', // Team A: centro operações (monitoramento parâmetros água + qualidade salmão/peixe + sistemas recirculação + alimentação automática) + gestão energia
+            'OODDNN', // Team B: criação e crescimento (alimentação dos espécimes + controlo crescimento + classificação tamanho + manejo individuos + bem-estar animal)
+            'NNOODD', // Team C: colheita e processamento (remoção captura + processamento pós-colheita + conservação + embalagem + logística distribuição) + QC qualidade
+            'DDOONN', // Team D: manutenção equipamentos (ROV intervenção + limpeza estruturas + reparação redes + calibração sensores + manutenção preventiva) + conformidade regulatória
+        ],
+        industry: 'Aquicultura Autónoma Offshore'
+    },
+    // Observatórios de Ondas Gravitacionais
+    {
+        name: 'Observatórios de Ondas Gravitacionais (3 Equipas)',
+        description: 'Detecção ondas gravitacionais - 3 equipas, turnos 12h, operação detectores + leitura dados + monitoramento ambiental + manutenção cryogenic',
+        teams: 3,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMTTTTNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMTTTTNNNNOOOO', // Team A: operação detectores (interferômetros a laser + sinais sísmicos + manutenção criogenia + vácuo ultra-alto + estabilização térmica) + aquisição dados tempo real
+            'NNNNOOOOMMMMTTTT', // Team B: processamento dados (reconhecimento padrões + filtragem ruído + correção órbitas + modelação waveform + detecção transientes) + pipeline dados
+            'TTTTNNNNOOOOMMMM', // Team C: manutenção instalação (cryogenic system + isolamento térmico + vácuo + manutenção óptica + substituição componentes + qualificação equipamento) + segurança radiológica
+        ],
+        industry: 'Observatórios de Ondas Gravitacionais'
+    },
+    // Captura Energética Piezoelétrica Urbana
+    {
+        name: 'Captura Energética Piezoelétrica Urbana (4 Equipas)',
+        description: 'Captura energia piezoelétrica urbana - 4 equipas, turnos 12h, sensores piezoelétricos + transdutores + rede elétrica municipal + armazenamento + distribuição descentralizada',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 42,
+        pattern: 'DDNNOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'DDNNOO', // Team A: instalação sensores (deployamento transdutores piezoelétricos + integração rede urbana + monitoramento produção energia + manutenção preventiva + qualidade sinal) + certificação normas
+            'OODDNN', // Team B: rede elétrica (distribuição energia + gestão carga + otimização rede + integração renovável + resposta pico demanda + eficiência rede) + gestão demanda
+            'NNOODD', // Team C: armazenamento e distribuição (sistemas battery + supercapacitors + gestão thermal + balanceamento carga + micro-redes + entrega descentralizada + logística distribuição) + QC energia
+            'DDOONN', // Team D: I+D e otimização (pesquisa materiais + desenvolvimento transdutores + modelação física + simulação CFD + prototipagem + teste campo + análise dados + melhoria performance) + patentes + parcerias
+        ],
+        industry: 'Captura Energética Piezoelétrica Urbana'
+    },
+    // Impressão 3D Habitacional Autónoma
+    {
+        name: 'Impressão 3D Habitacional Autónoma (4 Equipas)',
+        description: 'Habitação 3D autónoma - 4 equipas, turnos 12h, impressão estruturas + concretos especializados + integração sistemas + acabamento + controle qualidade',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 42,
+        pattern: 'DDNNOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'DDNNOO', // Team A: design e preparação (modelação BIM + otimização estrutura + preparação bio-concreto + sliceamento + toolpath generation + planeamento geometria) + CAD/BIM
+            'OODDNN', // Team B: impressão estrutural (operação impressoras 3D grande escala + extrusão material + monitoração deposition + controlo térmico + reparação + manutenção equipment) + impressão construção
+            'NNOODD', // Team C: integração sistemas (instalação redes elétricas + encanamentos HVAC + vidros + isolamento + acabamento superficial + controle qualidade conformidade + certificação construção) + fit-out
+            'DDOONN', // Team D: acabamento e qualidade (revestimentos + pintura + paisagismo + inspeção estrutura + ensaios de resistência + certificação habitacional + relatórios + garantia + manutenção preventiva) + conclusão
+        ],
+        industry: 'Impressão 3D Habitacional Autónoma'
+    },
+    // Medicina de Precisão Personalizada
+    {
+        name: 'Medicina de Precisão Personalizada (4 Equipas)',
+        description: 'Medicina de precisão personalizada - 4 equipas, turnos 12h, coleta amostras + perfis genómicos + análise bioinformática + terapias diretas + controlo qualidade',
+        teams: 4,
+        shiftDuration: 12,
+        weeklyHoursContract: 42,
+        pattern: 'DDNNOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'DDNNOO', // Team A: coleta e processamento (biópsia + amostras sangue/tumor/fluidos + extração ADN/RNA + preparação bibliotecas + controlo qualidade amostragem + rastreabilidade) + biobanking
+            'OODDNN', // Team B: análise bioinformática (sequenciação de novo + alinhamento referencia + variantes calling + annotacao functional + pharma-omics + proteômica + metagenómica + análise de dados) + pipeline análise
+            'NNOODD', // Team C: terapias diretas (desenvolvimento fármacos + medicina personalizada + formulação dose + compound screening + farmacogenómica + entrega terapêutica + monitoramento resposta) + I+D
+            'DDOONN', // Team D: controlo qualidade e regulação (validacao analytica + QC bioquimico + QC microbiologico + conformidade regulatoria FDA/EMA/ANVISA + documentacao clinica + pharmacovigilance + ensaios clincos + publicacoes cientificas) + compliance
+        ],
+        industry: 'Medicina de Precisão Personalizada'
+    },
+    // Remoção/Reciclagem de Microplásticos em Escala
+    {
+        name: 'Remoção/Reciclagem de Microplásticos em Escala (3 Equipas)',
+        description: 'Remoção e reciclagem microplásticos escala - 3 equipas, turnos 12h, coleta amostras + filtragem + processo pirólise + derivados + monitoramento ambiental',
+        teams: 3,
+        shiftDuration: 12,
+        weeklyHoursContract: 40,
+        pattern: 'MMMMNNNNOOOO',
+        startDate: '2025-01-01',
+        teamPatterns: [
+            'MMMMNNNNOOOO', // Team A: coleta e amostragem (rede trawl + coleta água superficial + sedimento + amostragem atmosfera + filtração microplásticos + categorização tipo + contagem concentração) + campo
+            'NNNNOOOOMMMM', // Team B: processo reciclagem (pré-tratamento + classificação tamanho + pirólise + gaseificação + depolimerização + purificação + upgrading + derivados valor) + planta operação
+            'OOOOMMMMNNNN', // Team C: monitoramento ambiental (sensores marinhos + modelação dispersão + impacto ecossistema + relatórios MRV + certificação conformidade + engajamento stakeholders + comunicação pública) + MRV
+        ],
+        industry: 'Remoção/Reciclagem de Microplásticos em Escala'
+    },
 ];
 
 /**
