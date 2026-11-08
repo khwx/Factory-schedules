@@ -1129,6 +1129,7 @@ export const pt = {
       advancedMaterials: 'Materiais Avançados',
       biofabrication: 'Biofabricação',
       spaceMining: 'Mineração Espacial',
+    aquaculture: 'Aquicultura',
       greenHydrogenDistribution: 'Hidrogénio Verde Distribuição',
       biobanking: 'Biobanco / Criopreservação',
       tissueEngineering: 'Engenharia de Tecidos',

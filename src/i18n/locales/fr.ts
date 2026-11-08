@@ -1131,6 +1131,7 @@ holidayCalendar: {
       advancedMaterials: 'Matériaux Avancés',
       biofabrication: 'Biofabrication',
       spaceMining: 'Minage Spatial',
+    aquaculture: 'Aquaculture',
       greenHydrogenDistribution: 'Distribution Hydrogène Vert',
       biobanking: 'Biobanque / Cryopréservation',
       tissueEngineering: 'Ingénierie Tissulaire',

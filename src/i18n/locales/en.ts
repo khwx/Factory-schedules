@@ -1131,6 +1131,7 @@ export const en: Translations = {
       advancedMaterials: 'Advanced Materials',
       biofabrication: 'Biofabrication',
       spaceMining: 'Space Mining',
+    aquaculture: 'Aquaculture',
       greenHydrogenDistribution: 'Green Hydrogen Distribution',
       biobanking: 'Biobanking / Cryopreservation',
       tissueEngineering: 'Tissue Engineering',
