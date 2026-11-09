@@ -20,7 +20,7 @@ export default function Navigation() {
         { to: '/help', icon: HelpCircle, label: t.navigation.help },
     ];
     return (
-        <nav className="bg-gray-800 border-b border-gray-700 sticky top-0 z-30" role="navigation" aria-label="Main navigation">
+        <nav className="bg-gray-800 border-b border-gray-700 sticky top-0 z-30" role="navigation" aria-label={t.a11y.mainNavigation}>
             <div className="container mx-auto px-4">
                 <div className="flex items-center gap-1 overflow-x-auto py-2 scrollbar-hide" role="menubar">
                     {NAV_ITEMS.map(item => (

@@ -313,7 +313,6 @@ const ScenarioCard: React.FC<ScenarioCardProps> = React.memo(({
                     <button
                         onClick={() => onExport(scenario)}
                         className="flex-1 bg-green-600 hover:bg-green-700 text-white text-sm font-medium py-2 px-3 rounded transition-colors flex items-center justify-center gap-2"
-                        aria-label="Excel"
                     >
                         <Download className="w-4 h-4" />
                         Excel

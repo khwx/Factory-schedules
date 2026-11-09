@@ -16,7 +16,7 @@ describe('Navigation', () => {
 
     it('should render with navigation role and label', () => {
         renderNav();
-        expect(screen.getByRole('navigation', { name: /Main navigation/i })).toBeInTheDocument();
+        expect(screen.getByRole('navigation', { name: /Navegacao principal/i })).toBeInTheDocument();
         expect(screen.getByRole('menubar')).toBeInTheDocument();
     });
 
